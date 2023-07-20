@@ -1,0 +1,26 @@
+[smart_terrains]
+none = true
+
+[logic]
+active = remark
+on_death = death@crazy_doktor
+danger = danger_ignore 
+combat_ignore = combat_ignore@crazy_doktor
+
+[remark]
+anim = wait
+combat_ignore_cond = {-crazy_doktor =fighting_actor}
+on_death = death@crazy_doktor
+on_info = {+crazy_doktor} remark@1
+
+[remark@1]
+anim = threat_fire
+combat_ignore_cond = {-crazy_doktor =fighting_actor}
+on_death = death@crazy_doktor
+on_actor_dist_ge = 3| %=killactor =actor_enemy%
+
+[death@crazy_doktor]
+on_info = %+crazy_doktor_dead%
+
+[combat_ignore@crazy_doktor]
+combat_ignore_cond = {-crazy_doktor =fighting_actor}

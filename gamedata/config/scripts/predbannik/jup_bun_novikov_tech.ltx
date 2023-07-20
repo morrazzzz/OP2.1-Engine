@@ -1,0 +1,31 @@
+; general section
+[logic]
+active = walker@novikov
+combat_ignore = combat_ignore
+
+[walker@novikov]
+path_walk = jup_bun_novikov_tech_walk
+path_look = jup_bun_novikov_tech_look
+def_state_moving = wait_trade
+meet = meet
+combat_ignore_cond = always
+
+[remark@novikov]
+anim = wait
+snd = nil
+target = actor
+on_signal = anim_end|meet
+
+[meet]
+meet_state = 2|wait_trade@jup_b6_scientist_medic_greeting_1,5|{+info} wait_trade@jup_b6_scientist_medic_farewell_1
+meet_state_wpn = 2|wait_trade@jup_b6_scientist_medic_greeting_2,5|{+info} wait_trade@jup_b6_scientist_medic_farewell_2
+danger = danger_condition@novikov
+use = true
+use_wpn = false
+combat_ignore_cond = always
+
+[danger_condition@novikov]
+ignore_distance       = 0
+
+[combat_ignore]
+combat_ignore_cond = always

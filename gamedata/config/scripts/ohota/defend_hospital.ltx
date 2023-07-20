@@ -1,0 +1,9 @@
+[logic]
+active = sr_idle1
+ 
+[sr_idle1]
+on_actor_inside = sr_idle2 %+defend_hospital_spawn =akill.defend_hospital_battle%
+ 
+[sr_idle2]
+on_actor_outside = {-defend_hospital_have} nil %+defend_hospital_fail%
+on_info = {+defend_hospital_have} nil

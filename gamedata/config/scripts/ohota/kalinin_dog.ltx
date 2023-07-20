@@ -1,0 +1,49 @@
+[smart_terrains]
+none = true
+
+[logic]
+active = mob_home@lager
+ 
+[mob_home@lager]
+path_home = kalinin_dog_lager
+home_min_radius = 60
+home_max_radius = 100
+on_info = {+kalinin_dog_taynik} mob_home@home
+on_actor_dist_le_nvis = 7 | mob_remark@greet
+
+[mob_remark@greet]
+anim = stand_idle
+tip = kalinin_dog_use
+snd = kalinin_dog_threaten
+on_actor_dist_ge_nvis = 7 | mob_home@lager
+on_use = {=actor_has_item(kolbasa)} mob_remark@eat %+kalinin_dog_have =actor_remove_item(kolbasa)%
+
+[mob_remark@eat]
+anim = eat
+snd = kalinin_dog_eat
+on_signal = action_end | mob_remark@thank
+
+[mob_remark@thank]
+anim = attack
+snd = kalinin_dog_idle
+on_signal = action_end | mob_walker@taynik
+
+[mob_walker@taynik]
+path_walk = kalinin_dog_taynik_walk
+on_signal = arrived | mob_remark@taynik 
+
+[mob_remark@taynik]
+anim = attack
+snd = kalinin_dog_idle
+on_signal = action_end | mob_remark@rest %=akill.kalinin_dog_sound%
+
+[mob_remark@rest]
+anim = attack
+on_info = {+kalinin_dog_taynik} mob_home@home
+
+[mob_home@home]
+path_home = kalinin_dog_home
+home_min_radius = 20
+home_max_radius = 40
+aggressive_home
+

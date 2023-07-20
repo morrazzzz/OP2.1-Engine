@@ -1,0 +1,14 @@
+[logic]
+active = sr_idle@in
+
+[sr_idle@in]
+on_info = {+fli_have_3} sr_idle@stop
+on_actor_inside = sr_idle@out %+no_gravigun%
+
+[sr_idle@out]
+on_info = {+fli_have_3} sr_idle@stop
+on_actor_dist_le_nvis = 2.55 | {-acv_has_cheated} sr_idle@stop %=archievements.has_cheated_zone%
+on_actor_outside = sr_idle@in %-no_gravigun%
+
+[sr_idle@stop]
+on_info = nil %-no_gravigun%

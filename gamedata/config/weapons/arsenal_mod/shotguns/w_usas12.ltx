@@ -1,0 +1,215 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; USAS-12 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[wpn_usas12]:WP_LR300
+min_radius               	= 0
+max_radius               	= 70
+description					= enc_arsenal_usas12     
+
+ef_main_weapon_type			= 2
+ef_weapon_type				= 6
+
+holder_range_modifier	= 1.0		   ; во сколько раз увеличивается eye_range 
+holder_fov_modifier	= 0.7              ; во сколько раз увеличивается eye_fov
+
+cost					 	= 7500
+weapon_class			 	= assault_rifle
+
+ammo_limit		 		= 210
+ammo_current		 		= 30
+ammo_elapsed		 		= 30
+
+ammo_mag_size		 		= 10
+ammo_class		 		= ammo_12x70_buck, ammo_12x70_kart, ammo_12x76_zhekan, ammo_12x76_dart, ammo_zhekan_izomorf 
+fire_modes				= 1, -1
+
+hand_dependence		 		= 1
+single_handed				= 0
+
+inv_name					= ars-usas12             
+inv_weight					= 5.5
+
+inv_grid_width			= 5	 ; position and size of the icon that will be used to display weapon in the inventory menu
+inv_grid_height			= 2	 ; all icons are on the texture ui_icon_equipment.dds,   
+inv_grid_x			= 57  ; position and size are in terms of 64x64 squares
+inv_grid_y			= 10
+
+slot 			 		= 13 ;2		; // secondary
+animation_slot				= 2		; type of the animation that will be used
+
+;базовая дисперсия
+fire_dispersion_base		= 0.36 	;угол (в градусах) базовой дисперсии оружия (оружия зажатого в тисках)
+control_inertion_factor		= 1.2f
+
+;отдача
+cam_relax_speed         	= 8.5	;скорость возврата в исходное положение
+cam_dispersion          	= 0.25	;увеличения угла (в градусах) с каждым выстрелом
+cam_dispersion_inc		= 0.28	;увеличениe cam_dispersion с каждым выстрелом
+cam_dispertion_frac		= 0.35	;ствол будет подыматься на cam_dispersion*cam_dispertion_frac +- cam_dispersion*(1-cam_dispertion_frac)
+cam_max_angle			= 6.0	;максимальный угол отдачи
+cam_max_angle_horz		= 8.0	;(degree) maximum shot horizontal degree 
+cam_step_angle_horz		= 0.25 ;0.4	;(degree) size of step camera moved in horizontal position while shooting
+
+fire_dispersion_condition_factor = 5	 ;увеличение дисперсии в процентах при максимальном износе 
+misfire_probability 		   = 0.00065 ;вероятность осечки при максимальном износе
+misfire_condition_k			= 0.05 
+condition_shot_dec 			= 0.0001 ;увеличение износа при каждом выстреле
+
+direction                	= 0, 0, 1
+
+fire_point               	= 0.0, 0.179, 0.632
+
+flame_particles		   		= amik\weapons\smoke_particles\smoke_particles_pump_00 
+smoke_particles		   		= amik\weapons\smoke_particles\smoke_particles_pump_01
+
+shell_point		 			= 0.0, 0.199, 0.09
+shell_dir		 			= 0.0, 1.0, 0.0
+
+rpm_empty_click 	 		= 200
+
+PDM_disp_base 			= 1.0
+PDM_disp_vel_factor 		= 1.7
+PDM_disp_accel_factor 		= 1.7
+PDM_crouch	 		= 1.0
+PDM_crouch_no_acc 		= 1.0
+
+;;;;;;; Для ОП-2.1
+hit_power        	= 0.95
+hit_impulse		= 88
+hit_type 			     = fire_wound
+hit_rate	        = 1.95
+fire_distance          	= 90
+bullet_speed		= 350	;начальная скорость пули
+rpm                     = 360
+
+use_aim_bullet				= true		;Поддерживается ли первая суппер пуля
+time_to_aim					= 1.0	
+
+hud                      	= wpn_usas12_hud
+normal                   	= 0, 1, 0
+position                 	= -0.026, -0.118, 0.0030
+orientation              	= 0.0, 0.0, 0.0
+
+strap_position         		= -0.15,-0.37,0.2			; position (offset) and orientation of the weapon when it is strapped
+strap_orientation      		= -10,-5,10					; (3rd person view in degrees)
+strap_bone0				= bip01_spine2
+strap_bone1				= bip01_spine1
+
+startup_ammo             	= 1000
+visual                   	= weapons\usas12\wpn_usas12.ogf
+
+light_color		 		= 0.6,0.5,0.3
+light_range		 		= 5
+light_var_color		 		= 0.05
+light_var_range		 		= 0.1
+light_time 		 		= 0.2
+
+ph_mass			 			= 3
+;cost			 			= 2500
+
+;addons
+scope_status				= 2
+silencer_status				= 0 ;2
+grenade_launcher_status		        = 0
+
+zoom_enabled				= true
+scope_zoom_factor	    	            = 65
+
+scope_name 					= wpn_addon_acog
+scope_x 					= 66
+scope_y 					= -9
+
+;звуки
+snd_draw			= weapons\usas12\draw
+snd_holster			= weapons\usas12\holster
+snd_shoot			= weapons\usas12\usas12_shoot ;shot  
+snd_shoot1			= weapons\usas12\usas12_shoot1
+snd_empty			= weapons\usas12\empty, 0.5
+snd_reload			= weapons\usas12\reload
+;snd_silncer_shot		= weapons\usas12\shot_sil
+
+silencer_smoke_particles 	= weapons\generic_shoot_00
+
+[wpn_usas12_hud]
+
+shell_point          		= 0.05, -0.03, 0.05
+shell_dir		 		= 0.0, 1.0, 0.0
+
+fire_point			  = 0.0000,0.0523000,0.405 ;-0.0022500,0.0523000,0.2425
+fire_bone        	        = wpn_body
+orientation      	        = 4.75, 6, 0
+position         	        = -0.040, -0.2482, 0.1500
+visual           	        = weapons\usas12\wpn_usas12_hud.ogf
+
+grenade_bone            	= grenade
+
+anim_idle			= idle
+anim_idle_aim		= idle_aim
+anim_reload			= reload
+anim_draw			= draw
+anim_holster		= holster
+anim_shoot			= shoot
+anim_idle_sprint		= idle_sprint
+
+;смещения HUD для режима приближения
+zoom_offset		= -0.14050,0.1065,0.0815 ;-0.100350,0.02210,0.1500
+zoom_rotate_x		= 0.11425 ;0.011200
+zoom_rotate_y		= 0.10850 ;0.060635
+
+;прячем перекрестие прицела в зуме
+zoom_hide_crosshair	= true
+
+;;;;;;;;;;;;;;;;;;;;;;;;; USAS-12 "Шайтан" ;;;;;;;;;;;;;;;;;;;;;;;;;
+[wpn_usas20]:wpn_usas12
+cost					 	= 1500
+description					= enc_arsenal_usas20
+inv_name				= ars-usas20             
+inv_weight					= 6.25
+
+ammo_mag_size		 		= 20
+
+inv_grid_x				= 51
+inv_grid_y				= 74
+
+shell_particles	 		= amik\weapons\12x70_r
+fire_dispersion_base		= 0.38
+fire_point               	= 0.0, 0.227, 0.600 
+position                 	= -0.023, -0.162, 0.00185
+
+hit_power        	= 1.3
+fire_distance          	= 80
+bullet_speed		= 420
+rpm                     = 450
+
+scope_x 					= 74
+scope_y 					= -2
+
+hud                      	= wpn_usas20_hud
+visual                   	= weapons\usas12\wpn_usas20.ogf
+snd_reload			= weapons\usas12\usas12_reload 
+
+[wpn_usas20_hud]
+
+shell_point				= 0.028,0.078,0.113
+shell_dir             			= 0,1,0
+shell_bone            	  		= wpn_body
+
+fire_point				= 0.000,0.041578,0.00075 
+fire_bone      				= wpn_body
+
+orientation              	= 0.52,2.4,0.15
+position                 	= -0.062,-0.150,0.2055
+visual                   	= weapons\usas12\wpn_usas20_hud.ogf
+
+anim_idle					= idle
+anim_reload					= reload
+anim_draw					= draw
+anim_holster				= holster
+anim_shoot					= shoot
+anim_shoot_both 			= shoot
+anim_idle_aim				= idle_aim
+anim_idle_sprint			= idle_sprint
+
+;смещения HUD для режима приближения
+zoom_offset		= -0.09325,0.049550,-0.01100 
+zoom_rotate_x		= 0.0305000
+zoom_rotate_y		= 0.0078500
+

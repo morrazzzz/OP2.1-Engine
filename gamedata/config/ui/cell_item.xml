@@ -1,0 +1,12 @@
+<w>
+	<progress_item_condition x="1" y="1" width="42" height="8" horz="1" min="0" max="100" pos="100">
+        <progress>
+            <texture>ui_condition</texture>
+        </progress>
+		<background>
+			<texture>ui_condition</texture>
+		</background>
+		<min_color r="255" g="36" b="0"/>
+		<max_color r="0" g="255" b="0"/>
+    </progress_item_condition> 
+</w>

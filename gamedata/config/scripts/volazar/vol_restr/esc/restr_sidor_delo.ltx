@@ -1,0 +1,8 @@
+[logic] 
+active = sr_idle
+
+[sr_idle] 
+on_actor_inside = {+sidor_delo_1} sr_idle@one
+
+[sr_idle@one] 
+on_timer = 60000 | nil %+sidor_delo_2 =nano_suit_moduls.sidor_sms% 

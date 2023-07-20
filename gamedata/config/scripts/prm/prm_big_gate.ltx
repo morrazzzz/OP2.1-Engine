@@ -1,0 +1,13 @@
+;promzone big gate
+
+[logic]
+active = ph_gate@locked
+
+[ph_gate@locked]
+state = closed
+locking = hard
+on_use = ph_gate@unlocked
+
+[ph_gate@unlocked]
+state = closed
+locking = stick

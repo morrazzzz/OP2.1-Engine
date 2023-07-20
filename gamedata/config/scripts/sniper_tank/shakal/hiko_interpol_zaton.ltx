@@ -1,0 +1,29 @@
+[smart_terrains]
+none = true
+
+[logic]
+active = walker@hiko
+danger = danger_ignore@hiko
+
+[walker@hiko]
+path_walk = hiko_walk
+path_look = hiko_look
+meet = meet
+danger = danger_ignore@hiko
+on_info = {+crazy_surgery_start} walker@hiko2
+
+[walker@hiko2]
+path_walk = hiko_walk
+path_look = hiko_look
+meet = no_meet
+danger = danger_ignore@hiko
+
+[meet]
+use = true
+use_wpn = true
+meet_talk_enabled = true
+
+[danger_ignore@hiko]
+ignore_distance_corpse = 0
+ignore_distance_sound = 0
+ignore_distance = 0

@@ -1,0 +1,20 @@
+[smart_terrains]
+none = true
+
+[logic]
+active = walker@razved
+danger = danger_ignore
+corpse_detection_enabled = false
+on_death = mob_death
+
+[walker@razved]
+path_walk = marsh_razved_walk
+path_look = marsh_razved_look
+def_state_standing = hide
+sniper = true
+
+[danger_ignore]
+ignore_distance = 0
+
+[mob_death]
+on_info = %+marsh_razvedchik_dead%

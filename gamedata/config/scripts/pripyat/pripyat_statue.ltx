@@ -1,0 +1,9 @@
+[logic]
+active = ph_idle
+
+[ph_idle]
+on_timer = 60000 | ph_sound
+
+[ph_sound]
+snd = pripyat_statue
+on_signal = sound_end | ph_idle

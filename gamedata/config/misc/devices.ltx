@@ -1,0 +1,128 @@
+[device_atifact_merger]:II_ATTCH
+visual				= equipments\item_merger.ogf
+inv_name			= ArtefactMerger
+inv_weight			= 3	;0.2
+inv_grid_width		= 2
+inv_grid_height		= 1
+inv_grid_x			= 6
+inv_grid_y			= 13
+cost				= 5000
+
+[inventory_box]:O_INVBOX
+visual				= physics\box\expl_dinamit.ogf
+
+[m_inventory_box_parad]:inventory_box
+visual = equipments\item_rukzak
+
+[m_inventory_box_battle]:m_inventory_box_parad
+visual = equipments\item_rukzak
+
+[m_inventory_box]:treasure_item
+script_binding   			= binder_safe.init
+class						= O_PHYS_S
+visual          			= equipments\item_rukzak.ogf
+remove_time					= 10000
+
+[safe_stolen_note]:II_DOC
+visual                  = amk\item_zapiska.ogf
+quest_item				= true
+description         	= txt_safe_stolen_note_desc
+inv_name				= txt_safe_stolen_note_inv_name
+inv_weight				= 0
+inv_grid_width     		= 1
+inv_grid_height    		= 1
+inv_grid_x         		= 80
+inv_grid_y         		= 2
+cost					= 10000000
+cheat_item = true
+
+; Тайники
+[kostya_box]:O_INVBOX
+visual				= physics\box\expl_dinamit.ogf
+
+[device_teleport]:II_ANTIR
+visual                  = equipments\item_amk_gps.ogf
+description				= device_teleport
+cost					 = 40000
+cheat_item = true
+inv_name		= teleport
+inv_weight		= 0.05
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 13
+inv_grid_y			= 31
+
+attach_angle_offset		= 0.000000, -1.204452, -1.262921
+attach_position_offset	= 0.081856, -0.035081, 0.011694
+attach_bone_name		= bip01_l_hand
+
+eat_alcohol = 0.3
+
+[science_teleport]:II_ANTIR
+visual				= equipments\item_datchik1.ogf
+description			= "Телепорт Сахарова на Кордон"
+inv_name			= "Телепорт на Кордон"
+inv_weight			= 0.05
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 9
+inv_grid_y			= 14
+cost				= 40000
+cheat_item = true
+
+attach_angle_offset		= 0.000000, -1.204452, -1.262921
+attach_position_offset	= 0.081856, -0.035081, 0.011694
+attach_bone_name		= bip01_l_hand
+
+eat_alcohol = 0.3
+
+[science_teleport2]:II_ANTIR
+visual				= equipments\item_datchik1.ogf
+description			= "Телепорт Сахарова в Бар"
+inv_name			= "Телепорт в Бар"
+inv_weight			= 0.05
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 9
+inv_grid_y			= 14
+cost				= 40000
+cheat_item = true
+
+attach_angle_offset		= 0.000000, -1.204452, -1.262921
+attach_position_offset	= 0.081856, -0.035081, 0.011694
+attach_bone_name		= bip01_l_hand
+
+eat_alcohol = 0.3
+
+[science_teleport3]:II_ANTIR
+visual				= equipments\item_datchik1.ogf
+description			= "Телепорт Сахарова на Янтарь"
+inv_name			= "Телепорт на Янтарь"
+inv_weight			= 0.05
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 9
+inv_grid_y			= 14
+cost				= 40000
+cheat_item = true
+
+attach_angle_offset		= 0.000000, -1.204452, -1.262921
+attach_position_offset	= 0.081856, -0.035081, 0.011694
+attach_bone_name		= bip01_l_hand
+
+eat_alcohol = 0.3
+
+[zamok]:II_ATTCH
+visual                = equipments\zamok.ogf
+cost                 = 5000
+inv_name             = zamok
+description          = enc_zamok_desc
+inv_weight           = .2
+inv_grid_width       = 1
+inv_grid_height      = 2
+inv_grid_x           = 25
+inv_grid_y           = 35
+
+attach_angle_offset = -0.287979, 1.560923, 1.544060
+attach_position_offset = 0.096910, -0.013594, 0.107925
+attach_bone_name = bip01_r_hand

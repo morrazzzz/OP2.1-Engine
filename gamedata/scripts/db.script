@@ -1,0 +1,110 @@
+-- База данных онлайновых объектов
+
+artefacts           = {}
+zone_by_name        = {}
+sl_by_name          = {}
+storage             = {}
+sound               = {}
+actor               = nil
+heli                = {}
+btr                 = {}
+turret              = {}
+camp_storage        = {}
+story_by_id         = {}
+smart_terrain_by_id = {}
+trader        		= nil
+info_restr          = {}
+strn_by_respawn     = {}
+treasure_change_visual = {}   -- прозрачные рюкзаки
+god	= {}
+creatures = {}
+communities = {}
+
+db.eat_snd = nil
+db.dynamic_bioradar = ui_mm_opt_main.GetOption("dynamic_bioradar")
+db.money = 0
+db.debug_mode = ui_mm_opt_main.GetOption("debug") or nil
+db.vbr = 0
+db.traded = nil
+db.rotting = 0
+
+function add_obj(obj)
+	creatures[obj:id()] = obj
+end
+function del_obj(obj)
+	storage[obj:id()] = nil
+	creatures[obj:id()] = nil
+end
+
+function add_zone(zone)
+	zone_by_name[zone:name()] = zone
+--	add_obj(zone)
+end
+function del_zone(zone)
+	zone_by_name[zone:name()] = nil
+	del_obj(zone)
+end
+
+function add_sl(sl)
+	sl_by_name[sl:name()] = sl
+--	add_obj(sl)
+end
+function del_sl(sl)
+	sl_by_name[sl:name()] = nil
+	del_obj(sl)
+end
+
+function add_actor(obj)
+	actor = obj
+	add_obj(obj)
+end
+function del_actor()
+	del_obj(actor)
+	actor = nil
+end
+
+function add_heli(obj)  
+	heli[obj:id()] = obj
+end 
+function del_heli(obj)
+	heli[obj:id()] = nil
+end 
+
+function add_btr(obj)  
+	btr[obj:id()] = obj
+end 
+function del_btr(obj)
+	btr[obj:id()] = nil
+end 
+
+function add_turret(obj)
+	turret[obj:id()] = obj
+end
+function del_turret(obj)
+	turret[obj:id()] = nil
+end
+
+function add_smart_terrain(obj)
+	smart_terrain_by_id[obj.id] = obj
+end
+function del_smart_terrain(obj)
+	smart_terrain_by_id[obj.id] = nil
+end
+
+function god_init()
+	god = amk.load_table("god")
+
+	-- u... = true - опция включена
+	-- c... - счетчики использований
+	if not god.u then god.u = {} end
+	if not god.c then god.c = {} end
+
+	for i = 1,6 do
+		if god.u[i] == nil then
+			god.u[i] = false
+			god.c[i] = 0
+		end
+	end
+	
+	ui_mm_opt_main.GodHudUpdate()
+end

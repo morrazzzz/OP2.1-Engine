@@ -1,0 +1,257 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; kac_pdw ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[wpn_kac_pdw]:WP_LR300
+min_radius               	= 0
+max_radius               	= 100
+description				= enc_arsenal_kac_pdw
+
+ef_main_weapon_type			= 2
+ef_weapon_type				= 6
+
+holder_range_modifier	= 1.0		       ; во сколько раз увеличиваетс€ eye_range 
+holder_fov_modifier		= 0.7              ; во сколько раз увеличиваетс€ eye_fov
+
+cost					 	= 6800
+weapon_class			 	= assault_rifle
+
+ammo_limit		 			= 210
+ammo_current		 		= 30
+ammo_elapsed		 		= 30
+
+ammo_mag_size		 		= 30
+ammo_class		 		= ammo_5.7x28_ss190, ammo_5.7x28_ap
+grenade_class				= ammo_vog-27
+fire_modes					= 1, 3, -1
+launch_speed = 0
+
+hand_dependence		 		= 1
+single_handed				= 0
+
+inv_name				= ars-kac_pdw
+inv_weight					= 2.5
+
+inv_grid_width				= 5
+inv_grid_height				= 2
+inv_grid_x				= 56
+inv_grid_y				= 72
+
+slot 			 		= 2		; // secondary
+animation_slot				= 2		; type of the animation that will be used
+
+;базова€ дисперси€
+fire_dispersion_base		= 0.15 	;угол (в градусах) базовой дисперсии оружи€ (оружи€ зажатого в тисках)
+control_inertion_factor		= 1.2f
+
+;отдача
+cam_relax_speed        		= 12.5;0.15	;скорость возврата в исходное положение
+cam_relax_speed_ai        	= 360    ;скорость возврата в исходное положение у ј»
+cam_dispersion         		= 0.15	;увеличени€ угла (в градусах) с каждым выстрелом
+cam_dispersion_inc		= 0.15	;увеличениe cam_dispersion с каждым выстрелом
+cam_dispertion_frac		= 0.5	;ствол будет подыматьс€ на cam_dispersion*cam_dispertion_frac +- cam_dispersion*(1-cam_dispertion_frac)
+cam_max_angle			= 6	;максимальный угол отдачи
+cam_max_angle_horz		= 5.0	;(degree) maximum shot horizontal degree 
+cam_step_angle_horz		= 0.35;0.4	;(degree) size of step camera moved in horizontal position while shooting
+
+fire_dispersion_condition_factor = 5	;увеличение дисперсии в процентах при максимальном износе 
+misfire_probability 		   = 0.0025 ;веро€тность осечки при максимальном износе
+misfire_condition_k			= 0.05 
+condition_shot_dec 			= 0.00011 ;увеличение износа при каждом выстреле
+
+direction                	= 0, 0, 1
+
+fire_point               	= 0.0, 0.205, 0.4150  ;0.0, 0.2285, 0.431
+
+flame_particles			= weapons\generic_weapon05
+smoke_particles         	= weapons\generic_shoot_00
+grenade_flame_particles		= weapons\generic_weapon01
+
+shell_point		 		= 0.0, 0.212, 0.081
+shell_dir		 		= 0.0, 1.0, 0.0
+shell_particles	 			= weapons\arsenal_shells1
+
+rpm_empty_click 	 		= 200
+
+PDM_disp_base 			= 1.0
+PDM_disp_vel_factor 		= 1.2
+PDM_disp_accel_factor 		= 1.2
+PDM_crouch	 		= 1.0
+PDM_crouch_no_acc 		= 1.0
+
+;;;;;;; ƒл€ ќѕ-2.1
+hit_power        	= 0.74
+hit_impulse		= 54
+hit_type 			= fire_wound
+hit_rate	        = 1.88
+fire_distance           = 280
+bullet_speed	        = 930	;начальна€ скорость пули
+rpm                     = 750
+
+use_aim_bullet				= true		;ѕоддерживаетс€ ли перва€ суппер пул€
+time_to_aim				= 0.5	
+
+hud                      	= wpn_kac_pdw_hud
+normal                   	= 0, 1, 0
+position                 	= -0.0225, -0.15600, -0.002
+orientation              	= 0, 0, 0
+
+strap_position         		= -0.15,-0.37,0.2			; position (offset) and orientation of the weapon when it is strapped
+strap_orientation      		= -10,-5,10					; (3rd person view in degrees)
+strap_bone0			= bip01_spine2
+strap_bone1			= bip01_spine1
+
+startup_ammo             	= 1000
+visual           	        = weapons\kac_pdw\wpn_kac_pdw.ogf
+
+light_color		 		= 0.6,0.5,0.3
+light_range		 		= 5
+light_var_color		 		= 0.05
+light_var_range		 		= 0.1
+light_time 		 		= 0.2
+
+ph_mass			 		= 3
+;cost			 			= 2500
+
+;addons
+scope_status				= 2
+silencer_status				= 2
+grenade_launcher_status		        = 2  ; оллиматор
+
+zoom_enabled				= true
+scope_zoom_factor	    	        = 65
+
+scope_name 				= wpn_addon_acog  ;wpn_addon_scope
+scope_x 					= 88
+scope_y 					= -12
+
+silencer_name  				= wpn_addon_sil_57
+silencer_x 				= 189
+silencer_y 				= 7
+
+grenade_launcher_name 		      = wpn_kollim_sig
+grenade_launcher_x 			= 100
+grenade_launcher_y 			= -7
+
+;звуки
+snd_draw			= weapons\bull\sw_draw, 1.0, 0.15
+snd_holster			= weapons\bull\sw_host, 1.0, 0.22  
+snd_shoot			= weapons\m4a1\shot 
+snd_empty			= weapons\sbr\empty, 0.5
+snd_reload			= weapons\sbr\sbr_reload, 1.0, 0.15 
+snd_shoot_grenade				= weapons\m203_shot
+snd_reload_grenade			        = weapons\m203_reload
+snd_switch					= weapons\groza_switch
+snd_silncer_shot		= weapons\m4_a3\shot_sil, 0.5
+
+silencer_hit_power       	= 0.7
+silencer_hit_impulse	 	= 48
+silencer_fire_distance   	= 220
+silencer_bullet_speed	 	= 850
+
+;silencer_flame_particles 	= weapons\generic_weapon01
+silencer_smoke_particles 	= weapons\generic_shoot_00
+
+silencer_light_color		= 0.6,0.5,0.3
+silencer_light_range		= 2
+silencer_light_var_color	= 0.05
+silencer_light_var_range	= 0.5
+silencer_light_time 		= 0.2
+
+
+[wpn_kac_pdw_hud]
+
+shell_point          		= 0.05, -0.031, -0.1575
+shell_dir		 	= 0.0, 1.0, 0.0
+
+fire_point       	        = 0.0005,-0.0025,0.0015 ;0.0005,-0.0138,-0.0005
+fire_point2       	        = 0.0005,-0.0138,-0.0005
+fire_bone        	        = wpn_body
+orientation      	        = 2, 2, 0
+position         	        = 0.12,-0.036,0.14
+visual           	        = weapons\kac_pdw\wpn_kac_pdw_hud.ogf
+
+grenade_bone            	= wpn_grenade
+
+anim_idle			= idle
+anim_idle_aim		= idle_aim
+anim_reload			= reload
+anim_draw			= draw
+anim_holster		= holster
+anim_shoot			= shoot_1
+anim_idle_sprint		= idle_sprint
+
+anim_idle_gl				= idle_w_gl
+anim_idle_gl_aim				= aim_w_gl
+anim_reload_gl				= reload_w_gl
+anim_draw_gl				= draw_w_gl
+anim_holster_gl				= holster_w_gl
+anim_shoot_gl				= shoot_w_gl
+
+anim_idle_g				= draw
+anim_idle_g_aim				= draw
+anim_reload_g				= draw
+anim_shoot_g				= draw
+anim_switch_grenade_on			= draw
+anim_switch_grenade_off			= draw
+anim_draw_g				= draw
+anim_holster_g				= draw
+
+zoom_offset		= -0.12420,0.03725,-0.033 
+zoom_rotate_x		= 0.03750
+zoom_rotate_y		= 0.035
+
+grenade_zoom_offset			= -0.12420,0.03725,-0.033 
+grenade_zoom_rotate_x			= 0.03750
+grenade_zoom_rotate_y			= 0.035
+
+grenade_normal_zoom_offset		= -0.12410,0.01891,-0.033
+grenade_normal_zoom_rotate_x		= 0.02585 
+grenade_normal_zoom_rotate_y		= 0.03375
+
+;пр€чем перекрестие прицела в зуме
+zoom_hide_crosshair	= true
+
+;;;;;;;;;;;  ольт с коллиматором / M4A1 SOPMOD;;;;;;;;;;;
+[wpn_m4]:wpn_kac_pdw
+ammo_class				= ammo_5.56x45_ss190, ammo_5.56x45_ap, ammo_5.56x45_gd
+inv_grid_x				= 61
+inv_grid_y				= 72
+
+description				= enc_weapons_wpn-m4 ;enc_arsenal_wpn_m4t
+inv_name				= wpn-m4 ;ars-wpn_m4t
+inv_weight					= 3.7
+scope_status			= 0
+grenade_launcher_status         = 0
+
+silencer_name  				= wpn_addon_sil_556_ar
+silencer_x 				= 195
+silencer_y 				= 15
+
+fire_dispersion_base			= 0.17
+cam_relax_speed         		= 8
+cam_relax_speed_ai         		= 360
+cam_dispersion          		= 0.21
+cam_dispersion_inc			= 0.2
+cam_dispertion_frac			= 0.9
+cam_max_angle				= 6.0
+cam_max_angle_horz			= 8.0
+cam_step_angle_horz			= 0.35
+
+visual           	        = weapons\kac_pdw\wpn_m4col.ogf
+hud                      	= wpn_m4t_hud
+
+fire_point               	= 0.0, 0.205, 0.450
+position                 	= -0.0215, -0.12500, -0.0005
+
+[wpn_m4t_hud]:wpn_kac_pdw_hud
+fire_point       	        = 0.0005,-0.0025,0.0015
+visual           	        = weapons\kac_pdw\wpn_m4col_hud.ogf
+
+anim_idle_gl				= idle
+anim_idle_gl_aim			= idle_aim
+anim_reload_gl				= reload
+anim_draw_gl				= draw
+anim_holster_gl				= holster
+anim_shoot_gl				= shoot_1               ;;;—писок аним об€зателен, иначе вылет
+
+zoom_offset		= -0.12410,0.01891,-0.033
+zoom_rotate_x		= 0.01925  ;0.02585
+zoom_rotate_y		= 0.03375  ;0.03375

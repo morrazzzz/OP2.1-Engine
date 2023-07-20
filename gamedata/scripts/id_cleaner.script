@@ -1,0 +1,131 @@
+-- Удаление/респаун постоянных объектов алспауна на других территориях для освобождения id и ресурсов
+
+class "CIDCleaner"
+
+function CIDCleaner:__init()
+	-- Для каждой секции сделан свой нетпакет во избежание переполнения. Для каждого объекта пишется 2 байта номера секции из алспауна.
+	-- Для ОП-2.1 обрабатываются следующие количества:
+	-- lights_hanging_lamp2 - 2552 шт
+	-- climable_object - 1029 шт
+	-- zone_flame_small - 716 шт
+	-- lights_hanging_lamp - 452 шт
+	-- При добавлении новых объектов следить за переполнением нетпакета по lights_hanging_lamp и остальным
+	self.sections = {						-- Обрабатываемые секции = номера нетпакетов
+		lights_hanging_lamp2 = 1,
+		climable_object = 2,
+		zone_flame_small = 3,
+		lights_hanging_lamp = 4
+	}
+	self.ids = {}							-- [номер секции/нетпакета][уровень][список spawn_id на этом уровне]
+	for k,v in pairs(self.sections) do
+		self.ids[v] = {}
+	end
+end
+
+-- Старт новой игры
+function CIDCleaner:on_new_game()
+	-- Вычитываем id нужных секций, собираем их в таблицу и удаляем их все с НИ
+	local obj, sect, lvl
+	for sid = 800001,804740 do				-- При добавлении объектов сюда ставить последний номер их story_id из алспауна
+		obj = story_object(sid)
+		if obj then
+			sect = obj:section_name()
+			lvl = object_level(obj)
+			if not self.ids[self.sections[sect]][lvl] then
+				self.ids[self.sections[sect]][lvl] = {}
+			end
+			table.insert(self.ids[self.sections[sect]][lvl], sid-800000)
+			release(obj)
+		end
+	end
+	
+	-- Ставим поршень принудительной смены уровня для спавна на текущем уровне
+	give_info("level_changing")
+	amk.save_variable("id_cl", ai:level_id())
+end
+
+-- Смена уровня
+function CIDCleaner:on_level_changing()
+	-- Удаляем на предыдущем уровне
+	local lvl = amk.load_variable("id_cl")
+	--console:execute("load ~~~ on_level_changing clearing "..tostring(lvl))
+	for np,sids in pairs(self.ids) do
+		if sids[lvl] then
+			for _,sid in ipairs(sids[lvl]) do
+				release(story_object(sid+800000))
+				--console:execute("load ~~~ "..sid)
+			end
+		end
+	end
+	amk.del_variable("id_cl")
+	
+	-- Спавним на текущем уровне
+	lvl = ai:level_id()
+	--console:execute("load ~~~ on_level_changing spawning "..tostring(lvl))
+	for np,sids in pairs(self.ids) do
+		if sids[lvl] then
+			for _,sid in ipairs(sids[lvl]) do
+				--console:execute("load ~~~ "..sid)
+				create(ai:spawn_id(sid+800000))
+			end
+		end
+	end
+end
+
+-- Сохранение
+function CIDCleaner:save(p, np)
+	--local packet_size = p:w_tell()
+  
+	for lvl,sids in pairs(self.ids[np]) do
+		p:w_u16(lvl)	-- level id
+		
+		for _,sid in ipairs(sids) do
+			p:w_u16(sid)
+		end
+		p:w_u16(65535)	-- Конец уровня
+	end
+	
+	--console:execute("load ~~~ id_cleaner SAVE np_pda"..np.." size "..p:w_tell()-packet_size.." "..packet_size)
+end
+
+-- Загрузка
+function CIDCleaner:load(p, np)
+	--local packet_size = p:r_tell()
+
+	local lvl, sid
+	while not p:r_eof() do
+		lvl = p:r_u16()		-- level id
+		if not self.ids[np][lvl] then
+			self.ids[np][lvl] = {}
+		end
+			
+		sid = p:r_u16()
+		while sid ~= 65535 do	-- Конец уровня
+			table.insert(self.ids[np][lvl], sid)
+			sid = p:r_u16()
+		end
+	end
+
+	--console:execute("load ~~~ id_cleaner LOAD np_pda"..np.." size "..p:r_tell()-packet_size)
+end
+
+-- Биндер нетпакета данных
+function create_id_cleaner_pda(num)
+	create("np_pda"..num,db.actor:position(),db.actor:level_vertex_id(),db.actor:game_vertex_id(),db.actor:id())
+end
+function bind_id_cleaner_pda(obj)
+    obj:bind_object(id_cleaner_pda_binder(obj))
+end
+
+-- Если понадобится ещё добавить нетпакет, то делаем np_pda5, разделяем данные по номеру в методах save и load, увеличиваем до 5 цикл для create_id_cleaner_pda(i) в amk_mod.script и прописываем везде в исключения
+class "id_cleaner_pda_binder" (object_binder)
+function id_cleaner_pda_binder:__init(obj) super(obj)
+end 
+function id_cleaner_pda_binder:save(packet)
+    object_binder.save(self, packet)
+	_G.ID_Cleaner:save(packet, tonumber(string.sub(self.object:section(),-1)))
+end
+function id_cleaner_pda_binder:load(reader)
+    object_binder.load(self, reader)
+	_G.ID_Cleaner:load(reader, tonumber(string.sub(self.object:section(),-1)))
+end

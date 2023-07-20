@@ -1,0 +1,65 @@
+[smart_terrains]
+none = true
+
+[logic]
+active = walker
+danger = danger_ignore@cs4
+
+[walker]
+path_walk = cs4_shturm_walk
+path_look = cs4_shturm_look
+meet = meet
+danger = danger_ignore@cs4
+on_actor_dist_le = 15|remark@wait_cs4
+on_info = {+shturm_station_start} walker@cs4
+
+[remark@wait_cs4]  
+snd = mil_max_to_tolyan
+anim = wait
+on_signal = action_end | remark@wait_cs41
+danger = danger_ignore@cs4
+meet = no_meet
+on_info = {+shturm_station_start} walker@cs4
+
+[remark@wait_cs41]
+snd = mil_max_to_kolyan
+anim = wait
+on_signal = action_end | remark@wait_cs42
+danger = danger_ignore@cs4
+meet = no_meet
+on_info = {+shturm_station_start} walker@cs4
+
+[remark@wait_cs42]
+snd = dark_knyaz_hello
+danger = danger_ignore@cs4
+target = actor
+meet = meet@cs4
+on_info = {+shturm_station_start} walker@cs4
+
+[walker@cs4]
+path_walk = cs4_volna_walk
+path_look = cs4_volna_look
+def_state_moving = rush
+meet = meet@cs4
+danger = danger_ignore@cs4
+on_signal = shturm_done|%+shturm_station_have%
+on_info = {+fenix_defenders_otboi} kamp
+
+[kamp]
+center_point  = cs4_volna_camp_center
+path_walk     = cs4_volna_camp_center_task
+meet = meet
+radius = 1.5
+
+[meet@cs4]
+meet_state		= 7|guard@wait
+meet_state_wpn	= 7|backoff@threat_weap
+victim		= 7|actor
+victim_wpn		= 7|actor
+use			= true
+use_wpn		= false
+syndata		= backoff@threat_weap
+
+[danger_ignore@cs4]
+ignore_distance_corpse = 0
+ignore_distance = 0

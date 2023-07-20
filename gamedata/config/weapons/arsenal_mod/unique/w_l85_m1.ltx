@@ -1,0 +1,230 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; L85A2 "Сбалансированная" ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[wpn_l85_m1]:WP_AK74
+min_radius          	= 30
+max_radius          	= 100
+description				= enc_weapons1_wpn-l85_m1    
+	
+ef_main_weapon_type		= 2
+ef_weapon_type			= 6
+
+holder_range_modifier	= 1.85		       ; во сколько раз увеличивается eye_range 
+holder_fov_modifier		= 0.3              ; во сколько раз увеличивается eye_fov
+
+cost					= 5600
+weapon_class			= assault_rifle	; Type of the weapon
+launch_speed = 0
+	
+ammo_limit				= 210
+ammo_current			= 180
+ammo_elapsed			= 30
+	
+ammo_mag_size			= 30
+ammo_class			= ammo_5.56x45_ap, ammo_5.56x45_ss190, ammo_5.56x45_gd
+grenade_class			= ammo_m209
+fire_modes				= 1, -1
+
+hand_dependence			= 1
+single_handed			= 0	
+
+slot 				= 2		; // secondary
+animation_slot			= 8 ;2		; type of the animation that will be used
+
+inv_name	        	      = wpn-l85_m1       
+inv_weight				= 4.53
+
+inv_grid_width     = 5
+inv_grid_height    = 2
+inv_grid_x         = 27
+inv_grid_y         = 44
+
+;базовая дисперсия
+fire_dispersion_base			= 0.16		;угол (в градусах) базовой дисперсии оружия (оружия зажатого в тисках)
+control_inertion_factor			= 1.35f
+disp_rate = 1.9
+
+;отдача
+cam_relax_speed         		= 16.5 		;скорость возврата в исходное положение
+cam_dispersion          	        = 0.17		;увеличения угла (в градусах) с каждым выстрелом
+cam_dispersion_inc			= 0.20		;увеличениe cam_dispersion с каждым выстрелом
+cam_dispertion_frac			= 0.125	;0.000001	;0.85		;ствол будет подыматься на cam_dispersion*cam_dispertion_frac +- cam_dispersion*(1-cam_dispertion_frac)
+cam_max_angle				= 5.0		;максимальный угол отдачи
+cam_max_angle_horz			= 7.0		;(degree) maximum shot horizontal degree 
+cam_step_angle_horz			= 0.125	;0.18		;(degree) size of step camera moved in horizontal position while shooting
+
+fire_dispersion_condition_factor 	= 2	    ;увеличение дисперсии в процентах при максимальном износе 
+misfire_probability 	= 0.001	;вероятность осечки при максимальном износе 
+misfire_condition_k	= 0.1
+condition_shot_dec 		= 0.00015	;увеличение износа при каждом выстреле
+
+PDM_disp_base 			= 1.0
+PDM_disp_vel_factor 		= 1.2
+PDM_disp_accel_factor 		= 1.2
+PDM_crouch	 		= 1.0
+PDM_crouch_no_acc 		= 1.0
+
+direction              		=  0, 0, 1
+fire_point             		=  0.0, 0.178, 0.450 ;0.0, 0.186, 0.465
+fire_point2            		=  0.0, 0.100, 0.525 ;0.0, 0.106, 0.468
+
+flame_particles				= weapons\generic_weapon05
+smoke_particles				= weapons\generic_shoot_00
+grenade_flame_particles		        = weapons\generic_weapon01
+	
+shell_point		 			= 0.0, 0.180, -0.050 ;0.0, 0.186, -0.13
+shell_dir		 			= 0.0, 0.0, 0.4
+shell_particles	 			= amik\weapons\5_56x45\5_56x45_r ;weapons\arsenal_shells1
+
+rpm_empty_click 	 		= 200
+
+;;;;;;; Для ОП-2.1
+hit_power                	= 0.74
+hit_impulse		 	= 64
+hit_type 			  = fire_wound 	
+hit_rate	                = 1.97
+fire_distance            	= 320
+bullet_speed			= 950	;начальная скорость пули
+rpm                      	= 780
+
+use_aim_bullet			= true		;Поддерживается ли первая суппер пуля
+time_to_aim				= 1.0	
+
+silencer_hit_power       	= 0.7
+silencer_hit_impulse	 	= 52
+silencer_fire_distance   	= 240
+silencer_bullet_speed	 	= 875
+
+hud                      	= wpn_l85_m1_hud
+normal                   	= 0, 1, 0
+
+position         	        = -0.021, -0.128, -0.0225 ;-0.026, -0.135, -0.006
+orientation      	        = 0, 0, 0
+
+strap_position         		= -0.15,-0.36,0.25			; position (offset) and orientation of the weapon when it is strapped
+strap_orientation      		= -10,-5,10					; (3rd person view in degrees)
+strap_bone0					= bip01_spine2
+strap_bone1					= bip01_spine1
+
+startup_ammo   		        = 90
+visual         		        = weapons\l85\wpn_l85_m1.ogf
+	
+light_color				= 0.6,0.5,0.3
+light_range				= 5
+light_var_color				= 0.05
+light_var_range				= 0.5
+light_time 				= 0.2
+
+ph_mass						= 5
+;cost						= 2100
+
+;addons
+scope_status				= 1
+silencer_status				= 2
+grenade_launcher_status		        = 2
+
+zoom_enabled				= true
+scope_zoom_factor			= 28		;SUSAT 2X
+scope_texture				= Arsenal_Mod\Crosshairs\wpn_l85
+
+scope_name 					= wpn_addon_scope
+scope_x 					= 60
+scope_y 					= -2
+silencer_name  				= wpn_addon_sil_556_ar
+silencer_x 					= 174
+silencer_y 					= 18
+grenade_launcher_name 		      = wpn_addon_grenade_launcher_m203
+grenade_launcher_x 			= 101
+grenade_launcher_y 			= 34
+
+;звуки
+snd_draw					= weapons\l85\draw
+snd_holster					= weapons\l85\holster
+snd_shoot					= weapons\l85\l85_0 ;weapons\l85\l85_shoot
+;snd_shoot1					= weapons\l85\l85_shoot1
+;snd_shoot2					= weapons\l85\l85_shoot2
+;snd_shoot3					= weapons\l85\l85_shoot3
+snd_empty					= weapons\l85\empty_nato
+snd_reload					= weapons\l85\l85_reload ;reload
+snd_shoot_grenade				= weapons\m203\M203_grenshoot
+snd_reload_grenade			        = weapons\lr300\m203_grenload
+snd_switch					= weapons\lr300\m203_switch
+snd_silncer_shot				= weapons\l85\shot_sill ;l85_m1_shot_sil
+
+;настройки для глушителя
+;silencer_flame_particles 	= weapons\generic_weapon01
+silencer_smoke_particles 	= weapons\generic_shoot_00
+
+silencer_light_color		= 0.6,0.5,0.3
+silencer_light_range		= 2
+silencer_light_var_color	= 0.05
+silencer_light_var_range	= 0.5
+silencer_light_time 		= 0.2
+
+ 
+[wpn_l85_m1_hud]
+
+shell_point			= 0.0355,-0.0155,-0.710
+shell_dir               	= 0,0,0
+shell_bone			= gilza
+
+fire_point			= 0.000000,-0.00375,-0.43500 ;0.000000,0.000000,-0.560000
+fire_point2			= 0,-0.1150,-0.345
+fire_bone      	      		= muzzle
+fire_bone2			= muzzle_gl
+
+position			= -0.0720,-0.1500,0.2220 ;-0.080000,-0.150000,0.250000
+orientation			= 1.300000,1.25000,0.000000
+visual                  	= weapons\l85\wpn_l85_m1_hud.ogf
+grenade_bone            	= grenade
+
+anim_idle			= l85_idle
+anim_idle_aim			= l85_aim
+anim_reload			= l85_reload
+anim_draw			= l85_draw
+anim_holster			= l85_holster
+anim_shoot			= l85_shoot
+anim_idle_sprint		= l85_sprint_low
+			
+;анимации с подключенным подствольником
+;(режим стрельбы из подствольника)
+anim_idle_g				= l85_idle_g	;l85_aim
+anim_idle_g_aim				= l85_aim_g	;l85_aim
+anim_reload_g				= l85_reload_g	;l85_aim
+anim_shoot_g				= l85_shoot_g	;l85_aim
+anim_switch_grenade_on			= l85_switch_on	;l85_aim
+anim_switch_grenade_off			= l85_switch_off	;l85_aim
+anim_draw_g				= l85_draw_g	;l85_aim
+anim_holster_g				= l85_holster_g	;l85_aim
+anim_idle_sprint_g			= l85_sprint_g
+
+;(режим обычной стрельбы)			  
+anim_idle_gl				= l85_idle_w_gl
+anim_idle_gl_aim			= l85_aim_w_gl
+anim_reload_gl				= l85_reload_w_gl
+anim_draw_gl				= l85_draw_w_gl
+anim_holster_gl				= l85_holster_w_gl
+anim_shoot_gl				= l85_shoot_w_gl
+anim_idle_sprint_gl			= l85_sprint_w_gl
+
+;смещения HUD для режима приближения
+;прячем перекрестие прицела в зуме
+zoom_hide_crosshair	= true
+
+;тоже самое, но для прицепленого подствольника
+;режим обычной стрельбы
+zoom_offset		= -0.08050,0.020000,-0.1100 ;-0.062500,-0.016000,-0.075000
+zoom_rotate_x		= 0.04075
+zoom_rotate_y		= 0.017200
+
+grenade_normal_zoom_offset	= -0.08050,0.020000,-0.1100
+grenade_normal_zoom_rotate_x	= 0.04075
+grenade_normal_zoom_rotate_y	= 0.017200
+
+;режим подствольника
+grenade_zoom_offset		= -0.079500,-0.10250,0.000000 ;-0.06430,-0.11400,0.000000
+grenade_zoom_rotate_x		= -0.16750 ;-0.19300
+grenade_zoom_rotate_y		= 0.014750 ;-0.012200
+
+;время поворота HUD (сек)
+zoom_rotate_time			= 0.23
+rotate_time				= 0.23
+

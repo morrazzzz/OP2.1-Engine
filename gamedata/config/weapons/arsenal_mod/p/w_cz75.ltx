@@ -1,0 +1,174 @@
+;;;;;;;;;;;;;;;;;;;; Чешский пистолет CZ 75 ;;;;;;;;;;;;;;;;;;;
+[wpn_cz75]:WP_PM
+min_radius               	= 0
+max_radius               	= 50
+description					= enc_arsenal_wpn_cz75
+
+ef_weapon_type				= 5
+
+holder_range_modifier	= 1.0               ; во сколько раз увеличивается eye_range 
+holder_fov_modifier		= 1.0              ; во сколько раз увеличивается eye_fov
+
+cost					 	= 4000	;300
+
+ammo_limit		 			= 120
+ammo_current		 		= 96
+ammo_elapsed		 		= 10
+
+ammo_mag_size		 		= 16
+ammo_class		 			= ammo_9x21_11, ammo_9x21_10
+
+hand_dependence		 		= 1
+single_handed				= 1							
+
+slot 			 		= 1
+animation_slot				= 1									; type of the animation that will be used
+
+
+inv_name				= ars-wpn_cz75
+inv_weight					= 1.0
+
+inv_grid_width				= 2
+inv_grid_height				= 1
+inv_grid_x				= 65
+inv_grid_y				= 38
+
+
+;базовая дисперсия
+fire_dispersion_base		= 0.14 		;угол (в градусах) базовой дисперсии оружия (оружия зажатого в тисках)
+
+;отдача
+cam_relax_speed         	= 8.8 ;1.3	;скорость возврата в исходное положение
+cam_dispersion          	= 0.65		;увеличения угла (в градусах) с каждым выстрелом
+cam_dispersion_inc		= 0.0		;увеличениe cam_dispersion с каждым выстрелом
+cam_dispertion_frac		= 0.45		;ствол будет подыматься на cam_dispersion*cam_dispertion_frac +- cam_dispersion*(1-cam_dispertion_frac)
+cam_max_angle			= 6.0		;максимальный угол отдачи
+cam_max_angle_horz		= 8.0		;(degree) maximum shot horizontal degree 
+cam_step_angle_horz		= 0.39		;(degree) size of step camera moved in horizontal position while shooting
+
+fire_dispersion_condition_factor = 5		;увеличение дисперсии в процентах при максимальном износе 
+misfire_probability 		 = 0.0005	;вероятность осечки при максимальном износе 
+misfire_condition_k		 = 0.05
+condition_shot_dec 		 = 0.0001	;увеличение износа при каждом выстреле
+
+
+PDM_disp_base 			= 1.0
+PDM_disp_vel_factor 		= 0.6
+PDM_disp_accel_factor 		= 0.6
+PDM_crouch	 		= 1.0
+PDM_crouch_no_acc 		= 1.0
+
+use_aim_bullet				= true		;Поддерживается ли первая суппер пуля
+time_to_aim				= 0.5	
+
+hit_power                	= 0.65
+hit_impulse		 	= 52
+hit_type 			= fire_wound
+hit_rate	                = 1.88	
+fire_distance            	= 65
+bullet_speed		 	= 375		
+rpm                      	= 350
+rpm_empty_click 	 	= 350
+
+silencer_hit_power       	= 0.62
+silencer_hit_impulse	 	= 40
+silencer_fire_distance   	= 60
+silencer_bullet_speed	 	= 335
+
+hud                      	= wpn_cz75_hud
+visual                   	= weapons\cz75\wpn_cz75.ogf
+
+normal                   	= 0, 1, 0
+position                 	= -0.021, -0.088, -0.005
+orientation              	= 0, 0, 0
+
+;strap_position         		= -0.1,-0.45,0.2			; position (offset) and orientation of the weapon when it is strapped
+;strap_orientation      		= 1.57,0,0						; (3rd person view)
+;strap_bone0				= bip01_spine2
+;strap_bone1				= bip01_spine1
+
+direction           	 = 0, 0, 1
+fire_point               = 0.0, 0.130, 0.173
+
+flame_particles		   		= weapons\generic_weapon03
+smoke_particles		   		= weapons\generic_shoot_00
+
+shell_point		 		= 0.0, 0.133, 0.032
+shell_dir		 		= 0.0, 0.0, 0.4
+shell_particles	 			= weapons\arsenal_shells1
+;startup_ammo            	= 90
+
+light_color		 		= 0.6,0.5,0.3
+light_range		 		= 3.0
+light_var_color		 		= 0.05
+light_var_range		 		= 0.5
+light_time 		 		= 0.2
+
+ph_mass			 			= 1
+;cost			 			= 350
+
+;addons
+scope_status			= 0
+silencer_status			= 2
+grenade_launcher_status		= 0
+
+zoom_enabled			= true
+scope_zoom_factor	    	= 56
+
+;звуки
+snd_draw				= weapons\beretta\draw
+snd_holster				= weapons\generic_holster
+snd_shoot				= weapons\cz75\cz75_shoot  
+snd_empty				= weapons\pistol_empty
+snd_reload				= weapons\cz75\cz75_reload  
+snd_close				= weapons\generic_close
+snd_silncer_shot			= weapons\beretta\supressed_45
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; silencer
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+silencer_name  				= wpn_addon_sil_9_p	; section name for the attachable silencer
+silencer_x 					= 65						; offset in inventory icon
+silencer_y 					= -16				
+
+;params when silencer is attached 
+;similar to corresponding params without prefix silencer_
+
+;silencer_flame_particles 	= weapons\generic_weapon01
+silencer_smoke_particles 	= weapons\generic_shoot_00
+ 
+silencer_light_color		= 0.6,0.5,0.3
+silencer_light_range		= 2
+silencer_light_var_color	= 0.05
+silencer_light_var_range	= 0.5
+silencer_light_time 		= 0.2
+
+ 
+[wpn_cz75_hud]
+shell_point			= 0.0300000,0.0120000,-0.1350000
+fire_point			= 0.00000,0.0330,-0.235 
+fire_bone                	= wpn_body
+orientation              	= 0,0,0
+position                 	= -0.031,-0.157,0.0
+
+visual                   	= weapons\cz75\wpn_cz75_hud.ogf 
+
+anim_holster				= lancew_cz75_holster
+anim_idle				= lancew_cz75_idle
+anim_empty				= lancew_cz75_idle_empty
+anim_reload				= lancew_cz75_reload
+anim_reload_empty			= lancew_cz75_reload_full
+anim_draw				= lancew_cz75_draw
+anim_draw_empty				= lancew_cz75_draw_empty
+anim_shoot				= lancew_cz75_shoot
+anim_shot_last				= lancew_cz75_shoot_last
+anim_close				= lancew_cz75_holster 
+anim_idle_aim				= lancew_cz75_idle_aim
+anim_idle_sprint			= lancew_cz75_sprint
+
+;смещения HUD для режима приближения
+zoom_offset		= -0.085000,0.0385000,-0.0160 
+zoom_rotate_x		= -0.02085
+zoom_rotate_y		= -0.00820
+

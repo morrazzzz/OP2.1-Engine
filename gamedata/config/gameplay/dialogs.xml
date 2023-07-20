@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="windows-1251" ?>
+<game_dialogs>
+	<dialog id="dm_lin_treasure">
+		<phrase_list>
+			<phrase id="0">
+				<text>Есть полезная информация?</text>
+				<next>1</next>
+			</phrase>
+			<phrase id="1">
+				<text>Да, знаю одно место, где мужик тут один хабар кладёт. Сам бы обчистил, но не хочу рисковать, так что могу поделится, за определённую сумму деньжат, естественно...</text>
+				<next>3</next>
+			</phrase>
+			<phrase id="3">
+				<text>Ну и сколько ты хочешь?</text>
+				<next>32</next>
+			</phrase>
+			<phrase id="32">
+				<text>Мужик тот матёрый сталкер, так что думаю и хабар у него там не хуже. В общем, думаю 30000 рублей будет достаточно.</text>
+				<next>321</next>
+				<next>4</next>
+			</phrase>
+			<phrase id="321">
+				<precondition>linspiro.actor_has_money_2</precondition>
+				<text>Я согласен. Вот твои деньги.</text>
+				<action>linspiro.insert_custom_data</action>
+				<action>linspiro.give_money_2</action>
+				<next>5</next>
+			</phrase>
+			<phrase id="4">
+				<text>Хех... А не многовато ли? Нет, мужик, в другой раз.</text>
+				<action>dialogs.break_dialog</action>
+			</phrase>
+			<phrase id="5">
+				<text>Ну что же, как и договаривались, принимай информацию.</text>
+				<action>treasure.give</action>
+				<next>6</next>
+			</phrase>
+			<phrase id="6">
+				<text>Принял. Пойду теперь взгляну, что у нас там.</text>
+				<action>dialogs.break_dialog</action>
+			</phrase>
+		</phrase_list>
+		<precondition>linspiro.npc_relacion</precondition>
+		<precondition>linspiro.precond</precondition>
+	</dialog>
+
+	<dialog id="dm_hello_dialog">
+		<init_func>dialog_manager.init_intro_dialog</init_func>
+	</dialog>
+	
+	<dialog id="dm_cool_info_dialog" priority="-2">
+		<init_func>dialog_manager.init_cool_info_dialog</init_func>
+		<precondition>dialog_manager.precondition_info_global</precondition>
+	</dialog>
+
+	<dialog id="dm_help_wounded_medkit_dialog" priority="10">
+		<init_func>dialog_manager.init_help_wounded_medkit_dialog</init_func>
+		<precondition>dialogs.allow_wounded_dialog</precondition>
+		<precondition>dialogs.is_opp_wounded</precondition>
+		 <precondition>dialogs.actor_have_medkit</precondition>
+	</dialog>
+
+	<!-- Диалоги для ЦЗ нумеруются согласно порядковому номеру вендора в cycle_task.ltx -->
+	<dialog id="tm_000_dialog" priority="0">
+		<init_func>cycle_task.init_000_dialog</init_func>
+	</dialog>
+	<dialog id="tm_000_reward" priority="0">
+		<init_func>cycle_task.init_000_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_001_dialog" priority="0">
+		<init_func>cycle_task.init_001_dialog</init_func>
+	</dialog>
+	<dialog id="tm_001_reward" priority="0">
+		<init_func>cycle_task.init_001_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_002_dialog" priority="0">
+		<init_func>cycle_task.init_002_dialog</init_func>
+	</dialog>
+	<dialog id="tm_002_reward" priority="0">
+		<init_func>cycle_task.init_002_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_003_dialog" priority="0">
+		<init_func>cycle_task.init_003_dialog</init_func>
+	</dialog>
+	<dialog id="tm_003_reward" priority="0">
+		<init_func>cycle_task.init_003_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_004_dialog" priority="0">
+		<init_func>cycle_task.init_004_dialog</init_func>
+	</dialog>
+	<dialog id="tm_004_reward" priority="0">
+		<init_func>cycle_task.init_004_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_005_dialog" priority="0">
+		<init_func>cycle_task.init_005_dialog</init_func>
+	</dialog>
+	<dialog id="tm_005_reward" priority="0">
+		<init_func>cycle_task.init_005_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_006_dialog" priority="0">
+		<init_func>cycle_task.init_006_dialog</init_func>
+	</dialog>
+	<dialog id="tm_006_reward" priority="0">
+		<init_func>cycle_task.init_006_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_007_dialog" priority="0">
+		<init_func>cycle_task.init_007_dialog</init_func>
+	</dialog>
+	<dialog id="tm_007_reward" priority="0">
+		<init_func>cycle_task.init_007_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_008_dialog" priority="0">
+		<init_func>cycle_task.init_008_dialog</init_func>
+	</dialog>
+	<dialog id="tm_008_reward" priority="0">
+		<init_func>cycle_task.init_008_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_009_dialog" priority="0">
+		<init_func>cycle_task.init_009_dialog</init_func>
+	</dialog>
+	<dialog id="tm_009_reward" priority="0">
+		<init_func>cycle_task.init_009_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_010_dialog" priority="0">
+		<init_func>cycle_task.init_010_dialog</init_func>
+	</dialog>
+	<dialog id="tm_010_reward" priority="0">
+		<init_func>cycle_task.init_010_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_011_dialog" priority="0">
+		<init_func>cycle_task.init_011_dialog</init_func>
+	</dialog>
+	<dialog id="tm_011_reward" priority="0">
+		<init_func>cycle_task.init_011_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_012_dialog" priority="0">
+		<init_func>cycle_task.init_012_dialog</init_func>
+	</dialog>
+	<dialog id="tm_012_reward" priority="0">
+		<init_func>cycle_task.init_012_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_013_dialog" priority="0">
+		<init_func>cycle_task.init_013_dialog</init_func>
+	</dialog>
+	<dialog id="tm_013_reward" priority="0">
+		<init_func>cycle_task.init_013_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_014_dialog" priority="0">
+		<init_func>cycle_task.init_014_dialog</init_func>
+	</dialog>
+	<dialog id="tm_014_reward" priority="0">
+		<init_func>cycle_task.init_014_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_015_dialog" priority="0">
+		<init_func>cycle_task.init_015_dialog</init_func>
+	</dialog>
+	<dialog id="tm_015_reward" priority="0">
+		<init_func>cycle_task.init_015_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_016_dialog" priority="0">
+		<init_func>cycle_task.init_016_dialog</init_func>
+	</dialog>
+	<dialog id="tm_016_reward" priority="0">
+		<init_func>cycle_task.init_016_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_017_dialog" priority="0">
+		<init_func>cycle_task.init_017_dialog</init_func>
+	</dialog>
+	<dialog id="tm_017_reward" priority="0">
+		<init_func>cycle_task.init_017_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_018_dialog" priority="0">
+		<init_func>cycle_task.init_018_dialog</init_func>
+	</dialog>
+	<dialog id="tm_018_reward" priority="0">
+		<init_func>cycle_task.init_018_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_019_dialog" priority="0">
+		<init_func>cycle_task.init_019_dialog</init_func>
+	</dialog>
+	<dialog id="tm_019_reward" priority="0">
+		<init_func>cycle_task.init_019_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_020_dialog" priority="0">
+		<init_func>cycle_task.init_020_dialog</init_func>
+	</dialog>
+	<dialog id="tm_020_reward" priority="0">
+		<init_func>cycle_task.init_020_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_021_dialog" priority="0">
+		<init_func>cycle_task.init_021_dialog</init_func>
+	</dialog>
+	<dialog id="tm_021_reward" priority="0">
+		<init_func>cycle_task.init_021_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_022_dialog" priority="0">
+		<init_func>cycle_task.init_022_dialog</init_func>
+	</dialog>
+	<dialog id="tm_022_reward" priority="0">
+		<init_func>cycle_task.init_022_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_023_dialog" priority="0">
+		<init_func>cycle_task.init_023_dialog</init_func>
+	</dialog>
+	<dialog id="tm_023_reward" priority="0">
+		<init_func>cycle_task.init_023_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_024_dialog" priority="0">
+		<init_func>cycle_task.init_024_dialog</init_func>
+	</dialog>
+	<dialog id="tm_024_reward" priority="0">
+		<init_func>cycle_task.init_024_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_025_dialog" priority="0">
+		<init_func>cycle_task.init_025_dialog</init_func>
+	</dialog>
+	<dialog id="tm_025_reward" priority="0">
+		<init_func>cycle_task.init_025_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_026_dialog" priority="0">
+		<init_func>cycle_task.init_026_dialog</init_func>
+	</dialog>
+	<dialog id="tm_026_reward" priority="0">
+		<init_func>cycle_task.init_026_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_027_dialog" priority="0">
+		<init_func>cycle_task.init_027_dialog</init_func>
+	</dialog>
+	<dialog id="tm_027_reward" priority="0">
+		<init_func>cycle_task.init_027_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_028_dialog" priority="0">
+		<init_func>cycle_task.init_028_dialog</init_func>
+	</dialog>
+	<dialog id="tm_028_reward" priority="0">
+		<init_func>cycle_task.init_028_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_029_dialog" priority="0">
+		<init_func>cycle_task.init_029_dialog</init_func>
+	</dialog>
+	<dialog id="tm_029_reward" priority="0">
+		<init_func>cycle_task.init_029_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_030_dialog" priority="0">
+		<init_func>cycle_task.init_030_dialog</init_func>
+	</dialog>
+	<dialog id="tm_030_reward" priority="0">
+		<init_func>cycle_task.init_030_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_031_dialog" priority="0">
+		<init_func>cycle_task.init_031_dialog</init_func>
+	</dialog>
+	<dialog id="tm_031_reward" priority="0">
+		<init_func>cycle_task.init_031_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_032_dialog" priority="0">
+		<init_func>cycle_task.init_032_dialog</init_func>
+	</dialog>
+	<dialog id="tm_032_reward" priority="0">
+		<init_func>cycle_task.init_032_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_033_dialog" priority="0">
+		<init_func>cycle_task.init_033_dialog</init_func>
+	</dialog>
+	<dialog id="tm_033_reward" priority="0">
+		<init_func>cycle_task.init_033_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_034_dialog" priority="0">
+		<init_func>cycle_task.init_034_dialog</init_func>
+	</dialog>
+	<dialog id="tm_034_reward" priority="0">
+		<init_func>cycle_task.init_034_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_035_dialog" priority="0">
+		<init_func>cycle_task.init_035_dialog</init_func>
+	</dialog>
+	<dialog id="tm_035_reward" priority="0">
+		<init_func>cycle_task.init_035_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_036_dialog" priority="0">
+		<init_func>cycle_task.init_036_dialog</init_func>
+	</dialog>
+	<dialog id="tm_036_reward" priority="0">
+		<init_func>cycle_task.init_036_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_037_dialog" priority="0">
+		<init_func>cycle_task.init_037_dialog</init_func>
+	</dialog>
+	<dialog id="tm_037_reward" priority="0">
+		<init_func>cycle_task.init_037_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_038_dialog" priority="0">
+		<init_func>cycle_task.init_038_dialog</init_func>
+	</dialog>
+	<dialog id="tm_038_reward" priority="0">
+		<init_func>cycle_task.init_038_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_039_dialog" priority="0">
+		<init_func>cycle_task.init_039_dialog</init_func>
+	</dialog>
+	<dialog id="tm_039_reward" priority="0">
+		<init_func>cycle_task.init_039_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_040_dialog" priority="0">
+		<init_func>cycle_task.init_040_dialog</init_func>
+	</dialog>
+	<dialog id="tm_040_reward" priority="0">
+		<init_func>cycle_task.init_040_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_041_dialog" priority="0">
+		<init_func>cycle_task.init_041_dialog</init_func>
+	</dialog>
+	<dialog id="tm_041_reward" priority="0">
+		<init_func>cycle_task.init_041_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_042_dialog" priority="0">
+		<init_func>cycle_task.init_042_dialog</init_func>
+	</dialog>
+	<dialog id="tm_042_reward" priority="0">
+		<init_func>cycle_task.init_042_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_043_dialog" priority="0">
+		<init_func>cycle_task.init_043_dialog</init_func>
+	</dialog>
+	<dialog id="tm_043_reward" priority="0">
+		<init_func>cycle_task.init_043_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_044_dialog" priority="0">
+		<init_func>cycle_task.init_044_dialog</init_func>
+	</dialog>
+	<dialog id="tm_044_reward" priority="0">
+		<init_func>cycle_task.init_044_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_045_dialog" priority="0">
+		<init_func>cycle_task.init_045_dialog</init_func>
+	</dialog>
+	<dialog id="tm_045_reward" priority="0">
+		<init_func>cycle_task.init_045_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_046_dialog" priority="0">
+		<init_func>cycle_task.init_046_dialog</init_func>
+	</dialog>
+	<dialog id="tm_046_reward" priority="0">
+		<init_func>cycle_task.init_046_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_047_dialog" priority="0">
+		<init_func>cycle_task.init_047_dialog</init_func>
+	</dialog>
+	<dialog id="tm_047_reward" priority="0">
+		<init_func>cycle_task.init_047_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_048_dialog" priority="0">
+		<init_func>cycle_task.init_048_dialog</init_func>
+	</dialog>
+	<dialog id="tm_048_reward" priority="0">
+		<init_func>cycle_task.init_048_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_049_dialog" priority="0">
+		<init_func>cycle_task.init_049_dialog</init_func>
+	</dialog>
+	<dialog id="tm_049_reward" priority="0">
+		<init_func>cycle_task.init_049_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_050_dialog" priority="0">
+		<init_func>cycle_task.init_050_dialog</init_func>
+	</dialog>
+	<dialog id="tm_050_reward" priority="0">
+		<init_func>cycle_task.init_050_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_051_dialog" priority="0">
+		<init_func>cycle_task.init_051_dialog</init_func>
+	    <precondition>dialogs.is_not_opp_wounded</precondition>
+	</dialog>
+	<dialog id="tm_051_reward" priority="0">
+		<init_func>cycle_task.init_051_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	    <precondition>dialogs.is_not_opp_wounded</precondition>
+	</dialog>
+	<dialog id="tm_052_dialog" priority="0">
+		<init_func>cycle_task.init_052_dialog</init_func>
+	</dialog>
+	<dialog id="tm_052_reward" priority="0">
+		<init_func>cycle_task.init_052_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_053_dialog" priority="0">
+		<init_func>cycle_task.init_053_dialog</init_func>
+	</dialog>
+	<dialog id="tm_053_reward" priority="0">
+		<init_func>cycle_task.init_053_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_054_dialog" priority="0">
+		<init_func>cycle_task.init_054_dialog</init_func>
+	</dialog>
+	<dialog id="tm_054_reward" priority="0">
+		<init_func>cycle_task.init_054_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_055_dialog" priority="0">
+		<init_func>cycle_task.init_055_dialog</init_func>
+	</dialog>
+	<dialog id="tm_055_reward" priority="0">
+		<init_func>cycle_task.init_055_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_056_dialog" priority="0">
+		<init_func>cycle_task.init_056_dialog</init_func>
+	</dialog>
+	<dialog id="tm_056_reward" priority="0">
+		<init_func>cycle_task.init_056_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_057_dialog" priority="0">
+		<init_func>cycle_task.init_057_dialog</init_func>
+	</dialog>
+	<dialog id="tm_057_reward" priority="0">
+		<init_func>cycle_task.init_057_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_058_dialog" priority="0">
+		<init_func>cycle_task.init_058_dialog</init_func>
+	</dialog>
+	<dialog id="tm_058_reward" priority="0">
+		<init_func>cycle_task.init_058_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_059_dialog" priority="0">
+		<init_func>cycle_task.init_059_dialog</init_func>
+	</dialog>
+	<dialog id="tm_059_reward" priority="0">
+		<init_func>cycle_task.init_059_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_060_dialog" priority="0">
+		<init_func>cycle_task.init_060_dialog</init_func>
+	</dialog>
+	<dialog id="tm_060_reward" priority="0">
+		<init_func>cycle_task.init_060_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_061_dialog" priority="0">
+		<init_func>cycle_task.init_061_dialog</init_func>
+	</dialog>
+	<dialog id="tm_061_reward" priority="0">
+		<init_func>cycle_task.init_061_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_062_dialog" priority="0">
+		<init_func>cycle_task.init_062_dialog</init_func>
+	</dialog>
+	<dialog id="tm_062_reward" priority="0">
+		<init_func>cycle_task.init_062_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_063_dialog" priority="0">
+		<init_func>cycle_task.init_063_dialog</init_func>
+	</dialog>
+	<dialog id="tm_063_reward" priority="0">
+		<init_func>cycle_task.init_063_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_064_dialog" priority="0">
+		<init_func>cycle_task.init_064_dialog</init_func>
+	</dialog>
+	<dialog id="tm_064_reward" priority="0">
+		<init_func>cycle_task.init_064_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_065_dialog" priority="0">
+		<init_func>cycle_task.init_065_dialog</init_func>
+	</dialog>
+	<dialog id="tm_065_reward" priority="0">
+		<init_func>cycle_task.init_065_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_066_dialog" priority="0">
+		<init_func>cycle_task.init_066_dialog</init_func>
+	</dialog>
+	<dialog id="tm_066_reward" priority="0">
+		<init_func>cycle_task.init_066_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_067_dialog" priority="0">
+		<init_func>cycle_task.init_067_dialog</init_func>
+	</dialog>
+	<dialog id="tm_067_reward" priority="0">
+		<init_func>cycle_task.init_067_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_068_dialog" priority="0">
+		<init_func>cycle_task.init_068_dialog</init_func>
+	</dialog>
+	<dialog id="tm_068_reward" priority="0">
+		<init_func>cycle_task.init_068_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_069_dialog" priority="0">
+		<init_func>cycle_task.init_069_dialog</init_func>
+	</dialog>
+	<dialog id="tm_069_reward" priority="0">
+		<init_func>cycle_task.init_069_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_070_dialog" priority="0">
+		<init_func>cycle_task.init_070_dialog</init_func>
+	</dialog>
+	<dialog id="tm_070_reward" priority="0">
+		<init_func>cycle_task.init_070_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_071_dialog" priority="0">
+		<init_func>cycle_task.init_071_dialog</init_func>
+	</dialog>
+	<dialog id="tm_071_reward" priority="0">
+		<init_func>cycle_task.init_071_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_072_dialog" priority="0">
+		<init_func>cycle_task.init_072_dialog</init_func>
+	</dialog>
+	<dialog id="tm_072_reward" priority="0">
+		<init_func>cycle_task.init_072_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_073_dialog" priority="0">
+		<init_func>cycle_task.init_073_dialog</init_func>
+	</dialog>
+	<dialog id="tm_073_reward" priority="0">
+		<init_func>cycle_task.init_073_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_074_dialog" priority="0">
+		<init_func>cycle_task.init_074_dialog</init_func>
+	</dialog>
+	<dialog id="tm_074_reward" priority="0">
+		<init_func>cycle_task.init_074_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_075_dialog" priority="0">
+		<init_func>cycle_task.init_075_dialog</init_func>
+	</dialog>
+	<dialog id="tm_075_reward" priority="0">
+		<init_func>cycle_task.init_075_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_076_dialog" priority="0">
+		<init_func>cycle_task.init_076_dialog</init_func>
+	</dialog>
+	<dialog id="tm_076_reward" priority="0">
+		<init_func>cycle_task.init_076_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_077_dialog" priority="0">
+		<init_func>cycle_task.init_077_dialog</init_func>
+	</dialog>
+	<dialog id="tm_077_reward" priority="0">
+		<init_func>cycle_task.init_077_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_078_dialog" priority="0">
+		<init_func>cycle_task.init_078_dialog</init_func>
+	</dialog>
+	<dialog id="tm_078_reward" priority="0">
+		<init_func>cycle_task.init_078_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_079_dialog" priority="0">
+		<init_func>cycle_task.init_079_dialog</init_func>
+	</dialog>
+	<dialog id="tm_079_reward" priority="0">
+		<init_func>cycle_task.init_079_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_080_dialog" priority="0">
+		<init_func>cycle_task.init_080_dialog</init_func>
+	</dialog>
+	<dialog id="tm_080_reward" priority="0">
+		<init_func>cycle_task.init_080_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_081_dialog" priority="0">
+		<init_func>cycle_task.init_081_dialog</init_func>
+	</dialog>
+	<dialog id="tm_081_reward" priority="0">
+		<init_func>cycle_task.init_081_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_082_dialog" priority="0">
+		<init_func>cycle_task.init_082_dialog</init_func>
+	</dialog>
+	<dialog id="tm_082_reward" priority="0">
+		<init_func>cycle_task.init_082_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_083_dialog" priority="0">
+		<init_func>cycle_task.init_083_dialog</init_func>
+	</dialog>
+	<dialog id="tm_083_reward" priority="0">
+		<init_func>cycle_task.init_083_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_084_dialog" priority="0">
+		<init_func>cycle_task.init_084_dialog</init_func>
+	</dialog>
+	<dialog id="tm_084_reward" priority="0">
+		<init_func>cycle_task.init_084_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_085_dialog" priority="0">
+		<init_func>cycle_task.init_085_dialog</init_func>
+	</dialog>
+	<dialog id="tm_085_reward" priority="0">
+		<init_func>cycle_task.init_085_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+	<dialog id="tm_086_dialog" priority="0">
+		<init_func>cycle_task.init_086_dialog</init_func>
+	</dialog>
+	<dialog id="tm_086_reward" priority="0">
+		<init_func>cycle_task.init_086_reward</init_func>
+		<precondition>cycle_task.vendor_has_active_task</precondition>
+	</dialog>
+    <dialog id="tm_087_dialog" priority="0">
+        <init_func>cycle_task.init_087_dialog</init_func>
+    </dialog>
+    <dialog id="tm_087_reward" priority="0">
+        <init_func>cycle_task.init_087_reward</init_func>
+        <precondition>cycle_task.vendor_has_active_task</precondition>
+    </dialog>
+
+	<!-- FINAL DIALOGS -->
+	<dialog id="hello_dialog">
+		<phrase_list>
+			<phrase id="1">
+				<next>2</next>
+				<next>3</next>
+			</phrase>
+			<phrase id="3">
+				<text>hello_dialog_3</text>
+				<precondition>dialogs.is_wounded</precondition>
+			</phrase>
+			<phrase id="0">
+				<next>1</next>
+			</phrase>
+			<phrase id="2">
+				<text>hello_dialog_2</text>
+				<precondition>dialogs.is_not_wounded</precondition>
+			</phrase>
+		</phrase_list>
+	</dialog>
+	<dialog id="actor_help_wounded" priority="10">
+		<precondition>dialogs.allow_wounded_dialog</precondition>
+		<precondition>dialogs.is_opp_wounded</precondition>
+		<phrase_list>
+			<phrase id="141">
+				<text>actor_help_wounded_141</text>
+			</phrase>
+			<phrase id="111">
+				<text>actor_help_wounded_111</text>
+			</phrase>
+			<phrase id="131">
+				<text>actor_help_wounded_131</text>
+			</phrase>
+			<phrase id="13">
+				<text>actor_help_wounded_13</text>
+				<next>131</next>
+			</phrase>
+			<phrase id="14">
+				<text>actor_help_wounded_14</text>
+				<next>141</next>
+			</phrase>
+			<phrase id="12">
+				<text>actor_help_wounded_12</text>
+				<precondition>dialogs.actor_have_bandage</precondition>
+				<action>dialogs.transfer_bandage</action>
+				<next>111</next>
+			</phrase>
+			<phrase id="11">
+				<text>actor_help_wounded_11</text>
+				<precondition>dialogs.actor_have_medkit</precondition>
+				<action>dialogs.transfer_medkit</action>
+				<next>111</next>
+			</phrase>
+			<phrase id="0">
+				<text>actor_help_wounded_0</text>
+				<next>1</next>
+			</phrase>
+			<phrase id="1">
+				<text>actor_help_wounded_1</text>
+				<next>11</next>
+				<next>12</next>
+				<next>13</next>
+				<next>14</next>
+			</phrase>
+		</phrase_list>
+	</dialog>
+	<dialog id="actor_break_dialog" priority="-5">
+		<precondition>dialogs.allow_break_dialog</precondition>
+		<phrase_list>
+			<phrase id="0">
+				<text>actor_break_dialog_0</text>
+				<action>dialogs.break_dialog</action>
+			</phrase>
+		</phrase_list>
+	</dialog>
+</game_dialogs>

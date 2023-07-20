@@ -1,0 +1,56 @@
+class "op21_options" (CUIWindow)
+ 
+function op21_options:__init() super()
+end
+
+function op21_options:__finalize()
+end
+	
+function op21_options:InitControls(x, y, xml, handler)
+	self:Init(x,y, 738, 416)
+	self:SetAutoDelete(true)
+	self.bk = xml:InitFrame("op21_options:frame_op21", self)
+	
+	self.scroll_v	= xml:InitScrollView		("op21_options:scroll_v", self)
+	
+	local _st = xml:InitStatic("op21_options:templ_item",self.scroll_v)
+	xml:InitLabel		("op21_options:cap_ui_group",_st)
+	
+	local _st = xml:InitStatic("op21_options:templ_item",self.scroll_v)
+	xml:InitCheck("op21_options:check_cap_ui_show_focused",_st)
+	
+	local _st = xml:InitStatic("op21_options:templ_item",self.scroll_v)
+	xml:InitCheck("op21_options:check_cap_ui_show_selected",_st)
+	
+	local _st = xml:InitStatic("op21_options:templ_item",self.scroll_v)
+	xml:InitCheck("op21_options:check_cap_ui_show_extdesc",_st)
+	
+	local _st = xml:InitStatic("op21_options:templ_item",self.scroll_v)
+	xml:InitCheck("op21_options:check_cap_ui_show_conditions",_st)
+
+	local _st = xml:InitStatic("op21_options:templ_item",self.scroll_v)
+	xml:InitCheck("op21_options:check_cap_ui_show_trade_sb",_st)
+	
+	handler.btn_game = xml:Init3tButton("op21_options:btn_game", self)
+	handler:Register(handler.btn_game, "btn_game")
+
+	handler.btn_amk = xml:Init3tButton("op21_options:btn_amk", self)
+	handler.btn_amk:Enable(amk.check_game())
+	handler:Register(handler.btn_amk, "btn_amk")
+
+	handler.btn_god = xml:Init3tButton("op21_options:btn_god", self)
+	handler.btn_god:Enable(amk.check_game())
+	handler:Register(handler.btn_god, "btn_god")
+end
+
+function op21_options:UpdateControls()
+	local optManager = COptionsManager()
+
+	optManager:SetCurrentValues("mm_opt_ui_op21")
+	optManager:SaveBackupValues("mm_opt_ui_op21")
+end
+
+function op21_options:SaveOptions()
+	local optManager = COptionsManager()
+	optManager:SaveValues("mm_opt_ui_op21")
+end

@@ -1,0 +1,28 @@
+;rostok factory door to lab
+
+[logic]
+active = ph_gate@locked
+
+[ph_gate@locked]
+state = closed
+locking = hard
+on_use = ph_gate@lock_break
+breakable = false
+
+[ph_gate@lock_break]
+state = closed
+locking = soft
+on_use = ph_gate@open
+breakable = true
+
+[ph_gate@closed]
+state = closed
+locking = none
+on_use = ph_gate@open
+breakable = true
+
+[ph_gate@open]
+state = open
+locking = none
+on_use = ph_gate@closed
+breakable = true

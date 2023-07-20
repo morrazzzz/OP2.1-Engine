@@ -1,0 +1,607 @@
+; Артефакты, которые при активизации создают аномальные зоны
+[artefact_spawn_zones]
+; Формат: {секция_артефакта} = {секция_зоны},Radius,Power
+caps_mosquito_bald	= caps_mosquito_bald_average, 		2.0, 	1.0
+caps_gravi			= caps_gravi_zone_average,	  		3.0, 	1.0
+caps_mincer			= caps_mincer_average,		  		2.0, 	1.0
+caps_electra		= caps_witches_galantine_average, 	3.0, 	1.0
+caps_zharka			= caps_zharka_static_average,	  	2.0, 	1.0
+caps_ameba			= caps_buzz_average, 		  		2.0, 	1.0
+caps_ice		    = caps_ice_average, 		  		2.0, 	1.0
+
+mutant_dog_cocoon			= zone_dog,				2.0,	0.0
+mutant_krovosos_cocoon		= zone_krovosos,	    2.0,	0.0
+mutant_burer_cocoon			= zone_burer,		    2.0,	0.0
+mutant_zombie_cocoon		= zone_zombie,		    2.0,	0.0
+mutant_snork_cocoon			= zone_snork,		    2.0,	0.0
+mutant_flesh_cocoon			= zone_flesh,		    2.0,	2.0
+mutant_gigant_cocoon		= zone_gigant,		    2.0,	0.0
+mutant_poltergeist_cocoon	= zone_poltergeist,   	2.0,	0.0
+mutant_psevdodog_cocoon		= zone_psevdodog,	    2.0,	0.0
+mutant_controller_cocoon	= zone_controller,	    2.0,	0.0
+mutant_chimera_cocoon		= zone_chimera,			2.0,	0.0
+mutant_boar_cocoon			= zone_boar,		    2.0,	0.0
+mutant_tushkano_cocoon		= zone_tushkano,	    2.0,	0.0
+mutant_psydog_cocoon		= zone_psydog,		    2.0,	0.0
+mutant_cat_cocoon			= zone_cat,				2.0,	0.0
+;emb
+mutant_rat_cocoon			= zone_rat,				2.0,	0.0
+mutant_tarakan_cocoon		= zone_tarakan,			2.0,	0.0
+mutant_tarakan2_cocoon		= zone_tarakan2,		2.0,	0.0
+mutant_bloodsucker_cocoon	= zone_bloodsucker,		2.0,	0.0
+mutant_bloodsucker2_cocoon	= zone_bloodsucker2,	2.0,	0.0
+mutant_deathclaw_cocoon		= zone_deathclaw,		2.0,	0.0
+mutant_fracture_cocoon		= zone_fracture,		2.0,	0.0
+mutant_bibliotekar_cocoon	= zone_bibliotekar,		2.0,	0.0
+mutant_mono_cocoon			= zone_mono,			2.0,	0.0
+mutant_tm_cocoon			= zone_tm,				2.0,	0.0
+mutant_babka_cocoon			= zone_babka,			2.0,	0.0
+mutant_ghost_cocoon			= zone_ghost,			2.0,	0.0
+mutant_kachok_cocoon		= zone_kachok,			2.0,	0.0
+mutant_big_cocoon			= zone_big,				2.0,	0.0
+mutant_jumper_cocoon		= zone_jumper,			2.0,	0.0
+mutant_electro_cocoon		= zone_electro,			2.0,	0.0
+mutant_x_ray_cocoon			= zone_x_ray,			2.0,	0.0
+mutant_wolf_cocoon			= zone_wolf,			2.0,	0.0
+
+mutant_lesnik_cocoon		= zone_lesnik,			2.0,	0.0
+
+; Активационные последовательности
+; Формат:				time(sec),	sound_name,	   			light_R,G,B, light_range, particle_name,						af_animation_name
+[embrion_activation]
+starting				=	2.0, "", 	  	           		0.0, 0.0, 0.0,  0.0, 	  "",										"idle"
+flying					=	0.0, "", 	  	           		0.0, 0.0, 0.0,  0.0, 	  "",										""
+idle_before_spawning	=	0.0, "", 	  	           		0.0, 0.0, 0.0,  0.0, 	  "",										""
+spawning				=	1.0, anomaly\anomaly_gravy_hit1,0.0, 0.0, 0.0,  0.0, 	  "", 										""
+
+[af_activation_gravi]
+starting				=	5.0, anomaly\gravi_idle00,		0.5, 1.0, 1.5, 	5.0,	  "anomaly2\artefact_gravi_blast_start",	"idle"
+flying					=	2.0, anomaly\gravi_idle01,		0.8, 1.0, 1.2, 	3.0,	  "anomaly2\artefact\artefact_gravi",		"idle"
+idle_before_spawning	=	5.0, anomaly\gravi_blowout5,	1.0, 1.0, 1,    0.0,	  "anomaly2\artefact_gravi_blast_finished",	"idle"
+spawning				=	1,   anomaly\gravity_entrance,	0.9, 1.1, 1.01, 0.0,	  "",										"idle"
+
+[af_activation_bold]
+starting				=	5.0, anomaly\gravi_idle00,		0.8, 1.5, 0.9, 	5.0,	  "anomaly2\artefact_bold_blast_start",		"idle"
+flying					=	2.0, anomaly\gravi_idle01,		0.8, 0.9, 0.8, 	2.0,	  "anomaly2\artefact\artefact_zharka",		"idle"
+idle_before_spawning	=	2.0, anomaly\gravity_entrance,	1.0, 1.1, 1.0, 	0.0,	  "anomaly2\artefact_bold_blast_finished",	"idle"				
+spawning				=	0.5, anomaly\pux_blast,  		1.0, 1.0, 0.5, 	5.0,	  "anomaly2\gravi_anomaly_00",				"idle"
+
+[af_activation_mincer]
+starting				=	5.0, anomaly\gravi_idle00,		0.5, 1.0, 1.5,  5.0,	  "anomaly2\artefact_gravi_blast_start",	"idle"
+flying					=	2.0, anomaly\gravi_idle01,		0.8, 1.0, 1.2,  3.0,	  "anomaly2\artefact\artefact_mincer",		"idle"
+idle_before_spawning	=	5.0, anomaly\gravi_blowout2,	1.0, 1.0, 1.0,  0.0,	  "anomaly2\artefact_gravi_blast_finished",	"idle"				
+spawning				=	0.0, "",						1.0, 1.0, 0.5,  0.0,	  "",										"idle"
+
+[af_activation_electra]
+starting				= 	5.0, anomaly\bfuzz_blowout, 	0.8, 1.0, 1.5,  5.0, 	  "anomaly2\artefact_electra_blast_start",  "idle"
+flying					= 	2.0, anomaly\electra_idle1, 	1.0, 1.0, 1.0,  5.0, 	  "anomaly2\artefact\artefact_electra", 	"idle"
+idle_before_spawning	= 	0.0, "", 			  			1.0, 1.0, 2.5,  0,   	  "", 					   					"idle"				
+spawning				= 	2,   "anomaly\pux_blast", 	  	1.0, 1.0, 1.5,  5.0, 	  "anomaly2\artefact_electra_blast_finished","idle"
+
+[af_activation_zharka]
+starting				=	5.0, anomaly\gravi_idle00, 	  	1.8, 0.5, 0.5,  5.0, 	  "anomaly2\group_items\gravi_vivert_04",   "idle"
+flying					=	2.0, anomaly\gravi_idle01, 	  	0.8, 0.9, 0.8,  2.0, 	  "monsters\polter_idle_00", 	   	   		"idle"
+idle_before_spawning	=	2.0, anomaly\gravity_entrance, 	1.0, 1.1, 1.0,  0.0, 	  "monsters\group\polter_spark_00",	   		"idle"				
+spawning				=	2.5, "", 	  		  			1.0, 1.0, 0.5,  5.0, 	  "monsters\polter_yadro", 		   			"idle"
+
+[af_activation_ameba]
+starting				=	5.0, anomaly\gravi_idle00, 	  	0.8, 1.5, 0.9,  5.0, 	  "anomaly2\artefact_bold_blast_start", 	"idle"
+flying					=	2.0, anomaly\gravi_idle01, 	  	0.8, 0.9, 0.8,  2.0, 	  "anomaly2\artefact\artefact_zharka", 	   	"idle"
+idle_before_spawning	=	2.0, anomaly\gravity_entrance, 	1.0, 1.1, 1.0,  0.0, 	  "anomaly2\artefact_bold_blast_finished",  "idle"		
+spawning				=	0.5, anomaly\pux_blast, 	  	1.0, 1.0, 0.5,  5.0, 	  "anomaly2\gravi_anomaly_00", 		   		"idle"
+
+[zone_dog]:anomaly
+class			= ZS_MBALD
+script_binding	     = embrion_binder.init
+hit_impulse_scale	          = 0.0
+effective_radius	          = 0.1 ;размер радиуса в процентах от оригинального, где действует зона
+actor_blowout_radius_percent	= 0.0
+ef_anomaly_type			= 1
+ef_weapon_type			     = 13
+
+sound			= anomaly\anomaly_body_tear_1
+
+hit_type			= telepatic
+
+min_start_power		= 0.10
+max_start_power		= 0.15
+
+awaking_time		     = 100
+blowout_time		     = 150	
+accamulate_time		= 200
+
+idle_particles			= anomaly2\body_tear_01
+
+blowout_light       = off
+
+disable_time		= 5000		;время игнорирования неживого объекта в зоне (-1 если не нужно)
+disable_time_small	= 5000		;время игнорирования маленького неживого объекта в зоне (-1 если не нужно)
+disable_idle_time	= 10		;время отключения idle партиклов
+
+ignore_nonalive		= true
+ignore_small		= true
+ignore_artefacts	= true
+
+blowout_light		= off
+idle_light			= off
+visible_by_detector = off
+blowout_wind		= off
+
+[zone_krovosos]:zone_dog
+[zone_burer]:zone_dog
+[zone_zombie]:zone_dog
+[zone_snork]:zone_dog
+[zone_flesh]:zone_dog
+[zone_gigant]:zone_dog
+[zone_poltergeist]:zone_dog
+[zone_psevdodog]:zone_dog
+[zone_controller]:zone_dog
+[zone_chimera]:zone_dog
+[zone_boar]:zone_dog
+[zone_tushkano]:zone_dog
+[zone_psydog]:zone_dog
+[zone_cat]:zone_dog
+;emb
+[zone_rat]:zone_dog
+[zone_tarakan]:zone_dog
+[zone_tarakan2]:zone_dog
+[zone_bloodsucker]:zone_dog
+[zone_bloodsucker2]:zone_dog
+[zone_deathclaw]:zone_dog
+[zone_fracture]:zone_dog
+[zone_bibliotekar]:zone_dog
+[zone_mono]:zone_dog
+[zone_tm]:zone_dog
+[zone_babka]:zone_dog
+[zone_ghost]:zone_dog
+[zone_kachok]:zone_dog
+[zone_big]:zone_dog
+[zone_jumper]:zone_dog
+[zone_electro]:zone_dog
+[zone_x_ray]:zone_dog
+[zone_wolf]:zone_dog
+
+[zone_lesnik]:zone_dog
+
+; Эмбрионы монстров
+[cocoon]:ARTEFACT
+cocoon					= true
+slot					= 1
+belt					= false
+inv_grid_width      	= 1
+inv_grid_height     	= 1
+jump_height				= .5
+particles		    	= alwen\artefact_kaktus
+lights_enabled 			= true
+trail_light_color 		= 0.9, 0.7, 0.5
+trail_light_range 		= 1.0
+artefact_activation_seq	= embrion_activation
+
+[cocoon_hud]
+orientation            	= 0, 0, 0
+position               	= 0, 0, 0
+anim_idle				= idle
+anim_idle_sprint		= idle_sprint
+anim_hide				= holster
+anim_show				= draw
+anim_activate			= activate
+
+; Эмбрионы монстров
+[mutant_dog_cocoon]:cocoon
+visual                = physics\anomaly\cocoo8.ogf
+inv_name              = dog_cocoon
+description           = dog_cocoon_description
+inv_weight            = 0.3
+inv_grid_x            = 38
+inv_grid_y            = 41
+cost                  = 6300
+hud			          = mutant_dog_cocoon_hud
+[mutant_dog_cocoon_hud]:cocoon_hud
+visual             	  = aktiv_embrions\mutant_dog_hud.ogf
+
+[mutant_krovosos_cocoon]:cocoon
+visual                = physics\anomaly\cocoo6.ogf
+inv_name              = krovosos_cocoon
+description           = krovosos_cocoon_description
+inv_weight            = 0.4
+inv_grid_x            = 35
+inv_grid_y            = 41
+cost                  = 15000
+hud			          = mutant_krovosos_cocoon_hud
+[mutant_krovosos_cocoon_hud]:cocoon_hud
+visual                = aktiv_embrions\mutant_krovosos_hud.ogf
+
+[mutant_burer_cocoon]:cocoon
+visual                = physics\anomaly\cocoo6.ogf
+inv_name              = burer_cocoon
+description           = burer_cocoon_description
+inv_weight            = 0.35
+inv_grid_x            = 45
+inv_grid_y            = 41
+cost                  = 15000
+hud			          = mutant_burer_cocoon_hud
+[mutant_burer_cocoon_hud]:cocoon_hud
+visual                = aktiv_embrions\mutant_burer_hud.ogf
+
+[mutant_zombie_cocoon]:cocoon
+visual                = physics\anomaly\cocoo6.ogf
+inv_name              = zombie_cocoon
+description           = zombie_cocoon_description
+inv_weight            = 0.4
+inv_grid_x            = 32
+inv_grid_y            = 41
+cost                  = 10000
+hud			          = mutant_zombie_cocoon_hud
+[mutant_zombie_cocoon_hud]:cocoon_hud
+visual                = aktiv_embrions\mutant_zombie_hud.ogf
+
+[mutant_snork_cocoon]:cocoon
+visual                = physics\anomaly\cocoo6.ogf
+inv_name              = snork_cocoon
+description           = snork_cocoon_description
+inv_weight            = 0.4
+inv_grid_x            = 36
+inv_grid_y            = 41
+cost                  = 8000
+hud			          = mutant_snork_cocoon_hud
+[mutant_snork_cocoon_hud]:cocoon_hud
+visual                = aktiv_embrions\mutant_snork_hud.ogf
+
+[mutant_flesh_cocoon]:cocoon
+visual                = physics\anomaly\cocoo5.ogf
+inv_name              = flesh_cocoon
+description           = flesh_cocoon_description
+inv_weight            = 0.25
+inv_grid_x            = 42
+inv_grid_y            = 41
+cost                  = 10000
+hud			     	  = mutant_flesh_cocoon_hud
+[mutant_flesh_cocoon_hud]:cocoon_hud
+visual                = aktiv_embrions\mutant_flesh_hud.ogf
+
+[mutant_gigant_cocoon]:cocoon
+visual                = physics\anomaly\cocoo7.ogf
+inv_name              = gigant_cocoon
+description           = gigant_cocoon_description
+inv_weight            = 0.8
+inv_grid_x            = 40
+inv_grid_y            = 41
+cost                  = 18000
+hud			          = mutant_gigant_cocoon_hud
+[mutant_gigant_cocoon_hud]:cocoon_hud
+visual                = aktiv_embrions\mutant_gigant_hud.ogf
+
+[mutant_poltergeist_cocoon]:cocoon
+visual                = physics\anomaly\cocoo7.ogf
+inv_name              = poltergeist_cocoon
+description           = poltergeist_cocoon_description
+inv_weight            = 0.2
+inv_grid_x            = 44
+inv_grid_y            = 41
+cost                  = 9000
+hud			          = mutant_poltergeist_cocoon_hud
+[mutant_poltergeist_cocoon_hud]:cocoon_hud
+visual                = aktiv_embrions\mutant_poltergeist_hud.ogf
+
+[mutant_psevdodog_cocoon]:cocoon
+visual                = physics\anomaly\cocoo2.ogf
+inv_name              = psevdodog_cocoon
+description           = psevdodog_cocoon_description
+inv_weight            = 0.25
+inv_grid_x            = 39
+inv_grid_y            = 41
+cost                  = 9000
+hud			          = mutant_psevdodog_cocoon_hud
+[mutant_psevdodog_cocoon_hud]:cocoon_hud
+visual                = aktiv_embrions\mutant_psevdodog_hud.ogf
+
+[mutant_controller_cocoon]:cocoon
+visual                = physics\anomaly\cocoo6.ogf
+inv_name              = controller_cocoon
+description           = controller_cocoon_description
+inv_weight            = 0.4
+inv_grid_x            = 33
+inv_grid_y            = 41
+cost                  = 20000
+hud			          = mutant_controller_cocoon_hud
+[mutant_controller_cocoon_hud]:cocoon_hud
+visual                = aktiv_embrions\mutant_controller_hud.ogf
+
+[mutant_chimera_cocoon]:cocoon
+visual                = physics\anomaly\cocoo3.ogf
+inv_name              = chimera_cocoon
+description           = chimera_cocoon_description
+inv_weight            = 0.45
+inv_grid_x            = 41
+inv_grid_y            = 41
+cost                  = 18500
+hud			      	  = mutant_chimera_cocoon_hud
+[mutant_chimera_cocoon_hud]:cocoon_hud
+visual                = aktiv_embrions\mutant_chimera_hud.ogf
+
+[mutant_boar_cocoon]:cocoon
+visual                = physics\anomaly\cocoo2.ogf
+inv_name              = boar_cocoon
+description           = boar_cocoon_description
+inv_weight            = 0.45
+inv_grid_x            = 31
+inv_grid_y            = 41
+cost                  = 7000
+hud			          = mutant_boar_cocoon_hud
+[mutant_boar_cocoon_hud]:cocoon_hud
+visual                = aktiv_embrions\mutant_boar_hud.ogf
+
+[mutant_tushkano_cocoon]:cocoon
+visual                = physics\anomaly\cocoo7.ogf
+inv_name              = tushkano_cocoon
+description           = tushkano_cocoon_description
+inv_weight            = 0.1
+inv_grid_x            = 37
+inv_grid_y            = 41
+cost                  = 7000
+hud			          = mutant_tushkano_cocoon_hud
+[mutant_tushkano_cocoon_hud]:cocoon_hud
+visual                = aktiv_embrions\mutant_tushkano_hud.ogf
+
+[mutant_psydog_cocoon]:cocoon
+visual                = physics\anomaly\cocoo2.ogf
+inv_name              = psydog_cocoon
+description           = psydog_cocoon_description
+inv_weight            = 0.3
+inv_grid_x            = 43
+inv_grid_y            = 41
+cost                  = 11000
+hud			          = mutant_psydog_cocoon_hud
+[mutant_psydog_cocoon_hud]:cocoon_hud
+visual                = aktiv_embrions\mutant_krovosos_hud.ogf
+
+[mutant_cat_cocoon]:cocoon
+visual                = physics\anomaly\cocoo8.ogf
+inv_name              = cat_cocoon
+description           = cat_cocoon_description
+inv_weight            = 0.2
+inv_grid_x            = 34
+inv_grid_y            = 41
+cost                  = 7500
+hud			          = mutant_cat_cocoon_hud
+[mutant_cat_cocoon_hud]:cocoon_hud
+visual             	  = aktiv_embrions\mutant_snork_hud.ogf
+
+; emb
+[mutant_rat_cocoon]:mutant_cat_cocoon
+visual             = physics\anomaly\cocoo1.ogf
+inv_name           = rat_cocoon
+description        = emb_cocoon_description
+inv_weight         = 0.1
+inv_grid_x         = 76
+inv_grid_y         = 51
+cost               = 6000
+[mutant_tarakan_cocoon]:mutant_rat_cocoon
+visual             = physics\anomaly\cocoo2.ogf
+inv_name           = tarakan_cocoon
+inv_weight         = 0.1
+inv_grid_x         = 76
+inv_grid_y         = 50
+cost               = 7500
+[mutant_tarakan2_cocoon]:mutant_rat_cocoon
+visual             = physics\anomaly\cocoo3.ogf
+inv_name           = tarakan2_cocoon
+inv_weight         = 0.15
+inv_grid_x         = 77
+inv_grid_y         = 50
+cost               = 8500
+[mutant_bloodsucker_cocoon]:mutant_rat_cocoon
+visual             = physics\anomaly\cocoo4.ogf
+inv_name           = bloodsucker_cocoon
+inv_weight         = 0.3
+inv_grid_x         = 79
+inv_grid_y         = 50
+cost               = 10000
+[mutant_bloodsucker2_cocoon]:mutant_rat_cocoon
+visual             = physics\anomaly\cocoo5.ogf
+inv_name           = bloodsucker2_cocoon
+inv_weight         = 0.3
+inv_grid_x         = 79
+inv_grid_y         = 48
+cost               = 12000
+[mutant_deathclaw_cocoon]:mutant_rat_cocoon
+visual             = physics\anomaly\cocoo6.ogf
+inv_name           = deathclaw_cocoon
+inv_weight         = 0.4
+inv_grid_x         = 76
+inv_grid_y         = 49
+cost               = 22000
+[mutant_fracture_cocoon]:mutant_rat_cocoon
+visual             = physics\anomaly\cocoo7.ogf
+inv_name           = fracture_cocoon
+inv_weight         = 0.2
+inv_grid_x         = 80
+inv_grid_y         = 50
+cost               = 8000
+[mutant_bibliotekar_cocoon]:mutant_rat_cocoon
+visual             = physics\anomaly\cocoo8.ogf
+inv_name           = bibliotekar_cocoon
+inv_weight         = 0.5
+inv_grid_x         = 78
+inv_grid_y         = 50
+cost               = 13500
+[mutant_mono_cocoon]:mutant_rat_cocoon
+visual             = physics\anomaly\cocoo9.ogf
+inv_name           = mono_cocoon
+inv_weight         = 0.4
+inv_grid_x         = 77
+inv_grid_y         = 48
+cost               = 9000
+[mutant_tm_cocoon]:mutant_rat_cocoon
+visual             = physics\anomaly\cocoo1.ogf
+inv_name           = tm_cocoon
+inv_weight         = 0.4
+inv_grid_x         = 78
+inv_grid_y         = 48
+cost               = 26000
+[mutant_babka_cocoon]:mutant_rat_cocoon
+visual             = physics\anomaly\cocoo2.ogf
+inv_name           = babka_cocoon
+inv_weight         = 0.2
+inv_grid_x         = 78
+inv_grid_y         = 51
+cost               = 8500
+[mutant_ghost_cocoon]:mutant_rat_cocoon
+visual             = physics\anomaly\cocoo3.ogf
+inv_name           = ghost_cocoon
+inv_weight         = 0.2
+inv_grid_x         = 79
+inv_grid_y         = 49
+cost               = 9000
+[mutant_kachok_cocoon]:mutant_rat_cocoon
+visual             = physics\anomaly\cocoo4.ogf
+inv_name           = kachok_cocoon
+inv_weight         = 0.6
+inv_grid_x         = 78
+inv_grid_y         = 49
+cost               = 15000
+[mutant_big_cocoon]:mutant_rat_cocoon
+visual             = physics\anomaly\cocoo5.ogf
+inv_name           = big_cocoon
+inv_weight         = 0.7
+inv_grid_x         = 77
+inv_grid_y         = 49
+cost               = 18000
+[mutant_jumper_cocoon]:mutant_rat_cocoon
+visual             = physics\anomaly\cocoo6.ogf
+inv_name           = jumper_cocoon
+inv_weight         = 0.5
+inv_grid_x         = 80
+inv_grid_y         = 49
+cost               = 21000
+[mutant_electro_cocoon]:mutant_rat_cocoon
+visual             = physics\anomaly\cocoo7.ogf
+inv_name           = electro_cocoon
+inv_weight         = 0.3
+inv_grid_x         = 80
+inv_grid_y         = 51
+cost               = 14500
+[mutant_x_ray_cocoon]:mutant_rat_cocoon
+visual             = physics\anomaly\cocoo8.ogf
+inv_name           = x_ray_cocoon
+inv_weight         = 0.3
+inv_grid_x         = 79
+inv_grid_y         = 51
+cost               = 18000
+[mutant_wolf_cocoon]:mutant_rat_cocoon
+visual             = physics\anomaly\cocoo9.ogf
+inv_name           = wolf_cocoon
+inv_weight         = 0.3
+inv_grid_x         = 80
+inv_grid_y         = 48
+cost               = 28000
+cheat_item 		   = true
+
+[mutant_lesnik_cocoon]:mutant_rat_cocoon
+visual             = physics\anomaly\cocoo9.ogf
+inv_name           = lesnik_cocoon
+inv_weight         = 0.7
+inv_grid_x         = 74
+inv_grid_y         = 51
+cost               = 13000
+cheat_item 		   = true
+
+; Капсулы аномалий
+[caps_anom]:ARTEFACT
+caps_anom				= true
+inv_weight				= 1
+slot					= 1
+belt					= false
+lights_enabled 			= true
+
+; Капсулы аномалий
+[caps_mosquito_bald]:caps_anom
+visual					= physics\anomaly\capsule_bald.ogf
+description				= enc_zone_caps_mosquito_bald
+inv_name				= st_caps_mosquito_bald
+inv_grid_x				= 40
+inv_grid_y				= 14
+cost	     			= 9000
+jump_height				= .5
+particles				= anomaly2\artefact\artefact_gravi
+trail_light_color 		= 0.9, 0.7, 0.5
+trail_light_range 		= 1.0
+artefact_activation_seq	= af_activation_bold
+
+[caps_gravi]:caps_anom
+visual					= physics\anomaly\capsule_gravi.ogf  
+description				= enc_zone_artifact_caps_gravi
+inv_name				= st_caps_gravi
+inv_grid_x				= 40
+inv_grid_y				= 15
+cost					= 8500
+jump_height				= .3
+particles				= anomaly2\artefact\artefact_gravi
+trail_light_color 		= 0.6, 0.7, 0.5
+trail_light_range 		= 0.5
+artefact_activation_seq	= af_activation_gravi
+
+[caps_mincer]:caps_anom
+visual					= physics\anomaly\capsule_mincer.ogf
+description				= enc_zone_artifact_caps_mincer
+inv_name				= st_caps_mincer
+inv_grid_x				= 40
+inv_grid_y				= 17
+cost					= 9200
+jump_height				= .1
+particles				= anomaly2\artefact\artefact_mincer
+trail_light_color 		= 0.9, 0.7, 0.5
+trail_light_range 		= 1.0
+artefact_activation_seq	= af_activation_mincer
+
+[caps_electra]:caps_anom
+visual					= physics\anomaly\capsule_electra.ogf
+description				= enc_zone_artifact_caps_electra
+inv_name				= st_caps_electra
+inv_grid_x				= 40
+inv_grid_y				= 18
+cost					= 10000
+jump_height				= .1
+particles				= anomaly2\artefact\artefact_electra
+trail_light_color 		= 0.6, 0.7, 0.9
+trail_light_range 		= 1.0
+artefact_activation_seq	= af_activation_electra
+
+[caps_zharka]:caps_anom
+visual					= physics\anomaly\capsule_zharka.ogf
+description				= enc_zone_artifact_caps_zharka
+inv_name				= st_caps_zharka
+inv_grid_x				= 40
+inv_grid_y				= 19
+cost					= 8700
+particles				= anomaly2\artefact\artefact_zharka
+trail_light_color 		= 0.9, 0.5, 0.5
+trail_light_range 		= 3.0
+artefact_activation_seq	= af_activation_zharka
+
+[caps_ameba]:caps_anom
+visual					= physics\anomaly\capsule_ameba.ogf 
+description				= enc_zone_artifact_caps_ameba
+inv_name				= st_caps_ameba
+inv_grid_x				= 40
+inv_grid_y				= 16
+cost					= 8000
+jump_height				= .1
+particles				= anomaly2\artefact\artefact_ameba
+trail_light_color 		= 0.6, 0.9, 0.6
+trail_light_range 		= 1
+artefact_activation_seq	= af_activation_ameba
+
+[caps_ice]:caps_anom
+visual					= physics\anomaly\capsule_ice.ogf
+description				= enc_zone_artifact_caps_ice
+inv_name		     	= st_caps_ice
+inv_grid_x				= 75
+inv_grid_y				= 69
+cost					= 10000
+jump_height				= .1
+particles				= anomaly2\artefact\artefact_electra
+trail_light_color 		= 0.6, 0.7, 0.9
+trail_light_range 		= 1.0
+artefact_activation_seq	= af_activation_electra
+

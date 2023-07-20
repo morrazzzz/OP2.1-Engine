@@ -1,0 +1,14 @@
+[logic]
+active = sr_idle
+
+[sr_idle]
+on_actor_inside = sr_sound1 %=set_sidorovich_animation%
+
+[sr_sound1]
+snd = characters_voice\scenario\aes\aes2\aes2_trader_ask
+position = aes_sidorovich_snd
+on_signal = sound_end | %+stealth_can_blow_sidor%
+on_timer = 4000 | %+aes2_teleport_trader% sr_idle2
+
+[sr_idle2]
+on_timer = 3000 | {-stealth_blow_sidor_have} %-stealth_can_blow_sidor -aes2_teleport_trader% sr_idle, nil

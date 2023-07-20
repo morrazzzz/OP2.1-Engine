@@ -1,0 +1,15 @@
+<ui_texture>
+    <file_name>ui\ui_arhara_unique</file_name>
+
+     <texture id="ui_arhara_u_likvidator" x="0" y="1942" width="165" height="108" />
+        <texture id="ui_arhara_u_kontrik" x="0" y="1834" width="165" height="108" />
+        <texture id="ui_arhara_u_obmorok" x="0" y="1728" width="165" height="108" />
+<texture id="ui_arhara_dokplen_nachalnik" x="0" y="1620" width="165" height="108" />
+      <texture id="ui_arhara_lday_sniper" x="0" y="1512" width="165" height="108" />
+      <texture id="ui_arhara_vitek_voron" x="0" y="1404" width="165" height="108" />
+      <texture id="ui_arhara_osvedomitel" x="0" y="1295" width="165" height="108" />
+        <texture id="ui_arhara_tumenskiy" x="0" y="1187" width="165" height="108" />
+       <texture id="ui_arhara_ek_z_zhelt" x="0" y="1078" width="165" height="108" />
+       <texture id="ui_arhara_ek_z_zelen" x="0" y="971" width="165" height="108" />		
+
+</ui_texture>

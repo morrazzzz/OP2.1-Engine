@@ -1,0 +1,88 @@
+-- Приделываем к окну КПК разное своё
+local wnd = nil
+
+function on_info(info_id)
+	if info_id == "ui_pda" then
+		if not wnd then	
+			wnd = PDAAdd(level.main_input_receiver())
+		end
+	elseif info_id == "ui_pda_hide" then
+		if wnd then
+			wnd:DetachWnd()
+			wnd = nil
+		end
+	end
+end
+
+class "PDAAdd" (CUIScriptWnd)
+
+function PDAAdd:__init(owner) super()
+	self.owner = owner
+	self:Init(0, 0, 1024, 768)
+	self:InitControls()
+end
+
+function PDAAdd:InitControls()
+	local xml = CScriptXmlInit()
+	xml:ParseFile("ui_pda_add.xml")
+	
+	if has_info("pda_dont_work") then
+		self.owner:Show(false)
+		
+		xml:InitStatic("bsod_back", self)
+	--	xml:InitStatic("bsod", self)
+	
+		local k = (1024/768) / (screen.width/screen.height)
+		local w = 1920
+		local h = (w*696/974) *k
+		self.bsod = CUIStatic()
+		self.bsod:Init(25, 32, 974, 696)
+		self.bsod:SetAutoDelete(true)
+		self.bsod:InitTexture("ui\\ui_bsod")
+		self.bsod:SetOriginalRect(0, 0, w, h)
+		self.bsod:SetStretchTexture(true)
+		self:AttachChild(self.bsod)
+		
+		self.OnQuit = function()
+			self:GetHolder():start_stop_menu(self, true)
+			level.start_stop_menu(self.owner, true)
+		end
+		self:Register(xml:InitButton("btn_off", self), "button_off")
+		self:AddCallback("button_off", ui_events.BUTTON_CLICKED, self.OnQuit, self)
+			
+		level.start_stop_menu(self, true)
+	else
+		self.stat = CUIStatic()
+		self.stat:Init(0, 0, 1024, 768)
+		self.owner:AttachChild(self.stat)
+		self.stat:Show(true)
+		
+		local btn = xml:InitButton("btn_off", self.stat)
+		self:Register(btn, "button_off")
+		self:AddCallback("button_off", ui_events.BUTTON_CLICKED, function()
+			level.start_stop_menu(level.main_input_receiver(), true)
+		end, self)
+	end
+end
+
+function PDAAdd:DetachWnd()
+	if self.stat then
+		self.owner:DetachChild(self.stat)
+	end
+end
+
+function PDAAdd:OnKeyboard(dik, action)
+	CUIScriptWnd.OnKeyboard(self, dik, action)
+	if self.stat then return true end
+	if action == ui_events.WINDOW_KEY_PRESSED then
+		local bind = dik_to_bind(dik)
+		if bind == key_bindings.kQUIT	-- 47
+			or bind == 53				-- key_bindings.kACTIVE_JOBS
+			or bind == 54				-- key_bindings.kMAP
+			or bind == 55				-- key_bindings.kCONTACTS
+		then
+			self.OnQuit()
+		end
+	end
+	return true
+end

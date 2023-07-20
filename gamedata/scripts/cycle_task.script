@@ -1,0 +1,1275 @@
+-- Циклические задания
+
+class "CCycleTask"
+
+function CCycleTask:__init()
+	--local tmr = profile_timer() tmr:start()
+	--' На конструкторе вычитывать из LTX только необходимые общие данные для взаимодействия между заданиями.
+	--' Все остальные параметры вычитывать на лету по необходимости, чтобы не засорять память.
+	self.task_ini = ini_file("misc\\cycle_task.ltx")
+	self.ini = config
+	self.task_phrase_id = 100		-- Для генератора уникальных phrase_id
+	self.task_time = 60*60*24*14	-- (с) время выполнения всех заданий, 2 недели
+	self.idle_time = 24*5			-- (игровые часы) время между выдачами задания повторно, 5 игровых дней
+	self.status = {normal = 0, selected = 1, completed = 2, refused = 3, failed = 4, rewarded = 5, once = 6}	-- Статусы заданий
+	self.type = {eliminate_lager = 0, defend_lager = 1, kill_stalker = 2, monster_part = 3, artefact = 4, find_item = 5, chain = 6}	-- Типы заданий
+	self.type_name = {}
+	for k,v in pairs(self.type) do self.type_name[v] = k end
+	self.community = {"stalker", "ecolog", "dolg", "freedom", "stranger", "trader", "green", "nebo"}	-- Дружественные группировки
+	self.random = {["0"] = "Редкий ствол", ["1"] = "Обычные патроны", ["2"] = "Неплохие патроны", ["3"] = "Крутые патроны", ["4"] = "Редкие патроны", ["5"] = "Граната или подствол", ["6"] = "Аномальная граната", ["7"] = "Эмбрион монстра"}	-- Рандомные наборы
+	self.trader_names = {[3] = "Сидорович", [9511] = "Василий"}	-- Имена для класса trader
+
+	--' phrase_id в диалогах состоит из task_id и этого суффикса
+	self.init_phrase_id = "0"
+	self.desc_phrase_id = "1"
+	self.yes_phrase_id = "2"
+	self.no_phrase_id = "3"
+	self.completed_phrase_id = "4"
+
+	local task_desc			-- Текущее обрабатываемое в данный момент задание
+	local task_id				-- id текущего обрабатываемого в данный момент задания
+	local task_vendor			-- Вендор текущего обрабатываемого в данный момент задания либо его story_id
+	local vendor_string
+
+	--' Начальная установка
+	self.task_info = {}
+
+	--' Дополнительные ассоциативные таблицы для облегчения поиска
+	self.task_id_by_vendor = {}				-- По вендору
+	self.task_id_by_type_kill_stalker = {}	-- Задания "Убить сталкера"
+	self.active_task_by_type = {}				-- Текущие активные задания
+
+	--' Перебираем вендоров
+	for v=0,255 do
+		vendor_string = string.format("%03d", v)
+		if not self.task_ini:section_exist(vendor_string.."000") then break end	-- Вендоры кончились
+
+		task_vendor = self:get_vendor_by_order(v)
+		self.task_id_by_vendor[task_vendor] = {}
+
+		--' Создаем зависимые от вендора функции диалогов
+		_G.cycle_task["init_"..vendor_string.."_dialog"] = function(dlg) _G.Cycle_Task:init_dialog(dlg, _G.Cycle_Task:get_vendor_by_order(v)) end
+		_G.cycle_task["init_"..vendor_string.."_reward"] = function(dlg) _G.Cycle_Task:init_reward(dlg, _G.Cycle_Task:get_vendor_by_order(v)) end
+
+		--' Перебираем задания вендора
+		for t=0,255 do
+			task_id = vendor_string..string.format("%03d", t)
+			if not self.task_ini:section_exist(task_id) then 
+				if self.task_ini:section_exist(vendor_string..string.format("%03d", t+1)) then
+					abort("Task manager: разрыв цепочки номеров [%s]. Номера заданий одного вендора должны идти непрерывно.", task_id)
+				end
+				break	--' Задания у вендора кончились
+			end
+
+			self.task_info[task_id] = {}
+			task_desc = self.task_info[task_id]
+
+			if not self.task_ini:line_exist(task_id, "type") then abort("Task manager: отсутствует type для задания [%s].", task_id) end
+			if not self.task_ini:line_exist(task_id, "target") then abort("Task manager: отсутствует target для задания [%s].", task_id) end
+
+			task_desc.type = self.type[self.task_ini:r_string(task_id, "type")]
+			task_desc.target = self.task_ini:r_string(task_id, "target")
+			task_desc.vendor = task_vendor
+			task_desc.complex_type = task_desc.type..vendor_string
+
+			if task_desc.type == self.type.monster_part or task_desc.type == self.type.artefact or task_desc.type == self.type.find_item or task_desc.type == self.type.chain
+			then
+				task_desc.target_count = self.task_ini:line_exist(task_id, "target_count") and self.task_ini:r_u32(task_id, "target_count") or 1
+
+				if condition_item(task_desc.target) then
+					task_desc.target_cond = self.task_ini:line_exist(task_id, "target_cond") and parse_nums(self.task_ini:r_string(task_id, "target_cond")) or {50,100}
+					if not task_desc.target_cond[2] then task_desc.target_cond[2] = 100 end
+				end
+
+			elseif task_desc.type == self.type.kill_stalker then
+				table.insert(self.task_id_by_type_kill_stalker, task_id)
+
+			elseif task_desc.type == self.type.defend_lager then
+				if self.task_ini:line_exist(task_id, "defend_target") then
+					task_desc.defend_target = self.task_ini:r_u32(task_id, "defend_target")
+				else
+					abort("Task manager: отсутствует defend_target для задания [%s].", task_id)
+				end
+			end
+
+			if self.task_ini:line_exist(task_id, "condlist") then
+				task_desc.condlist = xr_logic.parse_condlist(self.task_ini:r_string(task_id, "condlist"))
+			end
+
+			--' Приоритет задания, выдаются доступные задания с приоритетом от меньшего к большему
+			task_desc.prior = self.task_ini:line_exist(task_id, "prior") and self.task_ini:r_u32(task_id, "prior") or 0
+
+			--' По умолчанию задание доступно для выдачи
+			task_desc.enabled = true
+
+			--' Статус задания
+			task_desc.status = self.status.normal
+
+			--' Вспомогательные таблицы
+			table.insert(self.task_id_by_vendor[task_desc.vendor], task_id)
+		end
+	end
+
+	--' Сгруппируем задания по типам внутри вендора для удобства отображения
+	for k,v in pairs(self.task_id_by_vendor) do
+		table.sort(v, function(a, b) return self.task_info[a].type < self.task_info[b].type	end)
+	end
+
+	--tmr:stop() console:execute("load ~~~ TIME SPEND task manager __init: "..tmr:time())
+end
+
+--' Сохранение
+function CCycleTask:save(p, np)
+	local packet_size = p:w_tell()
+	local state
+
+	for k,v in pairs(self.task_info) do
+		--' Собираем состояние задания
+		state = v.status
+		if not v.enabled then
+			state = state+8
+		end
+		if self.active_task_by_type[v.complex_type] == k then	--' Задание активно
+			state = state+16
+		end
+		if v.next_time then
+			if v.next_time >= amk.game_hours() then
+				state = state+32
+			else
+				v.next_time = nil	--' Время ожидания вышло
+			end
+		end
+		if v.selected_target then
+			state = state+64
+		end
+		-- последний байт state, 128, свободен
+
+		--if state > 0 then console:execute(string.format("load ~~~ cycle_task save id[%s] type[%s] state[%s] status[%s]", k, self.type_name[v.type], state, v.status)..iif(v.enabled," enabled","")..iif(self.active_task_by_type[v.complex_type] == k," active","")..iif(v.next_time," next_time["..tostring(v.next_time).."]","")..iif(v.selected_target," selected_target["..tostring(v.selected_target).."]","")) end
+
+		if state > 0 then	--' Если state = 0 значит задание находится в дефолтном состоянии, писать его нет смысла
+			if np == 2 and v.status == self.status.once then		--' Во второй нетпакет пишем разовые выполненные задания
+				--console:execute("load ~~~ SAVE tm_pda"..np.." id: "..k)
+				p:w_u8(tonumber(string.sub(k,1,3)))	--' Вендор
+				p:w_u8(tonumber(string.sub(k,-3)))	--' Задание
+			elseif np == 1 and v.status ~= self.status.once then	--' В первый - всё остальное
+				--console:execute("load ~~~ SAVE tm_pda"..np.." id: "..k)
+				p:w_u8(tonumber(string.sub(k,1,3)))	--' Вендор
+				p:w_u8(tonumber(string.sub(k,-3)))	--' Задание
+				p:w_u8(state)
+				if v.selected_target then
+					p:w_u16(v.selected_target)
+				end
+				if v.next_time then
+					p:w_u16(v.next_time)
+				end
+			end
+		end
+	end
+
+	if p:w_tell()-packet_size > 6000 then
+		sms("%c[255,255,128,128]Количество активных циклических заданий приближается к максимально допустимому пределу. Необходимо как можно скорее завершить часть заданий и не брать новых до стабильного исчезновения этого сообщения при сохранении и загрузке игры, иначе все последующие сохранения могут быть необратимо повреждены.", nil, "nano", 80000)
+	end
+	--console:execute("load ~~~ SAVE tm_pda"..np.." size "..p:w_tell()-packet_size.." "..packet_size)
+end
+
+--' Загрузка
+function CCycleTask:load(p, np)
+	local packet_size = p:r_tell()
+	local task_id, task_desc, state
+
+	while not p:r_eof() do
+		task_id = string.format("%03d", p:r_u8())..string.format("%03d", p:r_u8())
+		task_desc = self.task_info[task_id]
+
+		if not task_desc then
+			abort("Task manager LOAD: отсутствует конфиг для задания [%s]. Удалять циклические задания без НИ нельзя.", task_id)
+		end
+
+		if np == 2 then		--' Во втором нетпакете только разовые выполненные задания
+			task_desc.status = self.status.once
+		else				--' В первом - всё остальное
+			state = p:r_u8()
+			if state >= 64 then
+				task_desc.selected_target = p:r_u16()
+				state = state-64
+			end
+			if state >= 32 then
+				task_desc.next_time = p:r_u16()
+				state = state-32
+			end
+			if state >= 16 then	--' Задание активно
+				self.active_task_by_type[task_desc.complex_type] = task_id
+				state = state-16
+			end
+			if state >= 8 then
+				task_desc.enabled = false
+				state = state-8
+			end
+			task_desc.status = state
+		end
+	end
+
+	if p:r_tell()-packet_size > 6000 then
+		sms("%c[255,255,128,128]Количество активных циклических заданий приближается к максимально допустимому пределу. Необходимо как можно скорее завершить часть заданий и не брать новых до стабильного исчезновения этого сообщения при сохранении и загрузке игры, иначе все последующие сохранения могут быть необратимо повреждены.", nil, "nano", 80000)
+	end
+	--console:execute("load ~~~ LOAD tm_pda"..np.." size "..p:r_tell()-packet_size)
+end
+
+--' Может ли вендор выдать задание
+function CCycleTask:vendor_can_task(actor, vendor, p1, p2, p3)
+	local avail = false
+	self:task_avail_reset(vendor)
+	local task_vendor = vendor:story_id()
+
+	for k,v in pairs(self.task_id_by_vendor[task_vendor]) do
+		if self:task_avail(actor, vendor, nil, nil, v..self.init_phrase_id, true) then
+			avail = true
+		end
+	end
+
+	return avail
+end
+
+--' Есть ли у игрока хоть одно задание от данного вендора
+function CCycleTask:active_vendor_task(actor, vendor)
+	local task_desc
+	local task_vendor = vendor:story_id()
+
+	for k,v in pairs(self.active_task_by_type) do
+		task_desc = self.task_info[v]
+
+		if task_desc.vendor == task_vendor and (task_desc.status == self.status.selected or task_desc.status == self.status.completed) then
+			return true
+		end       
+	end
+	return false
+end
+
+--' Есть ли игрока завершенные задания от вендора (которые осталось только сдать)
+function CCycleTask:have_completed_job(actor, vendor)
+	local task_desc
+	local task_vendor = vendor:story_id()
+
+	for k,v in pairs(self.active_task_by_type) do
+		task_desc = self.task_info[v]
+
+		if task_desc.vendor == task_vendor and task_desc.status == self.status.completed then
+			return true
+		end       
+	end
+	return false
+end
+
+--' Выдача задания игроку
+function CCycleTask:action_give_task(actor, npc, p1, p2)
+	local task_id = string.sub(p2,1,6)
+	local task_desc = self.task_info[task_id]
+	local task_vendor = story_object(task_desc.vendor)
+
+	--' Формируем задание
+	local game_task = CGameTask()
+	game_task:load("tm_"..task_desc.complex_type)
+	game_task:set_title(self:generate_task_title(task_vendor))
+
+	local objective = SGameTaskObjective(game_task,1)
+	objective:set_description(self:generate_task_target(task_desc, true))
+
+	if task_desc.type == self.type.eliminate_lager then
+		objective:set_map_hint(self.type_name[task_desc.type])
+		objective:set_map_location("eliminate_lager_location")
+		objective:set_object_id(server_object(task_desc.target).id)
+	elseif task_desc.type == self.type.defend_lager then
+		objective:set_map_hint(self.type_name[task_desc.type])
+		objective:set_map_location("defend_lager_location")
+		objective:set_object_id(server_object(task_desc.target).id)
+	elseif task_desc.type == self.type.kill_stalker then
+		objective:set_map_hint(self.type_name[task_desc.type])
+		objective:set_map_location("kill_stalker_location")
+		objective:set_object_id(task_desc.selected_target)
+	end
+	objective:add_complete_func("cycle_task.task_complete")
+	game_task:add_objective(objective)
+
+	objective = SGameTaskObjective(game_task,2)
+	objective:set_description(self:generate_task_reward(task_id))
+	objective:set_map_hint(self:get_vendor_name(task_vendor))
+	objective:set_map_location("blue_location")
+	objective:set_object_id(task_vendor.id)
+	game_task:add_objective(objective)
+
+	--' Время на выполнение
+	local title_time = game.CTime()
+	title_time:setHMS(0,0,self.task_time)
+	title_time:add(game.get_game_time())
+	if not newEngine then
+		game_task:set_title(game_task:get_title().."\\n%c[255,150,150,180]до "..title_time:dateToString(game.CTime.DateToDay))
+	end
+	db.actor:give_task(game_task,self.task_time*1000,false)
+
+	--' Дизаблим все остальные задания данного типа, так как игрок не может одновременно обладать двумя заданиями одного типа
+	task_desc.status = self.status.selected
+	self.active_task_by_type[task_desc.complex_type] = task_id
+	for k,v in pairs(self.task_info) do
+		if v.complex_type == task_desc.complex_type then
+			v.enabled = false
+		end
+	end
+end
+
+--' Отказ игроком от задания
+function CCycleTask:action_refuse_task(actor, npc, p1, p2)
+	local task_desc = self.task_info[string.sub(p2,1,6)]
+
+	task_desc.selected_target = nil
+	task_desc.status = self.status.refused
+
+	--' Делаем доступными все задания данного типа
+	for k,v in pairs(self.task_info) do
+		if v.complex_type == task_desc.complex_type then
+			v.enabled = true
+		end
+	end
+end
+
+--' Проверяем, выполнено ли задание, вызывается из апдейта задания
+function CCycleTask:task_complete(game_task, objective)
+	if not db.actor then return false end
+
+	local task_id = self.active_task_by_type[string.sub(game_task,4)]
+	local task_desc = self.task_info[task_id]
+
+	if objective == 0 then
+		if task_desc.status == self.status.rewarded then
+			task_desc.next_time = amk.game_hours()+self.idle_time
+			return true
+		end
+	end
+
+	if objective == 1 then
+		if task_desc.type == self.type.eliminate_lager then
+			if server_object(task_desc.target).gulag:get_population_comed() == 0 then
+				task_desc.status = self.status.completed
+				return true
+			end
+		elseif task_desc.type == self.type.defend_lager then
+			--' Задание выполнено потому что рейд прекратился
+			if xr_gulag.getGulagState(task_desc.defend_target) == 0 then
+				task_desc.status = self.status.completed
+				return true
+			end
+		elseif task_desc.type == self.type.kill_stalker then
+			local oo = server_object(task_desc.selected_target)
+
+			if oo == nil then
+				--' Сталкер пропал почему-то
+				abort("selected_target %s = nil для задания [%s].", task_desc.selected_target, task_id)
+			end
+			if oo == nil or not oo:alive() then
+				--' Сталкер пропал или убит, закрываем задание
+				task_desc.selected_target = nil
+				task_desc.status = self.status.completed
+				return true
+			end
+		elseif task_desc.type == self.type.monster_part or task_desc.type == self.type.artefact or task_desc.type == self.type.find_item or task_desc.type == self.type.chain then
+
+			if self:actor_has_target(task_desc) then
+				task_desc.status = self.status.completed
+				return true
+			end
+		end
+	end
+
+	return false
+end
+
+--' Проверяем, провалено ли задание, вызывается из апдейта задания
+function CCycleTask:task_fail(game_task, objective)
+	if objective == 0 then
+		local task_desc = self.task_info[self.active_task_by_type[string.sub(game_task,4)]]
+
+		--' Проверяем что жив, выдавший задание
+		local task_vendor = story_object(task_desc.vendor)
+		if not self:vendor_alive(task_vendor) then
+			task_desc.status = self.status.failed
+			task_desc.next_time = amk.game_hours()+self.idle_time
+			return true   
+		end
+
+		if task_desc.status == self.status.refused or task_desc.status == self.status.failed then
+			task_desc.next_time = amk.game_hours()+self.idle_time
+			return true
+		end
+
+		if task_desc.type == self.type.defend_lager then
+			if server_object(task_desc.target).gulag:get_population_comed() == 0 then
+				--' Задание провалилось потому что все защищаемые погибли
+				task_desc.status = self.status.failed
+				task_desc.next_time = amk.game_hours()+self.idle_time
+				return true
+			end
+		end
+	end
+
+	return false
+end
+
+--' Обнуление переменных при завершении или провале задания, вызывается из калбека актора на изменение задания
+function CCycleTask:task_callback(game_task, objective, state)
+	if objective ~= 0 then return end
+
+	local task_id = self.active_task_by_type[string.sub(game_task,4)]
+	if task_id == nil then return end
+
+	local task_desc = self.task_info[task_id]
+
+	if state == task.completed then
+		if self.task_ini:line_exist(task_id, "once") then
+			--' Выполнено одноразовое задание, больше оно никогда не выдастся
+			task_desc.status = self.status.once
+			task_desc.selected_target = nil
+			task_desc.next_time = nil
+		else
+			task_desc.status = self.status.normal
+		end
+
+		--' Восстановление других заданий данного типа
+		for k,v in pairs(self.task_info) do
+			if v.complex_type == task_desc.complex_type then
+				v.enabled = true
+			end
+		end
+		self.active_task_by_type[task_desc.complex_type] = nil
+
+	elseif state == task.fail then
+		task_desc.status = self.status.normal
+
+		--' Восстановление других заданий данного типа
+		for k,v in pairs(self.task_info) do
+			if v.complex_type == task_desc.complex_type then
+				v.enabled = true
+			end
+		end
+		self.active_task_by_type[task_desc.complex_type] = nil
+	end
+end
+
+--' Выводит список доступных заданий
+function CCycleTask:action_task_show(vendor, actor)
+	local task_texture, task_rect
+	local task_desc
+	local task_vendor = vendor:story_id()
+
+	for k,v in pairs(self.task_id_by_vendor[task_vendor]) do
+		task_desc = self.task_info[v]
+		if self:task_avail(actor, vendor, nil, nil, v..self.init_phrase_id, false) then
+			task_texture, task_rect = get_texture_info("ui_iconsTotal_"..self.type_name[task_desc.type], "ui_iconsTotal_stalker10")
+			db.actor:give_talk_message(self:generate_task_target(task_desc, true), task_texture, task_rect, "iconed_trade_info")
+		end
+	end
+end
+
+--' Сброс таблицы доступных заданий вендора и подсчет блока приоритета по времени ожидания. Вызывается при создании диалога
+function CCycleTask:task_avail_reset(vendor)
+	self.current_vendor_type_prior = {}
+	self.current_vendor_locked_prior = {}
+
+	local task_desc
+	local task_next_time = amk.game_hours()
+	local task_vendor = vendor:story_id()
+
+	for k,v in pairs(self.task_id_by_vendor[task_vendor]) do
+		task_desc = self.task_info[v]
+
+		if task_desc.next_time and task_desc.next_time >= task_next_time then
+			if (self.current_vendor_locked_prior[task_desc.complex_type] == nil or
+				self.current_vendor_locked_prior[task_desc.complex_type] < task_desc.prior)
+			then
+				self.current_vendor_locked_prior[task_desc.complex_type] = task_desc.prior
+			end
+		else
+			task_desc.next_time = nil	--' Время ожидания вышло
+		end
+	end
+end
+
+--' Проверка доступно ли текущее задание для выдачи
+function CCycleTask:task_avail(actor, vendor, p1, p2, p3, calculate)
+	local task_id = string.sub(p3,1,6)
+	local task_desc = self.task_info[task_id]
+
+	--' Если calculate == true то нужно проверять check_task_props, иначе просто вернуть значения
+	if calculate == true then
+		self:check_task_props(task_desc)
+
+		local t = task_desc.enabled and task_desc.enabled_props
+
+		--' Обрезаем по приоритетам
+		if t == true and (self.current_vendor_type_prior[task_desc.complex_type] == nil or
+			self.current_vendor_type_prior[task_desc.complex_type] > task_desc.prior)
+		then
+			self.current_vendor_type_prior[task_desc.complex_type] = task_desc.prior
+		end
+
+		return t
+	end
+
+	if  self.current_vendor_type_prior[task_desc.complex_type] ~= nil and
+		self.current_vendor_type_prior[task_desc.complex_type] < task_desc.prior
+	then
+		return false
+	end
+
+	return task_desc.enabled and task_desc.enabled_props
+end
+
+--' Проверка свойств задания на доступность к выдаче
+function CCycleTask:check_task_props(task_desc)
+	--' Проверка по активным заданиям данного типа у вендора
+	if self.active_task_by_type[task_desc.complex_type] ~= nil then
+		task_desc.enabled_props = false
+		return
+	end
+
+	--' Проверка по разовости
+	if task_desc.status == self.status.once then
+		task_desc.enabled_props = false
+		return
+	end
+
+	--' Проверка по блоку приоритета по времени ожидания
+	if self.current_vendor_locked_prior[task_desc.complex_type] and self.current_vendor_locked_prior[task_desc.complex_type] >= task_desc.prior then
+		task_desc.enabled_props = false
+		return
+	end
+
+	--' Проверка по кондлисту
+	if task_desc.condlist and xr_logic.pick_section_from_condlist(db.actor, task_desc.condlist) == nil then
+		task_desc.enabled_props = false
+		return
+	end
+
+	--' Проверка по таймауту
+	if task_desc.next_time then
+		if task_desc.next_time >= amk.game_hours() then
+			task_desc.enabled_props = false
+			return
+		else
+			task_desc.next_time = nil	--' Время ожидания вышло
+		end
+	end
+
+	--' Проверка по цели
+	if task_desc.type == self.type.eliminate_lager then
+		if server_object(task_desc.target).gulag:get_population_comed() > 0 then
+			task_desc.enabled_props = true
+			return 
+		end
+		task_desc.enabled_props = false
+		return
+
+	elseif task_desc.type == self.type.defend_lager then
+		if xr_gulag.getGulagState(task_desc.defend_target) == 1 then
+		--if xr_gulag.getGulagState(task_desc.defend_target) == 0 then --' Раскомментить вместо выше для отладки этого типа ЦЗ
+			task_desc.enabled_props = true
+			return
+		end
+		task_desc.enabled_props = false
+		return
+
+	elseif task_desc.type == self.type.kill_stalker then
+		--' Нету целей
+		if task_desc.target_objects == nil then
+			task_desc.selected_target = nil
+			task_desc.enabled_props = false
+			return
+		end
+
+		--' Проверим, живы ли наши цели
+		local oo
+		if task_desc.selected_target then
+			oo = server_object(task_desc.selected_target)
+			if oo == nil or oo.alive == nil or not oo:alive() then
+				task_desc.selected_target = nil
+			end
+		end
+		for k,v in pairs(task_desc.target_objects) do
+			oo = server_object(v)
+			if oo == nil or oo.alive == nil or not oo:alive() then
+				table.remove(task_desc.target_objects, k)
+			end
+		end
+
+		--' Не осталось целей
+		if #task_desc.target_objects == 0 then
+			task_desc.selected_target = nil
+			task_desc.enabled_props = false
+			return
+		end
+
+		--' Выбираем текущую цель задания
+		if not task_desc.selected_target then
+			task_desc.selected_target = task_desc.target_objects[math.random(#task_desc.target_objects)]
+		end
+		task_desc.enabled_props = true
+		return
+
+	else
+		task_desc.enabled_props = true
+		return    
+	end
+end
+
+--' Проверяется является ли текущее задание выданным игроку
+function CCycleTask:active_task(actor, npc, p1, p2, p3)
+	local task_desc = self.task_info[string.sub(p3,1,6)]
+	return task_desc.status == self.status.selected or task_desc.status == self.status.completed
+end
+
+--' Проверяется наличие предметов по заданию
+function CCycleTask:completed_task(actor, npc, p1, p2, p3)
+	if not p3 then return false end
+
+	local task_id = string.sub(p2,1,6)
+	if not task_id then return false end
+
+	local task_desc = self.task_info[task_id]
+	if task_desc.status ~= self.status.completed then return false end
+
+	if task_desc.type == self.type.monster_part or task_desc.type == self.type.artefact or task_desc.type == self.type.find_item or task_desc.type == self.type.chain
+	then
+		if not self:actor_has_target(task_desc) then
+			return false
+		end
+	end
+
+	return true
+end
+
+--' Создается диалог актера, в котором будут выдаваться задания.
+function CCycleTask:init_dialog(dlg, task_vendor)
+	local phr = dlg:AddPhrase(self:random_phrase("tm_seek_new_job"),"0","",-10000)
+	local phrase_script = phr:GetPhraseScript()
+
+	phr = dlg:AddPhrase(self:random_phrase("tm_list_job"),"1","0",-10000)
+	phrase_script = phr:GetPhraseScript()
+	phrase_script:AddAction("cycle_task.action_task_show")
+	phrase_script:AddPrecondition("cycle_task.precondition_vendor_can_task")
+		
+	phr = dlg:AddPhrase(self:random_phrase("tm_has_no_job"),"2","0",-10000)
+	phrase_script = phr:GetPhraseScript()
+	phrase_script:AddPrecondition("cycle_task.precondition_vendor_cannot_task")
+
+	local task_desc
+	for k,v in pairs(self.task_id_by_vendor[task_vendor]) do
+		task_desc = self.task_info[v]
+
+		phr = dlg:AddPhrase(self:generate_task_target(task_desc, false), v..self.init_phrase_id, "1", -10000)		
+		phrase_script = phr:GetPhraseScript()
+		phrase_script:AddPrecondition("cycle_task.precondition_task_avail")
+
+		phr = dlg:AddPhrase("tm_"..v.."_text", v..self.desc_phrase_id, v..self.init_phrase_id, -10000)
+		phrase_script = phr:GetPhraseScript()
+		phrase_script:AddAction("cycle_task.action_show_reward")
+
+		phr = dlg:AddPhrase(self:random_phrase("tm_seek_job_yes"), v..self.yes_phrase_id, v..self.desc_phrase_id, -10000)
+		phrase_script = phr:GetPhraseScript()
+		phrase_script:AddAction("cycle_task.action_give_task")
+
+		phr = dlg:AddPhrase(self:random_phrase("tm_seek_job_no"), v..self.no_phrase_id, v..self.desc_phrase_id, -10000)
+	end
+
+	dlg:AddPhrase(self:random_phrase("tm_seek_job_abandon"),"3","1",-10000)
+end
+
+--' Выдача награды за выполненное задание
+function CCycleTask:task_reward(vendor, actor, p1, p2)
+	local task_id = string.sub(p2,1,6)
+	local task_desc = self.task_info[task_id]
+
+	if task_desc.status == self.status.completed and task_desc.vendor == vendor:story_id() then
+		--' Забираем у игрока предметы по заданию
+		local can_finish = true
+		if task_desc.type == self.type.monster_part or task_desc.type == self.type.artefact or task_desc.type == self.type.find_item or task_desc.type == self.type.chain
+		then
+			if not self:actor_has_target(task_desc) then
+				can_finish = false
+			else
+				self:actor_out_target(task_desc)
+			end
+		end
+
+		if can_finish == true then
+			--' Выдаем награду
+			task_desc.status = self.status.rewarded
+
+			--' Конкретные предметы
+			if self.task_ini:line_exist(task_id, "reward_item") then
+				local reward_item = utils.parse_key_value_num(self.task_ini:r_string(task_id, "reward_item"))
+				for kk,vv in pairs(reward_item) do
+					got(kk,vv)
+				end
+			end
+
+			--' Рандомные предметы
+			if self.task_ini:line_exist(task_id, "reward_random") then
+				local reward_random = utils.parse_key_value_num(self.task_ini:r_string(task_id, "reward_random"))
+				for kk,vv in pairs(reward_random) do
+					for ii = 1,vv do
+						got(self:get_random_item(kk),1)
+					end
+				end
+			end
+
+			--' Тайник
+			if self.task_ini:line_exist(task_id, "reward_treasure") then
+				treasure.give()
+			end
+
+			--' Деньги
+			if self.task_ini:line_exist(task_id, "reward_money") then
+				got_money(self.task_ini:r_u32(task_id, "reward_money"))
+			end
+
+			--' Репутация
+			if self.task_ini:line_exist(task_id, "reward_relation") then
+				local reward_relation = utils.parse_key_value_num(self.task_ini:r_string(task_id, "reward_relation"))
+				for kk,vv in pairs(reward_relation) do
+					relation_registry.change_community_goodwill(kk, db.actor:id(), tonumber(vv))
+				end
+			else
+				--' По дефолту + в репу группировке вендора и рандомной дружественной, врагам репу не меняем
+				local comm = level_story_object(task_desc.vendor):character_community()
+				if self.community[comm] then
+					--' Дружественная группировка
+					relation_registry.change_community_goodwill(comm, db.actor:id(), math.random(1,3))
+					relation_registry.change_community_goodwill(self.community[math.random(#self.community)], db.actor:id(), math.random(1,3))
+				end
+			end
+
+			--' Скрипт
+			if self.task_ini:line_exist(task_id, "reward_script") then
+				_G.cycle_task[self.task_ini:r_string(task_id, "reward_script")]()
+			end
+
+			--' Прочие заслуги
+			db.actor:change_character_reputation(5)
+			xr_statistic.add_actor_rank(3)
+
+			--' Считаем статистику
+			local koef = 0
+			if not has_info("stat_"..task_desc.type) then
+				koef = 1
+				give_info("stat_"..task_desc.type)
+			end
+			actor_stats.add_points("quests", self.type_name[task_desc.type], 1, koef)
+			archievements.acv_count_3event("acv_ct", 500, "Наёмник", "acv_ct2", 1000, "Стаханов", "acv_ct3", 2000, "Папа Карло")
+		end
+	end 
+end
+
+--' Диалог актера, в котором будут приниматься задания
+function CCycleTask:init_reward(dlg, task_vendor)
+	local phr = dlg:AddPhrase(self:random_phrase("tm_reward_job"),"0","",-10000)
+	phr = dlg:AddPhrase(self:random_phrase("tm_job_ask"), "2", "0", -10000)
+	local phrase_script
+
+	--' Список возможных заданий вендора
+	local task_desc
+	for k,v in pairs(self.task_id_by_vendor[task_vendor]) do
+		task_desc = self.task_info[v]
+
+		phr = dlg:AddPhrase(self:generate_task_target(task_desc, false), v..self.init_phrase_id, "2", -10000)
+		phrase_script = phr:GetPhraseScript()   
+		phrase_script:AddPrecondition("cycle_task.precondition_active_task")
+
+		phr = dlg:AddPhrase(self:random_phrase("tm_job_what"), v..self.desc_phrase_id, v..self.init_phrase_id, -10000)
+
+		phr = dlg:AddPhrase(self:random_phrase("tm_job_refuse"), v..self.yes_phrase_id, v..self.desc_phrase_id, -10000)
+		phrase_script = phr:GetPhraseScript()
+		phrase_script:AddAction("cycle_task.action_refuse_task")
+		phrase_script:AddPrecondition("cycle_task.precondition_notcompleted_task")
+		  
+		phr = dlg:AddPhrase(self:random_phrase("tm_job_nothing"), v..self.no_phrase_id, v..self.desc_phrase_id,-10000)
+		phrase_script = phr:GetPhraseScript()
+		phrase_script:AddPrecondition("cycle_task.precondition_notcompleted_task")
+
+		phr = dlg:AddPhrase(self:random_phrase("tm_job_completed"), v..self.completed_phrase_id, v..self.desc_phrase_id,-10000)
+		phrase_script = phr:GetPhraseScript()
+		phrase_script:AddAction("cycle_task.action_task_reward")
+		phrase_script:AddPrecondition("cycle_task.precondition_completed_task")
+
+		--' Награда информацией
+		if self.task_ini:line_exist(v, "reward_info") then
+			local reward_info = parse_names(self.task_ini:r_string(v, "reward_info"))
+
+			--' Информация еще не выдана, будем выдавать
+			if not self:reward_info_given(reward_info) then
+
+				--' Дополнительный диалог при сдаче задания для выдачи инфы
+				if self.task_ini:line_exist(v, "reward_dialog") then
+					local reward_dialog = parse_names(self.task_ini:r_string(v, "reward_dialog"))
+					local prev_phrase_id = v..self.completed_phrase_id
+					local curr_phrase_id
+					for _,p in ipairs(reward_dialog) do
+						curr_phrase_id = self:gen_phrase_id()
+						phr = dlg:AddPhrase(p, curr_phrase_id, prev_phrase_id, -10000)
+						prev_phrase_id = curr_phrase_id
+					end
+
+					phrase_script = phr:GetPhraseScript()	-- Последняя фраза диалога
+				end
+
+				--' Выдаем информацию в последней фразе
+				for _,i in ipairs(reward_info) do
+					phrase_script:AddGiveInfo(i)
+				end
+			end
+		end
+	end
+end
+
+--' Выданы ли уже все поршни по reward_info
+function CCycleTask:reward_info_given(reward_info)
+	for _,i in ipairs(reward_info) do
+		if not has_info(i) then return false end
+	end
+	return true
+end
+
+--' Регистрация целей для заданий
+function CCycleTask:register_target(obj)
+	if IAmAStalker[obj:clsid()] and obj:alive() then
+		--' Возможно регистрируется цель для задания "убить сталкера"
+		local section = obj:section_name()
+		local task_desc
+		for k,v in pairs(self.task_id_by_type_kill_stalker) do 
+			task_desc = self.task_info[v]
+
+			if section == task_desc.target then
+				if task_desc.target_objects == nil then
+				task_desc.target_objects = {}
+				end
+				--console:execute("load ~~~ register_target "..v..section)
+				table.insert(task_desc.target_objects, obj.id)
+			end
+		end
+	end
+end
+
+--' ОТРегистрация целей для заданий
+function CCycleTask:unregister_target(obj)
+	if IAmAStalker[obj:clsid()] then
+		--' Возможно отрегистрируется цель для задания "убить сталкера"
+		local task_desc
+		for k,v in pairs(self.task_id_by_type_kill_stalker) do 
+			task_desc = self.task_info[v]
+
+			if task_desc.target_objects ~= nil then
+				for kk,vv in pairs(task_desc.target_objects) do
+					if vv == obj.id then
+						table.remove(task_desc.target_objects, vv)
+					end
+				end     
+			end
+		end
+	end
+end
+
+--' Вывод награды за задание
+function CCycleTask:show_reward(actor,npc,p1,p2)
+	local task_id = string.sub(p2,1,6)
+	local task_desc = self.task_info[task_id]
+	local task_texture, task_rect = get_texture_info("ui_iconsTotal_find_item")
+	
+	--' Покажем задание
+	if task_desc.type == self.type.monster_part or task_desc.type == self.type.artefact or task_desc.type == self.type.find_item or task_desc.type == self.type.chain then
+		db.actor:give_talk_message(self:random_phrase("tm_job_bring")..self:target_cond_name(task_desc)..(task_desc.target_count>1 and task_desc.target_count.."x " or "")..game.translate_string(self.ini:r_string(task_desc.target, "inv_name"))..".", "ui\\ui_icon_equipment", get_item_icon(task_desc.target), "iconed_trade_info")
+	end
+
+	--' Покажем награду
+	db.actor:give_talk_message(self:random_phrase("tm_job_reward"), task_texture, task_rect, "tm_no_icon")
+
+	--' А награда то скрыта!
+	if self.task_ini:line_exist(task_id, "hide_reward") then
+		db.actor:give_talk_message("Награда скрыта", "ui\\ui_icon_equipment", Frect():set(4000,300,50,50), "iconed_trade_info")
+		return
+	end
+
+	--' Конкретные предметы
+	if self.task_ini:line_exist(task_id, "reward_item") then
+		local reward_item = utils.parse_key_value_num(self.task_ini:r_string(task_id, "reward_item"))
+		for k,v in pairs(reward_item) do
+			db.actor:give_talk_message((v>1 and v.."x " or "")..game.translate_string(self.ini:r_string(k, "inv_name")), "ui\\ui_icon_equipment", get_item_icon(k), "iconed_trade_info")
+		end
+	end
+
+	--' Рандомные предметы
+	if self.task_ini:line_exist(task_id, "reward_random") then
+		local reward_random = utils.parse_key_value_num(self.task_ini:r_string(task_id, "reward_random"))
+		for k,v in pairs(reward_random) do
+			db.actor:give_talk_message((v>1 and v.."x " or "")..self.random[k], "ui\\ui_icon_equipment", get_item_icon(self:get_random_item(k)), "iconed_trade_info")
+		end
+	end
+
+	--' Тайник
+	if self.task_ini:line_exist(task_id, "reward_treasure") then
+		task_texture, task_rect = get_texture_info("ui_iconsTotal_taynik")
+		db.actor:give_talk_message("Тайник", "ui\\ui_icon_equipment", get_item_icon("treasure_item"), "iconed_trade_info")
+	end
+
+	--' Деньги
+	if self.task_ini:line_exist(task_id, "reward_money") then
+		task_texture, task_rect = get_texture_info("ui_iconsTotal_found_money")
+		db.actor:give_talk_message(self.task_ini:r_u32(task_id, "reward_money").." RU", task_texture, task_rect, "iconed_trade_info")
+	end
+
+	--' Репутация
+	if self.task_ini:line_exist(task_id, "reward_relation") then
+		db.actor:give_talk_message("Репутация", "ui\\ui_icon_equipment", Frect():set(3900,300,100,50), "iconed_trade_info")
+	end
+end
+
+--' Напоминания
+function CCycleTask:remind()
+	local smses = {}
+	local sms_size = 0
+
+	local task_desc, task_vendor
+	for k,v in pairs(self.active_task_by_type) do
+		task_desc = self.task_info[v]
+
+		if task_desc.status == self.status.completed then
+			task_vendor = story_object(task_desc.vendor)
+
+			if self:vendor_alive(task_vendor) and object_level(task_vendor) == ai:level_id() then
+				--' формируем сообщение
+				if not smses[task_desc.vendor] then 
+					smses[task_desc.vendor] = {sender = self:get_vendor_name(task_vendor), txt = ""}
+					sms_size = sms_size+1
+				end
+
+				smses[task_desc.vendor].txt = smses[task_desc.vendor].txt.."%c[255,127,255,255]"..self:generate_task_target(task_desc, false)..": %c[default]"..self:generate_task_reward(v).."\\n"
+			end
+		end       
+	end
+
+	--' Выдаем напоминания
+	if sms_size > 0 then
+		for k,v in pairs(smses) do
+			reminder.send_info("%c[255,0,255,255]"..v.sender.."\\n%c[default]"..v.txt)
+		end
+	end
+
+	return sms_size > 0
+end
+
+--' Уведомления о новых доступных заданиях у вендоров при выдаче инфопорции
+function CCycleTask:notify_new_task(info)
+	local txt = ""
+	local vendors = {}
+
+	local task_vendor
+	for k,v in pairs(self.task_info) do
+		if self.task_ini:line_exist(k, "condlist") 
+			and string.find(self.task_ini:r_string(k, "condlist"), info) 
+			and xr_logic.pick_section_from_condlist(db.actor, v.condlist) ~= nil
+		then
+			task_vendor = story_object(v.vendor)
+
+			if task_vendor then
+				if not vendors[v.vendor] then
+					vendors[v.vendor] = true
+					txt = txt.."\\n%c[255,127,255,255]"..self:get_vendor_name(task_vendor)
+				end
+			end
+		end       
+	end
+
+	if txt ~= "" then
+		local task_texture, task_rect = get_texture_info("ui_iconsTotal_stalker10", "ui_iconsTotal_stalker10")
+		db.actor:give_game_news("%c[255,0,255,255]Доступны новые циклические задания"..txt, task_texture, task_rect, 0, 15000)
+		say([[device\pda\pda_tip]])
+	end
+end
+
+--' Генератор уникальных ID для фраз
+function CCycleTask:gen_phrase_id()
+	self.task_phrase_id = self.task_phrase_id+1
+	return tostring(self.task_phrase_id)
+end
+
+--' Возвращает story_id вендора по порядковому номеру
+function CCycleTask:get_vendor_by_order(order)
+	local result, id, value = self.task_ini:r_line("vendor", order, "", "")
+	return tonumber(value)
+end
+
+--' Имя вендора
+function CCycleTask:get_vendor_name(task_vendor)
+	if task_vendor:clsid() == clsid.script_trader then
+		return self.trader_names[task_vendor.m_story_id]
+	else
+		return netpacket:get(task_vendor).checked_characters
+	end
+end
+
+--' Жив ли вендор
+function CCycleTask:vendor_alive(task_vendor)
+	return task_vendor and (task_vendor:clsid() == clsid.script_trader or task_vendor:alive())
+end
+
+--' Заголовок задания
+function CCycleTask:generate_task_title(task_vendor)
+	return self:get_vendor_name(task_vendor)
+end
+
+--' Цель задания
+function CCycleTask:generate_task_target(task_desc, show_level)
+	if task_desc.type == self.type.monster_part or task_desc.type == self.type.artefact or task_desc.type == self.type.find_item or task_desc.type == self.type.chain
+	then
+		return self:random_phrase("tm_task_bring")..self:target_cond_name(task_desc)..(task_desc.target_count>1 and task_desc.target_count.."x " or "")..game.translate_string(self.ini:r_string(task_desc.target, "inv_name"))
+	elseif task_desc.type == self.type.kill_stalker then
+		return game.translate_string(self.type_name[task_desc.type])..", "..game.translate_string(self.ini:r_string(task_desc.target, "community")).." "..game.translate_string(self.ini:r_string(task_desc.target, "spec_rank"))..(show_level and ", "..self:target_level_name(task_desc.selected_target) or "")
+	elseif task_desc.type == self.type.eliminate_lager or task_desc.type == self.type.defend_lager then
+		return game.translate_string(self.type_name[task_desc.type])..", "..self:target_level_name(task_desc.target)
+	end
+end
+
+--' Текст награды для различных сообщений
+function CCycleTask:generate_task_reward(task_id)
+	--' А награда то скрыта!
+	if self.task_ini:line_exist(task_id, "hide_reward") then
+		return "Награда скрыта"
+	end
+
+	local txt = self:random_phrase("tm_task_get").." "
+
+	--' Конкретные предметы
+	if self.task_ini:line_exist(task_id, "reward_item") then
+		local reward_item = utils.parse_key_value_num(self.task_ini:r_string(task_id, "reward_item"))
+		for k,v in pairs(reward_item) do
+			txt = txt..(v>1 and v.."x " or "")..game.translate_string(self.ini:r_string(k, "inv_name"))..", "
+		end
+	end
+
+	--' Рандомные предметы
+	if self.task_ini:line_exist(task_id, "reward_random") then
+		local reward_random = utils.parse_key_value_num(self.task_ini:r_string(task_id, "reward_random"))
+		for k,v in pairs(reward_random) do
+			txt = txt..(v>1 and v.."x " or "")..self.random[k]..", "
+		end
+	end
+
+	--' Тайник
+	if self.task_ini:line_exist(task_id, "reward_treasure") then
+		txt = txt.."Тайник, "
+	end
+
+	--' Деньги
+	if self.task_ini:line_exist(task_id, "reward_money") then
+		txt = txt..self.task_ini:r_u32(task_id, "reward_money").." RU, "
+	end
+
+	--' Репутация
+	if self.task_ini:line_exist(task_id, "reward_relation") then
+		txt = txt.."Репутация, "
+	end
+
+	return string.sub(txt,1,-3)
+end
+
+--' Рандомная фраза для диалога
+function CCycleTask:random_phrase(id)
+	return game.translate_string(id..math.random(5))
+end
+
+--' Название уровня, на котором находится цель задания
+function CCycleTask:target_level_name(target)
+	return game.translate_string(object_level_name(server_object(target)))
+end
+
+--' Рандомный предмет из набора
+function CCycleTask:get_random_item(random_level)
+	local result, id, value
+	repeat
+		result, id, value = self.task_ini:r_line("random_"..random_level, math.random(0, self.task_ini:line_count("random_"..random_level)-1), "", "")
+	until value == "" or has_info(value)	--' Не выдаем награду, если не выдан прикрывающий поршень
+	return id
+end
+
+--' Название состояния цели
+function CCycleTask:target_cond_name(task_desc)
+	local str = " "
+	if task_desc.target_cond then
+		if task_desc.target_cond[1] >= 95 then
+			str = " новый "
+		elseif task_desc.target_cond[1] < 50 then
+			str = " сломанный "
+		end
+	end
+	return str
+end
+
+--' Проверка наличия в инвентаре ГГ target
+function CCycleTask:actor_has_target(task_desc)
+	if condition_item(task_desc.target) then
+		--' Предмет с износом
+		return self:has_cond_target(task_desc)
+	else
+		--' Обычный предмет
+		return self:has_target(task_desc)
+	end
+end
+
+--' У ГГ есть target с износом
+function CCycleTask:has_cond_target(task_desc)
+	local cnt = 0
+
+	--' Смотрим, сколько у нас есть подходящего
+	db.actor:inventory_for_each(function(item) 
+		if item:section() == task_desc.target and between(item:condition()*100, task_desc.target_cond[1], task_desc.target_cond[2]) then
+			cnt = cnt+1
+		end
+	end)
+
+	return cnt >= task_desc.target_count
+end
+
+--' У ГГ есть обычный target
+function CCycleTask:has_target(task_desc)
+	return has(task_desc.target, task_desc.target_count)
+end
+
+--' Отбираем у ГГ target при сдаче ЦЗ
+function CCycleTask:actor_out_target(task_desc)
+	give_info("biznes_remove_special_item")
+	if condition_item(task_desc.target) then
+		--' Предмет с износом
+		self:out_cond_target(task_desc)
+	else
+		--' Обычный предмет
+		self:out_target(task_desc)
+	end
+	disable_info("biznes_remove_special_item")
+end
+
+--' Забираем target с износом
+function CCycleTask:out_cond_target(task_desc)
+	local target_items = {}
+
+	--' Смотрим, что у нас есть подходящего
+	db.actor:inventory_for_each(function (item) 
+		if item:section() == task_desc.target and between(item:condition()*100, task_desc.target_cond[1], task_desc.target_cond[2]) then
+			table.insert(target_items, {id = item:id(), cond = item:condition()})
+		end
+	end)
+
+	--' Cортируем по износу
+	table.sort(target_items, function(a, b) return a.cond < b.cond end)
+	--for kk,vv in pairs(target_items) do console:execute("load ~~~ sorted condition: "..vv.cond) end
+
+	--' Забираем нужное количество, начиная с максимального подходящего износа
+	local cnt = 0
+	for kk,vv in pairs(target_items) do
+		release(server_object(vv.id))
+		cnt = cnt+1
+		if cnt == task_desc.target_count then break end
+	end
+
+	news_manager.relocate_item("out", task_desc.target, task_desc.target_count)
+end
+
+--' Забираем обычный target
+function CCycleTask:out_target(task_desc)
+	lost(task_desc.target, task_desc.target_count)
+end
+
+--' Статистика всех заданий
+function CCycleTask:stats()
+	for k,v in pairs(self.task_info) do
+		console:execute("load ~~~ "..string.format("[%s] %s : %s, %s, %s, %s", v.status, k, tostring(v.target), tostring(v.selected_target), tostring(v.defend_target), tostring(v.next_time)))
+	end
+end
+
+--' precondition диалогов
+function vendor_has_active_task(actor, npc)
+	return _G.Cycle_Task:active_vendor_task(actor, npc)
+end
+function precondition_task_avail(actor, npc, p1, p2, p3)
+	return _G.Cycle_Task:task_avail(actor, npc, p1, p2, p3, false)
+end
+function precondition_active_task(actor, npc, p1, p2, p3)
+	return _G.Cycle_Task:active_task(actor, npc, p1, p2, p3)
+end
+function precondition_completed_task(actor, npc, p1, p2, p3)
+	return _G.Cycle_Task:completed_task(actor, npc, p1, p2, p3)
+end
+function precondition_notcompleted_task(actor, npc, p1, p2, p3)
+	return not _G.Cycle_Task:completed_task(actor, npc, p1, p2, p3)
+end
+function precondition_vendor_can_task(npc, actor, p1, p2, p3)
+	return _G.Cycle_Task:vendor_can_task(actor, npc, p1, p2, p3)
+end
+function precondition_vendor_cannot_task(npc, actor, p1, p2, p3)
+	return not _G.Cycle_Task:vendor_can_task(actor, npc, p1, p2, p3)
+end
+function precondition_have_completed_job(npc, actor, p1, p2, p3)
+	return _G.Cycle_Task:have_completed_job(actor, npc)
+end
+
+--' action диалогов
+function action_task_show(npc, actor)
+	_G.Cycle_Task:action_task_show(npc, actor)
+end
+function action_show_reward(actor,npc,p1,p2)
+	_G.Cycle_Task:show_reward(actor,npc,p1,p2)
+end
+function action_give_task(actor, npc, p1, p2)
+	_G.Cycle_Task:action_give_task(actor, npc, p1, p2)
+end
+function action_refuse_task(npc, actor, p1, p2)
+	_G.Cycle_Task:action_refuse_task(npc, actor, p1, p2)
+end
+function action_task_reward(actor, npc, p1, p2)
+	_G.Cycle_Task:task_reward(npc, actor, p1, p2)
+end
+
+--' Калбеки заданий
+function task_complete(p1, p2)
+	return _G.Cycle_Task:task_complete(p1, p2)
+end
+function task_fail(p1, p2)
+	return _G.Cycle_Task:task_fail(p1, p2)
+end
+function task_callback(p1, p2, state)
+	return _G.Cycle_Task:task_callback(p1, p2, state)
+end
+
+--' Функции наград
+function bad_day()
+	game.start_tutorial("bad_day")
+end
+function prostokvashino()
+	game.start_tutorial("prostokvashino")
+end
+
+--' Биндер нетпакета ЦЗ
+function create_tm_pda(num)
+	create("tm_pda"..num,db.actor:position(),db.actor:level_vertex_id(),db.actor:game_vertex_id(),db.actor:id())
+end
+function bind_tm_pda(obj)
+    obj:bind_object(tm_pda_binder(obj))
+end
+
+--' Если понадобится ещё добавить нетпакет, то делаем tm_pda3, разделяем данные по номеру в методах save и load, и увеличиваем до 3 цикл для create_tm_pda(i) в amk_mod.script и прописываем везде в исключения
+class "tm_pda_binder" (object_binder)
+function tm_pda_binder:__init(obj) super(obj)
+end 
+function tm_pda_binder:save(packet)
+    object_binder.save(self, packet)
+	_G.Cycle_Task:save(packet, tonumber(string.sub(self.object:section(),-1)))
+end
+function tm_pda_binder:load(reader)
+    object_binder.load(self, reader)
+	_G.Cycle_Task:load(reader, tonumber(string.sub(self.object:section(),-1)))
+end

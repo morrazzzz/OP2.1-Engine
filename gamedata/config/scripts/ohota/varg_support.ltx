@@ -1,0 +1,9 @@
+[logic]
+active = sr_idle1
+ 
+[sr_idle1]
+on_actor_inside = sr_idle2 %+varg_support_spawn =akill.varg_support_battle%
+
+[sr_idle2]
+on_actor_outside = {-varg_support_have} nil %+varg_support_fail%
+on_info = {+varg_support_have} nil

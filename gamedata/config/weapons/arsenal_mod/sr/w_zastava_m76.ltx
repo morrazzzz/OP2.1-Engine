@@ -1,0 +1,290 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Снайперская винтовка "Zastava" ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[wpn_zastava_m76]:WP_BINOC
+min_radius               	= 0
+max_radius               	= 160
+
+inv_name	        		= ars-zastava
+description				= enc_weapons1_wpn_zastava
+
+cost						= 15500
+inv_weight					= 4.45
+
+visual                   	= weapons-new\zastava_m76\wpn_m76.ogf
+
+ef_main_weapon_type			= 2
+ef_weapon_type				= 6
+
+holder_range_modifier		= 1
+holder_fov_modifier		= 1
+
+hand_dependence		     	= 1
+single_handed			= 0
+
+slot 			        = 2
+animation_slot			= 2
+
+inv_grid_width     = 6
+inv_grid_height    = 2
+inv_grid_x         = 18
+inv_grid_y         = 66
+
+ammo_limit		       	= 210
+ammo_current		     	= 90
+ammo_elapsed		     	= 15
+
+ph_mass				= 5
+
+;;;;;; Для ОП-2.1
+hit_power           = 0.90
+hit_impulse	    = 82
+hit_type 			= fire_wound
+hit_rate	    = 1.90
+fire_distance       = 650
+bullet_speed	    = 850	;начальная скорость пули
+rpm                 = 650
+
+;настройки для глушителя
+silencer_hit_power       	= 0.86
+silencer_hit_impulse	 	= 74
+silencer_fire_distance   	= 600
+silencer_bullet_speed	 	= 815
+
+ammo_mag_size				= 10
+ammo_class				= ammo_7.92x57_fmj, ammo_7.92x57_ap ;ammo_7.62x51_ap, ammo_7.62x51_fmj 
+
+fire_modes				= 1
+	
+control_inertion_factor		= 1.25f
+
+fire_dispersion_base		      = 0.025
+handling_factor				= 1.00
+use_aim_bullet				= true
+time_to_aim					= 0.5
+
+PDM_disp_base 			= 4.00
+PDM_disp_vel_factor 		= 0.9
+PDM_disp_accel_factor 		= 1.0
+PDM_crouch	 		= 1.0
+PDM_crouch_no_acc 		= 1.0
+
+cam_relax_speed        	 	= 12.5
+cam_relax_speed_ai      	= 360
+cam_dispersion         	 	= 0.25
+cam_step_angle_horz			= 0.22
+cam_dispersion_inc			= 0.22
+cam_dispertion_frac			= 0.15
+cam_max_angle				= 4.0
+cam_max_angle_horz			= 6.0
+
+fire_dispersion_condition_factor 	= 2.000
+misfire_probability 			= 0.00065
+misfire_condition_k			= 0.15
+condition_shot_dec 			= 0.0001 ;увеличение износа при каждом выстреле
+
+zoom_enabled				= true
+
+scope_status		    = 1
+scope_name 		    = wpn_addon_scope
+scope_x                     = 47		; offset in inventory icon
+scope_y                     = -5
+
+scope_zoom_factor           = 12
+scope_texture		    = Arsenal_mod\Crosshairs\wpn_zastava ;scope_zastava.dds
+
+silencer_status		    = 2
+silencer_name  		    = wpn_addon_sil_762_ar	
+silencer_x                  = 253		; offset in inventory icon
+silencer_y                  = 19
+
+grenade_launcher_status	    = 0
+
+snd_draw					= weapons\m76\draw
+snd_holster					= weapons\m76\holster
+snd_shoot					= weapons\m76\shot
+snd_empty					= weapons\m76\empty, 0.5
+snd_reload					= weapons\m76\reload
+snd_silncer_shot			= weapons\scar_cry\scar_sil_shoot ;weapons\m76\silent
+snd_gyro					= weapons\binoculars_gyro
+snd_zoomin				= weapons\binoculars_zoomin
+snd_zoomout				= weapons\binoculars_zoomout
+
+vision_present		= false
+vis_frame_speed	        = 6
+vis_frame_color		= 0.7,0.7,0.7,1.0
+found_snd		= detectors\DA-2_beep1
+
+light_color				= 0.6,0.5,0.3
+light_range				= 5
+light_var_color				= 0.05
+light_var_range				= 0.5
+light_time 				= 0.2
+
+silencer_light_color		= 0.6,0.5,0.3
+silencer_light_range		= 2
+silencer_light_var_color	= 0.05
+silencer_light_var_range	= 0.5
+silencer_light_time 		= 0.2
+
+flame_particles				= weapons\generic_weapon05
+smoke_particles				= weapons\generic_shoot_00
+silencer_smoke_particles 	      = weapons\generic_shoot_00
+
+shell_point		 			= 0,0.215,0.100
+shell_particles	 			= amik\weapons\7_62x51\7_62x51_r_01
+
+position         	    	      = -0.0252,-0.172,0
+orientation              	= 0, 0, 0
+
+fire_point               	= 0,0.216,0.715
+fire_point2            		= 0,0.17,0.463
+
+strap_position         		= -0.16,-0.40,0.15
+strap_orientation      		= -10,-5,10
+strap_bone0				= bip01_spine2
+strap_bone1				= bip01_spine1
+
+hud                      	= wpn_m76_hud
+
+[wpn_m76_hud]
+allow_inertion			= true
+shell_point				= 0.030,-0.0200,-0.0750
+shell_dir			     	= 0.0, 1.0, 0.0
+
+fire_point               	= 0,0.08,0.135
+fire_bone                	= wpn_body
+grenade_bone           		= wpn_grenade
+orientation              	= 0, 0, 0
+position                	= 0.10,-0.045,-0.0375
+visual                   	= weapons-new\zastava_m76\wpn_m76_hud.ogf
+
+anim_idle				= idle
+anim_idle_aim				= idle_aim
+anim_reload				= reload
+anim_draw				= draw
+anim_holster				= holster
+anim_shoot				= shoot
+anim_idle_sprint			= idle_sprint
+
+zoom_hide_crosshair			= true
+
+zoom_offset				= -0.099850,0.0300,-0.10
+zoom_rotate_x				= 0.02750
+zoom_rotate_y				= 0.0
+
+zoom_rotate_time		= 0.35
+rotate_time			= 0.35
+
+;;;;;;;;;;;;;;;;;;;;;;; Снайперская винтовка "Zastava" под 7.62х54 ;;;;;;;;;;;;;;;;;;;;;;
+[wpn_zastava_m77]:wpn_zastava_m76
+class				= WP_AK74
+inv_name	        	= ars-zastava_m77
+description			= enc_weapons1_wpn_zastava_m77
+
+cost					= 21500
+inv_weight				= 3.25
+
+inv_grid_x         = 12
+inv_grid_y         = 66
+scope_status		    = 2 
+scope_name 					= wpn_barska_scope
+scope_x 					= 48					
+scope_y 					= 4
+scope_zoom_factor           = 70 ;10
+;scope_texture		    = Arsenal_mod\Crosshairs\wpn_zastava_m1 
+silencer_x                  = 248
+silencer_y                  = 19
+grenade_launcher_status	         = 2
+grenade_class				= ammo_vog-25, ammo_vog-25p
+launch_speed				= 0
+
+grenade_launcher_name 	    = wpn_addon_grenade_launcher
+grenade_launcher_x               = 111
+grenade_launcher_y               = 23
+
+shell_particles	 		= amik\weapons\7_62x54\7_62x54_r
+grenade_flame_particles		= weapons\generic_shoot_00
+
+hit_power         = 1.25
+bullet_speed	  = 1200
+rpm               = 500
+
+silencer_hit_power       	= 1.15
+silencer_bullet_speed	 	= 1150
+
+ammo_mag_size				= 20
+ammo_class				= ammo_7.62x54_ap, ammo_7.62x54_7h14, ammo_7.62x54_7h1, ammo_7.62x54_izomorf 
+
+fire_modes					= 1, 3, -1
+
+fire_dispersion_base		= 0.01
+cam_relax_speed        	 	= 16.5
+cam_dispersion_inc		= 0.125
+condition_shot_dec 		= 0.00005
+
+position         	        = -0.021, -0.140, 0.035
+fire_point               	= 0,0.186,0.700
+fire_point2            		= 0,0.125,0.463
+
+snd_shoot			= weapons\m76\svu_shot_v1, 3.0
+snd_reload			= weapons\ak74_arma\aks74m3_reload
+snd_shoot_grenade		= weapons\gen_grenshoot
+snd_reload_grenade		= weapons\gen_grenload, 1.0, 0.9
+snd_switch			= weapons\groza_switch, 1.0, 0.2
+
+visual                   	= weapons-new\zastava_m76\wpn_zastava_m77.ogf
+hud                      	= wpn_m77_hud
+
+[wpn_m77_hud]
+shell_point     	   	 	= 0.070,-0.045,-0.6500 ;0.020,-0.022,-0.780
+shell_dir			     	= 0.0, 1.0, 0.0
+
+fire_point			= 0,-0.005,-0.470 ;0,-0.005,-0.5075
+fire_point2              	= 0,-0.085,-0.5
+fire_bone               	= muzzle
+
+grenade_bone            	= grenade
+
+position			= -0.0485,-0.144,0.13
+orientation			= 1.65,2,0
+
+visual                   	= weapons-new\zastava_m76\wpn_zastava_m77_hud.ogf
+
+; animation names
+anim_idle				= idle
+anim_idle_aim				= idle_aim
+anim_reload				= reload
+anim_draw				= draw
+anim_holster				= holster
+anim_shoot				= shoot
+			
+anim_idle_g				= idle_w_gl
+anim_idle_g_aim				= idle_aim_w_gl
+anim_reload_g				= reload_g
+anim_shoot_g				= shoot_g
+anim_switch_grenade_on		= idle_aim_w_gl
+anim_switch_grenade_off		= idle_aim_w_gl
+anim_draw_g				= draw_w_gl
+anim_holster_g				= holster_w_gl
+
+anim_idle_gl				= idle_w_gl
+anim_idle_gl_aim			= idle_aim_w_gl
+anim_reload_gl				= reload_w_gl
+anim_draw_gl				= draw_w_gl
+anim_holster_gl				= holster_w_gl
+anim_shoot_gl				= shoot_w_gl
+anim_idle_sprint			= idle_sprint
+
+zoom_offset		= -0.10740,0.0630,-0.115 ;-0.107075,0.061975,-0.115
+zoom_rotate_x		= 0.02750 ;0.035
+zoom_rotate_y		= 0.02845
+
+grenade_normal_zoom_offset		= -0.10740,0.0630,-0.115
+grenade_normal_zoom_rotate_x		= 0.0270
+grenade_normal_zoom_rotate_y		= 0.0285
+
+grenade_zoom_offset		= -0.06880,0.0005,-0.025
+grenade_zoom_rotate_x		= -0.0822
+grenade_zoom_rotate_y		= 0.02615
+
+zoom_rotate_time		= 0.3
+rotate_time			= 0.3

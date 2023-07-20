@@ -1,0 +1,57 @@
+-- Биндер мин
+function init(obj)
+    local new_binder = mine_binder(obj)
+    obj:bind_object(new_binder)
+end
+
+---------------------------------------------------------------------------------------------
+-- Порядок загрузки:
+-- reload
+-- reinit
+-- load
+-- net_spawn
+---------------------------------------------------------------------------------------------
+class "mine_binder" (object_binder)
+function mine_binder:__init(obj) super(obj)
+	self.beep = sound_object([[zwuk\radiomayak]])
+end 
+
+function mine_binder:net_spawn(data)
+    if not object_binder.net_spawn(self, data) then
+        return false
+    end
+	
+	self.beep:play_at_pos(db.actor, self.object:position(), 0, sound_object.s3d+sound_object.looped)
+	
+--	console:execute("load ~~~ net_spawn: "..self.object:id())
+    return true
+end
+
+function mine_binder:net_destroy()
+--	console:execute("load ~~~ net_destroy: "..self.object:id())
+
+	self.beep:stop()
+	-- состояние 0 == взрыв
+	if self.object:condition() == 0 then
+		-- мина исчезла в онлайне и не телепорт = взрыв
+--		console:execute("load ~~~ blow: "..self.object:id())
+		give_info("info_mina_"..string.sub(self.object:section(),6))
+	
+		-- проверяем, все ли мины подорваны
+		local all_mines_done = true
+		for i = 1,20 do		-- количество мин
+			if not has_info("info_mina_"..tostring(i)) then
+				all_mines_done = false
+				break
+			end
+		end
+		
+		if all_mines_done then
+			-- все - выдаем поршень завершения задания
+			give_info("find_mina_have") 
+			sms("%c[255,160,160,160]".."МЕЧЕНЫЙ:".."\\n".."%c[255,255,128,128]Путь расчищен, рандеву на Затоне. Не подведи, командир!", nil, nil, 15000)
+		end
+	end
+
+    object_binder.net_destroy(self)
+end

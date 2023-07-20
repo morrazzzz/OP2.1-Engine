@@ -1,0 +1,57 @@
+class "god_options" (CUIWindow)
+ 
+function god_options:__init() super()
+end
+
+function god_options:__finalize()
+end
+	
+function god_options:InitControls(x, y, xml, handler)
+	if not amk.check_game() then return end
+	
+	self:Init(x,y, 738, 416)
+	self:SetAutoDelete(true)
+	
+	self.bk = xml:InitFrame("frame_god", self)
+
+	xml:InitStatic("god_options:cap_warning", self)
+
+	handler.god_invul = xml:InitCheck("god_options:check_invul", self)
+	handler.god_invul:SetCheck(db.god.u[1])
+	handler.god_invul:SetText(handler.god_invul:GetText()..used(db.god.c[1]))
+	handler.god_item = xml:InitCheck("god_options:check_item", self)
+	handler.god_item:SetCheck(db.god.u[2])
+	handler.god_item:SetText(handler.god_item:GetText()..used(db.god.c[2]))
+	handler.god_jump = xml:InitCheck("god_options:check_jump", self)
+	handler.god_jump:SetCheck(db.god.u[3])
+	handler.god_jump:SetText(handler.god_jump:GetText()..used(db.god.c[3]))
+	handler.god_coll = xml:InitCheck("god_options:check_coll", self)
+	handler.god_coll:SetCheck(db.god.u[4])
+	handler.god_coll:SetText(handler.god_coll:GetText()..used(db.god.c[4]))
+	handler.god_docs = xml:InitCheck("god_options:check_docs", self)
+	handler.god_docs:SetCheck(db.god.u[5])
+	handler.god_docs:SetText(handler.god_docs:GetText()..used(db.god.c[5]))
+	handler.god_tele = xml:InitCheck("god_options:check_tele", self)
+	handler.god_tele:SetCheck(db.god.u[6])
+	handler.god_tele:SetText(handler.god_tele:GetText()..used(db.god.c[6]))
+	handler.god_loc = xml:InitCheck("god_options:check_loc", self)
+	handler.god_loc:SetCheck(has_info("god_loc"))
+	handler.god_loc:Enable(not has_info("god_loc"))
+
+	handler.btn_op21 = xml:Init3tButton("god_options:btn_op21", self)
+	handler:Register(handler.btn_op21, "btn_op21")
+
+	handler.btn_amk = xml:Init3tButton("god_options:btn_amk", self)
+	handler:Register(handler.btn_amk, "btn_amk")
+
+	handler.btn_game = xml:Init3tButton("god_options:btn_game", self)
+	handler:Register(handler.btn_game, "btn_game")
+end
+
+function used(times)
+	if times == 0 then
+		return ""
+	else
+		return " ("..game.translate_string("god_used")..": "..times..")"
+	end
+end

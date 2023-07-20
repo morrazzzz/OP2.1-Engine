@@ -1,0 +1,20 @@
+[logic]
+active = sr_idle@one
+
+[sr_idle@one]
+on_npc_in_zone = 19936 |restr_ozersky_check_4| sr_idle@two %=nano_suit_moduls.vol_sms_14%
+
+[sr_idle@two]
+on_timer = 20000 | sr_idle@three %=nano_suit_moduls.vol_sms_15%
+
+[sr_idle@three]
+on_timer = 20000 | sr_idle@four %=nano_suit_moduls.vol_sms_16%
+
+[sr_idle@four]
+on_timer = 20000 | sr_idle@five %=nano_suit_moduls.vol_sms_17%
+
+[sr_idle@five]
+on_timer = 15000 | sr_idle@six %=nano_suit_moduls.vol_sms_18%
+
+[sr_idle@six]
+on_timer = 10000 | nil %+vol_pizdec_tvoritsya6 =nano_suit_moduls.invul_4_seconds =nano_suit_moduls.vol_sms_19%

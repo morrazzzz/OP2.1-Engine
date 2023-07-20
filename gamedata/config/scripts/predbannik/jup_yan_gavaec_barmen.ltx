@@ -1,0 +1,34 @@
+; general section
+[logic]
+active = walker@gavaec
+combat_ignore = combat_ignore
+trade = trade\barman.ltx
+inv_max_weight = 10000
+
+[walker@gavaec]
+path_walk = jup_yan_gavaec_barmen_walk
+path_look = jup_yan_gavaec_barmen_look
+;Стоит за прилавком, как сталкеры у столов в баре
+def_state_moving = bar_fas
+meet = meet
+combat_ignore_cond = always
+
+[remark@meet]
+anim = bar_fas
+snd = nil
+target = actor
+on_signal = anim_end|meet
+
+[meet]
+meet_state = 2|bar_fas@jup_a6_stalker_barmen_greeting_1,5|{+info} bar_fas@jup_a6_stalker_barmen_farewell_1
+meet_state_wpn = 2|bar_fas@jup_a6_stalker_barmen_greeting_2,5|{+info} bar_fas@jup_a6_stalker_barmen_farewell_2
+danger = danger_condition@gavaec
+use = true
+use_wpn = false
+combat_ignore_cond = always
+
+[danger_condition@gavaec]
+ignore_distance       = 0
+
+[combat_ignore]
+combat_ignore_cond = always

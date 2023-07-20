@@ -1,0 +1,737 @@
+prefetch("lua_ext")
+
+schemes = {} -- соответствие схем модулям
+stypes = {} -- типы схем
+
+-- Загружает схему из файла на диске и активирует в мотиваторе.
+-- filename - имя файла, в котором реализована схема, без расширения
+-- scheme - имя схемы
+function load_scheme(filename, scheme, stype)
+	schemes[scheme] = filename
+	stypes[scheme] = stype
+end
+
+-- Глобальные singletone классы
+newEngine = IsOPEngine~=nil and type(IsOPEngine)=="function" and IsOPEngine()
+config = system_ini()
+console = get_console()
+graph = game_graph()
+screen = device()
+
+-- Следующие singletone классы задаются в start_game_callback
+ai = nil
+Cycle_Task = nil
+ID_Cleaner = nil
+netpacket = nil
+
+-- В bind_actor.net_spawn
+hud = nil
+Arena = nil
+
+-- Старт игры
+function start_game_callback()
+	if newEngine then
+		console:execute("hud_min_crosshair off")
+		console:execute("dialog_numbered on")
+	end
+	
+	ai = alife()
+	Cycle_Task = cycle_task.CCycleTask()
+	ID_Cleaner = id_cleaner.CIDCleaner()
+	netpacket = m_netpk.c_net_packet()
+	
+	xr_sound.clear_all_sound_object()
+	dialog_manager.fill_phrase_table() 
+	amk.on_game_start()
+end
+
+-- Короткие имена для частых функций
+voice = xr_sound.get_safe_sound_object
+sms = news_manager.send_tip
+
+-- Инвентарь ГГ, объявляется в bind_actor.net_spawn
+Inventory = nil
+function has(s,i)
+	return Inventory:has(s,i)
+end
+function has_good(s,i)
+	return Inventory:has_good(s,i)
+end
+function got(s,i)
+	Inventory:got(s,i)
+end
+function lost(s,i)
+	Inventory:lost(s,i)
+end
+function lost_good(s,i)
+	Inventory:lost_good(s,i)
+end
+function lost_all(s)
+	Inventory:lost_all(s)
+end
+function transfer(v,s,t)
+	Inventory:transfer(v,s,t)
+end
+-- Нужно ли контролировать состояние предмета (стволы и броники)
+function condition_item(s)
+	return config:line_exist(s, "weapon") or config:line_exist(s, "outfit")
+end
+-- Спавн предмета в инвентарь актора без вывода сообщения
+function got_item(s)
+	create(s,xyz(0,0,0),0,0,0)
+end
+
+-- Тайники
+Treasure = treasure.CTreasure()
+function got_treasure(t)
+	Treasure:give(t)
+end
+
+-- Деньги
+function got_money(num)
+	db.actor:give_money(num)
+	game_stats.money_quest_update(num) 
+	news_manager.relocate_money("in", num)
+end
+function lost_money(num)
+	db.actor:give_money(-num)
+	game_stats.money_quest_update(-num) 
+	news_manager.relocate_money("out", num)
+end
+
+-- Проиграть звук
+function say(s)
+	voice(s):play_no_feedback(db.actor, sound_object.s2d, 0, vector(), 1.0)
+end
+
+-- Вместо has_alife_info, alife():has_info, db.actor:has_info
+function has_info(i)
+	return ai:has_info(0,i)
+end
+
+-- Вместо alife():dont_has_info, db.actor:dont_has_info
+function dont_has_info(i)
+	return ai:dont_has_info(0,i)
+end
+
+-- Вместо db.actor:give_info_portion
+function give_info(i)
+	return db.actor:give_info_portion(i)
+end
+
+-- Вместо db.actor:disable_info_portion
+function disable_info(i)
+	return db.actor:disable_info_portion(i)
+end
+
+-- Вместо alife():create() все варианты
+function create(...)
+	return ai:create(...)
+end
+
+-- Вместо alife():release(), alife():release(alife():object(id|name)) с проверками
+-- В качестве параметра можно передавать серверный объект, клиентский объект и просто id. Для объектов алспауна можно передавать name
+function release(o)
+	if not o then return end
+
+	if type(o) ~= "userdata" then
+		local o = ai:object(o)
+		if o then ai:release(o) end
+	elseif o.m_game_vertex_id then
+		ai:release(o)
+	elseif o.game_vertex_id then
+		local o = ai:object(o:id())
+		if o then ai:release(o) end
+	end
+end
+
+-- Вместо alife():object()
+function server_object(o)
+	return ai:object(o)
+end
+
+-- Вместо alife():story_object()
+function story_object(o)
+	return ai:story_object(o)
+end
+
+-- Уровень, на котором находится объект
+function object_level(o)
+	return graph:vertex(o.m_game_vertex_id and o.m_game_vertex_id or o:game_vertex_id()):level_id()
+end
+
+-- Название уровня, на котором находится объект
+function object_level_name(o)
+	return ai:level_name(object_level(o))
+end
+
+-- Вместо level.object_by_id()
+level_object = level.object_by_id
+
+-- Вместо level_object_by_sid()
+function level_story_object(sid)
+	local se_obj = story_object(sid)
+	if se_obj then
+		return level_object(se_obj.id)
+	end
+	return nil
+end
+
+function id_by_sid(sid)
+	local se_obj = story_object(sid)
+	if se_obj then
+		return se_obj.id
+	end
+	return nil
+end
+
+-- Это использовать только при разовых указаниях позиции для create и т.п. Для всего остального использовать свой экземпляр класса vector().
+pos_only = vector()
+function xyz(x,y,z)
+	return pos_only:set(x,y,z)
+end
+
+function printf(fmt,...)
+--[[ Раскомментить это для включения расширенного лога
+	console:execute(string.gsub(string.format(fmt,...), " ", "_")) 
+	console:execute("flush") 
+--]]
+end
+
+-- Вывод в лог
+function log(fmt,...)
+	local arg={...}
+	local message=string.extformat(fmt,unpack(arg))
+	if newEngine then
+		engine_log(message)
+	else
+		console:execute("load ~"..tostring(message):gsub("%s+","_"))
+	end
+end
+
+function wait(time_to_wait)
+    verify_if_thread_is_running()
+    if (time_to_wait == nil) then
+        coroutine.yield()
+    else
+        local time_to_stop = time_global() + time_to_wait
+        while time_global() <= time_to_stop do
+            coroutine.yield()
+        end
+    end
+end
+
+function action(obj,...)
+    local arg = {...}
+    local act = entity_action()
+    local i = 1
+    while true do
+        if (arg[i] ~= nil) then
+            act:set_action(arg[i])
+        else
+            break
+        end
+        i = i + 1
+    end
+    if (obj ~= nil) then
+        obj:command(act,false)
+    end
+    return  entity_action(act)
+end
+
+function distance_between(obj1, obj2)
+    return obj1:position():distance_to(obj2:position())
+end
+
+function reset_action(npc, script_name)
+    if npc:get_script() then
+       npc:script(false, script_name)
+    end
+    npc:script(true, script_name)
+end
+
+-- Константа, которую использовать в местах, где нужно задать неограниченное время действия
+time_infinite = 100000000
+
+function random_choice(...)
+    local arg = {...}
+    local r = math.random(1, #arg)
+    return arg[r]
+end
+
+function if_then_else(cond, if_true, if_false)
+    if cond then
+        return if_true
+    end
+    return if_false
+end
+
+-- Парсит строку вида "ааа, ббб, ввв..." в таблицу {"ааа", "ббб", "ввв", ...}
+function parse_names(s)
+    local t = {}
+    for name in string.gfind(s, "([%w_\\]+)%p*") do
+        table.insert(t, name)
+    end
+
+    return t
+end
+
+-- Парсит строку вида "n1, n2, n3..." в таблицу {n1, n2, n3, ...} где n1, n2, n3... - целые числа
+function parse_nums(s)
+	local t = {}
+
+	for entry in string.gfind(s, "([%d%.]+)%,*") do
+		table.insert(t, tonumber(entry))
+	end
+
+	return t
+end
+
+function is_object_online(obj_id)
+	return level_object(obj_id) ~= nil
+end
+
+function get_clsid(npc)
+    if npc == nil then return nil end
+	return npc:clsid()
+end
+
+function isWeapon(object)
+	local clsid_weapon = {
+		[clsid.wpn_ak74_s]              = true,
+		[clsid.wpn_bm16_s]              = true,
+		[clsid.wpn_grenade_f1]          = true,
+		[clsid.wpn_grenade_fake]        = true,
+		[clsid.wpn_grenade_launcher]    = true,
+		[clsid.wpn_grenade_rgd5]        = true,
+		[clsid.wpn_grenade_rpg7]        = true,
+		[clsid.wpn_groza_s]             = true,
+		[clsid.wpn_hpsa_s]              = true,
+		[clsid.wpn_knife_s]             = true,
+		[clsid.wpn_lr300_s]             = true,
+		[clsid.wpn_pm_s]                = true,
+		[clsid.wpn_rpg7_s]              = true,
+		[clsid.wpn_shotgun_s]           = true,
+		[clsid.wpn_svd_s]               = true,
+		[clsid.wpn_svu_s]               = true,
+		[clsid.wpn_usp45_s]             = true,
+		[clsid.wpn_val_s]               = true,
+		[clsid.wpn_vintorez_s]          = true,
+		[clsid.wpn_walther_s]           = true,
+	}
+    return (object and clsid_weapon[object:clsid()])
+end
+function isWeaponFireOnly(object)
+	local clsid_weapon_fireonly = {
+		[clsid.wpn_ak74_s]              = true,
+		[clsid.wpn_bm16_s]              = true,
+		[clsid.wpn_fn2000]              = true,
+		[clsid.wpn_fort]                = true,
+		[clsid.wpn_groza_s]             = true,
+		[clsid.wpn_hpsa_s]              = true,
+		[clsid.wpn_lr300_s]             = true,
+		[clsid.wpn_pm_s]                = true,
+		[clsid.wpn_rg6_s]               = true,
+		[clsid.wpn_rpg7_s]              = true,
+		[clsid.wpn_shotgun_s]           = true,
+		[clsid.wpn_svd_s]               = true,
+		[clsid.wpn_svu_s]               = true,
+		[clsid.wpn_usp45_s]             = true,
+		[clsid.wpn_val_s]               = true,
+		[clsid.wpn_vintorez_s]          = true,
+		[clsid.wpn_walther_s]           = true,
+	}
+    return (object and clsid_weapon_fireonly[object:clsid()])
+end
+IAmAWeapon = {}
+function IAmAWeaponInit()
+    IAmAWeapon = {
+		[clsid.wpn_ak74_s]              = true,
+		[clsid.wpn_bm16_s]              = true,
+		[clsid.wpn_grenade_f1]          = true,
+		[clsid.wpn_grenade_fake]        = true,
+		[clsid.wpn_grenade_launcher]    = true,
+		[clsid.wpn_grenade_rgd5]        = true,
+		[clsid.wpn_grenade_rpg7]        = true,
+		[clsid.wpn_groza_s]             = true,
+		[clsid.wpn_hpsa_s]              = true,
+		[clsid.wpn_knife_s]             = true,
+		[clsid.wpn_lr300_s]             = true,
+		[clsid.wpn_pm_s]                = true,
+		[clsid.wpn_rpg7_s]              = true,
+		[clsid.wpn_rg6_s]               = true,
+		[clsid.wpn_shotgun_s]           = true,
+		[clsid.wpn_svd_s]               = true,
+		[clsid.wpn_svu_s]               = true,
+		[clsid.wpn_usp45_s]             = true,
+		[clsid.wpn_val_s]               = true,
+		[clsid.wpn_vintorez_s]          = true,
+		[clsid.wpn_walther_s]           = true
+    }
+end
+IAmAWeaponFireOnly = {}
+function IAmAWeaponFireOnlyInit()
+    IAmAWeaponFireOnly = {
+		[clsid.wpn_ak74_s]              = true,
+		[clsid.wpn_bm16_s]              = true,
+		[clsid.wpn_fn2000]              = true,
+		[clsid.wpn_fort]                = true,
+		[clsid.wpn_groza_s]             = true,
+		[clsid.wpn_hpsa_s]              = true,
+		[clsid.wpn_lr300_s]             = true,
+		[clsid.wpn_pm_s]                = true,
+		[clsid.wpn_rg6_s]               = true,
+		[clsid.wpn_rpg7_s]              = true,
+		[clsid.wpn_shotgun_s]           = true,
+		[clsid.wpn_svd_s]               = true,
+		[clsid.wpn_svu_s]               = true,
+		[clsid.wpn_usp45_s]             = true,
+		[clsid.wpn_val_s]               = true,
+		[clsid.wpn_vintorez_s]          = true,
+		[clsid.wpn_walther_s]           = true
+    }
+end
+function isMagazinedWeapon(object)
+local clsid_magazined_weapon = {
+    [clsid.wpn_ak74_s]              = true,
+    [clsid.wpn_bm16_s]              = true,
+    [clsid.wpn_groza_s]             = true,
+    [clsid.wpn_hpsa_s]              = true,
+    [clsid.wpn_lr300_s]             = true,
+    [clsid.wpn_pm_s]                = true,
+--    [clsid.wpn_rpg7_s]              = true,
+    [clsid.wpn_shotgun_s]           = true,
+    [clsid.wpn_svd_s]               = true,
+    [clsid.wpn_svu_s]               = true,
+    [clsid.wpn_usp45_s]             = true,
+    [clsid.wpn_val_s]               = true,
+    [clsid.wpn_vintorez_s]          = true,
+    [clsid.wpn_walther_s]           = true,
+    [clsid.wpn_binocular_s]         = true,
+    [clsid.wpn_rg6_s]               = true,
+}
+    return (object and clsid_magazined_weapon[object:clsid()])
+end
+
+-- Вычисляет yaw в радианах
+function yaw( v1, v2 )
+    return  math.acos( ( (v1.x*v2.x) + (v1.z*v2.z ) ) / math.sqrt((v1.x*v1.x + v1.z*v1.z ) * (v2.x*v2.x + v2.z*v2.z )) )
+end
+
+function yaw_degree( v1, v2 )
+    return  (math.acos( ( (v1.x*v2.x) + (v1.z*v2.z ) ) / math.sqrt((v1.x*v1.x + v1.z*v1.z ) * (v2.x*v2.x + v2.z*v2.z )) ) * 57.2957)
+end
+function yaw_degree3d( v1, v2 )
+    return  (math.acos((v1.x*v2.x + v1.y*v2.y + v1.z*v2.z)/math.sqrt((v1.x*v1.x + v1.y*v1.y + v1.z*v1.z )*(v2.x*v2.x + v2.y*v2.y + v2.z*v2.z)))*57.2957)
+end
+
+function vector_cross (v1, v2)
+    return vector ():set (v1.y  * v2.z  - v1.z  * v2.y, v1.z  * v2.x  - v1.x  * v2.z, v1.x  * v2.y  - v1.y  * v2.x)
+end
+
+-- Вращает вектор вокруг оси y против часовой стрелки
+function vector_rotate_y (v, angle)
+    angle = angle * 0.017453292519943295769236907684886
+    local c = math.cos (angle)
+    local s = math.sin (angle)
+    return vector ():set (v.x * c - v.z * s, v.y, v.x * s + v.z * c)
+end
+
+function stop_play_sound(obj)
+	if obj:alive() == true then
+		obj:set_sound_mask(-1)
+		obj:set_sound_mask(0)
+	end
+end
+
+function object_type(obj)
+    local otype = get_clsid(obj)
+    local type
+
+    if  otype == clsid.actor or
+        otype == clsid.script_stalker or
+        otype == clsid.script_trader
+    then
+        type = "stalker"
+    elseif  otype == clsid.crow or
+        otype == clsid.zombie or
+        otype == clsid.flesh or
+        otype == clsid.controller or
+        otype == clsid.bloodsucker or
+        otype == clsid.burer or
+        otype == clsid.fracture or
+        otype == clsid.chimera or
+        otype == clsid.boar or
+        otype == clsid.flesh_group or
+        otype == clsid.dog_red or
+        otype == clsid.dog_black or
+        otype == clsid.cat or
+        otype == clsid.pseudo_gigant
+    then
+        type = "monstr"
+    elseif  otype == clsid.wpn_fn2000 or
+        otype == clsid.wpn_ak74 or
+        otype == clsid.wpn_lr300 or
+        otype == clsid.wpn_hpsa or
+        otype == clsid.wpn_pm or
+        otype == clsid.wpn_fort or
+        otype == clsid.wpn_binocular or
+        otype == clsid.wpn_shotgun or
+        otype == clsid.wpn_svd or
+        otype == clsid.wpn_svu or
+        otype == clsid.wpn_rpg7 or
+        otype == clsid.wpn_val or
+        otype == clsid.wpn_vintorez or
+        otype == clsid.wpn_walther or
+        otype == clsid.wpn_usp45 or
+        otype == clsid.wpn_groza or
+        otype == clsid.wpn_knife or
+        otype == clsid.wpn_scope or
+        otype == clsid.wpn_silencer or
+        otype == clsid.wpn_grenade_launcher or
+        otype == clsid.obj_physic or
+        otype == clsid.obj_breakable or
+        otype == clsid.device_pda or
+        otype == clsid.device_torch or
+        otype == clsid.device_detector_simple or
+        otype == clsid.obj_bolt or
+        otype == clsid.obj_medkit or
+        otype == clsid.obj_food or
+        otype == clsid.obj_bottle or
+        otype == clsid.obj_antirad or
+        otype == clsid.obj_explosive or
+        otype == clsid.obj_document or
+        otype == clsid.obj_attachable or
+        otype == clsid.wpn_grenade_f1 or
+        otype == clsid.wpn_grenade_rpg7 or
+        otype == clsid.wpn_grenade_rgd5 or
+        otype == clsid.wpn_grenade_fake or
+        otype == clsid.equ_scientific or
+        otype == clsid.equ_stalker or
+        otype == clsid.equ_military or
+        otype == clsid.equ_exo or
+        otype == clsid.wpn_ammo or
+        otype == clsid.wpn_ammo_vog25 or
+        otype == clsid.wpn_ammo_og7b or
+        otype == clsid.wpn_ammo_m209
+    then
+        type = "item"
+    else
+        type = "none"
+    end
+
+    -- проверяем не труп ли это
+    if type == "stalker" or
+       type == "monstr" then
+        if obj:alive() == false then
+            type = "corpse"
+        end
+    end
+
+    return type
+end
+
+-- Печать таблицы
+function print_table(tbl, subs, noflush)
+	if not subs then subs = "" end
+
+	for k,v in pairs(tbl) do
+		if type(v) == "table" then
+			log(subs..tostring(k).." = table:")
+			print_table(v, "   ", true)
+		elseif type(v) == "userdata" then
+			log(subs..tostring(k).." = userdata")
+		else
+			log(subs..tostring(k).." = "..tostring(v))
+		end
+	end
+
+	if not noflush then
+		console:execute("flush")
+	end
+end
+
+function switch_online(id)
+    if id == -1 then return end
+	ai:set_switch_online(id, true)
+	ai:set_switch_offline(id, false)
+end
+
+function switch_offline(npc)
+    if npc == nil
+		or ( ( IsStalker(npc) or IsMonster(npc) )
+		and npc:alive() == false  )
+	then return end
+	ai:set_switch_online(npc:id (), false)
+	ai:set_switch_offline(npc:id (), true)
+end
+
+IAmAStalker = {}
+function IAmAStalkerInit()
+    IAmAStalker = {
+        [clsid.actor] = true,
+        [clsid.script_stalker] = true
+    }
+end
+IAmAMonster = {}
+function IAmAMonsterInit()
+    IAmAMonster = {
+		[clsid.boar_s] = true,
+		[clsid.bloodsucker_s] = true,
+		[clsid.dog_s] = true,
+		[clsid.flesh_s] = true,
+		[clsid.pseudodog_s] = true,
+		[clsid.psy_dog_s] = true,
+		[clsid.burer_s] = true,
+		[clsid.cat_s] = true,
+		[clsid.chimera_s] = true,
+		[clsid.controller_s] = true,
+		[clsid.fracture_s] = true,
+		[clsid.poltergeist_s] = true,
+		[clsid.gigant_s] = true,
+		[clsid.zombie_s] = true,
+		[clsid.tushkano_s] = true,
+		[clsid.snork_s] = true
+    }
+end
+
+function IsStalker(object, class_id)
+    local cls = class_id or get_clsid (object)
+	return cls and IAmAStalker[cls] ~= nil
+end
+
+function IsMonster(object, class_id)
+    local cls = class_id or get_clsid (object)
+	return cls and IAmAMonster[cls] ~= nil
+end
+
+function IsAlive( obj )
+	if obj==nil then return false end
+    local cls = obj:clsid()
+	return (IAmAStalker[cls] or IAmAMonster[cls]) and obj:alive()
+end
+	
+-- быстрый if
+function iif(t,t1,t2)
+	if t then
+		return t1
+	else
+		return t2
+	end
+end
+
+-- значение между
+function between(t,t1,t2)
+	return t >= t1 and t <= t2
+end
+
+-- Вывод сообщения об ошибке, зависе
+function abort(fmt, ...)
+	local reason = (...==nil and fmt) or string.format(fmt, ...)
+	if db.actor then
+		local msg = "!!!АХТУНГ!!!".."\\n%c[255,255,0,0]"..reason
+		db.actor:give_game_news(msg, "ui\\ui_iconsTotal", Frect():set(913,752,83,47), 0, 80000) 
+	end
+	log(reason)
+	console:execute("flush")
+end
+
+function set_inactivate_input_time(delta)
+	db.storage[db.actor:id()].disable_input_time = game.get_game_time()
+	db.storage[db.actor:id()].disable_input_idle = delta
+	level.disable_input()
+end
+
+-- проверяет целую часть числа на нечётность
+function odd(x)
+	return math.floor(x*0.5)*2 == math.floor(x)
+end
+
+--' Усталость
+function on_actor_critical_power()
+	if has_info("esc_trader_newbie") then
+		game.start_tutorial("part_11_weakness")
+	end
+	if not has_info("encyclopedy_tutorial_weakness") then
+		give_info("encyclopedy_tutorial_weakness")
+	end
+end
+
+function on_actor_critical_max_power()
+end
+
+--' Кровотечение
+function on_actor_bleeding()
+	if has_info("esc_trader_newbie") then
+		game.start_tutorial("part_8_wound")
+	end
+	if not has_info("encyclopedy_tutorial_wound") then
+		give_info("encyclopedy_tutorial_wound")
+	end
+end
+
+function on_actor_satiety()
+end
+
+--' Радиация
+function on_actor_radiation()
+	if has_info("esc_trader_newbie") then
+		game.start_tutorial("part_6_radiation")
+	end
+	if not has_info("encyclopedy_tutorial_radiation") then
+		give_info("encyclopedy_tutorial_radiation")
+	end
+end
+
+--' Заклинило оружие
+function on_actor_weapon_jammed()
+	if has_info("esc_trader_newbie") then
+		game.start_tutorial("part_9_weapon")
+	end
+	if not has_info("encyclopedy_tutorial_weapon") then
+		give_info("encyclopedy_tutorial_weapon")
+	end
+end
+
+--' не может ходить изза веса
+function on_actor_cant_walk_weight()
+	if has_info("esc_trader_newbie") then
+		game.start_tutorial("part_14_overload")
+	end
+	if not has_info("encyclopedy_tutorial_overload") then
+		give_info("encyclopedy_tutorial_overload")
+	end
+end
+
+--' пси воздействие
+function on_actor_psy()
+end
+
+function get_texture_info(id_name, id_default)
+	if id_default == nil then id_default = id_name end
+
+	local task_info = GetTextureInfo(id_name, id_default)
+	local r = task_info:get_rect()
+
+	r.x2 = r.x2 - r.x1
+	r.y2 = r.y2 - r.y1
+	return task_info:get_file_name(), r
+end
+
+--' получение иконки предмета для give_talk_message и give_game_news
+function get_item_icon(item)
+	return Frect():set(
+		config:r_u32(item, "inv_grid_x")*50,
+		config:r_u32(item, "inv_grid_y")*50,
+		config:r_u32(item, "inv_grid_width")*50,
+		config:r_u32(item, "inv_grid_height")*50)
+end
+
+function ammo_section(section)
+	return config:r_string(section, "class") == "AMMO"
+end
+
+old_user_name = user_name
+user_name = function()
+	return ui_mm_opt_add.GetUserName()
+end

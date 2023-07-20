@@ -1,0 +1,37 @@
+[smart_terrains] 
+none = true 
+
+[logic]
+active = mob_walker
+on_hit = hit
+
+[mob_walker] 
+path_walk = vol_bloodsucker_walk_7
+path_look = vol_bloodsucker_look
+friendly = true
+state = invis
+on_timer = 5000| mob_walker@bl_2
+
+[mob_walker@bl_2] 
+path_walk = vol_bloodsucker_walk_7
+path_look = vol_bloodsucker_look
+friendly = true
+state = vis
+on_info = {+vol_sosich_go} mob_walker@bl_round, {+taynik_nayti_oz_10_fail} nil
+
+[mob_walker@bl_round] 
+path_walk = vol_bloodsucker_walk_round_7
+friendly = true
+state = vis
+on_info = {+vol_pizdec_tvoritsya6} mob_walker@bl_3, {+taynik_nayti_oz_10_fail} nil
+
+[mob_walker@bl_3] 
+path_walk = vol_bloodsucker_walk_9
+path_look = vol_bloodsucker_look_9
+friendly = true
+actor_friendly = true
+state = vis
+on_signal = del | nil %=release%
+
+[hit] 
+on_info = %+taynik_nayti_oz_10_fail%

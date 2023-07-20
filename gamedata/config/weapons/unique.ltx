@@ -1,0 +1,625 @@
+; Уникальное оружие
+
+; Экспериментальный Fort
+[wpn_fort_m1]:wpn_fort	;Fort-15
+inv_name						= wpn-fort_m
+description						= enc_weapons1_wpn-fort_m1
+ammo_mag_size		 			= 16
+inv_weight					= 0.73
+ammo_class					= ammo_9x19_fmj, ammo_9x19_pbp
+visual                   	= weapons\fort\wpn_fort15.ogf
+hud                      	= wpn_fort_m1_hud
+
+inv_grid_x						= 10
+inv_grid_y						= 21
+cost                                                    = 620
+snd_draw					= weapons\aps\aps_draw
+snd_holster					= weapons\aps\aps_holster
+snd_reload					= weapons\fort\reload_m1
+
+fire_dispersion_base		= 0.17
+hit_power           = 0.59
+fire_distance       = 55
+
+silencer_hit_power       	= 0.57
+silencer_fire_distance   	= 50
+
+[wpn_fort_m1_hud]
+shell_point			= -0.0300,0.0550,-0.3000
+fire_point			= 0.0000,0.0600,-0.2050
+
+fire_bone                	= wpn_body
+orientation              	= 2.5,1.75,0
+position                 	= 0.130, -0.060, -0.065
+visual                   	= weapons\fort\wpn_fort15_hud.ogf 
+
+anim_holster				= holster
+anim_idle					= idle
+anim_empty					= empty
+anim_reload					= reload 
+anim_reload_empty			      = reload_empty
+anim_draw					= draw 
+anim_draw_empty				= draw_empty
+anim_shoot					= shoot
+anim_shot_last				= shoot_last
+anim_close					= close
+anim_idle_aim				= idle_aim
+anim_idle_sprint			      = idle_sprint
+
+;смещения HUD для режима приближения
+zoom_offset			= -0.12650,0.07670,-0.0330
+zoom_rotate_x		= 0.030500
+zoom_rotate_y		= 0.043550
+
+
+; Спас-12 Хантера
+[wpn_spas12_m1]:wpn_spas12	
+description				= enc_weapons1_wpn-spas12_m1
+cost					 	= 6500
+cheat_item = true
+ammo_mag_size		 		= 10
+
+fire_dispersion_base		= 0.22
+control_inertion_factor		= 1.2f
+cam_dispersion          	= 0.35
+cam_dispersion_inc		= 0.25
+cam_dispertion_frac		= 0.25
+cam_max_angle			= 5.0
+cam_max_angle_horz		= 8.0
+cam_step_angle_horz		= 1.0
+
+misfire_probability 		= 0.0006
+condition_shot_dec 		= 0.000025
+inv_name				= wpn-spas12_m1
+
+inv_grid_width     = 5
+inv_grid_x	   = 0
+inv_grid_y         = 34
+shell_point			= 0.0, 0.138, 0.07
+fire_point               	= 0.0, 0.134, 0.629
+fire_point2              	= 0.0, 0.103, 0.686
+
+hit_power        		= 1.15
+hit_impulse      		= 90
+hit_rate	            = 2.1
+fire_distance           = 75
+bullet_speed		= 470
+rpm                     = 140
+hud                      	= wpn_spas12_m1_hud
+position                 	= -0.024, -0.090, -0.015
+
+visual                   	= weapons\spas12\wpn_spas12h.ogf
+
+snd_shoot					= weapons\spas12\spas12h_shot      
+snd_open_weapon				= weapons\spas12\spas12h_open		
+snd_add_cartridge				= weapons\spas12\load 
+snd_close_weapon			      = weapons\spas12\spas12_close, 1.0, 0.75	       
+
+[wpn_spas12_m1_hud]:wpn_spas12_hud
+fire_point      			= 0.010000,0.140000,0.068500
+fire_point2				= 0.000000,0.125000,0.315000
+fire_bone                	= wpn_body
+orientation              	= 0, 0, 0
+position                 	= 0.085,-0.05,-0.068
+visual                   	= weapons\spas12\wpn_spas12h_hud.ogf
+
+zoom_offset			= -0.0883300,0.027600,-0.012000
+zoom_rotate_x		= -0.009800
+zoom_rotate_y		= 0.000650
+
+anim_idle_aim = idle_aim
+anim_idle_sprint = idle_sprint
+anim_open_weapon = reload1
+anim_add_cartridge = reload2
+anim_close_weapon = reload3
+
+; Боевой винчестер
+[wpn_winchester_m1]:wpn_wincheaster1300	
+description						= enc_weapons1_wpn-winchester_m1
+inv_name	        			      = wpn-winchester_m1
+cost					= 3500
+cheat_item = true
+ammo_elapsed		 	= 8
+ammo_mag_size		 	= 8
+
+fire_dispersion_base			= 0.23	
+control_inertion_factor          	= 1.0f
+handling_factor				= 1.00
+cam_relax_speed         		= 15.0	
+cam_dispersion          		= 0.33	
+cam_dispersion_inc			= 0.54	
+cam_dispertion_frac			= 1.0   
+cam_max_angle				= 8.0		
+cam_max_angle_horz			= 12.5	
+cam_step_angle_horz			= 0.25	
+misfire_probability 			= 0.0005
+condition_shot_dec 			= 0.000015
+
+inv_weight			= 3.2
+inv_grid_width			= 5
+inv_grid_height			= 2
+inv_grid_x			= 8
+inv_grid_y			= 63
+
+fire_point               		= 0.0, 0.056, 1.3
+fire_point2              		= 0, 0, 0
+fire_distance            	= 100
+rpm                      	= 160
+
+hud                      		= wpn_winchester_m1_hud
+
+normal                   		= 0,0,0
+position                 		= -0.02,0.005,-0.538
+strap_position         		= -0.24,-0.10,-0.3250
+strap_orientation      		= -15,-9,110
+visual                   	= weapons\winchester1300\wpn_superx3.ogf
+scope_status				= 2
+scope_name 				= wpn_addon_scope_hanter
+scope_x 				= 62
+scope_y 				= 3
+
+snd_draw				= weapons\superx3\tupostb
+snd_holster				= weapons\superx3\tupostb
+snd_shoot				= weapons\superx3\shoot_naf  ;shoot
+snd_empty				= weapons\superx3\empty
+snd_reload				= weapons\superx3\empty
+snd_shoot_duplet			= weapons\superx3\empty
+snd_open_weapon			= weapons\superx3\tupostb
+snd_add_cartridge			= weapons\superx3\insert
+snd_close_weapon			= weapons\superx3\zatvor
+ 
+[wpn_winchester_m1_hud]
+
+shell_point		 		= 0,0,0
+fire_point				= 0.5,0.0,0.01
+fire_point2				= 0.0,0,0
+fire_bone                	= firepoint
+
+orientation				= 1,1.5,0
+position				= 0.005,-0.04,0.0
+
+visual                   	= weapons\winchester1300\wpn_superx3_hud.ogf
+
+anim_idle				= idle
+anim_reload				= aim
+anim_draw				= draw
+anim_holster			= holster
+anim_shoot				= shoot
+anim_shoot_both 			= aim
+anim_idle_aim			= aim
+anim_idle_sprint			= sprint
+anim_open_weapon			= open
+anim_add_cartridge		= add
+anim_close_weapon			= close
+
+zoom_offset				= -0.108000,0.025000,-0.113000
+zoom_rotate_x			= 0.012000
+zoom_rotate_y			= 0.017500
+
+; Снайперская LR300
+[wpn_lr300_m1]:wpn_lr300
+description						= enc_weapons1_wpn-lr300_m1
+inv_name						= wpn-lr300_m1
+cost					= 11500
+cheat_item = true
+inv_weight				= 3.5
+fire_modes				= 1, 2, 3
+
+inv_grid_width			= 6
+inv_grid_x			= 6 ;0
+inv_grid_y			= 76 ;26
+
+fire_dispersion_base		= 0.025
+control_inertion_factor		= 1.05f
+cam_relax_speed        		= 18.5
+cam_dispersion         		= 0.15
+cam_dispersion_inc		= 0.15
+cam_dispertion_frac		= 0.15
+cam_max_angle			= 4
+cam_max_angle_horz		= 3.0
+cam_step_angle_horz		= 0.15
+
+condition_shot_dec 		= 0.000025
+
+fire_point             	= 0,0.210,0.60
+flame_particles		= weapons\generic_shoot_00 
+shell_point		 	= 0,0.210,0.089 
+PDM_disp_base 			= 1.2
+
+visual                  = weapons\lr300\wpn_lr300snip.ogf
+hud                     = wpn_lr300snip_hud
+
+hit_power          = 0.8
+fire_distance      = 600
+bullet_speed	   = 980
+rpm                = 1200 
+
+silencer_hit_power       	= 0.8
+silencer_fire_distance   	= 480
+silencer_bullet_speed	 	= 980
+
+scope_status			= 1
+silencer_status			= 1
+grenade_launcher_status	        = 0
+scope_zoom_factor			= 12
+scope_texture			= Arsenal_Mod\Crosshairs\wpn_lr300_m1
+
+snd_draw			= weapons\bull\sw_draw, 1.0, 0.15
+snd_holster			= weapons\bull\sw_host, 1.0, 0.22  
+snd_shoot			= weapons\lr300\lr300_m1_shot
+snd_shoot1			= weapons\lr300\lr300_m1_shot
+snd_shoot2			= weapons\lr300\lr300_m1_shot
+snd_shoot3			= weapons\lr300\lr300_m1_shot
+snd_reload			= weapons\sbr\sbr_reload, 1.0, 0.15
+snd_silncer_shot		= weapons\lr300\lr300_m1_shot
+
+[wpn_lr300snip_hud]
+shell_point          		= 0.05, -0.031, -0.1535
+shell_dir		 		= 0.0, 1.0, 0.0
+
+fire_point       	        = 0.0005,-0.0138,0.010
+fire_bone        	        = wpn_body
+grenade_bone 		  = wpn_grenade
+orientation      	        = 2, 2, 0
+position         	        = 0.12,-0.036,0.14
+visual           	        = weapons\lr300\wpn_lr300snip_hud.ogf
+
+anim_idle			= idle
+anim_idle_aim		= idle_aim
+anim_reload			= reload
+anim_draw			= draw
+anim_holster		= holster
+anim_shoot			= shoot_1
+anim_idle_sprint		= idle_sprint
+
+anim_idle_g					= idle
+anim_idle_g_aim				= idle_aim
+anim_reload_g				= reload
+anim_shoot_g				= shoot
+anim_switch_grenade_on		= holster
+anim_switch_grenade_off		= draw
+anim_draw_g					= shoot_1
+anim_holster_g				= holster
+
+anim_idle_gl 		= idle
+anim_idle_gl_aim 	      = idle_aim
+anim_reload_gl 		= reload
+anim_draw_gl 		= draw
+anim_holster_gl 	      = holster
+anim_shoot_gl 		= shoot_1
+
+;смещения HUD для режима приближения
+;режим обычной стрельбы
+zoom_offset			= -0.1206,0.02105,-0.16
+zoom_rotate_x		= -0.0142
+zoom_rotate_y		= -0.002
+
+grenade_normal_zoom_offset		= -0.1206,0.02105,-0.16
+grenade_normal_zoom_rotate_x		= -0.0142
+grenade_normal_zoom_rotate_y		= -0.002
+
+grenade_zoom_offset		= -0.1206,0.02105,-0.16
+grenade_zoom_rotate_x		= -0.0142
+grenade_zoom_rotate_y		= -0.002
+
+; фотик Хабарыч/Большой Бэн с фотиком
+[wpn_eagle_m2]:wpn_desert_eagle	
+description		      = enc_wpn-eagle_m2_foto
+inv_name		      = "Фотопистолет"
+
+cost			     = 10000
+
+ammo_class		      = ammo_foto
+hit_power               = 1.5
+hit_impulse		 	= 5
+condition_shot_dec	     = 0.00001
+
+inv_grid_width          = 3
+inv_grid_height         = 2
+inv_grid_x              = 42
+inv_grid_y              = 45
+
+ammo_mag_size	= 3
+silencer_x 		= 123
+silencer_y 		= 6
+;отдача
+cam_relax_speed         = 0.00001	;скорость возврата в исходное положение
+cam_dispersion          = 0.00001	;увеличения угла (в градусах) с каждым выстрелом
+cam_dispersion_inc	= 0.0	        ;увеличениe cam_dispersion с каждым выстрелом
+cam_dispertion_frac	= 0.0001	;ствол будет подыматься на cam_dispersion*cam_dispertion_frac +- cam_dispersion*(1-cam_dispertion_frac)
+cam_max_angle		= 0.0001;максимальный угол отдачи
+cam_max_angle_horz	= 0.001	;(degree) maximum shot horizontal degree 
+cam_step_angle_horz	= 0.001	;(degree) size of step camera moved in horizontal position while shooting
+
+fire_dispersion_condition_factor = 5	;увеличение дисперсии в процентах при максимальном износе 
+misfire_probability 		= 0.000003	;вероятность осечки при максимальном износе
+misfire_condition_k		= 0.0005 
+condition_shot_dec 		= 0.000000001 ;увеличение износа при каждом выстреле
+
+flame_particles		  = weapons\foto_01
+smoke_particles		  = weapons\foto_01
+shell_particles	 	  = weapons\foto_01
+
+scope_status		= 1
+silencer_status		= 0
+silencer_name  		= wpn_addon_silencer_pistol
+
+scope_texture			= Arsenal_Mod\Crosshairs\crosshair_foto
+scope_zoom_factor	   		= 14
+
+snd_draw		= weapons\pistol_holster
+snd_holster		= weapons\pistol_holster
+snd_shoot		= weapons\foto\fotik 
+snd_shoot1		= weapons\foto\fotik   
+snd_shoot2		= weapons\foto\fotik   
+snd_shoot3		= weapons\foto\fotik         
+snd_empty		= weapons\foto\fotik
+snd_reload		= weapons\foto\fotik_zoom
+snd_close		= weapons\foto\fotik_zoom
+snd_silncer_shot	= weapons\foto\fotik
+visual                  = death_mod\deagle\wpn_desert_eagle_foto.ogf
+hud                     = wpn_desert_eagle_uniqu_hud
+
+[wpn_desert_eagle_uniqu_hud]:wpn_desert_eagle_hud
+visual                  = death_mod\deagle\wpn_desert_eagle_foto_hud.ogf
+position                = -0.095,-0.08,0.1
+orientation             = 0,0,0
+
+shell_point			= -0.000000,0.040000,-0.235000
+fire_point               	= -0.001000,0.056000,-0.200000
+fire_bone                	= wpn_body
+
+anim_holster				= holster
+anim_idle					= idle
+anim_empty					= empty
+anim_reload					= reload_full
+anim_reload_empty			= reload
+anim_draw					= draw
+anim_draw_empty				= draw
+anim_shoot					= shoot
+anim_shot_last				= shoot_last
+anim_close					= holster ;draw
+anim_idle_aim				= idle_aim
+anim_idle_sprint			= idle_sprint
+
+;смещения HUD для режима приближения
+zoom_offset			= -0.119400,0.044400,-0.011400
+zoom_rotate_x		= -0.021800
+zoom_rotate_y		= 0.000500
+
+[wpn_eagle_m3]:wpn_eagle_m2
+ammo_class		     = ammo_9x39_sp5, ammo_9x39_ap, ammo_9x39_pab9, ammo_9x39_izomorf
+hit_power               = 0.7
+ammo_mag_size		     = 7
+
+[ammo_foto]:AMMO 		
+visual             = weapons\ammo_foto.ogf
+description		= enc_weapons1_ammo_ammo_foto
+
+cost			= 1000 ;100
+
+box_size		= 1
+
+inv_name		= "Фотоплёнка"
+inv_name_short	        = "Фотоплёнка"
+inv_weight		   = .03
+
+inv_grid_width         = 2
+inv_grid_height        = 1
+inv_grid_x             = 23
+inv_grid_y             = 50
+
+k_dist			= 1.2
+k_disp			= 1.02 
+k_hit			= 5.5
+k_impulse		     = 0.01
+k_pierce		     = 3.5
+impair			= 1
+buck_shot		     = 1
+tracer			= off
+wm_size                 = 0.04
+explosive		          = off
+tracer_color_ID		= 0
+
+; Фото СВД
+[wpn_svd_foto]:wpn_svd
+description			= enc_weapons1_wpn-svd-foto
+cost					= 10000
+ammo_mag_size			= 1
+ammo_class			= ammo_7.62x54_foto 
+
+sprint_allowed			= false
+
+condition_shot_dec 			= 0.00001 ;увеличение износа при каждом выстреле
+inv_name				= "Фоторужьё"
+inv_grid_width			= 6
+inv_grid_height			= 2
+inv_grid_x				= 0
+inv_grid_y				= 51
+flame_particles		= weapons\generic_shoot_00 ;weapons\generic_weapon06
+smoke_particles		= weapons\generic_shoot_00
+shell_particles	 	= 
+
+hit_power           = 16.8
+hit_impulse	    = 0.0001
+hit_type 	        = fire_wound
+hit_rate	        = 3.0
+fire_distance       = 210
+bullet_speed		= 950  
+rpm                 = 140
+
+hud                     = wpn_svd_foto_hud
+normal                  = 0, 1, 0
+position                = -0.026, -0.077, 0.00
+
+startup_ammo            = 1
+visual                  = weapons\svd\wpn_svd_foto.ogf
+
+snd_shoot		= weapons\fotozatvor 
+snd_reload 	        = weapons\svd\svd_foto_reload
+
+scope_status		= 1
+scope_zoom_factor	= 14
+scope_texture			= starter\items\fot\fot_cross.dds
+
+[wpn_svd_foto_hud]
+shell_point     	   	 	= 0.1,0,-0.95 
+shell_dir			     	= 0.0, 1.0, 0.0
+
+fire_point				= 0,0,-0.65
+fire_bone               	= muzzle
+position				= 0.05,-0.01,0.25
+orientation				= 2,2,0
+visual                  = weapons\svd\wpn_svd_foto_hud.ogf
+anim_holster	 = holster
+anim_idle	 = idle
+anim_idle_aim	 = aim
+anim_reload	 = reload
+anim_draw	 = draw
+anim_shoot	 = shoot
+anim_idle_sprint = sprint
+
+;смещения HUD для режима приближения
+zoom_offset			= -0.1,0.0,-0.05
+zoom_rotate_x			= 0
+zoom_rotate_y			= 0
+zoom_rotate_time		= 0.45
+rotate_time			= 0.45
+
+[ammo_7.62x54_foto]:AMMO
+
+visual             = weapons\ammo\ammo_762x54_ap.ogf
+description		= "Специальный патрон для фоторужья"
+
+cost					 = 2000 ;950
+
+box_size		= 1
+
+inv_name		= "фотопатрон"
+inv_name_short	        = "фотопатрон"
+inv_weight		= 0.2
+
+inv_grid_width		     = 1
+inv_grid_height		= 1
+inv_grid_x			= 2
+inv_grid_y			= 47
+	
+k_dist			= 4.2
+k_disp			= 3.0 
+k_hit			= 6.5
+k_impulse		= 0.8
+k_pierce		= 3.5
+tracer			= off
+wm_size         = 0.04
+explosive		= off
+
+; Модифицированный кольт
+[wpn_colt_m1]:wpn_colt_arm	
+description						= enc_weapons1_wpn-colt_m1
+inv_name						= wpn-colt_m1
+silencer_status					= 1
+condition_shot_dec 				= 0.00003
+inv_grid_x						= 18
+inv_grid_y						= 20
+ammo_mag_size			= 10
+inv_weight				= 1.45
+smoke_particles 			= weapons\generic_shoot_00
+flame_particles					= 
+light_disabled			= true
+rpm                           = 350
+snd_shoot			= weapons\colt\colt_m1_shot
+
+; Беретта М9А1 под револьверный патрон
+[wpn_beretta_m1]:wpn_beretta		
+description				= enc_weapons1_wpn-beretta_m1
+holder_fov_modifier		= 1.0 
+cost					 	= 2500
+ammo_class				      = ammo_357_hp_mag, ammo_357_ap_mag
+inv_name				      = wpn-beretta_m1
+
+inv_grid_x				= 21
+inv_grid_y				= 4
+
+fire_dispersion_base		= 0.12 
+cam_relax_speed         	= 9.5
+cam_dispersion          	= 0.15
+cam_dispertion_frac		= 0.25
+cam_max_angle			= 5.0
+misfire_probability 		= 0.0005
+condition_shot_dec 		= 0.000045
+
+hit_power               = 0.66
+hit_impulse		 	= 57
+fire_distance            	= 85
+bullet_speed		= 430
+rpm                      	= 350
+silencer_hit_power       	= 0.63
+silencer_hit_impulse	 	= 50
+silencer_fire_distance   	= 78
+silencer_bullet_speed	 	= 385
+
+snd_shoot				= weapons\beretta\beretta_m1_shoot
+
+hud                      	= wpn_beretta_m1_hud
+visual                   	= weapons\beretta92fs\wpn_beretta92fs_m1.ogf
+
+fire_point               	= 0.0, 0.217, 0.252
+
+silencer_name  				= wpn_addon_silencer
+silencer_x 					= 75			
+silencer_y 					= -18				
+
+[wpn_beretta_m1_hud]:wpn_beretta_hud
+fire_point			= 0.0000,0.0632,-0.1200
+shell_point			= -0.0270,0.0575,-0.3000
+
+visual                  = weapons\beretta92fs\wpn_beretta92fs_m1_hud.ogf 
+
+zoom_offset			= -0.12525,0.0635,-0.0330
+zoom_rotate_x		= 0.03160
+zoom_rotate_y		= 0.04220
+
+; Гроза с лазерным наведением => выведен из мода. !!!!
+[wpn_groza_m3]:wpn_groza	             				
+
+; РГ-6 м209
+[wpn_rg6_m1]:wpn_rg-6	
+description						= enc_weapons1_wpn-rg6_m1
+inv_name						= wpn-rg6_m1
+ammo_class		 				= ammo_m209
+cheat_item = true
+condition_shot_dec 				= 0.00001
+inv_grid_x						= 5
+inv_grid_y						= 28
+snd_shoot				= weapons\m203\M203_grenshoot
+
+; Арбалет Нормана
+[wpn_crossbow_m1]:wpn_crossbow	             				
+description				= enc_wpn_crossbow-m1
+inv_name		               = wpn-crossbow-m1           
+cost			               = 9800
+cheat_item = true
+inv_weight		           = 2.3
+hit_power                    = 0.85
+bullet_speed                 = 350
+scope_texture				= death_mod\crosshair\crosshair_2
+condition_shot_dec 		      = 0.0000001
+
+inv_grid_width		     = 4
+inv_grid_height		     = 2
+inv_grid_x		           = 30
+inv_grid_y		           = 51
+
+; Arena
+[wpn_pm_arena]:wpn_pm
+[wpn_mp5_arena]:wpn_mp5
+[wpn_toz34_arena]:wpn_bm16
+[wpn_spas12_arena]:wpn_spas12
+[wpn_ak74_arena]:wpn_ak74
+[wpn_bm16_arena]:wpn_bm16
+[wpn_ak74u_arena]:wpn_ak74u
+[wpn_val_arena]:wpn_val
+[wpn_groza_arena]:wpn_groza
+[wpn_fn2000_arena]:wpn_fn2000
+[wpn_g36_arena]:wpn_g36
+

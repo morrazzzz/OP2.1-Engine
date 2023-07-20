@@ -1,0 +1,15 @@
+[logic]
+active = ph_sound@idle
+ 
+[ph_sound@idle]
+snd = radio_music_random
+min_idle = 5000
+max_idle = 15000
+on_info = {+bar_arena_start} ph_idle@idle 
+on_info2 = {+bar_start_megafon} ph_sound@start_sound
+ 
+[ph_sound@start_sound]
+snd = radio_music_rock
+min_idle = 5000
+max_idle = 15000
+on_timer = 45000|ph_sound@idle %-bar_start_megafon%

@@ -1,0 +1,73 @@
+[smart_terrains] 
+none = true 
+
+[logic]
+active = kamp@volazar
+combat_ignore = combat_ignore
+
+[kamp@volazar]
+center_point = vol_war_kamp
+radius = 2
+meet = meet@on
+show_spot = false 
+on_info = {+vol_go_lab2} walker@stand
+on_info2 = {+vol_go_lab} walker@open_door
+
+[walker@open_door]
+path_walk = vol_walk_go_to_the_door
+path_look = vol_look_go_to_the_door
+meet = meet@off
+show_spot = false 
+on_signal = pressed | remark@open_door %=play_snd(characters_voice\volazar\volazar_damn_door)%
+danger = danger_ignore
+combat_ignore_cond = always
+
+[remark@open_door]
+anim = press
+meet = meet@off
+target = vol_look_go_to_the_door,0
+show_spot = false 
+on_timer = 5000 | remark@open_door2 %=play_snd(characters_voice\volazar\volazar_damn_door2)%
+danger = danger_ignore
+combat_ignore_cond = always
+
+[remark@open_door2]
+anim = press
+meet = meet@off
+target = vol_look_go_to_the_door,0
+on_timer = 4000 | remark@open_door3 %=play_snd(characters_voice\volazar\volazar_fuck)%
+danger = danger_ignore
+combat_ignore_cond = always
+
+[remark@open_door3]
+anim = punch
+meet = meet@off
+target = vol_look_go_to_the_door,0
+show_spot = false
+on_signal = anim_end | {-vol_open_door} %+vol_open_door =play_snd(material\large_furniture\large_furniture_1)%
+on_timer = 4000 | %+vol_go_lab2 =nano_suit_moduls.vol_eeeehhaa% walker@stand
+danger = danger_ignore
+combat_ignore_cond = always
+
+[walker@stand]
+path_walk = vol_walk_go_to_the_door2
+path_look = vol_look_go_to_the_door2
+meet = meet@on
+show_spot = false 
+on_signal = meet | %+razg_estb_go_lab%
+danger = danger_ignore
+combat_ignore_cond = always
+
+[meet@on]
+use = true
+use_wpn = false
+
+[meet@off]
+use = false
+use_wpn = false
+
+[danger_ignore]
+ignore_distance = 0
+
+[combat_ignore]
+combat_ignore_cond = always

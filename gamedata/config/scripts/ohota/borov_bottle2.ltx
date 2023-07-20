@@ -1,0 +1,13 @@
+[logic]
+active = sr_idle
+ 
+[sr_idle]
+on_actor_inside = sr_timer %+borov_bottle2_spawn =akill.borov_bottle2_spawn%
+ 
+[sr_timer]
+type = dec
+start_value = 60000
+argb = 255,255,255,255
+on_value = 0 | nil
+on_info = {+info_target_19} nil
+string = st_time_kvest_proval

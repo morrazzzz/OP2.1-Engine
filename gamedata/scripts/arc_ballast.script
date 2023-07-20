@@ -1,0 +1,29 @@
+local current_ballast_weight = 0
+local ballast_num = 0
+
+function check_ballast()
+	local n = math.floor( math.clamp(current_ballast_weight*100, 0, 50000) )
+	if (n ~= ballast_num) then
+		local a = db.actor
+		local obj = a:object("wpn_ballast")
+		if obj then
+			obj:set_ammo_elapsed(n)
+			ballast_num = n
+		--	a:invalidate_inventory()	-- XE function - for update weight info
+		else		-- if first run
+			release(a:object("arc_ballast"))	-- הכÿ סמגלוסעטלמסעט סמ סעאנûלט ס‎יגאלט
+			
+			local sobj = create("wpn_ballast", a:position(),
+							a:level_vertex_id(), a:game_vertex_id(), 0)
+			level.client_spawn_manager():add(sobj.id, 0, 
+				function (id, lobj)
+					lobj:set_ammo_elapsed(0)
+				end
+			)
+		end
+	end
+end
+
+function change_ballast(delta)
+	current_ballast_weight = current_ballast_weight + delta
+end

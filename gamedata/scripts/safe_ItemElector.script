@@ -1,0 +1,173 @@
+local _sysIniReader=ini_reader.iniReader()
+
+--кешируем многократный вызов 
+local itemElectorClass=nil
+
+function init(reinit) --вызывать в начале сеанса игры
+	if reinit==nil then --reinit , для упреждающей инициализации
+		reinit=false
+	end
+	if itemElectorClass==nil or reinit then 
+		itemElectorClass=ItemElector()
+	end
+end
+
+function GetItemElectorClass(reinit) --вернуть сам класс
+	if reinit==nil then
+		reinit=false
+	end
+	if itemElectorClass==nil or reinit then
+		init(reinit)
+	end
+	return itemElectorClass
+end
+
+--класс для определения типа итема на основании таблиц в ltx
+class "ItemElector"
+function ItemElector:__init() 
+	self.classname="ItemElector"
+	self.iniReader=ini_reader.iniReader("misc\\safe_tables.ltx")
+	self.weapon_sections=self:readTable("weapon_sections")
+	self.weapon_classes=self:readTable("weapon_classes")
+	self.ammo_sections=self:readTable("ammo_sections")
+	self.ammo_classes=self:readTable("ammo_classes")
+
+	self.medics_sections=self:readTable("medics_sections")
+
+	self.kit_classes=self:readTable("kit_classes")
+	self.kit_sections=self:readTable("kit_sections")
+	
+	self.outfit_sections=self:readTable("outfit_sections")
+	self.outfit_classes=self:readTable("outfit_classes")
+	
+	self.mpart_sections=self:readTable("mpart_sections")
+	
+	self.artefact_classes=self:readTable("artefact_classes")
+	self.artefact_sections=self:readTable("artefact_sections")
+	
+	self.grenade_classes=self:readTable("grenade_classes")
+	self.grenade_sections=self:readTable("grenade_sections")
+end
+
+function ItemElector:is_grenade(item)
+	local section=item:section()
+	local class = _sysIniReader:readString(section,"class")
+	if class then
+		return self:get_bool_result_from_tables(self.grenade_classes,self.grenade_sections,class:lower(),section)
+	else
+		return false
+	end	
+end
+
+function ItemElector:is_weapon(item)
+	local section=item:section()
+	local class = _sysIniReader:readString(section,"class")
+	if class then
+		return self:get_bool_result_from_tables(self.weapon_classes,self.weapon_sections,class:lower(),section)
+	else
+		return false
+	end	
+end
+
+function ItemElector:is_outfit(item)
+	local section=item:section()
+	local class = _sysIniReader:readString(section,"class")
+	if class then
+		return self:get_bool_result_from_tables(self.outfit_classes,self.outfit_sections,class:lower(),section)
+	else
+		return false
+	end			
+end
+
+function ItemElector:is_ammo(item)
+	local section=item:section()
+	local class = _sysIniReader:readString(section,"class")
+	if class then
+		return self:get_bool_result_from_tables(self.ammo_classes,self.ammo_sections,class:lower(),section)
+	else
+		return false
+	end					
+end
+
+function ItemElector:is_artefact(item)
+	local section=item:section()
+	local class = _sysIniReader:readString(section,"class")
+	if class then
+		return self:get_bool_result_from_tables(self.artefact_classes,self.artefact_sections,class:lower(),section)
+	else
+		return false
+	end							
+end
+
+function ItemElector:is_kit(item)
+	local section=item:section()
+	local class = _sysIniReader:readString(section,"class")
+	if class then
+		return self:get_bool_result_from_tables(self.kit_classes,self.kit_sections,class:lower(),section)
+	else
+		return false
+	end									
+end
+
+function ItemElector:is_medics(item)
+	if not item then return false end
+	local section=item:section()
+	if not section then return false end
+	local value=self.medics_sections[section]
+	if (value ~= nil ) then
+		return value
+	end
+	return false
+end
+
+function ItemElector:is_mpart(item)
+	if not item then return false end
+	local section=item:section()
+	if not section then return false end
+	local value=self.mpart_sections[section]
+	if (value ~= nil ) then
+		return value
+	end
+	return false
+end
+
+function ItemElector:is_quest_item(item)
+	if not item then return false end
+	local section=item:section()
+	if not section then return false end
+	local qi=_sysIniReader:readBool(section,"quest_item")
+	if qi==nil  then
+		return false
+	end
+	return qi
+end
+
+--сравнение результатов из твых таблиц
+function ItemElector:get_bool_result_from_tables(table1,table2,value1,value2)
+	local from_table1=table1[value1]
+	local from_table2
+	if value2 then
+		from_table2=table2[value2]
+	else
+		from_table2=table2[value1]
+	end
+	local result
+	if from_table1==nil and from_table2==nil then -- нет ни в одной
+		result=false
+	elseif from_table1~=nil and from_table2==nil then -- в одной из таблиц, вернуть значение
+		result=from_table1
+	elseif from_table1==nil and from_table2~=nil then -- в одной из таблиц, вернуть значение
+		result=from_table2
+	elseif from_table1~=nil and from_table2~=nil then -- в обоих
+		result=from_table1 and from_table2
+	end
+	return result
+end
+
+function ItemElector:readTable(table_section) -- читаем данные из ltx 
+	local table_data=self.iniReader:readSection(table_section,"true")
+	for key,value in pairs(table_data) do
+		table_data[key]=iif(value=="true",true,false)
+	end
+	return table_data
+end

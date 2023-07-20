@@ -1,0 +1,28 @@
+[logic] 
+active = remark@my_nps_vit 
+meet = meet 
+on_combat = combat 
+danger = danger_condition
+on_death = death 
+
+[remark@my_nps_vit] 
+anim = claim 
+target = actor 
+danger = danger_condition 
+meet = meet 
+combat_ignore_cond = always 
+on_actor_dist_le = 8| remark@my_nps_vit1 
+
+[remark@my_nps_vit1] 
+anim = claim 
+target = actor 
+danger = danger_condition 
+meet = meet 
+combat_ignore_cond = always 
+on_actor_dist_ge = 10| remark@my_nps_vit 
+
+[smart_terrains] 
+none = true 
+
+[death] 
+on_info = %+info_vitamin_death%

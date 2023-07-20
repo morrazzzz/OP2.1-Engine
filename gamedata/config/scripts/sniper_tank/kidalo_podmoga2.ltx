@@ -1,0 +1,22 @@
+[smart_terrains]
+none = true
+
+[logic]
+active = walker
+danger = danger_condition@kidalo_friend3_ignore_corpses
+corpse_detection_enabled = false
+
+[walker]
+path_walk = kidalo_friend3_walk
+path_look = kidalo_friend3_look
+def_state_moving = run
+meet = no_meet
+corpse_detection_enabled = false
+danger = danger_condition@kidalo_friend3_ignore_corpses
+
+[danger_condition@kidalo_friend3_ignore_corpses]
+ignore_distance_corpse = 0
+ignore_distance_sound = 0
+ignore_distance = 0
+
+

@@ -1,0 +1,98 @@
+[StealManager]
+enable=true
+protectionCostFirstPay=10000 ;первый взнос 
+protectionCostDayPay=500 ;ежедневный взнос
+bethDistance=60 ;расстояние для "умного" обкрадывания
+traderDistance=6 ;расстояние до торговца с платным хранилищем глобальное
+;секции торговцев по id уровня
+traderSections=l01_escape,l02_garbage,l03_agroprom,l05_bar,l04_darkvalley,l08_yantar,l07_military,l10_radar,l11_pripyat,marsh,zaton,jupiter,pripyat,aver,generators,atp_for_test22,dead_city
+
+;списки торговцев для охраняемых платных нычек,specific_character id идентификатор
+[l01_escape] ;кордон
+traderDistance=8 ;расстояние до торговца с платным хранилищем на кордоне
+traders=escape_trader,esc_akim,esc_soldier_commander,3 ;через запятую, если надо - уточняем дистанцию для конкретного торговца
+
+[l02_garbage] ;свалка
+traders=amk_vitek_voron,amk_artem_kulinar
+
+[l03_agroprom] ;агропром
+traders=agro_adrenalin
+
+[l05_bar]
+traders=bar_dolg_petrenko,stalker_green_zahar,bar_dolg_leader,bar_barman
+
+[l04_darkvalley]
+traders=val_bandit_trader,val_bandit_borov
+
+[l08_yantar]
+traders=yan_general_ecolog
+
+[l07_military]
+traders=mil_svoboda_trader,yakut_agro2
+
+[l10_radar]
+traders=Sak
+
+[l11_pripyat]
+traders=doktor
+
+[marsh]
+traders=clear_scy_leader,marsh_remont,agr_nebo_chromov
+
+[zaton]
+traders=bibliofrend_talk,bibliofrend_talk_black
+
+[jupiter]
+traders=aaz_upi
+
+[pripyat]
+traders=pri_dimak
+
+[aver]
+traders=otshelnik
+
+[generators]
+traders=zemlyk
+
+[atp_for_test22]
+traders=atp_kalinin
+
+[dead_city]
+traders=dcity_dok_bolot
+
+[icons];соответсвие specific_character id и sender из tips_icons
+dcity_dok_bolot=doctor
+doktor=doctor
+atp_kalinin=kalinin
+zemlyk=zemlyak
+otshelnik=otshelnik
+pri_dimak=dimak
+aaz_upi=aaz
+bibliofrend_talk=bibliofrend
+bibliofrend_talk_black=bibliofrend_black
+clear_scy_leader=sviblov
+marsh_remont=vasiliy
+marsh_barman=holod
+agr_nebo_chromov=holod
+Sak=sak
+mil_svoboda_trader=skraga
+yakut_agro2=yakut
+yan_general_ecolog=saharov
+val_bandit_trader=gila
+val_bandit_borov=borov
+bar_dolg_petrenko=petrenko
+stalker_green_zahar=zahar
+bar_dolg_leader=voronin
+bar_barman=barman
+agro_adrenalin=adrenalin
+amk_vitek_voron=voron
+amk_artem_kulinar=kulinar
+escape_trader=sid
+esc_akim=akim
+esc_soldier_commander=kuznecov
+
+[specific_npc];квестовые нпс, не торговцы, но могут воровать, им диалоги перенесены в профиль
+sak_military_stalker	;Шерстюк
+bar_stalker_guard		;Гарик
+bar_barman_guard		;Гарик
+bar_bar_osvedomitel 	;Информатор

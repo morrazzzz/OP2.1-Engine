@@ -1,0 +1,55 @@
+function main()
+	write_data_bin()
+	write_data_ini()
+	log("==========================")
+	load_data_bin()
+	log("--------------------------")	
+	load_data_ini()
+	
+	--got("repair_item_weapon",5)
+	-- got("wpn_addon_sil_762_ar",1)
+	-- got("wpn_addon_grenade_launcher",1)
+	-- got("wpn_ak47",1)
+	-- got("ammo_7.62x39_fmj",5)
+
+end
+
+function write_data_bin()
+	local binf=getFS():w_open("bin.settings")
+	binf:w_stringZ("section")
+	binf:w_s32(22)
+	binf:w_stringZ("data")
+	getFS():w_close(binf)
+end
+
+function load_data_bin()
+	local binf=getFS():r_open("bin.settings")
+	log("[%s]",binf:r_stringZ())
+	log(tostring(binf:r_s32()))
+	log("[%s]",binf:r_stringZ())
+	getFS():r_close(binf)
+end
+
+function write_data_ini()
+	local inif=open_ini_file("test.ini",true)
+	inif:w_string("section","line",string.extformat("%i:%i",level.get_time_hours(),level.get_time_minutes()),"comment1")
+	inif:w_string("section","param",string.extformat("%i:%i",level.get_time_hours(),level.get_time_minutes()),"comment2")
+	inif:w_string("section","param2",string.extformat("%i:%i",level.get_time_hours(),level.get_time_minutes()))
+	inif:remove_section("test")
+	close_ini_file(inif)
+end
+
+function load_data_ini()
+	local inif=open_ini_file("test.ini",false)
+	log(inif:r_string("section","param2"))
+	log(inif:r_string("section","param"))
+	log(inif:r_string("section","line"))
+	close_ini_file(inif)
+end
+
+function test()
+local obj = alife():create(section,pos,lv,gv)
+local data = xrs_utils.get_item_data(obj)
+data.oflags = bit_and(data.oflags,bit_not(128)) -- снять флаг flUsedAI_Locations
+xrs_utils.set_item_data(data,obj)
+end

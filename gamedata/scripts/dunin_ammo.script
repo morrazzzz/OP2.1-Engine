@@ -1,0 +1,132 @@
+
+local ammo = {}
+local inited = false
+local repack = false 
+
+--------
+-- инициализация переменных, выполняется единожды
+--------
+function init()
+	--local i, result, section, value
+	--local ini = config
+	-- список патронов возьмём из "death_generic.ltx"
+	local death_ini = ini_file("misc\\death_generic.ltx")
+	--local n = iniLinesCount("ammo_sections", "misc\\death_generic.ltx")
+	--for i=0,n-1 do
+		--result, section, value = getIniLine("ammo_sections",i,"","", "misc\\death_generic.ltx")
+	utils.iterate_ini_lines(death_ini, "ammo_sections", function(result, section, value)
+		ammo[section] = {}
+		ammo[section].repack = false
+		-- размеры полных пачек
+		ammo[section].box = config:r_u32(section, "box_size")
+	end)
+	repack = false
+	inited = true
+end
+
+--------
+-- вызывается при добавлении в инвентарь ГГ любых патрон
+--  obj - game_object добавляемой пачки
+-- здесь будем только ставить флажки о необходимости проверки,
+-- саму проверку и перепаковку сделаем в апдейте актёра,
+-- если перепаковку делать прям здесь, то будет глюк при загрузки и
+-- при взятии из нычки кучи патрон (взять всё)
+--------
+function on_take(obj)
+	if not inited then
+		init()
+	end
+
+	local section = obj:section()
+	if ammo[section] ~= nil and section ~= nil and ammo[section].repack == false then
+		if get_ammo_size(obj) < ammo[section].box then
+			ammo[section].repack = true
+			repack = true
+		end
+	end
+end
+
+
+--------
+-- вызывается из апдейта актёра
+-- проверяет наличие флажков и вызывает процедуру переупаковки
+--------
+function on_update()
+	if repack then
+		local section, data
+		for section, data in pairs(ammo) do
+			if data.repack then
+				repack_ammo(section, data.box)
+				data.repack = false
+			end
+		end
+		repack = false
+	end
+end
+
+--------
+-- переупаковка патронов заданного типа
+--  section - строка, имя секции (тип патрон)
+--  box_size - колличество патрон в полной пачке
+-- сначало составляем список неполных пачек, затем
+-- удаляем их и создаём нужное колличество полных
+--------
+function repack_ammo(section, box_size)
+	local s, t = enum_ammo(section, box_size)
+	if (s > 0) and (#t > 1) then
+		local i, id
+		local pos = db.actor:position()
+		local lvid = db.actor:level_vertex_id()
+		local gvid = db.actor:game_vertex_id()
+		local pid = db.actor:id()
+
+		for i, id in pairs(t) do
+			release(server_object(id), true)
+		end
+
+		while s >= box_size do
+			ai:create_ammo(section, pos, lvid, gvid, pid, box_size)
+			s = s - box_size
+		end
+
+		if s > 0 then
+			ai:create_ammo(section, pos, lvid, gvid, pid, s)
+		end
+	end
+end
+
+--------
+-- пробегаемся по инветарю ГГ и собираем инфу о неполных пачках
+--  section - строка, имя секции (тип патрон)
+--  box_size - колличество патрон в полной пачке
+-- возвращает сумарное колличество патрон в неполных пачках и массив id-шников этих пачек
+--------
+function enum_ammo(section, box_size)
+	local i, obj, size
+	local s = 0
+	local t = {}
+	for i=0, db.actor:object_count()-1 do
+		obj = db.actor:object(i)
+		if obj:section() == section then
+			size = get_ammo_size(obj)
+			if size < box_size then
+				table.insert(t, obj:id())
+				s = s + size
+			end
+		end
+	end
+	return s, t
+end
+
+--------
+-- возвращает колличество патрон в пачке
+-- вроде подходящих функций нет, пришлось делать через net_packet
+--------
+function get_ammo_size(obj)
+	local se_obj = server_object(obj:id())
+	if se_obj==nil then return 0 end
+	local pk = net_packet()
+	se_obj:STATE_Write(pk)
+	pk:r_seek(pk:w_tell() - 2)
+	return pk:r_u16()
+end

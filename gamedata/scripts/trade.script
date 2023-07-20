@@ -1,0 +1,91 @@
+-- Торговля неписей
+local traders = {}
+
+function init(npc, cfg)
+	traders[npc:id()] = cfg
+end
+
+-- Торговля задается разово на первом аплейте
+function first_update(npc)
+	printf("TRADE INIT[%s]", npc:name())
+	local cond, condlist, list
+	local ini = ini_file(traders[npc:id()])
+	
+	-- коэфициенты покупки
+	cond = utils.cfg_get_string(ini, "trader", "buy_condition", npc, true, "")
+	if cond == nil then
+		abort("Incorrect trader settings. Cannot find buy_condition. [%s]->[%s]", npc:name(), cfg)
+	end
+	condlist = xr_logic.parse_condlist(cond)
+	list = xr_logic.pick_section_from_condlist(npc, condlist)
+	npc:buy_condition(ini, list)
+	
+	-- коэфициенты продажи
+	cond = utils.cfg_get_string(ini, "trader", "sell_condition", npc, true, "")
+	if cond == nil then
+		abort("Incorrect trader settings. Cannot find sell_condition. [%s]->[%s]", npc:name(), cfg)
+	end	
+	condlist = xr_logic.parse_condlist(cond)
+	list = xr_logic.pick_section_from_condlist(npc, condlist)
+	npc:sell_condition(ini, list)
+	
+	-- хабар на продажу
+	if rx_utils.IsTrader(npc) then
+		local se_npc = server_object(npc:id())
+		local game_hours = amk.game_hours()
+		if se_npc.resupply_time <= game_hours then
+			cond = utils.cfg_get_string(ini, "trader", "buy_supplies", npc, false, "")
+			if cond ~= nil then
+				condlist = xr_logic.parse_condlist(cond)
+				list = xr_logic.pick_section_from_condlist(npc, condlist)
+				npc:buy_supplies(ini, list)
+			end
+			se_npc.resupply_time = game_hours + math.random(12,24)
+		end
+	end
+
+	traders[npc:id()] = nil
+end
+--------------------------------------------------------------------------------------------
+local trade_items = {}
+local need_del = false
+
+function on_info(info_id)
+	if info_id == "ui_trade" then
+		local second_talker = nil
+		local cls
+		for id, npc in pairs(db.creatures) do
+			cls = npc:clsid()
+			if (cls==clsid.script_stalker or cls==clsid.script_trader)
+				and npc:is_talking()	-- get second talker
+			then
+				need_del = rx_utils.IsTrader(npc)	-- traders only
+			--	log("trade: second talker is : "..npc:name().." , need_del:"..tostring(need_del))
+				break
+			end
+		end
+	elseif info_id == "ui_trade_hide" then
+		if need_del then
+			local obj
+		--	log("trade: release items' count:"..table.size(trade_items))
+			for id in pairs(trade_items) do
+				obj = server_object(id)
+				if obj and obj.parent_id~=0 then
+					release(obj)
+				end
+			end
+			need_del = false
+			trade_items = {}
+		end
+	end
+end
+
+function on_trade(item, sell_bye)
+	if need_del == false then return end
+	if sell_bye == true then
+		trade_items[item:id()] = true
+	else
+		trade_items[item:id()] = nil
+	end
+end
+

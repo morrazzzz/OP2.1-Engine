@@ -1,0 +1,46 @@
+[m_car]:SCRPTCAR
+inv_weight        		= 1000
+cost          			= 100000
+
+[vehicle_btr]:SCRPTCAR
+visual                  = physics\vehicles\btr\veh_btr_script_u_01.ogf
+actor_visual			= physics\vehicles\btr\veh_btr_script_u_01.ogf
+ef_equipment_type		= 3
+ph_mass			 		= 100000
+
+; Для парада
+[vehicle_btr_parad_tm]:vehicle_btr
+
+; Для сюжета на Кордоне
+[vol_vehicle_btr]:vehicle_btr
+
+; ЗСУ-23-4 Шилка
+[vehicle_shilka]:vehicle_btr
+visual                  	= physics\vehicles\shilka\shilka.ogf
+actor_visual	= physics\vehicles\shilka\shilka.ogf
+
+; БТР Страйкер
+[vehicle_apc]:vehicle_btr
+visual                  	= physics\vehicles\apc\apc.ogf
+actor_visual	= physics\vehicles\apc\apc.ogf
+
+; Автоматические турели
+; Футуристический
+[auto_turret_1]:vehicle_btr
+visual                  		= physics\vehicles\turet_st1\veh_turet_0.ogf
+actor_visual		= physics\vehicles\turet_st1\veh_turet_0.ogf
+
+; Миниган на треноге
+[auto_turret_2]:vehicle_btr
+visual                  		= physics\vehicles\turet_st2\veh_turet_01.ogf
+actor_visual		= physics\vehicles\turet_st2\veh_turet_01.ogf
+
+; Турель «Тайфун» для Меченого
+[turret_to_strelok]:auto_turret_2
+
+; НЕ ПОДКЛЮЧЕНА В СКРИПТЕ !!!
+; Миниган на опоре, пример опоры в алл.спавн section_name = physic_object, name = opora, object_flags = 0xffffff3a
+; опора должна быть ниже турели на 0.05 по к-те у
+[auto_turret_3]:vehicle_btr
+visual                  		= physics\vehicles\turet_w\veh_turet_wool.ogf
+actor_visual		= physics\vehicles\turet_w\veh_turet_wool.ogf

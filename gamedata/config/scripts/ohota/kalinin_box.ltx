@@ -1,0 +1,14 @@
+[logic]
+active = sr_idle
+ 
+[sr_idle]
+on_actor_inside = sr_timer %=akill.kalinin_box2_spawn%
+ 
+[sr_timer]
+type = dec
+start_value = 360000
+argb = 255,255,255,255
+on_value = 0 | nil %=akill.kalinin_box_proverka%
+on_info = {+kalinin_box_fail} nil
+on_info2 = {+kalinin_box_end} nil
+string = st_time_kvest_proval

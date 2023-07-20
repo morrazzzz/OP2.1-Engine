@@ -1,0 +1,234 @@
+;;;;;;;;;;;;; 98 серия под патрон 9х21 мм ;;;;;;;;;;;;;;;;
+[wpn_beretta_red]:WP_PM
+min_radius               	= 0
+max_radius               	= 50
+description					= enc_arsenal_wpn-beretta_red
+
+ef_weapon_type				= 5
+
+holder_range_modifier	= 1.0               ; во сколько раз увеличивается eye_range 
+holder_fov_modifier		= 1.0              ; во сколько раз увеличивается eye_fov
+
+cost					 	= 3900	;300
+
+ammo_limit		 			= 120
+ammo_current		 		= 96
+ammo_elapsed		 		= 10
+
+ammo_mag_size		 		= 15
+ammo_class		 			= ammo_9x21_11, ammo_9x21_10
+
+hand_dependence		 		= 1
+single_handed				= 1							
+
+slot 			 		= 1
+animation_slot				= 1									; type of the animation that will be used
+
+
+inv_name				= ars-beretta_red
+inv_weight					= 0.95
+
+inv_grid_width				= 2
+inv_grid_height				= 1
+inv_grid_x				= 72
+inv_grid_y				= 31
+
+
+;базовая дисперсия
+fire_dispersion_base		= 0.16 		;угол (в градусах) базовой дисперсии оружия (оружия зажатого в тисках)
+disp_rate = 1.85
+
+;отдача
+cam_relax_speed         	= 8.5		;скорость возврата в исходное положение
+cam_dispersion          	= 0.35		;увеличения угла (в градусах) с каждым выстрелом
+cam_dispersion_inc		= 0.0		;увеличениe cam_dispersion с каждым выстрелом
+cam_dispertion_frac		= 0.45		;ствол будет подыматься на cam_dispersion*cam_dispertion_frac +- cam_dispersion*(1-cam_dispertion_frac)
+cam_max_angle			= 6.0		;максимальный угол отдачи
+cam_max_angle_horz		= 8.0		;(degree) maximum shot horizontal degree 
+cam_step_angle_horz		= 0.25		;(degree) size of step camera moved in horizontal position while shooting
+
+fire_dispersion_condition_factor = 5		;увеличение дисперсии в процентах при максимальном износе 
+misfire_probability 		= 0.00075	    	;вероятность осечки при максимальном износе 
+misfire_condition_k		= 0.05
+condition_shot_dec 		= 0.00011	;увеличение износа при каждом выстреле
+
+hit_power               = 0.68
+hit_impulse		= 52
+hit_type 			= fire_wound	
+hit_rate	        = 1.85
+fire_distance           = 65
+bullet_speed		= 470		
+rpm                     = 350
+rpm_empty_click 	 	= 250
+
+PDM_disp_base 			= 0.75
+PDM_disp_vel_factor 		= 0.6
+PDM_disp_accel_factor 		= 0.6
+PDM_crouch	 		= 1.0
+PDM_crouch_no_acc 		= 1.0
+
+use_aim_bullet				= true		;Поддерживается ли первая суппер пуля
+time_to_aim				= 1.0	
+
+silencer_hit_power       	= 0.65
+silencer_hit_impulse	 	= 40
+silencer_fire_distance   	= 60
+silencer_bullet_speed	 	= 420
+
+
+hud                      	= wpn_beretta_red_hud
+visual                   	= weapons\beretta92fs\wpn_beretta_red.ogf
+
+normal                   	= 0, 1, 0
+position                 	= -0.021, -0.165, -0.005
+orientation              	= 0, 0, 0
+
+;strap_position         		= -0.1,-0.45,0.2			; position (offset) and orientation of the weapon when it is strapped
+;strap_orientation      		= 1.57,0,0						; (3rd person view)
+;strap_bone0					= bip01_spine2
+;strap_bone1					= bip01_spine1
+
+direction           	 = 0, 0, 1
+fire_point               = 0.0, 0.217, 0.210
+
+flame_particles		   		= weapons\generic_weapon03
+smoke_particles		   		= weapons\generic_shoot_00
+
+shell_point		 		= 0.0, 0.205, 0.042
+shell_dir		 		= 0.0, 0.0, 0.4
+shell_particles	 			= weapons\arsenal_shells1
+
+;startup_ammo            	= 90
+
+light_color		 			= 0.6,0.5,0.3
+light_range		 			= 3.0
+light_var_color		 		= 0.05
+light_var_range		 		= 0.5
+light_time 		 			= 0.2
+
+ph_mass			 			= 1
+;cost			 			= 350
+
+;addons
+scope_status			= 0
+silencer_status			= 2
+grenade_launcher_status		= 0
+
+zoom_enabled			= true
+scope_zoom_factor	    	= 56
+
+;звуки
+snd_draw				= weapons\beretta\draw
+snd_holster				= weapons\generic_holster
+snd_shoot				= weapons\beretta\beretta_shoot1
+snd_empty				= weapons\pistol_empty
+snd_reload				= weapons\beretta\beretta_new_reload
+snd_close				= weapons\generic_close
+snd_silncer_shot			= weapons\beretta\supressed_45 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; silencer
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+silencer_name  				= wpn_addon_sil_9_p
+silencer_x 				= 77		
+silencer_y 				= -16				
+
+;params when silencer is attached 
+;similar to corresponding params without prefix silencer_
+
+;silencer_flame_particles 	= weapons\generic_weapon01
+silencer_smoke_particles 	= weapons\generic_shoot_00
+silencer_light_color		= 0.6,0.5,0.3
+silencer_light_range		= 2
+silencer_light_var_color	= 0.05
+silencer_light_var_range	= 0.5
+silencer_light_time 		= 0.2
+
+ 
+[wpn_beretta_red_hud]
+shell_point			= 0.00750,0.0100,-0.135000
+fire_point			= 0,0.0322,-0.177
+fire_bone                	= wpn_body
+orientation              	= 2,2,0 
+position                 	= 0.003,-0.1895,0.039 
+
+visual                   	= weapons\beretta92fs\wpn_beretta_red_hud.ogf 
+
+anim_holster				= beretta_holster
+anim_idle					= beretta_idle
+anim_empty					= beretta_idle_empty
+anim_reload					= beretta_reload
+anim_reload_empty			= beretta_reload_empty
+anim_draw					= beretta_draw
+anim_draw_empty				= beretta_draw_empty
+anim_shoot					= beretta_shoot
+anim_shot_last				= beretta_shoot_last
+anim_close					= beretta_holster ;idle
+anim_idle_aim				= beretta_idle_aim
+anim_idle_sprint			= beretta_idle_sprint
+
+;смещения HUD для режима приближения
+zoom_offset				= -0.122910,0.071950,-0.033 
+zoom_rotate_x				= 0.03550
+zoom_rotate_y				= 0.03550
+
+
+;;;;;;;;;;;;; Beretta Px4 Storm .45 ACP ;;;;;;;;;;;;;
+[wpn_beretta_px4]:wpn_beretta_red
+description			= enc_arsenal_wpn-beretta_px4
+inv_name				= ars-beretta_px4
+inv_weight					= 0.8
+cost					 	= 4300
+
+inv_grid_x					= 72
+inv_grid_y					= 30
+ammo_mag_size		 		= 10
+ammo_class		 		= ammo_11.43x23_fmj, ammo_11.43x23_hydro
+
+position                 = -0.021, -0.083, -0.0045
+fire_point               = 0.0, 0.135, 0.166
+shell_point		 = 0.0, 0.133, 0.030
+
+silencer_name 		= wpn_addon_sil_1143_p
+silencer_x 			= 77
+silencer_y 			= -14
+
+hud                      	= wpn_beretta_px4_hud
+visual                   	= weapons\beretta92fs\wpn_px4.ogf
+
+snd_shoot				= weapons\beretta\px4_shoot
+snd_silncer_shot			= weapons\beretta\silencer_45
+
+[wpn_beretta_px4_hud]:wpn_beretta_red_hud
+shell_point			= 0.0125,0.0120,-0.1370
+fire_point			= 0,0.0322,-0.177
+visual                   	= weapons\beretta92fs\wpn_beretta_px4_hud.ogf
+
+zoom_offset				= -0.122940,0.066260,-0.033
+zoom_rotate_x				= 0.031750
+zoom_rotate_y				= 0.0348950
+
+;;;;;;;;;;;;;;;; Beretta Px4 Storm .40 S&W ;;;;;;;;;;;;;;;;
+[wpn_beretta_px4b]:wpn_beretta_px4
+description			= enc_arsenal_wpn-beretta_px4b
+inv_name				= ars-beretta_px4b
+inv_weight					= 0.780
+
+inv_grid_x					= 72
+inv_grid_y					= 29
+ammo_mag_size		 		= 14
+ammo_class		 		= ammo_40sw_hp, ammo_40sw_ap
+
+hit_power               = 0.76
+bullet_speed		= 490
+silencer_hit_power       	= 0.73
+silencer_bullet_speed	 	= 450
+hud                      	= wpn_beretta_px4b_hud
+visual                   	= weapons\beretta92fs\wpn_px4b.ogf
+
+snd_silncer_shot			= weapons\beretta\supressed_45
+
+[wpn_beretta_px4b_hud]:wpn_beretta_px4_hud
+visual                   	= weapons\beretta92fs\wpn_beretta_px4b_hud.ogf
+

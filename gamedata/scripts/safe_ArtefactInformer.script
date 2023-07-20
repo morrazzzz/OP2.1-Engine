@@ -1,0 +1,293 @@
+--класс для сбора информации о артефакте, как всегда, он есть, но ПЫСЫ его забыли экспортировать...
+local ini=config
+--параметры актора 
+local actorParams={}
+
+--таблицы соотношения восстановления параметров арта к параметрам актора
+local artefactRestoreParams={
+	[0]="health_restore_speed",
+	[1]="radiation_restore_speed",
+	[2]="satiety_restore_speed",
+	[3]="power_restore_speed",
+	[4]="bleeding_restore_speed",
+	[5]="additional_weight"
+}
+--таблица параметров восстановления актора 
+local actorRestoreParams={
+	 [0]="satiety_health_v",
+	 [1]="radiation_v",
+	 [2]="satiety_v",
+	 [3]="satiety_power_v",
+	 [4]="wound_incarnation_v"
+}
+--таблицы выше соотносятся по индексам, для каждой пары своя формула
+local displayRestoreFunctions={
+	[0]=function (artVal,actorVal) --health_restore_speed satiety_health_v
+			local value=math.round((artVal/actorVal)*100)
+			if value<0 then
+				value="%c[red]"..tostring(value).." %%c[default]"
+			else
+				value="%c[green]+"..tostring(value).." %%c[default]"
+			end	
+			value=game.translate_string("ui_inv_health").." "..value
+			return value
+		end,
+	[1]=function (artVal,actorVal) --radiation_restore_speed radiation_v
+			local value=math.round(artVal/actorVal)
+			value=math.modf(value)
+			if value<0 then
+				value="%c[green]"..tostring(value).."%c[default]"
+			else
+				value="%c[red]+"..tostring(value).."%c[default]"
+			end	
+			value=game.translate_string("ui_inv_radiation").." "..value
+			return value
+		end,
+	[2]=function (artVal,actorVal) --satiety_restore_speed satiety_v
+			local value=math.round((artVal/actorVal)*100)
+			if value<0 then
+				value="%c[red]"..tostring(value).." %%c[default]"
+			else
+				value="%c[green]+"..tostring(value).." %%c[default]"
+			end	
+			value=game.translate_string("ui_inv_satiety").." "..value
+			return value
+		end,
+	[3]=function (artVal,actorVal) --power_restore_speed satiety_power_v
+			local value=math.round(artVal/actorVal)
+			value=math.modf(value)
+			if value<0 then
+				value="%c[red]"..tostring(value).."%c[default]"
+			else 	
+				value="%c[green]+"..tostring(value).."%c[default]"
+			end	   
+			value=game.translate_string("ui_inv_power").." "..value
+			return value
+		end,
+	[4]=function (artVal,actorVal) --bleeding_restore_speed wound_incarnation_v
+			local value=math.round((artVal/actorVal)*-100)
+			value=math.modf(value)
+			if value<0 then
+				value="%c[green]"..tostring(value).." %%c[default]"
+			else 	
+				value="%c[red]+"..tostring(value).." %%c[default]"
+			end	
+			value=game.translate_string("ui_inv_bleeding").." "..value
+			return value
+		end,
+	[5]=function (artVal,actorVal) --additional_weight
+			local value=""
+			local postfix=game.translate_string("ui_inv_aw_kg")
+			artVal=tonumber(artVal)
+			if (artVal>0 and artVal<1) or (artVal<0 and artVal>-1) then
+				postfix=game.translate_string("ui_inv_aw_gr")
+				artVal=artVal*1000
+			end
+			if artVal>0 then
+				value="%c[green]+"..tostring(artVal).." "..postfix.."%c[default]"
+			else 	
+				value="%c[red]"..tostring(artVal).." "..postfix.."%c[default]"
+			end	
+			value=game.translate_string("ui_inv_additional_weight").." "..value
+			return value
+		end
+}
+
+--таблица иммунитетов артефакта
+local artefactsImmuneParams={
+	[0]="burn_immunity",
+	[1]="strike_immunity",
+	[2]="wound_immunity",
+	[3]="radiation_immunity",
+	[4]="telepatic_immunity",
+	[5]="chemical_burn_immunity",
+	[6]="explosion_immunity",
+	[7]="fire_wound_immunity",
+	[8]="shock_immunity"
+}
+
+local displayImmuneFunctions={
+	[0]=function(value)  
+			local value=math.round((1-value)*100)
+			if value<0 then
+				value="%c[red]"..tostring(value).." %%c[default]"
+			else
+				value="%c[green]+"..tostring(value).." %%c[default]"
+			end	
+			value=game.translate_string("ui_inv_outfit_burn_protection").." "..value
+			return value 
+		end, --burn_immunity
+	[1]=function(value)  --strike_immunity
+			local value=math.round((1-value)*100)
+			if value<0 then
+				value="%c[red]"..tostring(value).." %%c[default]"
+			else
+				value="%c[green]+"..tostring(value).." %%c[default]"
+			end	
+			value=game.translate_string("ui_inv_outfit_strike_protection").." "..value
+			return value 
+		end, 
+	[2]=function(value)  --wound_immunity
+			local value=math.round((1-value)*100)
+			if value<0 then
+				value="%c[red]"..tostring(value).." %%c[default]"
+			else
+				value="%c[green]+"..tostring(value).." %%c[default]"
+			end	
+			value=game.translate_string("ui_inv_outfit_wound_protection").." "..value
+			return value
+		end, 
+	[3]=function(value)  --radiation_immunity
+			local value=math.round((1-value)*100)
+			if value<0 then
+				value="%c[red]"..tostring(value).." %%c[default]"
+			else
+				value="%c[green]+"..tostring(value).." %%c[default]"
+			end	
+			value=game.translate_string("ui_inv_outfit_radiation_protection").." "..value
+			return value 
+		end,
+	[4]=function(value) --telepatic_immunity
+			local value=math.round((1-value)*100)
+			if value<0 then
+				value="%c[red]"..tostring(value).." %%c[default]"
+			else
+				value="%c[green]+"..tostring(value).." %%c[default]"
+			end	
+			value=game.translate_string("ui_inv_outfit_telepatic_protection").." "..value
+			return value 
+		end, 
+	[5]=function(value)  --chemical_burn_immunity
+			local value=math.round((1-value)*100)
+			if value<0 then
+				value="%c[red]"..tostring(value).." %%c[default]"
+			else
+				value="%c[green]+"..tostring(value).." %%c[default]"
+			end	
+			value=game.translate_string("ui_inv_outfit_chemical_burn_protection").." "..value
+			return value 
+		end, 
+	[6]=function(value)  --explosion_immunity
+			local value=math.round((1-value)*100)
+			if value<0 then
+				value="%c[red]"..tostring(value).." %%c[default]"
+			else
+				value="%c[green]+"..tostring(value).." %%c[default]"
+			end	
+			value=game.translate_string("ui_inv_outfit_explosion_protection").." "..value
+			return value 
+		end, 
+	[7]=function(value)  --fire_wound_immunity
+			local value=math.round((1-value)*100)
+			if value<0 then
+				value="%c[red]"..tostring(value).." %%c[default]"
+			else
+				value="%c[green]+"..tostring(value).." %%c[default]"
+			end	
+			value=game.translate_string("ui_inv_outfit_fire_wound_protection").." "..value
+			return value 
+		end,
+	[8]=function(value)  --shock_immunity
+			local value=math.round((1-value)*100)
+			value=math.modf(value)
+			if value<0 then
+				value="%c[red]"..tostring(value).." %%c[default]"
+			else
+				value="%c[green]+"..tostring(value).." %%c[default]"
+			end	
+			value=game.translate_string("ui_inv_outfit_shock_protection").." "..value
+			return value 
+		end 		
+}
+
+--кешируем многократный вызов 
+local ArtefactInformerClass=nil
+function init() --вызывать в начале игры
+	local conditionSection=ini:r_string("actor","condition_sect")
+	actorParams={}
+	for i,section in pairs(actorRestoreParams) do
+		actorParams[i]=ini:r_string(conditionSection,section)
+	end
+	ArtefactInformerClass=nil
+	ArtefactInformerClass=ArtefactInformer()
+end
+function GetArtefactInformerClass(reinit) --вернуть сам класс
+	if reinit==nil then
+		reinit=false
+	end
+	if ArtefactInformerClass==nil or reinit then
+		init()
+	end
+	return ArtefactInformerClass
+end
+	
+class "ArtefactInformer"
+function ArtefactInformer:__init() 
+	self.classname="ArtefactInformer"
+	self.artefactParams={}
+	self.artefactImmuneParams={}
+end
+
+function ArtefactInformer:ReadParamsFromLtx(artefactSection)
+	if ini:section_exist(artefactSection) and ini:line_exist(artefactSection,"hit_absorbation_sect") then
+		local immuneSection=ini:r_string(artefactSection,"hit_absorbation_sect")
+		for i,parameter in pairs(artefactRestoreParams) do
+			local paramValue=0
+			if ini:line_exist(artefactSection,parameter) then
+				paramValue=ini:r_string(artefactSection,parameter)
+			end
+			self.artefactParams[i]=paramValue
+		end
+		for i,parameter in pairs(artefactsImmuneParams) do
+			self.artefactImmuneParams[i]=ini:r_string(immuneSection,parameter)
+		end
+		return true
+	else
+		return false
+	end	
+end
+
+function ArtefactInformer:GetArtefactInfo(artefactSection)
+	local result=self:ReadParamsFromLtx(artefactSection)
+	if not result then
+		return ""
+	end
+	local paramsInfo=""
+	for i,value in pairs(self.artefactParams) do
+		if tonumber(value) ~=0 then
+			if paramsInfo ~= "" then
+				paramsInfo=paramsInfo.." \\n"
+			end
+			local func=displayRestoreFunctions[i]
+			if func then
+				paramsInfo=paramsInfo..func(value,actorParams[i])
+			end
+		end
+	end
+	local immuneInfo=""
+	for i,value in pairs(self.artefactImmuneParams) do
+		if tonumber(value) ~=1 then
+			if immuneInfo ~= "" then
+				immuneInfo=immuneInfo.." \\n"
+			end
+			local func=displayImmuneFunctions[i]
+			if func then
+				immuneInfo=immuneInfo..func(value)
+			end	
+		end
+	end
+	local info=""
+	if paramsInfo~= "" then
+		paramsInfo="%c[ui_clr_3]Модификаторы:%c[default] \\n"..paramsInfo
+		info=paramsInfo
+	end
+	if immuneInfo~="" then
+		immuneInfo="%c[ui_clr_3]Сопротивления:%c[default] \\n"..immuneInfo
+		if info~="" then
+			info=info.." \\n"..immuneInfo			
+		else
+			info=immuneInfo
+		end
+	end
+	return info
+end

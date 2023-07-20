@@ -1,0 +1,145 @@
+-- Проверка предметов по квестам, их выдача, потеря и т.д
+
+local txt = volazar_tbl_text["text"]()
+
+-- калбек на подъем предмета
+function check_upd(obj)
+	local section = obj:section()
+	if     section == "anom_egg" then
+		if not has_info("taynik_nayti_oz_10_prehave") then
+			if not db.debug_mode then
+				volazar_tbl_text.tips(txt.o.jup_1, nil, 40000, "jup_1")
+				give_info("taynik_nayti_oz_10_prehave")
+			end
+		end
+
+	elseif (section == "nano_screw" and has("nano_rosin")) or (section == "nano_rosin" and has("nano_screw")) then
+		give_info("vol_pizdec_tvoritsya")
+	end
+end
+
+-- Прекондишены на диалоги
+function check()
+return has("nano_suit",1) and
+       has("suit_doc",1)
+end
+
+function check_1()
+return has("psevdo_nano_speed",1) and
+       has("nanobot_pow",1)
+end
+
+function check_2()
+return has("posobie_progr",1)
+end
+
+function check_3()
+return has("shema_sb_nano",1)
+end
+
+function check_4()
+return has("psevdo_nano_psi",1) and
+       has("nanobot_psi",1) and
+       has("shema_sb_nano_2",1)
+end
+
+function check_5()
+return has("nano_karta",1) and
+       has("shema_sb_nano_3",1) 
+end
+
+function check_6()
+return has("sist_hd",1)
+end
+
+function check_7()
+return has("psevdo_nano_rad",1) and
+       has("nanobot_rad",1)
+end
+
+function check_8()
+return has("nano_plata",3)
+end
+
+function check_9()
+return has("psevdo_nano_med",1) and
+       has("nanobot_med",1)
+end
+
+function check_10()
+return has("nano_screw",1) and
+       has("nano_rosin",1)
+end
+
+-- Выдаем
+function pol(first_speaker, second_speaker)
+got("suit_instr")
+end
+
+function pol_1(first_speaker, second_speaker)
+got("nano_speed")
+end
+
+function pol_2(first_speaker, second_speaker)
+got("nano_psi")
+end
+
+function pol_3(first_speaker, second_speaker)
+got("nano_rad")
+end
+
+function pol_4(first_speaker, second_speaker)
+got("nano_med")
+end
+
+function sidor_delo(first_speaker, second_speaker)
+	sms("%c[255,160,160,160]".."СИДОРОВИЧ:".."\\n".."%c[255,255,128,128]Всем! Всем! Всем! Нарисовалась одна серьёзная проблема. Увидите Меченого - передайте, что мне срочно нужна его помощь! Только он сможет её решить.", 3, nil, 30000, nil, [[sms\sidor\sidor_delo]])
+end
+
+-- Забираем
+function zab(first_speaker, second_speaker)
+lost("suit_doc",1)
+end
+
+function zab_1(first_speaker, second_speaker)
+lost("psevdo_nano_speed",1)
+end
+
+function zab_2(first_speaker, second_speaker)
+lost("posobie_progr",1)
+end
+
+function zab_3(first_speaker, second_speaker)
+lost("shema_sb_nano",1)
+end
+
+function zab_4(first_speaker, second_speaker)
+lost("shema_sb_nano_2",1)
+lost("psevdo_nano_psi",1)
+end
+
+function zab_5(first_speaker, second_speaker)
+lost("shema_sb_nano_3",1)
+lost("nano_karta",1)
+end
+
+function zab_6(first_speaker, second_speaker)
+lost("sist_hd",1)
+end
+
+function zab_7(first_speaker, second_speaker)
+lost("psevdo_nano_rad",1)
+end
+
+function zab_8(first_speaker, second_speaker)
+lost("nano_plata",3)
+end
+
+function zab_9(first_speaker, second_speaker)
+lost("psevdo_nano_med",1)
+end
+
+function zab_10(first_speaker, second_speaker)
+lost("nano_screw",1)
+lost("nano_rosin",1)
+end

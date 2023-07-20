@@ -1,0 +1,777 @@
+; Дар
+[af_kristal_zp]:ARTEFACT
+visual				= amk\modificat\amk_kristal.ogf
+description			= enc_zone_artifact_kristal_zp
+inv_name			= af_kristal_zp
+inv_weight			= 0.8
+inv_grid_x			= 73
+inv_grid_y			= 0
+cost				= 150000
+
+jump_height			= 0.1
+particles			= anomaly2\artefact\artefact_zharka
+lights_enabled = true
+trail_light_color = 0.9,0.5,0.5
+trail_light_range = 3.0
+
+hit_absorbation_sect		= af_kristal_zp_absorbation
+[af_kristal_zp_absorbation]
+burn_immunity = 1.0 
+strike_immunity = 2.5
+shock_immunity = 1.0
+wound_immunity = 2.5		
+radiation_immunity = -4.0
+telepatic_immunity = 1.0
+chemical_burn_immunity = 1.0
+explosion_immunity = 1.0
+fire_wound_immunity  = 2.5
+
+; Аквамарин
+[af_kristal_blue]:ARTEFACT
+visual				= amk\modificat\amk_kristal_blue.ogf
+description			= enc_zone_artifact_kristal_blue
+inv_name			= af_kristal_blue
+inv_weight			= 2
+inv_grid_x			= 72;21
+inv_grid_y			= 0;9
+cost				= 1000000
+cheat_item = true
+
+jump_height			= 0.1
+particles			= anomaly2\artefact\artefact_zharka
+lights_enabled = true
+trail_light_color = 0.9,0.5,0.5
+trail_light_range = 3.0
+
+inventory_radiation		= 0.025
+
+hit_absorbation_sect		= af_kristal_blue_absorbation
+[af_kristal_blue_absorbation]
+burn_immunity = 1.5 
+strike_immunity = 1.0
+shock_immunity = 1.5
+wound_immunity = 1.0		
+radiation_immunity = 1.0
+telepatic_immunity = 1.0
+chemical_burn_immunity = 1.5
+explosion_immunity = 0.6
+fire_wound_immunity  = 0.6
+
+; Чертополох
+[af_repei]:ARTEFACT
+visual				= amk\modificat\amk_repei.ogf
+description			= enc_zone_artifact_repei
+inv_name			= af_repei
+inv_weight			= 0.3
+inv_grid_x			= 80;29
+inv_grid_y			= 1;10
+cost				= 3500
+
+jump_height			= 0.1
+particles			= anomaly2\artefact\artefact_puxx
+lights_enabled = true
+trail_light_color = 0.1,0.1,0.5
+trail_light_range = 3.0
+
+hit_absorbation_sect		= af_repei_absorbation
+[af_repei_absorbation]
+burn_immunity = 1.0 
+strike_immunity = 1.0
+shock_immunity = 0.9
+wound_immunity = 0.93		
+radiation_immunity = 1.0
+telepatic_immunity = 1.0
+chemical_burn_immunity = 1.0
+explosion_immunity = 1.0
+fire_wound_immunity  = 1.04
+
+; "Индилиан"
+[af_dummy_indilian]:ARTEFACT
+visual				= physics\anomaly\danek\artefact_indilian.ogf
+description			= enc_zone_artifact_af-dummy-indilian
+inv_name			= af-dummy-indilian
+inv_weight			= 0.5
+inv_grid_x			= 74;23
+inv_grid_y			= 0;9
+cost				= 150000
+
+jump_height			= 0.1
+particles			= anomaly2\artefact\artefact_zharka
+lights_enabled = true	 
+trail_light_color = 0.9,0.5,0.5
+trail_light_range = 3.0
+
+health_restore_speed = -0.0015		
+
+hit_absorbation_sect = af_dummy_indilian_absorbation
+[af_dummy_indilian_absorbation]
+burn_immunity = 1.0 
+strike_immunity = 0.60
+shock_immunity = 1.0
+wound_immunity = 0.60
+radiation_immunity = 1.0
+telepatic_immunity = 0.3
+chemical_burn_immunity = 1.0
+explosion_immunity = 1.0
+fire_wound_immunity  = 1.0
+
+; "Джокер"
+[af_dummy_djoker]:ARTEFACT
+visual				= physics\anomaly\danek\artefact_djoker.ogf
+description			= enc_zone_artifact_af-dummy-djoker
+inv_name			= af-dummy-djoker
+inv_weight			= 1.2
+inv_grid_x			= 78;27
+inv_grid_y			= 0;9
+cost				= 16000
+
+jump_height			= 0.0
+particles			= anomaly2\artefact\artefact_zharka
+lights_enabled = false			
+
+power_restore_speed = -0.022
+inventory_radiation		= 0.0095
+
+hit_absorbation_sect = af_dummy_djoker_absorbation
+[af_dummy_djoker_absorbation]
+burn_immunity = 1.0 
+strike_immunity = 0.7
+shock_immunity = 1.0
+wound_immunity = 1.0		
+radiation_immunity = 1.0
+telepatic_immunity = 1.0
+chemical_burn_immunity = 1.0
+explosion_immunity = 0.7
+fire_wound_immunity  = 1.0
+
+; "Уголь"
+[af_dummy_coal]:ARTEFACT
+visual				= physics\anomaly\danek\artefact_coal.ogf
+description			= enc_zone_artifact_af-dummy-coal
+inv_name			= af-dummy-coal
+inv_weight			= 5
+inv_grid_x			= 81;30
+inv_grid_y			= 1;10
+cost				= 5000
+
+jump_height			= 0.1
+lights_enabled = true	 
+trail_light_color = 0.9,0.5,0.5
+trail_light_range = 3.0
+
+power_restore_speed = -0.0165
+
+hit_absorbation_sect = af_dummy_coal_absorbation
+[af_dummy_coal_absorbation]
+burn_immunity = 1.0 
+strike_immunity = 1.0
+shock_immunity = 1.0
+wound_immunity = 1.0		
+radiation_immunity = 0.65
+telepatic_immunity = 0.7
+chemical_burn_immunity = 1.0
+explosion_immunity = 1.0
+fire_wound_immunity  = 1.0
+
+; "Ракушка"
+[af_dummy_seashell]:ARTEFACT
+visual				= physics\anomaly\danek\artefact_seashell.ogf
+description			= enc_zone_artifact_af-dummy-seashell
+inv_name			= af-dummy-seashell
+inv_weight			= 0.8
+inv_grid_x			= 76;25
+inv_grid_y			= 0;9
+cost				= 2500
+
+jump_height			= 0.1
+particles			= anomaly2\artefact\artefact_zharka
+lights_enabled = true	 
+trail_light_color = 0.9,0.5,0.5
+trail_light_range = 3.0
+
+health_restore_speed = 0.0001		
+
+hit_absorbation_sect = af_dummy_seashell_absorbation
+[af_dummy_seashell_absorbation]
+burn_immunity = 1.0 
+strike_immunity = 1.0
+shock_immunity = 1.0
+wound_immunity = 1.0		
+radiation_immunity = 1.0
+telepatic_immunity = 1.0
+chemical_burn_immunity = 0.93
+explosion_immunity = 1.0
+fire_wound_immunity  = 1.03
+
+; "Гриб"
+[af_dummy_mushroom]:ARTEFACT
+visual				= physics\anomaly\danek\artefact_mushroom.ogf
+description			= enc_zone_artifact_af-dummy-mushroom
+inv_name			= af-dummy-mushroom
+inv_weight			= 0.5
+inv_grid_x			= 77;26
+inv_grid_y			= 0;9
+cost				= 20000
+
+jump_height			= 0.1
+particles			= anomaly2\artefact\artefact_zharka
+lights_enabled = true 
+trail_light_color = 0.6,0.7,0.5
+trail_light_range = 3.0
+
+power_restore_speed = -0.00278
+
+hit_absorbation_sect = af_dummy_mushroom_absorbation
+[af_dummy_mushroom_absorbation]
+burn_immunity = 1.5 
+strike_immunity = 1.0
+shock_immunity = 1.5
+wound_immunity = 1.0		
+radiation_immunity = 1.0
+telepatic_immunity = 1.0
+chemical_burn_immunity = 1.5
+explosion_immunity = 1.5
+fire_wound_immunity  = 0.65
+
+; "Гиря"
+[af_dummy_dumbbell]:ARTEFACT
+visual				= physics\anomaly\danek\artefact_dumbbell.ogf
+description			= enc_zone_artifact_af-dummy-dumbbell
+inv_name			= af-dummy-dumbbell
+inv_weight			= 18.0
+inv_grid_x			= 79
+inv_grid_y			= 0
+cost				= 20000
+
+jump_height			= 0.1
+particles			= anomaly2\artefact\artefact_zharka
+lights_enabled = false			
+
+health_restore_speed = 0.0004		
+radiation_restore_speed = -0.0015
+
+hit_absorbation_sect = af_dummy_dumbbell_absorbation
+[af_dummy_dumbbell_absorbation]
+burn_immunity = 1.0 
+strike_immunity = 1.0
+shock_immunity = 1.0
+wound_immunity = 1.0		
+radiation_immunity = 1.0
+telepatic_immunity = 1.0
+chemical_burn_immunity = 1.0
+explosion_immunity = 1.0
+fire_wound_immunity  = 1.0
+
+; "Вертушка"
+[af_dummy_vertyshka]:ARTEFACT
+visual				= physics\anomaly\danek\artefact_vertyshka.ogf
+description			= enc_zone_artifact_af-dummy-vertyshka
+inv_name			= af_dummy-vertyshka
+inv_weight			= 0.2
+inv_grid_x			= 75;24
+inv_grid_y			= 0;9
+cost				= 5000
+
+jump_height			= 0.1
+lights_enabled = true
+trail_light_color = 0.001, 0.002, 0.3
+trail_light_range = 4
+
+hit_absorbation_sect		= af_dummy_vertyshka_absorbation
+[af_dummy_vertyshka_absorbation]
+burn_immunity = 1.0 
+strike_immunity = 1.0
+shock_immunity = 0.65
+wound_immunity = 1.0		
+radiation_immunity = 1.2
+telepatic_immunity = 1.0
+chemical_burn_immunity = 1.0
+explosion_immunity = 1.0
+fire_wound_immunity  = 1.08
+
+; "Звезда монолита"
+[af_dummy_star_monolith]:ARTEFACT
+visual				= physics\anomaly\danek\artefact_star_monolith.ogf
+description			= enc_zone_artifact_af-dummy-star_monolith
+inv_name			= af_dummy-star_monolith
+inv_weight			= 0.8
+inv_grid_x			= 80;29
+inv_grid_y			= 0;9
+cost				= 50000
+
+jump_height			= 0.1
+lights_enabled = true
+trail_light_color = 0.001, 0.002, 0.3
+trail_light_range = 4
+
+radiation_restore_speed		= -0.005	
+
+hit_absorbation_sect		= af_dummy_star_monolith_absorbation
+[af_dummy_star_monolith_absorbation]
+burn_immunity = 1.0 
+strike_immunity = 1.0
+shock_immunity = 1.0
+wound_immunity = 1.0		
+radiation_immunity = 1.0
+telepatic_immunity = 0.4
+chemical_burn_immunity = 1.0
+explosion_immunity = 1.0
+fire_wound_immunity  = 1.4
+
+; "Игла"
+[af_dummy_quill]:ARTEFACT
+visual				= physics\anomaly\danek\artefact_quill.ogf
+description			= enc_zone_artifact_af-dummy-quill
+inv_name			= af-dummy-quill
+inv_weight			= 0.2
+inv_grid_x			= 73;22
+inv_grid_y			= 1;10
+cost				= 5000
+
+jump_height			= 0.1
+particles			= anomaly2\artefact\artefact_puxx
+lights_enabled = true
+trail_light_color =  0.5, 0.1, 0.1  
+trail_light_range = 4.0
+
+inventory_radiation		= 0.0005
+
+hit_absorbation_sect = af_dummy_quill_absorbation
+[af_dummy_quill_absorbation]
+burn_immunity = 0.9 
+strike_immunity = 0.93
+shock_immunity = 1.0
+wound_immunity = 1.0		
+radiation_immunity = 1.0
+telepatic_immunity = 1.0
+chemical_burn_immunity = 1.0
+explosion_immunity = 1.0
+fire_wound_immunity  = 1.0
+
+; "Огненная вата"
+[af_dummy_wool]:ARTEFACT
+visual				= physics\anomaly\danek\artefact_wool.ogf
+description			= enc_zone_artifact_af-dummy-wool
+inv_name			= af-dummy-wool
+inv_weight			= 0.1
+inv_grid_x			= 72;21
+inv_grid_y			= 1;10
+cost				= 8000
+
+jump_height			= 0.1
+lights_enabled = true	 
+trail_light_color = 0.9,0.3,0.4
+trail_light_range = 3.5
+
+health_restore_speed = 0.0003		
+
+hit_absorbation_sect = af_dummy_wool_absorbation
+[af_dummy_wool_absorbation]
+burn_immunity = 0.65 
+strike_immunity = 1.2
+shock_immunity = 1.0
+wound_immunity = 0.6		
+radiation_immunity = 1.0
+telepatic_immunity = 1.0
+chemical_burn_immunity = 1.0
+explosion_immunity = 1.15
+fire_wound_immunity  = 1.0
+
+; "Спрут"
+[af_dummy_bonanza]:ARTEFACT
+visual				= physics\anomaly\danek\artefact_bonanza.ogf
+description			= enc_zone_artifact_af-dummy-bonanza
+inv_name			= af-dummy-bonanza
+inv_weight			= 1.0
+inv_grid_x			= 76;25
+inv_grid_y			= 1;10
+cost				= 6000
+
+jump_height			= 0.1
+particles			= anomaly2\artefact\artefact_ameba
+lights_enabled = false			
+
+radiation_restore_speed = -0.0007
+
+hit_absorbation_sect = af_dummy_bonanza_absorbation
+[af_dummy_bonanza_absorbation]
+burn_immunity = 0.93 
+strike_immunity = 0.4
+shock_immunity = 0.93
+wound_immunity = 1.07		
+radiation_immunity = 1.0
+telepatic_immunity = 1.0
+chemical_burn_immunity = 0.93
+explosion_immunity = 1.0
+fire_wound_immunity  = 1.07
+
+; "Ртутный шар"
+[af_dummy_mercury_ball]:ARTEFACT
+visual				= physics\anomaly\danek\artefact_mercury_ball.ogf
+description			= enc_zone_artifact_af-dummy-mercury_ball
+inv_name			= af-dummy-mercury_ball
+inv_weight			= 2.7
+inv_grid_x			= 78;27
+inv_grid_y			= 1;10
+cost				= 15000
+
+jump_height			= 0.1
+particles			= anomaly2\artefact\artefact_mercury_ball
+lights_enabled = true 
+trail_light_color = 1.0,1.0,1.0
+trail_light_range = 4.0
+
+health_restore_speed = 0.001		
+power_restore_speed = 0.0165
+inventory_radiation		= 0.002
+
+hit_absorbation_sect = af_dummy_mercury_ball_absorbation
+[af_dummy_mercury_ball_absorbation]
+burn_immunity = 1.0 
+strike_immunity = 1.0
+shock_immunity = 1.0
+wound_immunity = 1.0		
+radiation_immunity = 1.4
+telepatic_immunity = 1.0
+chemical_burn_immunity = 1.0
+explosion_immunity = 1.0
+fire_wound_immunity  = 1.0
+
+; "Жгучие листья"
+[af_dummy_bezi]:ARTEFACT
+visual				= physics\anomaly\danek\artefact_bezi.ogf
+description			= enc_zone_artifact_af-dummy-bezi
+inv_name			= af-dummy-bezi
+inv_weight			= 0.3
+inv_grid_x			= 74;23
+inv_grid_y			= 1;10
+cost				= 4200	
+
+jump_height			= 0.1
+particles			= 1935\artefact\artefact_pux00
+lights_enabled = true			
+trail_light_color = 0.1,0.5,0.1
+trail_light_range = 4.0
+
+bleeding_restore_speed = 0.018
+
+hit_absorbation_sect = af_dummy_bezi_absorbation
+[af_dummy_bezi_absorbation]
+burn_immunity = 1.0 
+strike_immunity = 1.0
+shock_immunity = 1.0
+wound_immunity = 1.0		
+radiation_immunity = 1.0
+telepatic_immunity = 1.0
+chemical_burn_immunity = 0.65
+explosion_immunity = 1.0
+fire_wound_immunity  = 1.0
+
+; "Сияние"
+[af_dummy_glow]:ARTEFACT
+visual				= physics\anomaly\danek\artefact_glow.ogf
+description			= enc_zone_artifact_af-dummy-glow
+inv_name			= af-dummy-glow
+inv_weight			= 0.1
+inv_grid_x			= 79;28
+inv_grid_y			= 1;10
+cost				= 4000
+
+jump_height			= 0.1
+particles			= anomaly2\artefact\artefact_glow
+lights_enabled = false
+
+hit_absorbation_sect = af_dummy_glow_absorbation
+[af_dummy_glow_absorbation]
+burn_immunity = 0.65 
+strike_immunity = 1.0
+shock_immunity = 1.0
+wound_immunity = 1.12		
+radiation_immunity = 1.2
+telepatic_immunity = 1.0
+chemical_burn_immunity = 1.0
+explosion_immunity = 1.0
+fire_wound_immunity  = 1.0
+
+; "Узел"
+[af_dummy_node]:ARTEFACT
+visual				= physics\anomaly\danek\artefact_node.ogf
+description			= enc_zone_artifact_af-dummy-node
+inv_name			= af_dummy-node
+inv_weight			= 0.6
+inv_grid_x			= 77;26
+inv_grid_y			= 1;10
+cost				= 20000
+
+jump_height			= 0.1
+lights_enabled = true 
+trail_light_color = 0.5,0.7,0.9
+trail_light_range = 5.0
+
+inventory_radiation		= 0.0007
+
+hit_absorbation_sect		= af_dummy_node_absorbation
+[af_dummy_node_absorbation]
+burn_immunity = 1.0 
+strike_immunity = 1.15
+shock_immunity = 1.0
+wound_immunity = 1.0		
+radiation_immunity = 1.0
+telepatic_immunity = 1.0
+chemical_burn_immunity = 1.0
+explosion_immunity = 1.15
+fire_wound_immunity  = 0.9
+
+; "Ведьмины косы"
+[af_kosi]:ARTEFACT
+visual				= physics\anomaly\danek\artefact_kosi.ogf
+description			= enc_zone_artifact_af-kosi
+inv_name			= af_kosi
+inv_weight			= 0.2
+inv_grid_x			= 75;24
+inv_grid_y			= 1;10
+cost				= 23000
+
+jump_height			= 0.1
+particles			= anomaly2\artefact\artefact_kosa
+lights_enabled = true  
+trail_light_color = 0.6,0.7,0.5
+trail_light_range = 0.5
+
+power_restore_speed			= 0.00555
+bleeding_restore_speed		= 0.012
+
+hit_absorbation_sect		= af_kosi_absorbation
+[af_kosi_absorbation]
+burn_immunity = 1.0 
+strike_immunity = 1.0
+shock_immunity = 1.0
+wound_immunity = 1.35		
+radiation_immunity = 1.0
+telepatic_immunity = 1.0
+chemical_burn_immunity = 1.0
+explosion_immunity = 1.0
+fire_wound_immunity  = 0.8
+
+; "Жижа"
+[af_siyanie]:ARTEFACT
+visual				= physics\anomaly\sap\siyanie.ogf
+description			= af_siyanie_desc
+inv_name			= af_siyanie
+inv_weight			= 0.3
+inv_grid_x			= 80
+inv_grid_y			= 67
+cost				= 230000
+cheat_item = true
+
+jump_height			= 0.9
+particles		= anomaly2\artefact\artefact_electra
+lights_enabled = false  
+trail_light_color = 0.6,0.7,0.5
+trail_light_range = 0.5
+
+additional_weight 		= 9.0
+satiety_restore_speed	= -0.0004
+
+hit_absorbation_sect		= af_siyanie_absorbation
+[af_siyanie_absorbation]
+burn_immunity = 1.0 
+strike_immunity = 1.0
+shock_immunity = 1.0
+wound_immunity = 1.0		
+radiation_immunity = 1.0
+telepatic_immunity = 1.0
+chemical_burn_immunity = 0.65
+explosion_immunity = 1.0
+fire_wound_immunity  = 1.0
+
+; "Клевер"
+[af_klever]:ARTEFACT
+visual				= physics\anomaly\sap\klever.ogf
+description			= af_klever_desc
+inv_name			= af_klever
+inv_weight			= 0.4
+inv_grid_x			= 76
+inv_grid_y			= 68
+cost				= 2123000
+cheat_item = true
+
+jump_height			= 0.2
+particles			= anomaly2\artefact\artefact_ameba
+lights_enabled = false  
+trail_light_color = 0.5,0.3,0.1
+trail_light_range = 0.8
+
+health_restore_speed		= 0.0005			
+power_restore_speed			= 0.0025
+
+hit_absorbation_sect		= af_klever_absorbation
+[af_klever_absorbation]
+burn_immunity = 0.95 
+strike_immunity = 0.95
+shock_immunity = 1.05
+wound_immunity = 0.95
+radiation_immunity = 1.05
+telepatic_immunity = 1.0
+chemical_burn_immunity = 0.95
+explosion_immunity = 1.0
+fire_wound_immunity  = 0.95
+
+; "Гипербола"
+[af_giperbola]:ARTEFACT
+visual				= physics\anomaly\sap\giperbola.ogf
+description			= af_giperbola_desc
+inv_name			= af_giperbola
+inv_weight			= 1.6
+inv_grid_x			= 78
+inv_grid_y			= 68
+cost				= 340000
+cheat_item = true
+
+jump_height			= 0.4
+particles			= anomaly2\artefact\artefact_ameba
+lights_enabled = true  
+trail_light_color = 0.6,0.7,0.5
+trail_light_range = 0.5
+
+inventory_radiation			= 0.0005
+
+hit_absorbation_sect		= af_giperbola_absorbation
+[af_giperbola_absorbation]
+burn_immunity = 1.0 
+strike_immunity = 1.18
+shock_immunity = 1.0
+wound_immunity = 1.17		
+radiation_immunity = 1.0
+telepatic_immunity = 1.0
+chemical_burn_immunity = 1.0
+explosion_immunity = 1.0
+fire_wound_immunity  = 1.0
+
+; "Стеклянный браслет"
+[af_braslet]:ARTEFACT
+visual				= physics\anomaly\sap\braslet.ogf
+description			= af_braslet_desc
+inv_name			= af_braslet
+inv_weight			= 0.5
+inv_grid_x			= 79
+inv_grid_y			= 68
+cost				= 222000
+cheat_item = true
+
+jump_height			= 0.6
+particles			= anomaly2\artefact\artefact_glow
+lights_enabled = true  
+trail_light_color = 0.5,0.3,0.1
+trail_light_range = 0.8
+
+power_restore_speed			= 0.011
+inventory_radiation			= 0.0025
+
+hit_absorbation_sect		= af_braslet_absorbation
+[af_braslet_absorbation]
+burn_immunity = 1.0 
+strike_immunity = 1.0
+shock_immunity = 1.0
+wound_immunity = 1.0
+radiation_immunity = 1.0
+telepatic_immunity = 1.25
+chemical_burn_immunity = 1.0
+explosion_immunity = 1.0
+fire_wound_immunity  = 1.0
+
+; "Болотный призрак"
+[af_bol_prizrak]:ARTEFACT
+visual				= physics\anomaly\sap\bol_prizrak.ogf
+description			= af_bol_prizrak_desc
+inv_name			= af_bol_prizrak
+inv_weight			= 0.15
+inv_grid_x			= 77
+inv_grid_y			= 69
+cost				= 180500
+
+jump_height			= 0.6
+particles			= anomaly2\artefact\artefact_zharka
+lights_enabled = false  
+trail_light_color = 0.5,0.3,0.1
+trail_light_range = 0.8
+
+satiety_restore_speed		= -0.00002
+power_restore_speed			= -0.0005
+inventory_radiation			= 0.0003
+
+hit_absorbation_sect		= af_bol_prizrak_absorbation
+[af_bol_prizrak_absorbation]
+burn_immunity = 1.0 
+strike_immunity = 1.0
+shock_immunity = 1.01
+wound_immunity = 1.0
+radiation_immunity = 1.0
+telepatic_immunity = 1.0
+chemical_burn_immunity = 1.0
+explosion_immunity = 1.0
+fire_wound_immunity  = 0.99
+
+; "Пакость"
+[af_pakost]:ARTEFACT
+visual				= physics\anomaly\sap\pakost.ogf
+description			= af_pakost_desc
+inv_name			= af_pakost
+inv_weight			= 0.82
+inv_grid_x			= 78
+inv_grid_y			= 69
+cost				= 483525
+cheat_item = true
+
+jump_height			= 0.0
+lights_enabled = false  
+trail_light_color = 0.6,0.7,0.5
+trail_light_range = 0.5
+
+health_restore_speed		= 0.0001		
+radiation_restore_speed		= -0.003
+bleeding_restore_speed		= 0.003
+
+hit_absorbation_sect		= af_pakost_absorbation
+[af_pakost_absorbation]
+burn_immunity = 1.0 
+strike_immunity = 1.0
+shock_immunity = 1.0
+wound_immunity = 1.0	
+radiation_immunity = 1.0
+telepatic_immunity = 1.0
+chemical_burn_immunity = 1.0
+explosion_immunity = 1.0
+fire_wound_immunity  = 1.0
+
+; "Шкатулка"
+[af_shkatulka]:ARTEFACT
+visual				= physics\anomaly\sap\shkatulka.ogf
+description			= af_shkatulka_desc
+inv_name			= af_shkatulka
+inv_weight			= 0.9
+inv_grid_x			= 80
+inv_grid_y			= 69
+cost				= 1321500
+cheat_item = true
+
+jump_height			= 0.0
+lights_enabled = false  
+trail_light_color = 0.6,0.7,0.5
+trail_light_range = 0.5
+
+radiation_restore_speed		= -0.001
+power_restore_speed			= 0.0114
+bleeding_restore_speed		= 0.00171
+
+hit_absorbation_sect		= af_shkatulka_absorbation
+[af_shkatulka_absorbation]
+burn_immunity = 1.0 
+strike_immunity = 1.03
+shock_immunity = 1.0
+wound_immunity = 1.03	
+radiation_immunity = 1.0
+telepatic_immunity = 1.0
+chemical_burn_immunity = 1.04
+explosion_immunity = 1.0
+fire_wound_immunity  = 1.0

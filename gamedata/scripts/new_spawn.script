@@ -1,0 +1,285 @@
+function pda_prizrak()
+amk.spawn_item("pda_priz",xyz(-42.65,19.18,1.97),1530,2557) 
+end
+
+function esc_zahar()
+local obj = create("stalker_green_zahar",xyz(111.88757324,0.099669277667,74.2647323608),33195,1225)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\stalker_green_zahar.ltx", "story_id", 9613)
+end
+
+function bar_informator()
+local obj = create("mil_trader_gavr",xyz(25.325489,-8.35158157,-17.512226425),330707,1587)
+netpacket:modify(obj, "custom_data", "[logic]\nactive=walker\n[walker]\npath_walk = mil_trader_gavr_walk1\npath_look = mil_trader_gavr_look1\ncombat_ignore_cond=always", "story_id", 9623)
+
+obj = create("mil_gavr_bodyguard1",xyz(25.325489,-8.35158157,-17.512226425),330707,1587)
+netpacket:modify(obj, "custom_data", "[logic]\nactive=walker\n[walker]\npath_walk = mil_gavr_bodyguard1_walk1\npath_look = mil_gavr_bodyguard1_look1\ncombat_ignore_cond=always", "story_id", 9624)
+
+obj = create("mil_gavr_bodyguard2",xyz(25.325489,-8.35158157,-17.512226425),330707,1587)
+netpacket:modify(obj, "custom_data", "[logic]\nactive=walker\n[walker]\npath_walk = mil_gavr_bodyguard2_walk1\npath_look = mil_gavr_bodyguard2_look1\ncombat_ignore_cond=always", "story_id", 9625)
+end
+
+function bar_james()
+create("ros_killer_respawn_4",xyz(-259.963623,-0.000217974,22.387314),6507,1395)
+create("ros_killer_respawn_4",xyz(-257.169403,-0.000773012,5.0113105),7481,1395)
+create("ros_killer_respawn_4",xyz(-263.326446,-0.00097110867,11.14619922),5620,1395)
+create("ros_killer_respawn_4",xyz(-248.740127,-0.00184855,6.270340919),10240,1396)
+end
+
+function under_stalker()
+	local obj=amk.spawn_item("stalker_agro_und",xyz(-38.554332733,-4.621260643,-26.150243759),733,4747)
+	netpacket:modify(obj, "story_id", 9660, "health", 0, "upd.health", 0)
+	create("winger",xyz(-79.901573181152,-16.461309432983,-51.138591766357),2807,744)
+	create("winger",xyz(-79.901573181152,-16.461309432983,-51.138591766357),2807,744)
+	create("winger",xyz(-79.901573181152,-16.461309432983,-51.138591766357),2807,744)
+	create("winger",xyz(-79.901573181152,-16.461309432983,-51.138591766357),2807,744)
+	create("winger",xyz(-79.901573181152,-16.461309432983,-51.138591766357),2807,744)
+end
+
+function under_kontr()
+create("m_controller_old",xyz(-50.33838653564,-6.51431989,9.447748184),4221,727)
+create("m_controller_old_fat",xyz(-67.20966339,-16.463214874,-42.71123886),3647,716)
+end
+
+function prizrak_fail()
+local obj =create("boev_sniper1",xyz(-51.989505767822,-6.5053696632385,24.031425476074),4182,726)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\boev_sniper1.ltx", "story_id", 9640)
+
+obj =create("boev_sniper2",xyz(-47.507171630859,-6.4884614944458,8.3766565322876),4307,729)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\boev_sniper2.ltx", "story_id", 9641)
+
+obj =create("boev_sniper3",xyz(-57.223609924316,-6.4028582572937,21.511028289795),4019,775)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\boev_sniper3.ltx", "story_id", 9642)
+
+obj =create("boev_sniper4",xyz(-56.480762481689,-6.2299695014954,2.7234523296356),3993,777)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\boev_sniper4.ltx", "story_id", 9643)
+
+obj =create("boev_sniper5",xyz(-77.649810791016,-16.465929031372,16.364751815796),2986,764)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\boev_sniper5.ltx", "story_id", 9644)
+
+obj =create("boev_sniper6",xyz(-79.996566772461,-16.413192749023,1.0358234643936),2645,711)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\boev_sniper6.ltx", "story_id", 9645)
+end
+
+function prizrak_true()
+local obj =create("boev_sniper_rad1",xyz(608.736389160,-52.1336784363,-279.3496398926),218431,1883)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\boev_sniper_rad1.ltx", "story_id", 9670)
+
+obj =create("boev_sniper_rad2",xyz(593.38671875,-51.838394165039,-289.097137451),210993,1883)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\boev_sniper_rad2.ltx", "story_id", 9671)
+
+obj=create("boev_sniper_rad3",xyz(597.50213623,-53.779800415039,-255.705276489),213454,1863)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\boev_sniper_rad3.ltx", "story_id", 9672)
+
+obj=create("boev_sniper_rad4",xyz(611.5910034179,-52.4556274414,-304.1400756836),219774,1882)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\boev_sniper_rad4.ltx", "story_id", 9673)
+
+obj=create("boev_sniper_rad5",xyz(613.7868041992,-50.43564987183,-8.73648929596),220734,1899)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\boev_sniper_rad5.ltx", "story_id", 9674)
+
+obj=create("boev_sniper_rad6",xyz(606.57836914063,-53.641632081,-52.6836853027),217655,1897)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\boev_sniper_rad6.ltx", "story_id", 9675)
+
+obj=create("boev_sniper_rad7",xyz(511.014770507,-49.80339813232,16.531932830811),171492,1920)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\boev_sniper_rad7.ltx", "story_id", 9676)
+
+obj=create("boev_sniper_rad8",xyz(515.36065673828,-49.98353958129,0.59198832512),173514,1917)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\boev_sniper_rad8.ltx", "story_id", 9677)
+
+obj=create("boev_sniper_rad9",xyz(394.22698974609,-49.7197265625,15.6820411682),121105,1864)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\boev_sniper_rad9.ltx", "story_id", 9678)
+
+obj=create("boev_sniper_rad10",xyz(349.57217407227,-49.9717864990,15.1036739349),92719,1927)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\boev_sniper_rad10.ltx", "story_id", 9679)
+
+obj=create("boev_sniper_rad11",xyz(131.92094421387,-3.201653480529,30.6498222351),51503,1940)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\boev_sniper_rad11.ltx", "story_id", 9680)
+
+obj=create("boev_sniper_rad12",xyz(105.66445922852,-0.200214698910,-18.860168457),45473,1951)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\boev_sniper_rad12.ltx", "story_id", 9681)
+
+obj=create("boev_sniper_rad13",xyz(115.53982543945,-0.306800276,-33.98778152466),48501,1951)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\boev_sniper_rad13.ltx", "story_id", 9682)
+
+obj=create("boev_sniper_rad14",xyz(69.816612243,-0.4328181147575,-0.680386841297),33781,1984)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\boev_sniper_rad14.ltx", "story_id", 9683)
+
+obj=create("boev_sniper_rad15",xyz(90.30807495117,-0.39964208006,-18.0512924194),40764,1982)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\boev_sniper_rad15.ltx", "story_id", 9684)
+end
+
+function spawn_zver()
+local obj=create("esc_zver",xyz(-123.13681793213,-30.051919937134,-368.98876953125),130148,25)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_zver.ltx", "story_id", 9731)
+
+obj=create("esc_bodyzver1",xyz(-123.13681793213,-30.051919937134,-368.98876953125),130148,25)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_bodyzver1.ltx", "story_id", 9732)
+
+obj=create("esc_bodyzver2",xyz(-123.13681793213,-30.051919937134,-368.98876953125),130148,25)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_bodyzver2.ltx", "story_id", 9733)
+
+obj=create("esc_bodyzver3",xyz(-123.13681793213,-30.051919937134,-368.98876953125),130148,25)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_bodyzver3.ltx", "story_id", 9734)
+
+obj=create("esc_bodyzver4",xyz(-123.13681793213,-30.051919937134,-368.98876953125),130148,25)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_bodyzver4.ltx", "story_id", 9735)
+
+obj=create("esc_bodyzver5",xyz(-123.13681793213,-30.051919937134,-368.98876953125),130148,25)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_bodyzver5.ltx", "story_id", 9736)
+
+obj=create("esc_mil_def",xyz(-168.19195556641,-31.625070571899,-272.02471923828),83865,35)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_mil_def.ltx", "story_id", 9737)
+
+obj=create("esc_mil2_def",xyz(-168.19195556641,-31.625070571899,-272.02471923828),83865,35)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_mil2_def.ltx", "story_id", 9738)
+
+obj=create("esc_mil3_def",xyz(-168.19195556641,-31.625070571899,-272.02471923828),83865,35)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_mil3_def.ltx", "story_id", 9739)
+
+obj=create("esc_mil4_def",xyz(-168.19195556641,-31.625070571899,-272.02471923828),83865,35)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_mil4_def.ltx", "story_id", 9740)
+
+obj=create("esc_mil5_def",xyz(-163.01707458496,-25.436334609985,-350.4128112793),86407,31)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_mil5_def.ltx", "story_id", 9741)
+
+obj=create("esc_mil6_def",xyz(-163.01707458496,-25.436334609985,-350.4128112793),86407,31)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_mil6_def.ltx", "story_id", 9742)
+
+obj=create("esc_mil7_def",xyz(-163.01707458496,-25.436334609985,-350.4128112793),86407,31)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_mil7_def.ltx", "story_id", 9743)
+
+obj=create("esc_mil8_def",xyz(-163.01707458496,-25.436334609985,-350.4128112793),86407,31)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_mil8_def.ltx", "story_id", 9744)
+
+obj=create("esc_mil9_def",xyz(-133.7991027832,-25.811548233032,-354.52139282227),117354,19)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_mil9_def.ltx", "story_id", 9745)
+
+obj=create("esc_mil10_def",xyz(-133.7991027832,-25.811548233032,-354.52139282227),117354,19)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_mil10_def.ltx", "story_id", 9746)
+
+obj=create("esc_mil11_def",xyz(-133.21928405762,-29.690362930298,-354.28179931641),118113,19)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_mil11_def.ltx", "story_id", 9747)
+
+obj=create("esc_mil12_def",xyz(-133.7991027832,-25.811548233032,-354.52139282227),117354,19)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_mil12_def.ltx", "story_id", 9748)
+
+obj=create("esc_mil13_def",xyz(-139.49812316895,-29.691171646118,-353.13653564453),111254,19)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_mil13_def.ltx", "story_id", 9749)
+
+obj=create("esc_mil14_def",xyz(-139.49812316895,-29.691171646118,-353.13653564453),111254,19)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_mil14_def.ltx", "story_id", 9750)
+end
+
+function add_zver()
+local obj=create("esc_snip_atak",xyz(-130.93258666992,-17.900747299194,-187.99856567383),120643,42)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_snip_atak.ltx", "story_id", 9751)
+
+obj=create("esc_snip2_atak",xyz(-130.93258666992,-17.900747299194,-187.9985656738),120643,42)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_snip2_atak.ltx", "story_id", 9752)
+
+obj=create("esc_snip3_atak",xyz(-130.93258666992,-17.900747299194,-187.9985656738),120643,42)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_snip3_atak.ltx", "story_id", 9753)
+
+obj=create("esc_snip4_atak",xyz(-130.4655456543,-10.02149772644,-126.00447845459),121547,44)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_snip4_atak.ltx", "story_id", 9754)
+
+obj=create("esc_snip5_atak",xyz(-130.4655456543,-10.02149772644,-126.00447845459),121547,44)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_snip5_atak.ltx", "story_id", 9755)
+
+obj=create("esc_snip6_atak",xyz(-130.4655456543,-10.02149772644,-126.00447845459),121547,44)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_snip6_atak.ltx", "story_id", 9756)
+
+obj=create("esc_snip7_atak",xyz(-238.85079956055,-19.541189193726,-118.84622192383),16851,8)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_snip7_atak.ltx", "story_id", 9757)
+
+obj=create("esc_snip8_atak",xyz(-238.85079956055,-19.541189193726,-118.84622192383),16851,8)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_snip8_atak.ltx", "story_id", 9758)
+
+obj=create("esc_snip9_atak",xyz(-238.85079956055,-19.541189193726,-118.84622192383),16851,8)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\esc_snip9_atak.ltx", "story_id", 9759)
+end
+
+function chern_dell()
+local obj = create("chernomor_zombi1",xyz(11.4238529205322,0.279962688684464,15.8728618621826),44664,1501)
+netpacket:modify(obj, "custom_data", "[logic]\ncfg = scripts\\new\\chernomor_zombi1.ltx", "story_id", 9626)
+end
+
+
+function spawn_art()
+create("af_gold_mincer_meat",xyz(294.39636230469,16.796379089355,68.041152954102),102440,2594)
+create("af_gold_mincer_meat",xyz(69.090293884277,4.9815683364868,113.45052337646),54000,2536)
+create("af_gold_mincer_meat",xyz(15.024145126343,4.4579954147339,148.66020202637),33501,2525)
+create("af_gold_mincer_meat",xyz(20.866310119629,3.6217188835144,209.01692199707),34266,2524)
+create("af_gold_mincer_meat",xyz(82.715995788574,8.7262849807739,168.47891235352),57448,2557)
+create("af_gold_mincer_meat",xyz(184.58985900879,21.803495407104,188.47557067871),74473,2569)
+create("af_gold_mincer_meat",xyz(-2.0464670658112,17.001815795898,277.74737548828),24758,2541)
+create("af_gold_mincer_meat",xyz(96.206855773926,50.358055114746,79.338745117188),59035,2566) 
+create("af_gold_mincer_meat",xyz(294.06600952148,16.822654724121,69.23900604248),102227,2594)
+create("af_gold_mincer_meat",xyz(429.02359008789,8.5063734054565,159.03492736816),143946,2599)
+create("af_gold_mincer_meat",xyz(456.19100952148,8.5008964538574,158.3337097168),149725,2599)
+create("af_gold_mincer_meat",xyz(573.65032958984,5.0415830612183,126.05679321289),170815,2627)
+create("af_gold_mincer_meat",xyz(535.68536376953,-0.08577823638916,130.34606933594),169069,2627)
+create("af_gold_mincer_meat",xyz(692.55303955078,-0.11799703538418,165.55288696289),194971,2623)
+create("af_gold_mincer_meat",xyz(758.5927734375,-0.085957616567612,354.07299804688),203677,2655)
+create("af_gold_mincer_meat",xyz(577.39178466797,9.0905065536499,201.67486572266),173475,2631)
+end
+
+function tri_tainik_firstsp()
+create("bloodsucker_strong",xyz(370.66629,-0.00156867504,406.57116699),123988,2586)
+create("bloodsucker_effector",xyz(370.66629,-0.00156867504,406.57116699),123988,2586)
+create("bloodsucker_mil",xyz(370.66629,-0.00156867504,406.57116699),123988,2586)
+create("bloodsucker_normal",xyz(370.66629,-0.00156867504,406.57116699),123988,2586)
+create("bloodsucker_strong",xyz(370.66629,-0.00156867504,406.57116699),123988,2586)
+end
+
+function tri_tainik_secondsp()
+create("electro_chimera",xyz(562.12567,0.6415554,374.206726),136487,2586)
+create("new_electro_chimera",xyz(562.12567,0.6415554,374.206726),136487,2586)
+create("fire_chimera",xyz(562.12567,0.6415554,374.206726),136487,2586)
+create("chimera_x_ray",xyz(562.12567,0.6415554,374.206726),136487,2586)
+end
+
+function tri_tainik_thirdsp()
+create("controller_tubeman",xyz(446.917,-0.09459,73.922073),147015,2602)
+create("controller_tubeman",xyz(446.917,-0.09459,73.922073),147015,2602)
+create("controller_tubeman",xyz(446.917,-0.09459,73.922073),147015,2602)
+create("controller_tubeman",xyz(446.917,-0.09459,73.922073),147015,2602)
+end
+
+
+-- Hand Teleport
+
+function esc_kostya_ammo()
+	got("ammo_12x70_buck", 3)
+end
+
+function new_inventory12()
+create("m_inventory_box12",xyz(7.7449460029602,-22.623861312866,7.6079015731812),7689,2703)
+give_info("new_inventory12")
+end
+
+function checking_taken_item37(obj)
+  if not has_info("new_inventory12") then 
+    if obj:section()=="kostya_pda9" then new_inventory12(obj)
+	end
+  end
+end
+
+function new_inventory13()
+create("m_inventory_box13",xyz(-295.2509765625,25.836132049561,-119.17073059082),42457,303)
+give_info("kostya_documents_have")
+end
+
+function checking_taken_item23(obj)
+  if not has_info("kostya_documents_have") then 
+    if obj:section()=="kostya_documents" then new_inventory13(obj)
+	sms("Найдена информация.", nil, nil, 30000)
+	end
+  end
+end
+function pda_vasilyev()
+	create("pda_vasilyev",xyz(-42.24186706543,12.60915851593,7.8064550590515),2388,1532)
+	akill.x16_mutant_spawn()
+end
+function spawn_art()
+create("kostya_af_gold_fish",xyz(8.8234663009644,2.8059701919556,90.253837585449),285376,92)
+end

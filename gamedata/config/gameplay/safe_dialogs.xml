@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="windows-1251" ?>
+<game_dialogs>
+	
+	<dialog id="safe_dialog_stolen">
+		<phrase_list>
+			<phrase id="0">
+				<text>txt_safe_hello_0_1</text>
+				<next>1</next>
+			</phrase> 
+			<phrase id="1">
+				<text>txt_safe_stolen_gg_p1</text>
+				<next>2</next>
+			</phrase>
+			<phrase id="2">
+				<text>txt_safe_stolen_ss_p2</text>
+				<next>3</next>
+			</phrase>
+			<phrase id="3">
+				<text>txt_safe_stolen_gg_p3</text>
+				<next>4</next>
+			</phrase>
+			<phrase id="4">
+				<text>txt_safe_stolen_ss_p4</text>
+				<next>hasMoney</next>
+				<next>notMoney</next>
+			</phrase>			
+			<phrase id="hasMoney">
+				<precondition>safe_StealManager.ActorHasMoneyForBuyout</precondition>
+				<text>txt_safe_stolen_gg_p5_1</text>
+				<action>safe_StealManager.ReturnStorage</action>
+				<next>61</next>
+			</phrase>			
+			<phrase id="notMoney">
+				<text>txt_safe_stolen_gg_p5_2</text>
+				<next>62</next>
+			</phrase>	
+			<phrase id="61">
+				<text>txt_safe_stolen_ss_p6_1</text>
+ 				<next>7</next>
+			</phrase>				
+			<phrase id="62">
+				<text>txt_safe_stolen_ss_p6_2</text>
+				<next>7</next>
+			</phrase>	
+			<phrase id="7">
+                <text>actor_break_dialog_0</text>
+                <action>dialogs.break_dialog</action>
+            </phrase>			
+		</phrase_list>
+	</dialog>
+	
+	<dialog id="safe_dialog_specific_stolen">
+		<precondition>safe_StealManager.SpecificNPCPrecondition</precondition>
+		<phrase_list>
+			<phrase id="0">
+				<text>txt_safe_stolen_gg_p1</text>
+				<next>1</next>
+			</phrase> 
+			<phrase id="1">
+				<text>txt_safe_stolen_ss_p2</text>
+				<next>2</next>
+			</phrase>
+			<phrase id="2">
+				<text>txt_safe_stolen_gg_p3</text>
+				<next>4</next>
+			</phrase>
+			<phrase id="4">
+				<text>txt_safe_stolen_ss_p4</text>
+				<next>hasMoney</next>
+				<next>notMoney</next>
+			</phrase>			
+			<phrase id="hasMoney">
+				<precondition>safe_StealManager.ActorHasMoneyForBuyout</precondition>
+				<text>txt_safe_stolen_gg_p5_1</text>
+				<action>safe_StealManager.ReturnStorage</action>
+				<next>61</next>
+			</phrase>			
+			<phrase id="notMoney">
+				<text>txt_safe_stolen_gg_p5_2</text>
+				<next>62</next>
+			</phrase>	
+			<phrase id="61">
+				<text>txt_safe_stolen_ss_p6_1</text>
+ 				<next>7</next>
+			</phrase>				
+			<phrase id="62">
+				<text>txt_safe_stolen_ss_p6_2</text>
+				<next>7</next>
+			</phrase>	
+			<phrase id="7">
+                <text>actor_break_dialog_0</text>
+                <action>dialogs.break_dialog</action>
+            </phrase>			
+		</phrase_list>
+	</dialog>
+	
+	<dialog id="safe_dialog_trader_stolen" priority="50">
+		<precondition>safe_StealManager.TraderDialogPrecondition</precondition>
+		<phrase_list>
+			<phrase id="0">
+				<text>txt_safe_stolen_trader_gg_p1</text>
+				<next>1</next>
+			</phrase>
+			<phrase id="1">
+				<text>txt_safe_stolen_trader_p2</text>
+				<next>2</next>
+			</phrase>
+			<phrase id="2">
+				<text>txt_safe_stolen_trader_gg_p3</text>
+				<next>3</next>
+			</phrase>
+			<phrase id="3">
+				<text>txt_safe_stolen_trader_p4</text>
+				<next>hasMoney</next>
+				<next>notMoney</next>
+			</phrase>
+			<phrase id="hasMoney">
+				<precondition>safe_StealManager.ActorHasMoneyForBuyoutTrader</precondition>
+				<text>txt_safe_stolen_trader_gg_p5_1</text>
+				<action>safe_StealManager.ReturnStorage</action>
+				<next>51</next>
+			</phrase>			
+			<phrase id="notMoney">
+				<text>txt_safe_stolen_trader_gg_p5_2</text>
+				<next>52</next>
+			</phrase>						
+			<phrase id="51">
+				<text>txt_safe_stolen_trader_p6_1</text>
+			</phrase>	
+			<phrase id="52">
+				<text>txt_safe_stolen_trader_p6_2</text>
+			</phrase>	
+		</phrase_list>
+	</dialog>
+</game_dialogs>

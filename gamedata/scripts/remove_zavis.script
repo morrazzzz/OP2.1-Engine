@@ -1,0 +1,9 @@
+function remove_obj(obj)
+	abort("У объекта [%s] повреждён нетпакет. Это сохранение необратимо повреждено - удалите его, и переиграйте с более раннего. Продолжать игру на этом сохранении категорически запрещено!", tostring(obj:name()))      
+	amk.start_timer("zonedocs_gg_kill",3,0)
+	local se_obj = server_object(obj:id())
+	if se_obj then
+		release(se_obj)
+	end
+end
+

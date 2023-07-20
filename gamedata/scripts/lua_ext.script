@@ -1,0 +1,170 @@
+-- Расширения базовых библиотек Lua
+
+---------- table ----------
+
+-- Добавление в таблицу вида {[key] = count} подсчитываемого предмета
+_G.table.add = function(tbl, key)
+	if tbl[key] then
+		tbl[key] = tbl[key]+1
+	else
+		tbl[key] = 1
+	end
+end
+
+-- Удаление из таблицы вида {[key] = count} подсчитываемого предмета
+_G.table.sub = function(tbl, key)
+	if tbl[key] == 1 then
+		tbl[key] = nil
+	else
+		tbl[key] = tbl[key]-1
+	end
+end
+
+-- Выбор случайного элемента таблицы
+_G.table.random = function(tbl)
+	return tbl[math.random(#tbl)]
+end
+
+-- Поиск в таблице
+_G.table.find = function(tbl, val)
+	local t = type(val)
+	for k,v in pairs(tbl) do
+		if type(v) == t and v == val then
+			return true
+		end
+	end
+	return false
+end
+
+_G.table.size = function(tbl)
+	local count = 0
+	for key in pairs(tbl) do 
+		count = count+1 
+	end
+	return count
+end
+
+_G.table.strjoin = function(tbl, delimeter)
+	if delimeter==nil then
+		delimeter=" "
+	end
+	local str
+	for	i,v in pairs(tbl) do
+		str=str..delimiter..tostring(v)
+	end
+	return str
+end
+
+---------- string ----------
+
+-- Удаление начальных и конечных пробелов
+_G.string.trim = function(str)
+	return str:match("^%s*(.-)%s*$")
+end
+
+-- Разбирает cтроку в таблицу по разделителю
+-- {"substring1", "substring2", ...}
+-- clear = true - обрезать пробелы
+_G.string.explode = function(str, div, clear)
+	local t = {}
+	for s in string.gfind(str, "([^"..div.."]+)") do
+		if clear then
+			table.insert(t, s:trim())
+		else
+			table.insert(t, s)
+		end
+	end
+	return t
+end
+
+_G.string.subcount = function(s1, s2)
+    local count = 0
+    for i in s1:gmatch(s2) do count = count + 1 end
+    return count
+end
+
+_G.string.clear = function(str)
+	return str:gsub( "%p", function(s) return s:match("[%.%-_]*") end )
+end
+
+_G.string.extformat = function(fmt, ...)
+	local arg={...}
+	local result_str
+	local fmtCounts=tostring(fmt):subcount("%%") 
+	if fmtCounts>0 then --возможно, это форматная строка
+		if string.format then
+			for i=1,fmtCounts,1 do --если вдруг нехватает параметров или еще какая беда... О_О
+				if arg[i]==nil then
+					table.insert(arg,i,"<<nan>>")
+				end
+			end
+			for	i,v in pairs(arg) do --преобразуем некоторые значения к текстовым по умолчанию, остальные - по форматной строке
+				if v==nil or v=="" then --LUA 5.1 не имеет конвертора по умолчанию для nil
+					arg[i]="<<nan>>"
+				end
+				if type(v)=="boolean" then --LUA 5.1 не имеет конвертора по умолчанию для boolean
+					arg[i]=tostring(v)
+				end
+			end
+			result_str=string.format(fmt,unpack(arg)) --LUA 5.1 unpack in global ns, 5.2 in table ns
+		else --если нет string.format - попытаемся вывести все подряд...
+			result_str=tostring(fmt).." "..table.strjoin(arg)
+		end
+	else --если не форматная строка - то просто склеим все подряд
+		if arg~=nil and table.size(arg)>0 then
+			result_str=tostring(fmt).." "..table.strjoin(arg)
+		else
+			result_str=fmt
+		end
+	end
+	return result_str
+end
+
+---------- math ----------
+
+-- Окргуление до accuracy разрядов. Спасибо ПЫС за наше счастливое детство... пилиять, медленно, но верно...
+_G.math.round = function(num, accuracy) 
+    return tonumber(string.format('%0.'..(accuracy or 0)..'f', num))
+end
+
+-- Выравнивание числа n в пределах от _min до_max
+_G.math.clamp = function(n, _min, _max)
+	if _min>_max then
+		_max,_min=_min,_max
+	end
+	return (n<_min and _min)
+		or (n>_max and _max)
+		or n
+end
+
+_G.math.nan = (0/0) -- не число
+
+_G.math.isnan = function(value)
+	return value ~= value
+end
+
+_G.to_boolean = function(value) --convert string boolean values to plain boolean
+	if string.find(string.lower(value), "true") or value == "1" then
+		return true
+	end
+	return false
+end
+-- Расширения игровых объектов
+
+-- C++ class 'game_object'
+game_object.is_stalker = function (obj)
+	return obj:clsid() == clsid.script_stalker
+end
+
+game_object.is_monster = function (obj)
+	return IAmAMonster[obj:clsid()]~=nil
+end
+
+game_object.is_alive = function (obj)
+	local cls = obj:clsid()
+	return (IAmAStalker[cls] or IAmAMonster[cls]) and obj:alive()
+end
+
+game_object.is_wounded = function (obj)
+	return obj:is_stalker() and obj:alive() and obj:wounded()
+end

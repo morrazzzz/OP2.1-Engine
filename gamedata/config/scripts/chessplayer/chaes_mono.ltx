@@ -1,0 +1,12 @@
+[smart_terrains] 
+none = true
+
+[logic] 
+active = remark@no_actor
+
+[remark@no_actor]
+no_move = true 
+combat_ignore_cond = always 
+on_actor_dist_le_nvis = 10|remark@actor
+
+[remark@actor]

@@ -1,0 +1,55 @@
+-- Имитаторы аномалий
+[imitator_base]:ARTEFACT
+visual				= equipments\nevidimka
+description			= .
+inv_name			= .
+inv_weight			= 0
+inv_grid_width		= 0
+inv_grid_height		= 0
+inv_grid_x			= 0
+inv_grid_y			= 81
+cost				= 100
+can_take			= false
+
+[imitator]:imitator_base
+jump_height			= .0
+particles		    = anomaly2\electra_idle
+lights_enabled      = false
+trail_light_color   = 9.1,0.1,1.5
+trail_light_range   = 0.6			 
+
+[anomal_pole]:imitator_base
+jump_height			= .0
+particles			= amk_anoms\mincer_idle
+lights_enabled		= true
+trail_light_color 	= 0.6,0.7,0.9
+trail_light_range 	= 4.0			 
+
+[imitator_snezka]:imitator_base
+jump_height			= .0
+particle    		= amk\snow
+lights_enabled      = true
+trail_light_color   = 1.9,1.5,0.5
+trail_light_range   = 2.0
+
+[imitator_holodez]:imitator_base
+jump_height			= .3
+particles	        = anomaly2\studen_idle_bottom000
+lights_enabled      = false
+
+[imitator_shar]:imitator_base
+jump_height			= .4
+particles	        = anomaly2\generator\anomaly_teleport_00001
+lights_enabled      = false
+
+[imitator_tele_final1]:imitator_base
+jump_height			= .3
+particles	        = anomaly2\teleport_idle 
+lights_enabled      = false
+
+[anomal_pole_foto]:imitator_base
+jump_height			= .0
+lights_enabled 		= true
+trail_light_color 	= 0, 107, 0
+trail_light_range 	= 0.7			 
+

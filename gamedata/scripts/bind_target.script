@@ -1,0 +1,50 @@
+-- Ѕиндер мишеней дл€ квеста “ренировочный день
+function init(obj)
+    local new_binder = target_binder(obj)
+    obj:bind_object(new_binder)
+end
+
+---------------------------------------------------------------------------------------------
+-- ѕор€док загрузки:
+-- reload
+-- reinit
+-- load
+-- net_spawn
+---------------------------------------------------------------------------------------------
+class "target_binder" (object_binder)
+function target_binder:__init(obj) super(obj)
+end
+
+function target_binder:net_spawn(data)
+    if not object_binder.net_spawn(self, data) then
+        return false
+    end
+--	console:execute("load ~~~ net_spawn: "..self.object:id())
+    return true
+end
+
+function target_binder:net_destroy()
+--	console:execute("load ~~~ net_destroy: "..self.object:id())
+
+	if self.object:position():distance_to(db.actor:position()) < config:r_float("alife","switch_distance") and not has_info("teleport_started") then
+		-- цель исчезла в онлайне и не телепорт = взрыв
+--		console:execute("load ~~~ blow: "..self.object:id())
+		give_info("info_target_"..string.sub(self.object:section(),8))
+
+		-- провер€ем, все ли цели уничтожены
+		local all_targets_done = true
+		for i = 1,50 do		-- количество целей
+			if not has_info("info_target_"..tostring(i)) then
+				all_targets_done = false
+				break
+			end
+		end
+
+		if all_targets_done then
+			-- все - выдаем поршень завершени€ задани€
+			give_info("borov_target_have")
+		end
+	end
+
+    object_binder.net_destroy(self)
+end

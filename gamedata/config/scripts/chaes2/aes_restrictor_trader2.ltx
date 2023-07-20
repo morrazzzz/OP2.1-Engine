@@ -1,0 +1,10 @@
+[logic]
+active = sr_idle1
+
+[sr_idle1]
+on_info = {+aes2_teleport_trader} sr_teleport
+
+[sr_teleport]
+point1 = aes2_teleport_walk_exit1_2
+look1 = aes2_teleport_look_exit1_2
+on_info = {-aes2_teleport_trader} sr_idle1

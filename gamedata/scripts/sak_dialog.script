@@ -1,0 +1,1518 @@
+function add_abakan(first_speaker, second_speaker)
+	got("wpn_abakan")
+end
+function add_mp5(first_speaker, second_speaker)
+	got("wpn_mp5")
+end
+function give_10conserva(first_speaker, second_speaker)
+	lost("conserva",10)
+end
+function give_5kolbasa(first_speaker, second_speaker)
+	lost("kolbasa",5)
+end
+function give_kolbasa(first_speaker, second_speaker)
+	lost("kolbasa",1)
+end
+function kolbasa_have()
+  	return has("kolbasa",1) 
+end
+function conserva10_have()
+  	return has("conserva",10) 
+end
+function kolbasa5_have()
+  	return has("kolbasa",5) 
+end
+function give_3conserva(first_speaker, second_speaker)
+	lost("conserva",3)
+end
+function give_2kolbasa(first_speaker, second_speaker)
+	lost("kolbasa",2)
+end
+function give_2drink(first_speaker, second_speaker)
+	lost("energy_drink",2)
+end
+function give_3drink(first_speaker, second_speaker)
+	lost("energy_drink",3)
+end
+function give_5bread(first_speaker, second_speaker)
+	lost("bread",5)
+end
+function give_10bread(first_speaker, second_speaker)
+	lost("bread",5)
+end
+function conserva3_have()
+  	return has("conserva",3) 
+end
+function kolbasa2_have()
+  	return has("kolbasa",2) 
+end
+function drink2_have()
+  	return has("energy_drink",2) 
+end
+function drink3_have()
+  	return has("energy_drink",3) 
+end
+function bread5_have()
+  	return has("bread",5) 
+end
+function bread10_have()
+  	return has("bread",5) 
+end
+function has_soldiers_bribe(actor, npc)
+	return has("vodka",1)
+end
+function give_soldiers_bribe(actor, npc)
+	lost("vodka",1)
+	archievements.acv_count_event("acv_bribe", 20, "Честный налогоплательщик")
+end
+function have_krysyk_goods()
+  	return has("af_electra_moonlight",3) and
+		has("af_dummy_glassbeads",1)
+end
+function give_krysyk_goods()
+	lost("af_electra_moonlight",3)
+	lost("af_dummy_glassbeads",1)
+end
+function give_pda_krysyka()
+	lost("pda_krysyka",1)
+end
+function have_pda_krysyka()
+  	return has("pda_krysyka",1)
+end
+function give_borov_11()
+	lost("scaintist_docs",1)
+	lost("inventory_sakbox_05",1)
+end
+function have_borov_11()
+  	return has("scaintist_docs",1) and
+		has("inventory_sakbox_05",1)
+end
+function add_wpn_svd(first_speaker, second_speaker)
+	got("wpn_svd")
+end
+function add_wpn_sig(first_speaker, second_speaker)
+	got("wpn_sig_m2")
+end
+function add_wpn_svu(first_speaker, second_speaker)
+	got("wpn_svu")
+end
+function add_wpn_vintorez(first_speaker, second_speaker)
+	got("wpn_vintorez")
+end
+function add_dolg_scientific_outfit(first_speaker, second_speaker)
+	got("dolg_scientific_outfit")
+end
+function add_militaryspec_outfit(first_speaker, second_speaker)
+	got("militaryspec_outfit")
+end
+function add_dolg_black_exoskeleton(first_speaker, second_speaker)
+	got("dolg_black_exoskeleton")
+end
+function add_4ammo_vog_25s(first_speaker, second_speaker)
+	got("ammo_vog-25",4)
+end
+function add_3ammo_vog_25p(first_speaker, second_speaker)
+	got("ammo_vog-25p",3)
+end
+function add_2ammo_762x54_7h1(first_speaker, second_speaker)
+	got("ammo_7.62x54_7h1",2)
+end
+function add_2ammo_762x54_ap(first_speaker, second_speaker)
+	got("ammo_7.62x54_ap",1)
+end
+function add_1ammo_762x54_7h14(first_speaker, second_speaker)
+	got("ammo_7.62x54_7h14",2)
+end
+function add_2ammo_762x54_7h14(first_speaker, second_speaker)
+	got("ammo_7.62x54_7h14",2)
+end
+function add_1ammo_762x54_ap(first_speaker, second_speaker)
+	got("ammo_7.62x54_ap",1)
+end
+function add_3ammo_7_62_fmj(first_speaker, second_speaker)
+	got("ammo_7.62x39_fmj",3)
+end
+function add_2ammo_762x39_ap(first_speaker, second_speaker)
+	got("ammo_7.62x39_ap",2)
+end
+function add_3antirad(first_speaker, second_speaker)
+	got("antirad",3)
+end
+function add_2medkit_scientic(first_speaker, second_speaker)
+	got("medkit_scientic",2)
+end
+function add_2medkit_scientic(first_speaker, second_speaker)
+	got("medkit_scientic",2)
+end
+function add_3medkit_army(first_speaker, second_speaker)
+	got("medkit_army",3)
+end
+function add_2medkit_army(first_speaker, second_speaker)
+	got("medkit_army",2)
+end
+function add_medkit_army(first_speaker, second_speaker)
+	got("medkit_army",1)
+end
+function add_ammo_f1(first_speaker, second_speaker)
+	got("grenade_f1",1)
+end
+function add_ammo_f2(first_speaker, second_speaker)
+	got("grenade_f1",2)
+end
+function add_ammo_rgd1(first_speaker, second_speaker)
+	got("grenade_rgd5",1)
+end
+function add_ammo_9x19_ap(first_speaker, second_speaker)
+	got("ammo_9x19_pbp")
+end
+function add_ammo_762x54r(first_speaker, second_speaker)
+	got("ammo_7.62x54r")
+end
+function add_ammo_5_7x28_ss1902(first_speaker, second_speaker)
+	got("ammo_5.7x28_ss190",2)
+end
+function add_military_outfit(first_speaker, second_speaker)
+	got("military_outfit")
+end
+function add_wpn_abakan_m1(first_speaker, second_speaker)
+	got("wpn_abakan_m1")
+end
+function add_wpn_abakan(first_speaker, second_speaker)
+	got("wpn_abakan")
+end
+function add_wpn_pkm(first_speaker, second_speaker)
+	got("wpn_pkm")
+end
+function add_wpn_gauss(first_speaker, second_speaker)
+	got("wpn_gauss")
+end
+function add_wpn_spas12(first_speaker, second_speaker)
+	got("wpn_spas12")
+end
+function add_p90(first_speaker, second_speaker)
+	got("wpn_p90")
+end
+function add_fn2000(first_speaker, second_speaker)
+	got("wpn_fn2000")
+end
+function add_2ammo_12x76_zhekan(first_speaker, second_speaker)
+	got("ammo_12x76_zhekan",2)
+end
+function add_3ammo_12x76_dart(first_speaker, second_speaker)
+	got("ammo_12x76_dart",3)
+end
+function add_5ammo_12x70_buck(first_speaker, second_speaker)
+	got("ammo_12x70_buck",5)
+end
+function add_protection_outfit(first_speaker, second_speaker)
+	got("protection_outfit")
+end
+function add_ammo_super_gauss(first_speaker, second_speaker)
+	got("ammo_super_gauss",3)
+end
+function add_ammo_gauss(first_speaker, second_speaker)
+	got("ammo_gauss")
+end
+function take_fox_spot()
+	sak.add_spot_of_docent(5)
+end
+function take_shustryi_spot()
+	sak.add_spot_of_docent(4)
+end
+function take_wolf_spot()
+	sak.add_spot_of_docent(6)
+end
+function take_provodnik_spot()
+	sak.add_spot_of_docent(92)
+end
+function take_yrik_spot() 
+	sak.add_spot_of_docent(104)
+end
+function take_bes_spot() 
+	sak.add_spot_of_docent(107)
+end
+function take_krot_spot() 
+	sak.add_spot_of_docent(302)
+end
+function take_krisyk_spot() 
+	sak.add_spot_of_docent(9508)
+end
+function give_docent_5pda(first_speaker, second_speaker)
+	lost("device_pda_npc",5)
+end
+function give_2mica(first_speaker, second_speaker)
+	lost("af_ameba_mica",2)
+end
+function give_3mica(first_speaker, second_speaker)
+	lost("af_ameba_mica",3)
+end
+function docent_5pda_have()
+  	return has("device_pda_npc",5)
+end
+function docent_have_have()
+	if has_info("sak_gold_fish_have") or has_info("sak_find_seif_have") or has_info("sak_repair_box_have") or has_info("sak_reward_outfit_have") then
+		return true
+	else
+		return false
+	end 
+end
+function give_medkit_scientic(first_speaker, second_speaker)
+	lost("medkit_scientic", 1)
+end
+function medkit_scientic_have()
+	return has("medkit_scientic",1)
+end
+function give_medkit_army(first_speaker, second_speaker)
+	lost("medkit_army", 1)
+end
+function medkit_army_have()
+	return has("medkit_army",1)
+end
+function give_2medkit(first_speaker, second_speaker)
+	lost("medkit",2)
+end
+function medkit2_have()
+	return has("medkit",2)
+end
+function medkit_have()
+	return has("medkit",1)
+end
+function give_antirad(first_speaker, second_speaker)
+	lost("antirad", 1)
+end
+function antirad_have()
+	return has("antirad",1)
+end
+function give_fuzz_kolobok(first_speaker, second_speaker)
+	lost("af_fuzz_kolobok", 1)
+end
+function fuzz_kolobok_have()
+	return has("af_fuzz_kolobok",1)
+end
+function give_dummy_3glassbeads(first_speaker, second_speaker)
+	lost("af_dummy_glassbeads",3)
+end
+function dummy_3glassbeads_have()
+	return has("af_dummy_glassbeads",3)
+end
+function give_dummy_pellicle(first_speaker, second_speaker)
+	lost("af_dummy_pellicle", 1)
+end
+function dummy_pellicle_have()
+	return has("af_dummy_pellicle",1)
+end
+function give_dummy_battery(first_speaker, second_speaker)
+	lost("af_dummy_battery", 1)
+end
+function dummy_battery_have()
+	return has("af_dummy_battery",1)
+end
+function give_dummy_dummy(first_speaker, second_speaker)
+	lost("af_dummy_dummy", 1)
+end
+function dummy_dummy_have()
+	return has("af_dummy_dummy",1)
+end
+function give_dummy_spring(first_speaker, second_speaker)
+	lost("af_dummy_spring", 1)
+end
+function dummy_spring_have()
+	return has("af_dummy_spring",1)
+end
+function give_3rusty_sea_urchin(first_speaker, second_speaker)
+	lost("af_rusty_sea-urchin", 3)
+end
+function rusty_sea_urchin_3have()
+	return has("af_rusty_sea-urchin",3)
+end
+function give_2rusty_sea_urchin(first_speaker, second_speaker)
+	lost("af_rusty_sea-urchin", 2)
+end
+function rusty_sea_urchin_2have()
+	return has("af_rusty_sea-urchin",2)
+end
+function give_rusty_kristall(first_speaker, second_speaker)
+	lost("af_rusty_kristall", 1)
+end
+function rusty_kristall_have()
+	return has("af_rusty_kristall",1)
+end
+function give_rusty_thorn(first_speaker, second_speaker)
+	lost("af_rusty_thorn", 1)
+end
+function rusty_thorn_have()
+	return has("af_rusty_thorn",1)
+end
+function give_ameba_slug(first_speaker, second_speaker)
+	lost("af_ameba_slug", 1)
+end
+function ameba_slug_have()
+	return has("af_ameba_slug",1)
+end
+function give_ameba_slime(first_speaker, second_speaker)
+	lost("af_ameba_slime", 1)
+end
+function ameba_slime_have()
+	return has("af_ameba_slime",1)
+end
+function give_2fireball(first_speaker, second_speaker)
+	lost("af_fireball",2) 
+end
+function fireball2_have()
+	return has("af_fireball",2)
+end
+function give_fireball(first_speaker, second_speaker)
+	lost("af_fireball", 1)
+end
+function fireball_have()
+	return has("af_fireball",1)
+end
+function give_night_star(first_speaker, second_speaker)
+	lost("af_night_star", 1)
+end
+function night_star_have()
+	return has("af_night_star",1)
+end
+function give_electra_sparkler(first_speaker, second_speaker)
+	lost("af_electra_sparkler", 1)
+end
+function electra_sparkler_have()
+	return has("af_electra_sparkler",1)
+end 
+function fox_pay_money(actor, npc)
+	got_treasure("esc_secret_truck_goods")
+end
+function give_vodka()
+	lost("vodka", 1)
+end
+function give_2vodka()
+	lost("vodka",2)
+end
+function give_3vodka()
+	lost("vodka",3)
+end
+function give_5vodka()
+	lost("vodka",5)
+end
+function give_6vodka()
+	lost("vodka",6)
+end
+function give_7vodka()
+	lost("vodka",7)
+end
+function give_8vodka()
+	lost("vodka",8)
+end
+function give_10vodka()
+	lost("vodka",10)
+end
+function give_20vodka()
+	lost("vodka",20)
+end
+function give_15vodka()
+	lost("vodka",15)
+end
+function give_40vodka()
+	lost("vodka",40)
+end
+function have_vodka()
+	return has("vodka",1)
+end
+function have_2vodka()
+	return has("vodka",2)
+end
+function have_3vodka()
+	return has("vodka",3)
+end
+function have_5vodka()
+	return has("vodka",5)
+end
+function have_6vodka()
+	return has("vodka",6)
+end
+function have_7vodka()
+	return has("vodka",7)
+end
+function have_8vodka()
+	return has("vodka",8)
+end
+function have_10vodka()
+	return has("vodka",10)
+end
+function have_15vodka()
+	return has("vodka",15)
+end
+function have_20vodka()
+	return has("vodka",20)
+end
+function have_40vodka()
+	return has("vodka",40)
+end
+function give_drops(first_speaker, second_speaker)
+	lost("af_drops", 1)
+end
+function drops_have()
+	return has("af_drops",1)
+end
+function give_blood(first_speaker, second_speaker)
+	lost("af_blood", 1)
+end
+function blood_have()
+	return has("af_blood",1)
+end
+function give_electra_flash(first_speaker, second_speaker)
+	lost("af_electra_flash", 1)
+end
+function electra_flash_have()
+	return has("af_electra_flash",1)
+end
+function give_mincer_meat(first_speaker, second_speaker)
+	lost("af_mincer_meat", 1)
+end
+function mincer_meat_have()
+	return has("af_mincer_meat",1)
+end
+function give_vyvert(first_speaker, second_speaker)
+	lost("af_vyvert", 1)
+end
+function vyvert_have()
+	return has("af_vyvert",1)
+end
+function give_cristall_flower(first_speaker, second_speaker)
+	lost("af_cristall_flower", 1)
+end
+function cristall_flower_have()
+	return has("af_cristall_flower",1)
+end
+function give_medusa(first_speaker, second_speaker)
+	lost("af_medusa", 1)
+end
+function medusa_have()
+	return has("af_medusa",1)
+end
+function give_10medusa(first_speaker, second_speaker)
+	lost("af_medusa", 10)
+end
+function medusa10_have()
+	return has("af_medusa",10)
+end
+function give_7medusa(first_speaker, second_speaker)
+	lost("af_medusa", 7)
+end
+function medusa7_have()
+	return has("af_medusa",7)
+end
+function give_gravi(first_speaker, second_speaker)
+	lost("af_gravi", 1)
+end
+function gravi_have()
+	return has("af_gravi",1)
+end
+-- Akill begin
+function add_5vodka()
+	got("vodka",3)
+end
+function add_6vodka()
+	got("energy_drink",5)
+end
+-- Akill end
+function add_pampers()
+	got("pampers",1)
+end
+function add_vodka(first_speaker, second_speaker)
+	got("vodka")
+end
+function add_2vodka(first_speaker, second_speaker)
+	got("vodka",2)
+end
+function add_medkit(first_speaker, second_speaker)
+	got("medkit")
+end
+function add_3medkit(first_speaker, second_speaker)
+	got("medkit",3)
+end
+function add_5medkit(first_speaker, second_speaker)
+	got("medkit",5)
+end
+function add_10medkit(first_speaker, second_speaker)
+	got("medkit",3)
+end
+function add_saiga(first_speaker, second_speaker)
+	got("wpn_saiga12c")
+end
+function add_groza(first_speaker, second_speaker)
+	got("wpn_groza")
+end
+function add_val(first_speaker, second_speaker)
+	got("wpn_val")
+end
+function add_wpn_ak47(first_speaker, second_speaker)
+	got("wpn_ak47")
+end
+function add_toz(first_speaker, second_speaker)
+	got("wpn_toz34")
+end
+function add_3ammo_9x39_pab9(first_speaker, second_speaker)
+	got("ammo_9x39_pab9",3)
+end
+function add_2ammo_9x39_sp5(first_speaker, second_speaker)
+	got("ammo_9x39_sp5",2)
+end
+function add_1ammo_9x39_ap(first_speaker, second_speaker)
+	got("ammo_9x39_ap",1)
+end
+function add_2ammo_556x45_ss190(first_speaker, second_speaker)
+	got("ammo_5.56x45_ss190",2)
+end
+function add_ammo_556x45_ap(first_speaker, second_speaker)
+	got("ammo_5.56x45_ap")
+end
+function add_ammo_556x45_gd(first_speaker, second_speaker)
+	got("ammo_5.56x45_gd")
+end
+function add_ammo_545x39_ap(first_speaker, second_speaker)
+	got("ammo_5.45x39_ap")
+end
+function add_3ammo_545x39_ap(first_speaker, second_speaker)
+	got("ammo_5.45x39_ap",3)
+end
+function add_5ammo_5_45_fmj(first_speaker, second_speaker)
+	got("ammo_5.45x39_fmj",5)
+end
+function add_ammo_5_45_fmj(first_speaker, second_speaker)
+	got("ammo_5.45x39_fmj")
+end
+function add_ammo_5_45_fmj2(first_speaker, second_speaker)
+	got("ammo_5.45x39_fmj",2)
+end
+function add_ammo_7_62_fmj2(first_speaker, second_speaker)
+	got("ammo_7.62x39_fmj",2)
+end
+function add_ammo_7_62_ap3(first_speaker, second_speaker)
+	got("ammo_7.62x39_ap",3)
+end
+function add_ammo_7_62_ap(first_speaker, second_speaker)
+	got("ammo_7.62x54_ap")
+end
+function add_ammo_7_62_ap2(first_speaker, second_speaker)
+	got("ammo_7.62x54_ap",2)
+end
+function add_ammo_rgd2(first_speaker, second_speaker)
+	got("grenade_rgd5",2)
+end
+function add_ammo_rgd3(first_speaker, second_speaker)
+	got("grenade_rgd5",3)
+end
+function add_ammo_rgd5(first_speaker, second_speaker)
+	got("grenade_rgd5",5)
+end
+function add_ammo_12x70_buck3(first_speaker, second_speaker)
+	got("ammo_12x70_buck",3)
+end
+function add_3ammo_9x18_pmm(first_speaker, second_speaker)
+	got("ammo_9x18_pmm",3)
+end
+function add_wpn_ak74(first_speaker, second_speaker)
+	got("wpn_ak74")
+end
+function give_strelok_pda(first_speaker, second_speaker) 
+	lost("strelok_pda",1) 
+end
+function strelok_pda_have()
+	return has("strelok_pda",1)
+end
+function give_rad_kontainer(first_speaker, second_speaker) 
+	lost("inventory_sakbox_05",1) 
+end
+function rad_kontainer_have()
+	return has("inventory_sakbox_05",1)
+end
+function scintist_pda_have()
+	return has("scaintist_pda",1)
+end
+function give_scintist_pda(first_speaker, second_speaker) 
+	lost("scaintist_pda",1) 
+end
+function give_bar_ivancov_playboy(first_speaker, second_speaker) 
+	lost("playboy10",1) 
+end
+function bar_ivancov_playboy_have()
+	return has("playboy10",1)
+end
+function strelok_pda2_have()
+	return has("af_medusa_green",1)
+end
+function give_strelok_pda2(first_speaker, second_speaker) 
+	lost("af_medusa_green",1) 
+end
+function give_chimera_kogot(first_speaker, second_speaker) 
+	lost("part_chimera_kogot",7) 
+end
+function chimera_kogot_have()
+	return has("part_chimera_kogot",7)
+end
+function give_five_teil(first_speaker, second_speaker) 
+	lost("part_dog_tail",5) 
+end
+function five_teil_have()
+	return has("part_dog_tail",5)
+end
+function escape_lager_volk_document_have()
+	return has("sak_document2",1)
+end
+function give_sescape_lager_volk_document(first_speaker, second_speaker)
+	lost("sak_document2", 1)
+	second_speaker:set_relation(game_object.friend, first_speaker)
+end
+function take_agr_saiga(first_speaker, second_speaker)
+	got("wpn_ppsh41_sk2")
+    got("ammo_7.62x25_ps")
+	got("ammo_7.62x25_p",2)
+end
+function give_yan_scientist_teleport_01(first_speaker, second_speaker)
+	got("sak_resiver_yantar")
+end
+function mil_volk_resiver_have()
+	return has("sak_resiver",1)
+end
+function give_mil_volk_resiver(first_speaker, second_speaker)
+	lost("sak_resiver", 1)
+end
+function life_heart_final()
+	got("wpn_k98_m1")
+    got("ammo_93x64_ap")
+	got("ammo_93x64_sp")
+end
+function notebook_have()
+	return has("notebook",1)
+end
+function give_notebook(first_speaker, second_speaker)
+	lost("notebook", 1)
+end
+function give_doktor_book(first_speaker, second_speaker)
+	lost("sak_book4", 1)
+end
+function dummy_battery_red_have()
+	return has("af_dummy_battery_red",1)
+end
+function give_dummy_battery_red(first_speaker, second_speaker)
+	lost("af_dummy_battery_red", 1)
+end
+function dummy_pellicle_red_have()
+	return has("af_dummy_pellicle_red",1)
+end
+function give_dummy_pellicle_red(first_speaker, second_speaker)
+	lost("af_dummy_pellicle_red", 1)
+end
+function simbiont_have()
+	return has("af_simbion",1)
+end
+function give_simbiont(first_speaker, second_speaker)
+	lost("af_simbion", 1)
+end
+function dummy_spring_red_have()
+	return has("af_dummy_spring_red",1)
+end
+function give_dummy_spring_red(first_speaker, second_speaker)
+	lost("af_dummy_spring_red", 1)
+end
+function take_dummy_spring_red(first_speaker, second_speaker)
+	got("af_dummy_spring_red")
+end
+function take_soul(first_speaker, second_speaker)
+	got("af_soul")
+end
+function diplomat_have()
+	return has("diplomat",1)
+end
+function give_diplomat(first_speaker, second_speaker)
+	lost("diplomat", 1)
+end
+function take_mica(first_speaker, second_speaker)
+	got("af_ameba_mica")
+end
+function computer_have()
+	return has("computer",1)
+end
+function give_computer(first_speaker, second_speaker)
+	lost("computer", 1)
+end
+function take_moonlight(first_speaker, second_speaker)
+	got("af_electra_moonlight")
+end
+function take_kristall(first_speaker, second_speaker)
+	got("af_cristall")
+end
+function take_sescape_lager_volk_ak(first_speaker, second_speaker)
+	got("wpn_ak74u")
+end
+function esc_petruha_toz_have()
+	return has("wpn_toz34",1)
+end
+function give_esc_petruha_toz(first_speaker, second_speaker)
+	-- отдадаим ТОЗ Петрухе по-настоящему, чтобы не ходил с обрезом как лошара)
+	local npc = first_speaker:id()==0 and second_speaker or first_speaker
+	transfer(npc, "wpn_toz34", "out")
+	second_speaker:set_relation(game_object.friend, first_speaker)
+end
+function give_yan_kruglov_green_art(first_speaker, second_speaker)
+	lost("af_blood_green", 1)
+end
+function take_new_decoder(first_speaker, second_speaker)
+	got("detector_elite_sak")
+end
+function take_playboy(first_speaker, second_speaker)
+	got("playboy")
+end
+function yan_kruglov_green_art_have()
+	return has("af_blood_green",1)
+end
+function give_playboy(first_speaker, second_speaker)
+	lost("playboy", 1)
+end
+function give_esc_shustryi_medusa(first_speaker, second_speaker)
+	lost("af_medusa", 1)
+	second_speaker:set_relation(game_object.friend, first_speaker)
+end
+function esc_shustryi_medusa_have()
+	return has("af_medusa",1)
+end
+function gar_dram_novice_mp5_m1_have()
+	return has("wpn_mp5_m1",1)
+end
+function give_gar_dram_novice_mp5_m1(first_speaker, second_speaker)
+	lost("wpn_mp5_m1")
+	second_speaker:set_relation(game_object.friend, first_speaker)
+end
+function gar_dram_novice_burer_hand_have()
+	return has("part_burer_hand",1)
+end
+function give_gar_dram_novice_burer_hand(first_speaker, second_speaker)
+	lost("part_burer_hand", 1)
+end
+function gar_hellcar_outfit_have()
+	return has("stalker_outfit_m3",1)
+end
+function give_gar_hellcar_outfit(first_speaker, second_speaker)
+	lost("stalker_outfit_m3", 1)
+	second_speaker:set_relation(game_object.friend, first_speaker)
+end
+function agr_krot_PDA_have()
+	return has("agroprom_pda",1)
+end
+function give_agr_krot_PDA(first_speaker, second_speaker)
+	lost("agroprom_pda", 1)
+	second_speaker:set_relation(game_object.friend, first_speaker)
+end
+
+function gar_dolg_flesh_eye_have()
+	return has("part_flesh_eye",4)
+end
+
+function give_gar_dolg_flesh_eye(first_speaker, second_speaker)
+	lost("part_flesh_eye",4)
+	got("wpn_m1891_30_scope")
+	got("ammo_7.62x54_7h14")
+	second_speaker:set_relation(game_object.friend, first_speaker)
+end
+
+function gar_dolg_krovosos_jaw_have()
+	return has("part_krovosos_jaw",3)
+end
+
+function give_gar_dolg_krovosos_jaw(first_speaker, second_speaker)
+	lost("part_krovosos_jaw",3)
+end
+
+function gar_dolg_psevdodog_tail_have()
+	return has("part_psevdodog_tail",5)
+end
+
+function give_gar_dolg_psevdodog_tail(first_speaker, second_speaker)
+	lost("part_psevdodog_tail",5)
+	got("af_babka_3")
+end
+
+function bar_dolg_base_guard_art_have()
+	return has("af_vyvert_green",1)
+end
+
+function give_bar_dolg_base_guard_art(first_speaker, second_speaker)
+	lost("af_vyvert_green",1)
+	got("wpn_toz194")
+	second_speaker:set_relation(game_object.friend, first_speaker)
+end
+
+function esc_bridge_vodka_have()
+	return has("vodka",10)
+end
+
+function give_esc_bridge_vodka(first_speaker, second_speaker)
+	lost("vodka",10)
+end
+function give_esc_bridge_ammo(first_speaker, second_speaker)
+	got("ammo_5.45x39_ap")
+	got("ammo_5.45x39_ap",2)
+	create("a_inventory_box2",xyz(-114.82476806641,-26.251317977905,-375.40057373047),137493,26)
+end
+function esc_fox_medkit_have()
+	return has("medkit",10)
+end
+function give_esc_fox_medkit(first_speaker, second_speaker)
+	lost("medkit",10)
+end
+
+-- Akill begin
+local skryga_flash={
+    {position={x=-155.30387084961,y=2.5851620388031,z=-147.30797119141},gv=668,lv=82011},
+    {position={x=41.594230651855,y=4.7696099281311,z=-83.579383850098},gv=1100,lv=228080},
+    {position={x=-2.8137996196747,y=-4.932149887085,z=191.28129577637},gv=2195,lv=97948}
+}
+function take_mil_Svoboda_trader_ammo(actor,npc,p1,p2)
+    local a = skryga_flash[math.random(table.getn(skryga_flash))]
+    local obj = create("pda_flash", xyz(a.position.x,a.position.y,a.position.z), a.lv, a.gv)
+end
+function give_mil_Svoboda_trader_ammo()
+	lost("flash_pda", 1)
+	local obj
+	for a=1,65535,1 do
+		obj=server_object(a)
+		if obj and string.find(obj:name(),"pda_flash") then
+			release(obj,true)
+			return
+		end
+	end
+end
+function mil_Svoboda_trader_ammo_have_all()
+	return	has("flash_pda",1)
+end
+function mil_Svoboda_trader_ammo_have()
+	if has("flash_pda",1) then
+		give_info("mil_Svoboda_trader_ammo_have")
+		return true
+	else
+		return false
+	end
+end
+-- Akill end
+
+function give_ratcatcher_food(first_speaker, second_speaker)
+	lost("bread",20)
+	lost("conserva",20)
+	lost("kolbasa",20)
+	lost("vodka",5)
+	second_speaker:set_relation(game_object.friend, first_speaker)
+end
+
+function give_mil_Svoboda_trader_plan(first_speaker, second_speaker)
+	lost("sak_plan", 1)
+end
+
+function ratcatcher_food_have()
+  	return has("bread",20) and
+		has("conserva",20) and
+		has("vodka",5) and
+		has("kolbasa",20)
+end
+function tushkano_have()
+  	return has("part_face_tushkano",10) and
+		has("vodka",10)
+end
+function give_tushkano(first_speaker, second_speaker)
+	lost("part_face_tushkano",10)
+	lost("vodka",10)
+end
+
+function mil_Svoboda_trader_plan_have()
+  	return has("sak_plan",1)
+end
+function mil_Svoboda_trader_outfit_have()
+	return has("soldier_outfit",2)
+end
+
+function give_mil_Svoboda_trader_outfit(first_speaker, second_speaker)
+	lost("soldier_outfit", 1)
+end
+function take_val_pula_ammo(first_speaker, second_speaker)
+	got("inventory_sakbox_01")
+end
+
+function give_gar_hellcar_ammo(first_speaker, second_speaker)
+	lost("inventory_sakbox_01", 1)
+end
+
+function val_pula_ammo_have()
+  	return has("inventory_sakbox_01",1)
+end
+
+function give_val_pula_boar_leg(first_speaker, second_speaker)
+	lost("part_boar_leg",8)
+	lost("vodka",8)
+	got("af_dummy_pellicle_red")
+end
+
+function val_pula_boar_leg_have()
+  	return has("part_boar_leg",8) and
+		has("vodka",8)
+end
+
+function give_ratcatcher_order(first_speaker, second_speaker)
+	lost("rad_document7",1)
+	got("af_dummy_battery_red")
+end
+
+function ratcatcher_order_have()
+  	return has("rad_document7",1)
+end
+
+function val_escort_PDA_have()
+	return has("und_pda",1)
+end
+
+function give_val_escort_PDA(first_speaker, second_speaker)
+	lost("und_pda",1)
+	second_speaker:set_relation(game_object.friend, first_speaker)
+end
+
+function bar_dolg_petrenko_gaussgan_have()
+	return has("wpn_gungauss",1)
+end
+
+function give_bar_dolg_petrenko_gaussgan(first_speaker, second_speaker)
+	lost("wpn_gungauss",1)
+	second_speaker:set_relation(game_object.friend, first_speaker)
+end
+
+function bar_dolg_petrenko_electra_flash_have(task, info)
+    if has_info("petrenko_foto_embrion1") and has_info("petrenko_foto_embrion2") then
+		return give_info("bar_dolg_petrenko_electra_flash_have")
+	end
+	return false
+end
+
+function take_bar_dolg_petrenko_exo(first_speaker, second_speaker)
+	got("inventory_sakbox_05")
+end
+
+function give_yan_scientist_exo(first_speaker, second_speaker)
+	lost("inventory_sakbox_05", 1)
+	got("exo_outfit",2)
+end
+
+function give_bar_dolg_petrenko_exo(first_speaker, second_speaker)
+	lost("exo_outfit",2)--
+end
+
+function yan_scientist_exo_have()
+  	return has("inventory_sakbox_05",1)
+end
+
+function bar_dolg_petrenko_exo_have()
+  	return has("exo_outfit",2)
+end
+
+function take_sak_repair_box(first_speaker, second_speaker)
+	got("inventory_sakbox_05")
+end
+
+function give_esc_trader_sak_repair(first_speaker, second_speaker)
+	lost("inventory_sakbox_05", 1)
+	got("inventory_sakbox_02")
+end
+
+function give_sak_repair_box(first_speaker, second_speaker)
+	lost("inventory_sakbox_02", 1)
+	got("strelok_outfit")
+end
+
+function esc_trader_repair_box_have()
+  	return has("inventory_sakbox_05",1)
+end
+
+function sak_repair_box_have()
+  	return has("inventory_sakbox_02",1)
+end
+
+function sak_find_seif_have()
+	return has("inventory_sakbox_03",1)
+end
+
+function give_sak_find_seif(first_speaker, second_speaker)
+	sak.give_seif("inventory_sakbox_03")
+end
+
+function sak_gold_fish_have()
+	return has("af_gold_fish",1)
+end
+
+function give_sak_gold_fish(first_speaker, second_speaker)
+	lost("af_gold_fish", 1)
+end
+
+-- Akill begin
+local sak_flash={
+    {position={x=113.71061706543,y=-4.2031671047211,z=15.797422409058},gv=1239,lv=33617},
+    {position={x=131.71946716309,y=-4.577322435379,z=21.592748641968},gv=1238,lv=36238},
+    {position={x=226.57833862305,y=-4.6954984664917,z=132.79847717285},gv=1198,lv=57240},
+    {position={x=112.56023406982,y=0.65228396654129,z=73.371795654297},gv=1225,lv=33195},
+    {position={x=154.7790222168,y=0.98368340730667,z=70.509704589844},gv=1180,lv=41037}
+}
+function take_sak_reward_outfit(actor,npc,p1,p2)
+    local a = sak_flash[math.random(table.getn(sak_flash))]
+    local obj = create("disk_flash", xyz(a.position.x,a.position.y,a.position.z), a.lv, a.gv)
+end
+function give_sak_reward_outfit()
+	lost("flash_disk", 1)
+	local obj
+	for a=1,65535,1 do
+	obj=server_object(a)
+	if obj and string.find(obj:name(),"disk_flash") then
+	release(obj,true)
+	return
+	end
+	end
+end
+function sak_reward_outfit_have_all()
+	return has("flash_disk",1)
+end
+function sak_reward_outfit_have()
+	if has("flash_disk",1) then
+		give_info("sak_reward_outfit_have")
+		return true
+	else
+		return false
+	end
+end
+-- Akill end
+function sak_have_start()
+	if has_info("sak_gold_fish_start") or has_info("sak_find_seif_start") or has_info("sak_repair_box_start") or has_info("sak_reward_outfit_start")
+	then
+		return true
+	else
+		return false
+	end 
+end
+function sak_have_have()
+	if has_info("sak_gold_fish_have") or has_info("sak_find_seif_have") or has_info("sak_repair_box_have") or has_info("sak_reward_outfit_have")
+	then
+		return true
+	else
+		return false
+	end 
+end
+function yan_scientist_books_have()
+	return has("sak_book1",1) and
+		has("sak_book2",1) and
+		has("sak_book3",1) and
+		has("sak_book_warlab",1)
+end
+function give_yan_scientist_books(first_speaker, second_speaker)
+	lost("sak_book1",1)
+	lost("sak_book2",1)
+	lost("sak_book3",1)
+	lost("sak_book_warlab",1)
+	got("wpn_sw40p")
+end
+function yan_kruglov_decoder_have()
+	return has("decoder1",1)
+end
+function give_yan_kruglov_decoder(first_speaker, second_speaker)
+	lost("decoder1",1)
+end
+-- Akill begin
+local kruglov_flash={
+    {position={x=-140.48341369629,y=-28.670255661011,z=-351.92028808594},gv=19,lv=111255},
+    {position={x=179.60064697266,y=-6.1568055152893,z=-13.855489730835},gv=2835,lv=633171},
+    {position={x=-362.158203125,y=-12.973848342896,z=393.68969726563},gv=1848,lv=3385}
+}
+function take_yan_kruglov_art(actor,npc,p1,p2)
+    local a = kruglov_flash[math.random(table.getn(kruglov_flash))]
+    local obj = create("notebook_flash", xyz(a.position.x,a.position.y,a.position.z), a.lv, a.gv)
+end
+function give_yan_kruglov_art()
+	lost("flash_notebook", 1)
+	local obj
+	for a=1,65535,1 do
+	obj=server_object(a)
+	if obj and string.find(obj:name(),"notebook_flash") then
+	release(obj,true)
+	return
+	end
+	end
+end
+function yan_kruglov_art_have_all()
+	return has("flash_notebook",1)
+end
+function yan_kruglov_art_have()
+	if has("flash_notebook",1) then
+		give_info("yan_kruglov_art_have")
+		return true
+	else
+		return false
+	end
+end
+local ivancov_flash={
+    {position={x=-179.88851928711,y=4.7785663604736,z=-276.82165527344},gv=3364,lv=50992},
+    {position={x=-164.2699432373,y=2.7191691398621,z=-279.33911132813},gv=3372,lv=61216},
+    {position={x=-26.867282867432,y=-4.113676071167,z=-18.920783996582},gv=1593,lv=281961},
+    {position={x=-17.256162643433,y=-6.3255214691162,z=-28.58948135376},gv=1593,lv=288143},
+    {position={x=30.762537002563,y=-11.717179298401,z=-273.17190551758},gv=1480,lv=54304}
+}
+function take_bar_ivancov_rg6(actor,npc,p1,p2)
+    local a = ivancov_flash[math.random(table.getn(ivancov_flash))]
+    local obj = create("computer_flash", xyz(a.position.x,a.position.y,a.position.z), a.lv, a.gv)
+end
+function give_bar_ivancov_rg6(first_speaker, second_speaker)
+	lost("flash_computer", 1)
+	second_speaker:set_relation(game_object.friend, first_speaker)
+	local obj
+	for a=1,65535,1 do
+	obj=server_object(a)
+	if obj and string.find(obj:name(),"computer_flash") then
+	release(obj,true)
+	return
+	end
+	end
+end
+function bar_ivancov_rg6_have_all()
+	return has("flash_computer",1)
+end
+function bar_ivancov_rg6_have()
+	if has("flash_computer",1) then
+		give_info("bar_ivancov_rg6_have")
+		return true
+	else
+		return false
+	end
+end
+-- Akill end
+function take_blockpost_case(first_speaker, second_speaker)
+	got("quest_case_01")
+end
+function give_blockpost_case(first_speaker, second_speaker)
+	lost("quest_case_01", 1)
+	got("wpn_fort17",1)
+end
+function blockpost_case_have()
+  	return has("quest_case_01",1)
+end
+-- Akill begin
+function esc_find_groza_have_all()
+	return
+		has_good("wpn_val",1) and
+		has("wpn_addon_kobra",1) and
+		has("fosfor_light",10)
+end
+function esc_find_groza_have()
+	if esc_find_groza_have_all() then
+		give_info("esc_find_groza_have")
+		return true
+	else
+		return false
+	end
+end
+function give_find_groza(first_speaker, second_speaker)
+	lost_good( "wpn_val")
+	second_speaker:set_relation(game_object.friend, first_speaker)
+	lost("wpn_addon_kobra",1)
+	lost("fosfor_light",10)
+end
+-- Akill end
+function give_find_af_dummy_glassbeads(first_speaker, second_speaker)
+	lost("af_babka_3", 1)
+end
+function yan_scientist_find_af_dummy_glassbeads_have()
+  	return has("af_babka_3",1)
+end
+function give_find_dinamit(first_speaker, second_speaker)
+	lost("dynamite", 1)	
+end
+function mil_lukash_find_dinamit_have()
+  	return has("dynamite",1)
+end
+function give_find_case(first_speaker, second_speaker)
+	lost("quest_case_06", 1)	
+end
+function yan_scientist_find_case_have()
+  	return has("quest_case_06",1)
+end
+function give_find_2case(first_speaker, second_speaker)
+	lost("quest_case_05", 1)	
+end
+function bar_dolg_leader_find_case_have()
+  	return has("quest_case_05",1)
+end
+
+function actor_has_money_30000()
+  return db.actor:money()>=30000
+end
+
+function actor_has_money_40000()
+  return db.actor:money()>=50000
+end
+
+function actor_has_money_100000()
+  return db.actor:money()>=100000
+end
+function actor_has_money_50000()
+  return db.actor:money()>=50000
+end
+function actor_has_money_75000()
+  return db.actor:money()>=75000
+end
+function actor_has_money_150000()
+  return db.actor:money()>=150000
+end
+function actor_has_money_400000()
+  return db.actor:money()>=400000
+end
+function give_money_100000(t1,t2) 
+  lost_money(100000)
+end
+
+function give_money_150000(t1,t2) 
+  lost_money(150000)
+end
+
+function give_money_400000(t1,t2) 
+  lost_money(400000)
+end
+
+function give_money_30000(t1,t2)
+  lost_money(30000)
+end
+
+function give_money_50000(t1,t2)
+  lost_money(50000)
+end
+
+function give_money_75000(t1,t2)
+  lost_money(75000)
+end
+
+function give_money_40000(t1,t2)
+  lost_money(50000)
+end
+
+function soul_have()
+	return has("af_soul",1)
+end
+function soul_2have()
+	return has("af_soul",2)
+end
+function soul3_have()
+	return has("af_soul",3)
+end
+function kristall_have()
+	return has("af_cristall",1)
+end
+function kristall2_have()
+	return has("af_cristall",2)
+end
+function moonlight_have()
+	return has("af_electra_moonlight",1)
+end
+function mica2_have()
+	return has("af_ameba_mica",2)
+end
+function mica3_have()
+	return has("af_ameba_mica",3)
+end
+function mica_have()
+	return has("af_ameba_mica",1)
+end
+function actor_2500_have()
+	return db.actor:money()>=2500
+end
+function actor_9000_have()
+	return db.actor:money()>=9000
+end
+function actor_20000_have()
+	return db.actor:money()>=20000
+end
+function actor_5000_have()
+	return db.actor:money()>=5000
+end
+function actor_15000_have()
+	return db.actor:money()>=15000
+end
+function actor_10000_have()
+	return db.actor:money()>=10000
+end
+function actor_30000_have()
+	return db.actor:money()>=30000
+end
+function give_soul(first_speaker, second_speaker)
+	lost("af_soul", 1)
+end
+function give_2soul(first_speaker, second_speaker)
+	lost("af_soul", 2)
+end
+function give_3soul(first_speaker, second_speaker)
+	lost("af_soul", 3)
+end
+function give_kristall(first_speaker, second_speaker)
+	lost("af_cristall", 1)
+end
+function give_2kristall(first_speaker, second_speaker)
+	lost("af_cristall", 2)
+end
+function give_moonlight(first_speaker, second_speaker)
+	lost("af_electra_moonlight", 1)
+end
+function give_mica(first_speaker, second_speaker)
+	lost("af_ameba_mica", 1)
+end
+function give_2500_money(t1,t2) 
+  lost_money(2500)
+end
+function give_10000_money(t1,t2) 
+  lost_money(10000)
+end
+function give_15000_money(t1,t2) 
+  lost_money(15000)
+end
+function give_5000_money(t1,t2) 
+  lost_money(5000)
+end
+function give_20000_money(t1,t2) 
+  lost_money(20000)
+end
+function give_9000_money(t1,t2) 
+  lost_money(9000)
+end
+function give_30000_money(t1,t2) 
+  lost_money(30000)
+end
+
+-- Лимит диалогов. Сидор 9 раз
+function trade_sidor_not_enough()
+	return not dialogs.dialog_is_enough("trade_sidor_enough",9)
+end
+function trade_sidor_enough()
+	return dialogs.dialog_is_enough("trade_sidor_enough",9)
+end
+function trade_sidor_count()
+	return dialogs.dialog_count("trade_sidor_enough",9)
+end
+
+-- Лимит диалогов. Бармен 11 раз
+function trade_barman_not_enough()
+	return not dialogs.dialog_is_enough("trade_barman_enough",11)
+end
+function trade_barman_enough()
+	return dialogs.dialog_is_enough("trade_barman_enough",11)
+end
+function trade_barman_count()
+	return dialogs.dialog_count("trade_barman_enough",11)
+end
+
+-- Лимит диалогов. Петренко 12 раз
+function trade_petrenko_not_enough()
+	return not dialogs.dialog_is_enough("trade_petrenko_enough",12)
+end
+function trade_petrenko_enough()
+	return dialogs.dialog_is_enough("trade_petrenko_enough",12)
+end
+function trade_petrenko_count()
+	return dialogs.dialog_count("trade_petrenko_enough",12)
+end
+
+-- Лимит диалогов. Сахаров 15 раз
+function trade_sakharov_not_enough()
+	return not dialogs.dialog_is_enough("trade_sakharov_enough",15)
+end
+function trade_sakharov_enough()
+	return dialogs.dialog_is_enough("trade_sakharov_enough",15)
+end
+function trade_sakharov_count()
+	return dialogs.dialog_count("trade_sakharov_enough",15)
+end
+
+-- Лимит диалогов. Сяк 15 раз
+function trade_sak_not_enough()
+	return not dialogs.dialog_is_enough("trade_sak_enough",15)
+end
+function trade_sak_enough()
+	return dialogs.dialog_is_enough("trade_sak_enough",15)
+end
+function trade_sak_count()
+	return dialogs.dialog_count("trade_sak_enough",15)
+end
+
+-- Лимит диалогов. Доктор 9 раз
+function trade_doktor_not_enough()
+	return not dialogs.dialog_is_enough("trade_doktor_enough",9)
+end
+function trade_doktor_enough()
+	return dialogs.dialog_is_enough("trade_doktor_enough",9)
+end
+function trade_doktor_count()
+	return dialogs.dialog_count("trade_doktor_enough",9)
+end
+
+-- Лимит диалогов. Скряга 15 раз
+function trade_skraga_not_enough()
+	return not dialogs.dialog_is_enough("trade_skraga_enough",15)
+end
+function trade_skraga_enough()
+	return dialogs.dialog_is_enough("trade_skraga_enough",15)
+end
+function trade_skraga_count()
+	return dialogs.dialog_count("trade_skraga_enough",15)
+end
+
+-- Лимит диалогов. Жила 13 раз
+function trade_jlob_not_enough()
+	return not dialogs.dialog_is_enough("trade_jlob_enough",13)
+end
+function trade_jlob_enough()
+	return dialogs.dialog_is_enough("trade_jlob_enough",13)
+end
+function trade_jlob_count()
+	return dialogs.dialog_count("trade_jlob_enough",13)
+end
+
+-- Лимит диалогов. Кузнецов 12 раз
+function trade_kuznezov_not_enough()
+	return not dialogs.dialog_is_enough("trade_kuznezov_enough",12)
+end
+function trade_kuznezov_enough()
+	return dialogs.dialog_is_enough("trade_kuznezov_enough",12)
+end
+function trade_kuznezov_count()
+	return dialogs.dialog_count("trade_kuznezov_enough",12)
+end
+
+-- Лимит диалогов. Шерстюк 12 раз
+function trade_sherstyk_not_enough()
+	return not dialogs.dialog_is_enough("trade_sherstyk_enough",12)
+end
+function trade_sherstyk_enough()
+	return dialogs.dialog_is_enough("trade_sherstyk_enough",12)
+end
+function trade_sherstyk_count()
+	return dialogs.dialog_count("trade_sherstyk_enough",12)
+end
+
+-- Лимит диалогов. Макс 10 раз
+function trade_maks_not_enough()
+	return not dialogs.dialog_is_enough("trade_maks_enough",10)
+end
+function trade_maks_enough()
+	return dialogs.dialog_is_enough("trade_maks_enough",10)
+end
+function trade_maks_count()
+	return dialogs.dialog_count("trade_maks_enough",10)
+end
+
+-- Лимит диалогов. Дэн 12 раз
+function trade_dan_not_enough()
+	return not dialogs.dialog_is_enough("trade_dan_enough",12)
+end
+function trade_dan_enough()
+	return dialogs.dialog_is_enough("trade_dan_enough",12)
+end
+function trade_dan_count()
+	return dialogs.dialog_count("trade_dan_enough",12)
+end

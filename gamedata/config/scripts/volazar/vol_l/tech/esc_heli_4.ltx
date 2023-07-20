@@ -1,0 +1,15 @@
+[logic]
+active = heli_move@idle
+
+[heli_move@idle]
+path_move = esc_heli_move_4
+path_look = esc_heli_look_4
+engine_sound = true
+combat_use_rocket = true
+combat_use_mgun = true
+rocket_delay = 5000
+combat_safe_altitude = -30
+mute = true
+on_info = {=heli_health_le(0.1)} %=esc_fly.spawn_heli_2 =esc_fly.spawn_btr_1%
+
+

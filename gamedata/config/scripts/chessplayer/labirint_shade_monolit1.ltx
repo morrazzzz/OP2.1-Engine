@@ -1,0 +1,47 @@
+[spawn]
+blank_sheet_5
+
+[logic] 
+active = remark@my_nps_psih2 
+combat_ignore = combat_ignore 
+meet = no_meet 
+;on_hit = hit 
+;on_death = death 
+
+[danger_ignore] 
+ignore_distance = 50 
+
+[remark@my_nps_psih2] 
+anim = trans_0 
+on_actor_dist_le_nvis = 30|remark@my_nps_psih_kol2 
+danger = danger_condition 
+meet = no_meet 
+combat_ignore_cond = always 
+
+[remark@my_nps_psih_kol2] 
+anim = trans_0 
+no_move = true 
+meet = no_meet 
+combat_ignore_cond = always 
+on_actor_dist_le_nvis = 3|remark@my_nps_psih_vrag2 
+
+[remark@my_nps_psih_vrag2] 
+anim = prisoner
+target = actor 
+no_move = true 
+meet = no_meet 
+combat_ignore_cond = always 
+on_timer = 15000|remark@my_nps_psih_voyna2 
+
+[remark@my_nps_psih_voyna2] 
+anim = claim
+target = actor
+no_move = true 
+meet = no_meet 
+on_timer = 5000|%=actor_enemy% 
+
+[smart_terrains] 
+none = true
+
+
+

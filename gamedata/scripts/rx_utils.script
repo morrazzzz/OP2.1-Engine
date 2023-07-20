@@ -1,0 +1,523 @@
+function init() end
+--------------------------------------ini---------------------------------------
+function read_from_ini(ini,sec,lin,def,typ)
+	if not ini then
+		ini = config
+	end
+	if sec and lin and ini:section_exist(sec) and ini:line_exist(sec,lin) then
+		if typ == 0 then
+			return ini:r_bool(sec,lin)
+		elseif typ == 1 then
+			return ini:r_string(sec,lin) or def
+		elseif typ == 2 then
+			return ini:r_string_wq(sec,lin) or def
+		elseif typ == 3 then
+			return ini:r_s32(sec,lin) or def
+		elseif typ == 4 then
+			return ini:r_vector(sec,lin) or def
+		else
+			return ini:r_float(sec,lin) or def
+		end
+	else
+		return def
+	end
+end
+
+function collect_sections(ini,sections,tonum)
+	local r,p = {},{}
+	for k,v in ipairs(sections) do
+		if ini:section_exist(v) then
+			local n = ini:line_count(v)
+			if n > 0 then
+				for i = 0,n-1 do
+					local res,id,val = ini:r_line(v,i,"","")
+					if r[id] == nil then
+						r[id] = tonum and tonumber(val) or val
+					end
+				end
+			end
+			p[k] = n
+		else
+			p[k] = 0
+		end
+	end
+	return r,p
+end
+
+function parse_list(ini,sec,val,convert,tonum)
+	local tmp = string.explode(read_from_ini(ini,sec,val,"",1),",")
+	if tonum then
+		for i,v in ipairs(tmp) do
+			local res = tonumber(v)
+			if res ~= nil then
+				tmp[i] = res
+			end
+		end
+	end
+	if convert and #tmp ~= 0 then
+		local t = {}
+		for i,v in ipairs(tmp) do
+			t[v] = convert ~= -1 and convert or i
+		end
+		return t,tmp
+	end
+	return tmp
+end
+
+local ranksl
+function get_rank_list()
+	if ranksl then
+		return ranksl
+	end
+	local tmp = parse_list(nil,"game_relations","rating")
+	ranksl = {}
+	for i,rn in ipairs(tmp) do
+		if not tonumber(rn) then
+			table.insert(ranksl,rn)
+		end
+	end
+	return ranksl
+end
+
+local communitiesl
+function get_communities_list()
+	if communitiesl then
+		return communitiesl
+	end
+	local tmp = parse_list(nil,"game_relations","communities")
+	communitiesl = {}
+	for i,cn in ipairs(tmp) do
+		if not tonumber(cn) then
+			table.insert(communitiesl,cn)
+		end
+	end
+	return communitiesl
+end
+
+--------------------------------------str---------------------------------------
+function vec_to_str(vec)
+	if vec == nil then return "<nil>" end
+	return string.format("[%s:%s:%s]",vec.x,vec.y,vec.z)
+end
+
+local function format_safe(str,...)
+	local i,args = 0,{...}
+	local f = function()
+		i = i + 1
+		local a = args[i]
+		if a == nil then
+			return "<nil>"
+		elseif type(a) == "userdata" then
+			if a.setHP then
+				return vec_to_str(a)
+			elseif a.name then
+				return "<obj>:"..a:name()
+			end
+			return "<userdata>"
+		end
+		return tostring(a)
+	end
+	return string.gsub(str,"%%s",f)
+end
+
+--------------------------------------class---------------------------------------
+creatures_clslist = {
+		actor = clsid.actor,
+		stalker = clsid.script_stalker,
+		dog = clsid.dog_s,
+		boar = clsid.boar_s,
+		flesh = clsid.flesh_s,
+		pseudodog = clsid.pseudodog_s,
+		bloodsucker = clsid.bloodsucker_s,
+		snork = clsid.snork_s,
+		tushkano = clsid.tushkano_s,
+		zombie = clsid.zombie_s,
+		giant = clsid.gigant_s,
+		chimera = clsid.chimera_s,
+		burer = clsid.burer_s,
+		controller = clsid.controller_s,
+		poltergeist = clsid.poltergeist_s,
+		fracture = clsid.fracture_s,
+		cat = clsid.cat_s,
+		psy_dog = clsid.psy_dog_s,
+		psy_dog_phantom = clsid.psy_dog_phantom_s
+}
+
+local firearm_clst = {
+		[clsid.wpn_ak74] 				= true,
+		[clsid.wpn_ak74_s] 				= true,
+		[clsid.wpn_bm16] 				= true,
+		[clsid.wpn_bm16_s] 				= true,
+		[clsid.wpn_fn2000] 				= true,
+		[clsid.wpn_fort]				= true,
+		[clsid.wpn_groza] 				= true,
+		[clsid.wpn_groza_s] 			= true,
+		[clsid.wpn_hpsa] 				= true,
+		[clsid.wpn_hpsa_s] 				= true,
+		[clsid.wpn_lr300] 				= true,
+		[clsid.wpn_lr300_s] 			= true,
+		[clsid.wpn_pm] 					= true,
+		[clsid.wpn_pm_s] 				= true,
+		[clsid.wpn_rg6] 				= true,
+		[clsid.wpn_rg6_s] 				= true,
+		[clsid.wpn_rpg7] 				= true,
+		[clsid.wpn_rpg7_s] 				= true,
+		[clsid.wpn_shotgun] 			= true,
+		[clsid.wpn_shotgun_s] 			= true,
+		[clsid.wpn_svd] 				= true,
+		[clsid.wpn_svd_s] 				= true,
+		[clsid.wpn_svu] 				= true,
+		[clsid.wpn_svu_s] 				= true,
+		[clsid.wpn_usp45] 				= true,
+		[clsid.wpn_usp45_s] 			= true,
+		[clsid.wpn_val] 				= true,
+		[clsid.wpn_val_s] 				= true,
+		[clsid.wpn_vintorez] 			= true,
+		[clsid.wpn_vintorez_s] 			= true,
+		[clsid.wpn_walther] 			= true,
+		[clsid.wpn_walther_s] 			= true}
+
+function item_is_fa(o,c)
+	if not c then
+		c = o and o:clsid()
+	end
+	if c and firearm_clst[c] then
+		return true
+	end
+	return false
+end
+
+function item_is_knife(o,c)
+	if not c then
+		c = o and o:clsid()
+	end
+	return c == clsid.wpn_knife_s
+end
+
+local blaster_clst = {
+		[clsid.wpn_rg6] 				= true,
+		[clsid.wpn_rg6_s] 				= true,
+		[clsid.wpn_rpg7] 				= true,
+		[clsid.wpn_rpg7_s] 				= true}
+
+function item_is_blaster(o,c)
+	if not c then
+		c = o and o:clsid()
+	end
+	if c and blaster_clst[c] then
+		return true
+	end
+	return false
+end
+
+--[[
+local ammo_clst = {
+		[clsid.wpn_ammo] 				= true,
+		[clsid.wpn_ammo_vog25] 			= true,
+		[clsid.wpn_ammo_m209] 			= true,
+		[clsid.wpn_ammo_og7b] 			= true}
+
+function item_is_ammo(o,c)
+	if not c then
+		c = o and o:clsid()
+	end
+	if c and ammo_clst[c] then
+		return true
+	end
+	return false
+end
+]]
+
+function is_actor(o,c)
+	if not c then
+		c = o and o:clsid()
+	end
+	return c == clsid.actor
+end
+
+local anom_clst = {
+		[clsid.ameba_zone] 				= true,
+		[clsid.torrid_zone] 			= true,
+		[clsid.zone_acid_fog] 			= true,
+		[clsid.zone_bfuzz] 				= true,
+		[clsid.zone_bfuzz_s] 			= true,
+		[clsid.zone_dead] 				= true,
+		[clsid.zone_galant_s] 			= true,
+		[clsid.zone_galantine] 			= true,
+		[clsid.zone_mbald_s] 			= true,
+		[clsid.zone_mincer] 			= true,
+		[clsid.zone_mincer_s] 			= true,
+		[clsid.zone_mosquito_bald] 		= true,
+		[clsid.zone_radioactive] 		= true,
+		[clsid.zone_rusty_hair] 		= true}
+
+function is_anomaly(o,c)
+	if not c then
+		c = o and o:clsid()
+	end
+	if c and anom_clst[c] then
+		return true
+	end
+	return false
+end
+
+function is_story_object(game_obj)
+	return game_obj:story_id() < 4294967295
+end
+
+--------------------------------------sch---------------------------------------
+function add_anim(npc,anim,hand_usage,use_movement_controller)
+	if not use_movement_controller then
+		use_movement_controller=false
+	end
+	if anim then
+		npc:add_animation(anim,hand_usage,use_movement_controller)
+	end
+end
+
+function get_sound(snd)
+	if snd then
+		return xr_sound.get_safe_sound_object(snd)
+	end
+end
+
+--------------------------------------net------------------------------------------
+function get_weapon_data(sobj)
+	return netpacket:get(sobj)
+end
+
+function set_weapon_data(t,sobj)
+	netpacket:set(t,sobj)
+end
+
+--------------------------------------weapon---------------------------------------
+function get_wm(npc,enabled_only)
+	local st = rx_ai.get_storage(npc:id())
+	if st.wm and not (enabled_only and st.wm.disabled) then
+		return st.wm
+	end
+end
+
+function get_weapon(npc)
+	return rx_wmgr and rx_wmgr.get_wm(npc):get_weapon() or npc:best_weapon()
+end
+
+function get_ammo_type(wpn)
+	local sobj = server_object(wpn:id())
+	if sobj then
+		local pk = net_packet()
+		sobj:STATE_Write( pk )
+		pk:r_seek( pk:w_tell() - 1 )
+		return pk:r_u8()	-- ammo_type
+	end
+	return 0
+end
+
+function in_grenade_mode(wpn)
+	local sobj = server_object(wpn:id())
+	if sobj then
+		local pak = netpacket:get(sobj)
+		if bit_and(pak.addon_flags,2) == 2 then
+			return pak.upd.grenade_mode ~= 0
+		end
+	end
+	return false
+end
+
+function get_mag_size(section)
+	return (rx_wmgr and not rx_wmgr.wm_modes.forbiddens[section] and rx_wmgr.read_wpn_params(section).mag) or rx_utils.read_from_ini(nil,section,"ammo_mag_size",1,3)
+end
+
+function get_wpn_type(section)
+	return (rx_wmgr and not rx_wmgr.wm_modes.forbiddens[section] and rx_wmgr.read_wpn_params(section).typ) or rx_utils.read_from_ini(nil,section,"ef_weapon_type",0,3)
+end
+
+--------------------------------------addons---------------------------------------
+local adt = {}
+function get_addon_status(wpn,addon)
+	local sec = wpn:section()
+	if not adt[sec] then
+		adt[sec] = {}
+	end
+	if not adt[sec][addon] then
+		local ast = {sc = "scope_status",sl = "silencer_status",gl = "grenade_launcher_status"}
+		adt[sec][addon] = read_from_ini(nil,sec,ast[addon],0)
+	end
+	return adt[sec][addon]
+end
+
+function get_addon_flag(wpn,with_int)
+	local id = wpn:id()
+	local flag = 0
+	local sobj = server_object(id)
+	if sobj then
+		flag = get_weapon_data(sobj).addon_flags or 0
+--	else
+--		printf("get_addon_flag[%s]: not sobj!",wpn:name())
+	end
+	if with_int then
+		if get_addon_status(wpn,"sc") == 1 then
+			flag = flag+1
+		end
+		if get_addon_status(wpn,"sl") == 1 then
+			flag = flag+4
+		end
+		if get_addon_status(wpn,"gl") == 1 then
+			flag = flag+2
+		end
+	end
+	return flag
+end
+
+local ft = {sc = 1,sl = 4,gl = 2}
+function addon_attached(wpn,addon,flag)
+	if ft[addon] then
+		return bit_and(flag or get_addon_flag(wpn,true),ft[addon]) == ft[addon]
+	end
+end
+
+--------------------------------------ai-----------------------------------------
+function npc_in_cover(npc,stand)
+	local st = rx_ai.get_storage(npc:id(),"in_cover")
+	local be,de = npc:best_enemy(),db.storage[npc:id()].danger.exist
+	if (be and not xr_wounded.is_wounded(be) or de) then
+		if stand and not npc:path_completed() then
+			st.evn = false
+			return false
+		end
+	else
+		return true
+	end
+	local tg = time_global()
+	if (st.wait or 0) > tg then
+		return st.evn
+	end
+	local enemies,tt = {},{}
+	if be and not xr_wounded.is_wounded(be) then
+		enemies[1] = be
+		tt[be:id()] = true
+	else	-- в отсутствие врага проверяем угрозу
+		if not be and de and npc:best_danger() then
+			local dir = npc:best_danger():position():sub(npc:position())
+			if dir:magnitude() < 8 or 1-level.cover_in_direction(npc:level_vertex_id(),dir) < 0.3 then
+				st.evn = false
+				st.wait = tg+3000
+--				printf("npc_in_cover[%s]:danger! %s dist %s cover %s",npc:character_name(),de,dir:magnitude(),1-level.cover_in_direction(npc:level_vertex_id(),dir))
+				return false
+			end
+		end
+		st.evn = true
+		st.wait = tg+2000
+		return true
+	end
+	for o in npc:memory_visible_objects() do
+		local obj = o:object()
+		local id = obj:id()
+		if not tt[id] then
+			if obj and
+				( (IsStalker(obj) and not xr_wounded.is_wounded(obj) )
+				or IsMonster(obj))
+				and obj:alive()
+				and npc:relation(obj) == game_object.enemy
+			then
+				table.insert(enemies,obj)
+				tt[id] = true
+			end
+		end
+	end
+	for o in npc:memory_sound_objects() do
+		local obj = o:object()
+		if not tt[obj:id()] then
+			if obj
+				and ( (IsStalker(obj) and not xr_wounded.is_wounded(obj) )
+				or IsMonster(obj))
+				and obj:alive()
+				and npc:relation(obj) == game_object.enemy
+			then
+				table.insert(enemies,obj)
+			end
+		end
+	end
+	local npc_lvid,npc_id = npc:level_vertex_id(),npc:id()
+	local f = 28
+	for i,enemy in ipairs(enemies) do
+		if IsMonster(enemy) then
+			local dist = enemy:position():distance_to_sqr(npc:position())
+			local ebe = enemy:get_enemy()
+			if (dist < 12*12 and enemy:see(npc)) or (dist < 50*50 and ebe and ebe:id() == npc_id) then
+				st.evn = false
+				st.wait = tg+5000
+				return false
+			end
+		else
+			local dir = enemy:position():sub(npc:position())
+			local dist = dir:magnitude()
+			local seez = npc:see(enemy) and enemy:see(npc)	-- НПС знает, что враг его видит
+			local cover = level.cover_in_direction(npc_lvid,dir)
+			if seez or dist < 7 or cover > 0.8 or dist*cover > dist-f*cover then		-- чем дальше враг, тем меньше требуется прикрытия
+--				printf("npc_in_cover[%s]:enemy![dist = %s,seez = %s,cover = %s]",npc:character_name(),dist,seez,1-cover)
+				st.evn = false
+				st.wait = tg+2500
+				return false
+			end
+		end
+	end
+	st.evn = true
+	st.wait = tg+400
+	return true
+end
+
+function eat_medkit(npc,medkit)
+	npc:eat(medkit)
+end
+
+function IsTrader(npc)	-- check
+	local st = rx_ai.get_storage(npc:id())
+	if st.is_trader == nil then
+		local trader = false
+		if npc:character_community() == "trader" or npc:clsid() == clsid.script_trader or npc:clsid() == clsid.trader then
+			trader = true
+		elseif string.find(npc:section(),"trader") then
+			trader = true
+		elseif 
+			string.find(npc:profile_name(),"amk_vitek_voron") or 
+			string.find(npc:profile_name(),"agro_mobil_torgash") or 
+			string.find(npc:profile_name(),"mil_freedom_member0021") or 
+			string.find(npc:profile_name(),"bar_dolg_petrenko") or
+			string.find(npc:profile_name():lower(),"svoboda_trader") 
+			then 
+			trader = true
+		else
+			local cini = xr_logic.get_customdata_or_ini_file(npc,"<customdata>")
+	--		local cini = db.storage[npc:id()].ini
+	--		local logic = db.storage[npc:id()].section_logic
+	--		if not logic and not trader then
+	--			return false
+	--		end
+	--		if cini and logic and cini:section_exist(logic) and cini:line_exist(logic,"trade") then
+			if cini and cini:section_exist("logic") and cini:line_exist("logic","trade") then
+				trader = true
+			end
+		end
+		st.is_trader = trader
+	end
+	return st.is_trader
+end
+
+--------------------------------------output---------------------------------------
+function printf(str,...)
+	log(format_safe(str,...))
+end
+
+function ABORT(s,...)
+	printf("rx_utils.abort: "..s,...)
+	config:r_bool("___aborting","a")
+end
+_G['ABORTX'] = ABORT
+
+function ASSERT(o,s,...)
+	if not o then
+		ABORT(s,...)
+	end
+end
+_G['ASSERTX'] = ASSERT

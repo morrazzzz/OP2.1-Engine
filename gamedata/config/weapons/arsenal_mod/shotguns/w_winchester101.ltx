@@ -1,0 +1,254 @@
+;;;;;;;;;;;;;;; Ружьё Winchester 101 ;;;;;;;;;;;;;;;;
+[wpn_win101]:WP_BM16
+min_radius               = 0
+max_radius               = 50
+description				= enc_arsenal_wpn-win101
+
+ef_main_weapon_type			= 1
+ef_weapon_type				= 7
+
+holder_range_modifier	= 1.0               ; во сколько раз увеличивается eye_range 
+holder_fov_modifier		= 0.7              ; во сколько раз увеличивается eye_fov
+
+cost				 = 4000  ; 1000
+weapon_class			 = shotgun
+
+ammo_limit		 = 60
+ammo_current		 = 10
+ammo_elapsed		 = 0
+f_mode			 = 1
+ammo_mag_size		 = 2
+ammo_class		 = ammo_12x70_buck, ammo_12x70_kart, ammo_12x76_zhekan, ammo_12x76_dart, ammo_zhekan_izomorf
+fire_modes			= 1, 2
+;базовая дисперсия
+dispersion_start		= 0
+fire_dispersion_base		= 0.35  	;угол (в градусах) базовой дисперсии оружия (оружия зажатого в тисках)
+control_inertion_factor		= 1.3f
+
+;отдача
+cam_relax_speed         	= 12.0	;скорость возврата в исходное положение
+cam_dispersion          	= 1.0	;увеличения угла (в градусах) с каждым выстрелом
+cam_dispersion_inc		= 1.0	;увеличениe cam_dispersion с каждым выстрелом
+cam_dispertion_frac		= 1.0	;ствол будет подыматься на cam_dispersion*cam_dispertion_frac +- cam_dispersion*(1-cam_dispertion_frac)
+cam_max_angle			= 6.0	;максимальный угол отдачи
+cam_max_angle_horz		= 10.0	;(degree) maximum shot horizontal degree 
+cam_step_angle_horz		= 1.5	;(degree) size of step camera moved in horizontal position while shooting
+
+fire_dispersion_condition_factor = 5	;увеличение дисперсии в процентах при максимальном износе 
+misfire_probability 		= 0.0005	;вероятность осечки при максимальном износе 
+misfire_condition_k		= 0.05
+condition_shot_dec 		= 0.00025 ;увеличение износа при каждом выстреле
+
+hand_dependence 	 = 1
+single_handed		 = 0
+
+slot 			 = 13 ;2		; // secondary
+animation_slot		 = 3		; type of the animation that will be used
+
+inv_name		= ars-win101
+inv_weight		= 3.1
+
+inv_grid_width		= 6
+inv_grid_height		= 1
+inv_grid_x		= 65
+inv_grid_y		= 33
+
+direction                = 0, 0, 1
+shell_point		 = 0.0, 0.183, 0.07
+fire_point               = 0.0, 0.183, 0.750
+fire_point2              = 0.0, 0.160, 0.750
+
+flame_particles				= amik\weapons\smoke_particles\smoke_particles_03 ;weapons\generic_weapon05 
+smoke_particles     			= amik\weapons\smoke_particles\smoke_particles_pump_01 ;weapons\generic_shoot_00 
+rpm_empty_click 	   = 200
+
+PDM_disp_base 			= 1.0
+PDM_disp_vel_factor 		= 2.0
+PDM_disp_accel_factor 		= 2.0
+PDM_crouch	 		= 1.0
+PDM_crouch_no_acc 		= 1.0
+
+;;;;;;; Для ОП-2.1
+hit_power        		= 1.35
+hit_impulse      		= 95
+hit_type 			= fire_wound
+hit_rate	                = 2.0
+fire_distance            	= 90
+bullet_speed			= 450  ; начальная скорость пули
+rpm                      	= 600
+
+hud                      	= wpn_win101_hud
+normal  	                = 0, 1, 0
+position                 	= -0.026, -0.132, 0.06 ;-0.026, -0.117, 0.0
+orientation              	= 0, 30, 0      ;значение устанавливается в градусах
+
+;под мишкой
+strap_position         		= -0.26,-0.11,0.15			; position (offset) and orientation of the weapon when it is strapped
+strap_orientation      		= -15,-9,110				; (3rd person view in degrees)
+strap_bone0					= bip01_spine2
+strap_bone1					= bip01_spine1
+
+startup_ammo             = 10
+visual                   = weapons\win101\win101.ogf
+
+light_color		 = 0.6,0.5,0.3
+light_range		 = 6.0
+light_var_color		 = 0.05
+light_var_range		 = 0.5
+light_time 		 = 0.2
+
+ph_mass			 = 3
+;cost			 = 900
+
+;addons
+scope_status				= 0
+silencer_status				= 0
+grenade_launcher_status		        = 0
+
+zoom_enabled				= true
+scope_zoom_factor	    	= 65
+
+;звуки
+snd_draw				= weapons\win101\toz34_draw
+snd_holster				= weapons\toz34\holster
+snd_shoot				= weapons\win101\toz34_shot_02
+snd_empty				= weapons\win101\toz34_empty
+snd_reload				= weapons\win101\toz34_reload
+snd_shoot_duplet			= weapons\win101\toz34_shot_02
+snd_shoot_1				= weapons\win101\toz34_shot_02
+snd_reload_1				= weapons\win101\toz34_reload_one
+
+ 
+[wpn_win101_hud]
+shell_point		 = 0.02,0.07,0.14
+fire_point               = 0.0, 0.0, -0.565  ;0.0, 0.0, -0.36
+fire_point2              = 0.0, -0.15, -0.565
+fire_bone                = muzzle	;wpn_barrel_0
+orientation              = 0,0,0
+position                 = -0.156,-0.115,0.012 ;-0.1475,-0.15,0.01
+visual                   = weapons\win101\win101_hud.ogf
+
+anim_idle					= toz34_idle
+anim_reload					= toz34_reload_full ;toz34_reload_lr 
+anim_draw					= toz34_draw
+anim_holster				= toz34_holster
+anim_shoot					= toz34_shoot
+anim_shoot_both 			= toz34_shoot
+anim_idle_aim				= toz34_idle_aim
+anim_idle_sprint			= toz34_idle_sprint
+
+anim_reload_1				= toz34_reload_l
+anim_shoot_1				= toz34_shoot
+
+anim_idle_1					= toz34_idle
+anim_idle_2					= toz34_idle
+
+anim_zoomed_idle_1			= toz34_idle_aim
+anim_zoomedidle_2			= toz34_idle_aim
+
+
+;смещения HUD для режима приближения
+zoom_offset		= -0.070,0.0345,0.025	;-0.079990,0.072,0.05
+zoom_rotate_x		= 0.0018	;0.044000
+zoom_rotate_y		= -0.002	;0.017000
+;время поворота HUD (сек)
+;zoom_rotate_time	= 0.7
+
+;;;;;;;;;;;;;;; Обрез ружья Winchester 101 ;;;;;;;;;;;;;;;;;;
+[wpn_win101_obrez]:wpn_win101
+slot 			 = 1
+description		= enc_arsenal_wpn-win101_obrez
+inv_name		= ars-win101_obrez
+inv_weight		= 1.75
+cost			= 300
+inv_grid_width		= 3
+inv_grid_x		= 66
+inv_grid_y		= 34
+
+PDM_disp_vel_factor 		= 1.1
+PDM_disp_accel_factor 		= 1.1
+
+hit_power        		= 1.23
+fire_distance            	= 25
+bullet_speed			= 385
+
+fire_point               = 0.0, 0.035, 0.52
+fire_point2              = 0.0, 0.140, 0.740
+position                 = -0.026, 0.0001, -0.031
+strap_position         		= -0.21,-0.125,0.0015
+
+snd_shoot				= weapons\win101\toz34_shot_08
+snd_shoot_duplet			= weapons\win101\toz34_shot_08
+snd_shoot_1				= weapons\win101\toz34_shot_08
+visual                   = weapons\win101\win101_obrez.ogf
+hud                      	= wpn_win101_obrez_hud
+
+[wpn_win101_obrez_hud]:wpn_win101_hud
+fire_point               = 0.0, 0.0, -0.745 
+fire_point2              = 0.0, -0.15, -0.735
+visual                   = weapons\win101\win101_obrez_hud.ogf
+
+zoom_offset		= -0.070,0.03235,0.025
+zoom_rotate_x		= -0.0026
+zoom_rotate_y		= -0.002
+
+;;;;;;;;;;;;;;; Обрез ружья ТОЗ-34 под шрапнель ;;;;;;;;;;;;;
+[wpn_toz_short_23]:wpn_win101_obrez
+description		= enc_arsenal_wpn-toz_short_23
+inv_name		= ars-toz_short_23
+ammo_class		 	= ammo_23x76_shrap
+cost			= 2500
+cheat_item = true
+
+inv_grid_x		= 49
+inv_grid_y		= 23
+
+cam_relax_speed         	= 22
+cam_dispersion          	= 6.0
+cam_dispersion_inc		= 0.5
+cam_dispertion_frac		= 10.0
+cam_max_angle			= 15.0
+cam_max_angle_horz		= 3.0
+cam_step_angle_horz		= 0.25
+
+hit_power        		= 2.45
+fire_distance            	= 20
+fire_point               	= 0.0, 0.183, 0.330
+position                 	= -0.026, -0.132, 0.06
+orientation              	= 0, 30, 0 
+
+strap_position         		= -0.26,-0.11,0.15
+strap_orientation      		= -15,-9,110
+visual                   = weapons\win101\wpn_toz_short_23.ogf
+hud                      	= wpn_toz_short_23_hud
+
+[wpn_toz_short_23_hud]
+shell_point		 		= 0.0, 0.0,0.0
+fire_point               		= 0,0.025,-0.95
+fire_point2              		= 0,0.2,-0.95
+fire_bone                		= muzzle
+visual                   		= weapons\win101\wpn_toz_short_23_hud.ogf
+position				= -0.1475,-0.13,0.01
+orientation				= 2,2,0
+
+anim_idle				= idle
+anim_reload				= reload_both
+anim_draw				= draw
+anim_holster				= holster
+anim_shoot				= shoot
+anim_shoot_both 			= shoot
+anim_idle_aim				= aim
+anim_idle_sprint			= sprint
+
+anim_reload_1				= reload_one
+anim_shoot_1				= shoot
+
+anim_idle_1				= idle
+anim_idle_2				= idle
+
+anim_zoomed_idle_1			= aim
+anim_zoomedidle_2			= aim
+
+zoom_offset				= -0.081,0.053,0.075
+zoom_rotate_x				= 0.037
+zoom_rotate_y				= 0.0349

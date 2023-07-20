@@ -1,0 +1,13 @@
+<ui_texture>
+    <file_name>ui\ui_iconsTotal2</file_name>
+	<texture id="ui_npc_u_soldier_bandana_1" x="165" y="0" width="165" height="108"/>
+	<texture id="ui_npc_u_soldier_bandana_3" x="0" y="0" width="165" height="108"/>
+	<texture id="ui_npc_u_soldier_bandana_2" x="165" y="108" width="165" height="108"/>
+	<texture id="ui_npc_u_soldier_bandana_4" x="0" y="108" width="165" height="108"/>
+	<texture id="ui_npc_u_actor" x="0" y="216" width="165" height="108"/>
+	<texture id="ui_npc_u_izgoy" x="165" y="216" width="165" height="108"/>
+	<texture id="ui_npc_u_osoznanie" x="165" y="324" width="165" height="108"/>
+        <texture id="ui_npc_volazar" x="330" y="0" width="165" height="108"/>
+        <texture id="ui_npc_volazar_new" x="330" y="108" width="165" height="108"/>
+        <texture id="ui_npc_ozersky" x="330" y="216" width="165" height="108"/>
+</ui_texture>

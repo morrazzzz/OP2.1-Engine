@@ -1,0 +1,10 @@
+local particles_object_by_path = {}
+
+--' Обертка вокруг функции, возвращающей объект партикла.
+function get_safe_particles_object(path)
+	if particles_object_by_path[path] == nil then
+		particles_object_by_path[path] = particles_object(path)
+	end
+	return particles_object_by_path[path]
+end
+

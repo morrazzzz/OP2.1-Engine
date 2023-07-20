@@ -1,0 +1,27 @@
+[collide]
+ignore_static
+
+[logic]
+active = ph_idle@one
+
+[ph_idle@one]
+auto_fire = false
+on_actor_dist_ge_nvis = 12 | ph_minigun@one
+
+[ph_minigun@one]
+auto_fire = true
+target = actor
+track_target = true
+shoot_only_on_visible = false
+fire_range = 100
+fire_repeat = 5
+on_timer = 15000 | ph_minigun@two
+
+[ph_minigun@two]
+auto_fire = true
+target = actor
+;path_fire = trenoga_fire_walk
+track_target = true
+shoot_only_on_visible = false
+fire_range = 100
+fire_repeat = 5

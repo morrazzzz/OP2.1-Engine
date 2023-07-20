@@ -1,0 +1,37 @@
+[smart_terrains]
+none = true
+
+[logic]
+active = kamp
+danger = danger_ignore@cs6
+
+[kamp]
+center_point  = cs6_shturm_camp_center
+path_walk     = cs6_camp_center_task
+radius = 1.0
+meet = no_meet
+danger = danger_ignore@cs6
+on_info = {+shturm_station_start} walker@cs6
+
+[walker@cs6]
+path_walk = cs5_volna_walk
+;path_look = cs5_volna_look
+def_state_moving = rush
+meet = meet
+danger = danger_ignore@cs5
+on_info = {+fenix_defenders_otboi} kamp@cs6
+
+[kamp@cs6]
+center_point  = cs5_volna_camp_center
+path_walk     = cs5_volna_camp_center_task
+meet = meet
+radius = 1.5
+
+[meet]
+use = true
+use_wpn = true
+meet_talk_enabled = true
+
+[danger_ignore@cs6]
+ignore_distance_corpse = 0
+ignore_distance = 0

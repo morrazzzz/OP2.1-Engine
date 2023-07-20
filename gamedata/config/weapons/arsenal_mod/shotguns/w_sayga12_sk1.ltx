@@ -1,0 +1,336 @@
+;;;;;;;;;;;;;;;;;;;;;;;; Автоматический гладкоствольный карабин Сайга12К ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[wpn_sayga12_sk1]:WP_AK74
+min_radius              = 0
+max_radius              = 100
+description		= enc_arsenal_sayga12_sk1 
+
+ef_main_weapon_type		= 1
+ef_weapon_type			= 7
+
+holder_range_modifier	= 0.9
+holder_fov_modifier		= 1.3
+
+weapon_class			= assault_rifle
+
+cost					= 15500
+
+ammo_elapsed			= 8
+ammo_mag_size		 	= 8
+ammo_class		 		= ammo_12x70_buck, ammo_12x70_kart, ammo_12x76_zhekan, ammo_12x76_dart, ammo_zhekan_izomorf
+fire_modes				= 1, 2
+
+grenade_class		      = ammo_vog-27
+launch_speed			= 0
+
+hand_dependence		 	= 1
+single_handed			= 0
+
+inv_name				= ars-sayga12_sk1   
+inv_weight				= 3.6
+
+inv_grid_width     = 5
+inv_grid_height    = 2
+inv_grid_x         = 34
+inv_grid_y         = 59
+
+slot 				= 13 ;2		; // secondary
+animation_slot			= 2		; type of the animation that will be used
+
+;params of weapon recoil
+fire_dispersion_base			= 0.25		;угол (в градусах) базовой дисперсии оружия (оружия зажатого в тисках)
+control_inertion_factor			= 1.25f
+
+;отдача
+cam_relax_speed         	= 15.5		;скорость возврата в исходное положение
+cam_relax_speed_ai         	= 360
+cam_dispersion          	= 0.25	;увеличения угла (в градусах) с каждым выстрелом
+cam_dispersion_inc		= 0.1		;увеличениe cam_dispersion с каждым выстрелом
+cam_dispertion_frac		= 0.12	;ствол будет подыматься на cam_dispersion*cam_dispertion_frac +- cam_dispersion*(1-cam_dispertion_frac)
+cam_max_angle			= 4	    	;максимальный угол отдачи
+cam_max_angle_horz		= 6.0		;(degree) maximum shot horizontal degree 
+cam_step_angle_horz		= 0.2;1	;(degree) size of step camera moved in horizontal position while shooting
+
+fire_dispersion_condition_factor 	= 6		;увеличение дисперсии в процентах при максимальном износе 
+misfire_probability 	      = 0.00015	;вероятность осечки при максимальном износе 
+misfire_condition_k		= 0.05
+condition_shot_dec 		= 0.00005	;увеличение износа при каждом выстреле
+
+direction               = 0, 0, 1
+
+fire_point             	=  0,0.220,0.545
+flame_particles		   		= amik\weapons\smoke_particles\smoke_particles_pump_00 
+smoke_particles		   		= amik\weapons\smoke_particles\smoke_particles_pump_01	
+grenade_flame_particles		= weapons\generic_weapon01
+silencer_smoke_particles 	= weapons\generic_shoot_00
+shell_particles	 			= amik\weapons\12x70_r
+shell_point		 		= 0,0.216,0.174
+shell_dir		 		= 0.0, 1.0, 0.0
+
+rpm_empty_click 	 	= 200
+
+PDM_disp_base 			= 2.25
+PDM_disp_vel_factor 		= 0.8
+PDM_disp_accel_factor 		= 0.8
+PDM_crouch	 		= 1.0
+PDM_crouch_no_acc 		= 1.0
+
+grenade_vel			= 120
+
+;;;;;;; Для ОП-2.1
+hit_power                	= 0.82		; size of damage by bullet
+hit_impulse		 	= 88		; size of physic impulse by bullet	
+hit_type 				= fire_wound 	; [] type of the wound
+fire_distance            	= 100		; maximum fire distance that bullet can fly
+bullet_speed			= 420		; starting bullet speed
+rpm                      	= 850		; max round per minute
+
+use_aim_bullet			= true		;Поддерживается ли первая суппер пуля
+time_to_aim					= 1.0
+
+silencer_hit_power       	= 0.82
+silencer_hit_impulse	 	= 88
+silencer_fire_distance   	= 100
+silencer_bullet_speed	 	= 420
+
+hud                     = wpn_sayga12_sk1_hud
+normal                  = 0, 1, 0
+position         	= -0.022,-0.172,0.0025
+orientation             = 0, 0, 0
+
+strap_position         		= -0.16,-0.36,0.15			; position (offset) and orientation of the weapon when it is strapped
+strap_orientation      		= -10,-5,10					; (3rd person view in degrees)
+strap_bone0					= bip01_spine2
+strap_bone1					= bip01_spine1
+
+visual                  =  Aaz\Sayga12_SK1\wpn_sayga12k.ogf
+
+light_color		 	= 0.6,0.5,0.3
+light_range		 	= 5
+light_var_color		 	= 0.05
+light_var_range		 	= 0.1
+light_time 		 	= 0.2
+
+;addons
+scope_status			= 2
+silencer_status			= 0
+grenade_launcher_status	        = 0 ;2
+
+scope_name 					= wpn_addon_scope_hanter		; section name for the attachable scope
+scope_x 					= 54						; offset in inventory icon
+scope_y 					= 9
+
+;silencer_flame_particles 	= weapons\generic_weapon01
+silencer_smoke_particles 	= weapons\generic_shoot_00
+
+silencer_light_color		= 0.6,0.5,0.3
+silencer_light_range		= 2
+silencer_light_var_color	= 0.05
+silencer_light_var_range	= 0.5
+silencer_light_time 		= 0.2
+
+zoom_enabled		= true
+scope_zoom_factor	= 65
+
+;звуки
+snd_draw			        = weapons\sayga_sk1\sayga12k_draw
+snd_holster			        = weapons\sayga_sk1\sayga12k_holster
+snd_shoot			        = weapons\sayga_sk1\sayga12k_shot
+snd_empty			        = weapons\sayga_sk1\sayga12k_empty, 0.5
+snd_reload				= weapons\ak74_arma\aks74m3_reload
+snd_shoot_grenade		= weapons\gen_grenshoot
+snd_reload_grenade	        = weapons\gen_grenload
+snd_switch			= weapons\groza_switch
+
+[wpn_sayga12_sk1_hud]
+allow_inertion				= true
+
+shell_point     	   	 	= 0.02,-0.035,-0.500
+shell_dir			     	= 0.0, 1.0, 0.0
+
+fire_point			= 0,-0.005,-0.5075
+fire_point2              	= 0,-0.085,-0.5
+fire_bone               	= muzzle
+
+grenade_bone            	= grenade
+
+position			= -0.04875,-0.140,0.13
+orientation			= 1.65,2,0
+visual                  	= Aaz\Sayga12_SK1\wpn_sayga12k_hud.ogf
+
+; animation names
+anim_idle				= idle
+anim_idle_aim				= idle_aim
+anim_reload				= reload
+anim_draw				= draw
+anim_holster				= holster
+anim_shoot				= shoot
+			
+anim_idle_g				= idle_w_gl
+anim_idle_g_aim				= idle_aim_w_gl
+anim_reload_g				= reload_g
+anim_shoot_g				= shoot_g
+anim_switch_grenade_on		= idle_aim_w_gl
+anim_switch_grenade_off		= idle_aim_w_gl
+anim_draw_g				= draw_w_gl
+anim_holster_g				= holster_w_gl
+
+anim_idle_gl				= idle_w_gl
+anim_idle_gl_aim			= idle_aim_w_gl
+anim_reload_gl				= reload_w_gl
+anim_draw_gl				= draw_w_gl
+anim_holster_gl				= holster_w_gl
+anim_shoot_gl				= shoot_w_gl
+anim_idle_sprint			= idle_sprint
+
+zoom_offset		= -0.107075,0.061975,-0.115
+zoom_rotate_x		= 0.020
+zoom_rotate_y		= 0.030
+
+grenade_normal_zoom_offset		= -0.107075,0.061975,-0.115
+grenade_normal_zoom_rotate_x		= 0.035
+grenade_normal_zoom_rotate_y		= 0.0285
+
+grenade_zoom_offset		= -0.06880,0.0005,-0.025
+grenade_zoom_rotate_x		= -0.0820
+grenade_zoom_rotate_y		= 0.02615
+
+
+;;;;;;;;;;;;;;;; Полуавтоматический гладкоствольный карабин Сайга-12K «Самопал» ;;;;;;;;;;;;;;;;;;
+[wpn_sayga_un]:wpn_sayga12_sk1
+description		= enc_arsenal_sayga_un
+inv_name		= ars-sayga_un       
+
+ef_main_weapon_type		= 2
+ef_weapon_type			= 6
+
+holder_range_modifier		= 1.0		
+holder_fov_modifier		= 1.2 	
+
+tri_state_reload		= on
+
+weapon_class		= shotgun
+
+fire_modes			= 1
+grenade_class		      = ammo_vog-25, ammo_vog-25p
+cost					= 12500
+inv_weight				= 4.6
+
+inv_grid_x         = 24
+inv_grid_y         = 72
+
+fire_point             		= 0,0.209,0.660
+fire_point2            		= 0,0.158,0.570
+shell_point		 	= 0,0.230,0.125
+
+fire_dispersion_base			= 0.23
+
+position         	      = -0.024,-0.170,0.0085
+visual         		      = Aaz\Sayga12_SK1\wpn_sayga_unique.ogf
+
+hit_power               = 1.55
+bullet_speed		= 450
+rpm 			= 250	
+
+;addons
+scope_status			= 1		
+grenade_launcher_status		= 1	
+
+scope_zoom_factor	        = 22
+scope_texture		= Arsenal_Mod\Crosshairs\cro_hunter1
+scope_name 					= wpn_addon_scope_hanter	
+
+snd_shoot			                = weapons\spas12\sayga_un_shot
+snd_empty					= weapons\ak_md\empty, 0.5
+  
+snd_shoot_grenade			        = weapons\ak_md\grenshoot
+snd_reload_grenade			        = weapons\gen_grenload, 1.0, 0.9
+snd_switch					= weapons\groza_switch, 1.0, 0.2
+
+hud                     = wpn_sayga_unique_hud
+
+[wpn_sayga_unique_hud]
+shell_point     	   	 	= 0.036,-0.025,-0.6250
+shell_dir			     	= 0.0, 1.0, 0.0
+
+fire_point			= 0,-0.005,-0.5075
+fire_point2              	= 0,-0.085,-0.5
+fire_bone               	= muzzle
+
+grenade_bone            	= grenade
+
+position			= -0.0485,-0.144,0.13
+orientation			= 1.65,2,0
+
+visual                  	= Aaz\Sayga12_SK1\wpn_sayga_unique_hud.ogf
+
+; animation names
+anim_idle				= idle
+anim_idle_aim				= idle_aim
+anim_reload				= reload
+anim_draw				= draw
+anim_holster				= holster
+anim_shoot				= shoot
+			
+anim_idle_g				= idle_w_gl
+anim_idle_g_aim				= idle_aim_w_gl
+anim_reload_g				= reload_g
+anim_shoot_g				= shoot_g
+anim_switch_grenade_on		= idle_aim_w_gl
+anim_switch_grenade_off		= idle_aim_w_gl
+anim_draw_g				= draw_w_gl
+anim_holster_g				= holster_w_gl
+
+anim_idle_gl				= idle_w_gl
+anim_idle_gl_aim			= idle_aim_w_gl
+anim_reload_gl				= reload_w_gl
+anim_draw_gl				= draw_w_gl
+anim_holster_gl				= holster_w_gl
+anim_shoot_gl				= shoot_w_gl
+anim_idle_sprint			= idle_sprint
+
+zoom_offset		= -0.107075,0.061975,-0.115
+zoom_rotate_x		= 0.0600 ;0.035
+zoom_rotate_y		= 0.0285
+
+grenade_normal_zoom_offset		= -0.107075,0.061975,-0.115
+grenade_normal_zoom_rotate_x		= 0.0600 ;0.035
+grenade_normal_zoom_rotate_y		= 0.0285
+
+grenade_zoom_offset		= -0.06880,0.0005,-0.025
+grenade_zoom_rotate_x		= -0.07985
+grenade_zoom_rotate_y		= 0.02612
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;; Коллиматор для Витязя ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[wpn_kollim]:W_GLAUNC
+visual          = Arsenal_Mod\addons\wpn_addon_rakurs.ogf ;Aaz\Sayga12_SK1\kollim.ogf
+description		= enc_ars-kollim
+ammo_class		= ammo_vog-25, ammo_vog-25p
+fire_dispersion_base		= 0.14
+
+cost			= 2500
+inv_name		= ars_wpn_kollim
+inv_name_short = ars_wpn_kollim_s
+inv_weight		= 0.35
+inv_grid_width     = 1
+inv_grid_height    = 1
+inv_grid_x         = 23
+inv_grid_y         = 69
+
+;;;;;;;;;;;;;; "Охотничий прицел" для некоторых дробовиков ОП-2 ;;;;;;;;;;;;
+[wpn_addon_scope_hanter]:WP_SCOPE
+visual          = Aaz\Sayga12_SK1\score_hanter.ogf
+description		= enc_ars-addon_scope_hanter
+cost			= 2500
+holder_range_modifier	= 1.3
+holder_fov_modifier		= 0.3
+inv_name		= ars_addon_scope_hanter
+inv_name_short = ars_addon_scope_hanter_s
+inv_weight		= 0.65
+
+inv_grid_width     = 2
+inv_grid_height    = 1
+inv_grid_x         = 39
+inv_grid_y         = 58
+scope_texture	 = Arsenal_Mod\Crosshairs\cro_hunter   ;Aaz\Sayga12K\scope_s1
+scope_zoom_factor	 = 28

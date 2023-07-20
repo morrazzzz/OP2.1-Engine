@@ -1,0 +1,60 @@
+--[[ 
+Удаляем все телепорты.
+Вызываем из логики, в самый последний (!) момент.
+]]
+
+local txt = volazar_tbl_text["text"]()
+-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Военная Лаборатория>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+function del_nano_tel_war(story_id)
+	del_tel(volazar_tbl_tel_sect["tel_war"]())
+end
+--<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Х-16<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+function del_nano_tel_x16(story_id) 
+	del_tel(volazar_tbl_tel_sect["tel_x16"]())
+end
+-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ЧАЭС-2>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+function del_nano_tel_chs(story_id) 
+	del_tel(volazar_tbl_tel_sect["tel_chs"]())
+end
+--<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Х-8<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+function del_nano_tel_x8(story_id) 
+	del_tel(volazar_tbl_tel_sect["tel_x8"]())
+end
+-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ЗАТОН>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+function del_nano_tel_zat(story_id) 
+	del_tel(volazar_tbl_tel_sect["tel_zat"]())
+end
+--<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<ЧАЭС<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+function del_nano_tel_chs1(story_id) 
+	del_tel(volazar_tbl_tel_sect["tel_chs1"]())
+end
+-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ЛИМАНСК>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+function del_nano_tel_lim() 
+	del_tel(volazar_tbl_tel_sect["tel_lim"]())
+end
+--<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<ПУТЕПРОВОД<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+function del_nano_tel_put() 
+	del_tel(volazar_tbl_tel_sect["tel_put"]())
+end
+-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ВОСТОЧНАЯ ПРИПЯТЬ>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+function del_nano_tel_pri()
+	del_tel(volazar_tbl_tel_sect["tel_pri"]())
+end
+--<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<МЕРТВЫЙ ГОРОД<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+function del_nano_tel_mg()
+	del_tel(volazar_tbl_tel_sect["tel_mg"]())
+end
+-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ЮПИТЕР>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+function del_nano_tel_jup()
+	del_tel(volazar_tbl_tel_sect["tel_jup"]())
+end
+
+-- собственно удаление
+function del_tel(tels)
+    for _, teleport_name in pairs (tels) do
+		local se_obj = server_object(xr_logic.pstor_retrieve(db.actor, teleport_name, -1, true))
+		if se_obj then
+			release(se_obj, true)
+		end
+	end
+end

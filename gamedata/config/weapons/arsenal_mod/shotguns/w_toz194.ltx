@@ -1,0 +1,152 @@
+;;;;;;;;;;;;;;;;;;;;;; ТОЗ 194 ;;;;;;;;;;;;;;;;;;;;;
+[wpn_toz194]:WP_SHOTG
+min_radius               			= 0
+max_radius               			= 70
+description					= enc_weapons1_wpn-toz194
+
+ef_main_weapon_type				= 1
+ef_weapon_type					= 7
+
+holder_range_modifier				= 1.0              
+holder_fov_modifier				= 0.7              
+
+tri_state_reload				= on
+
+cost					 	= 5500
+weapon_class			 		= shotgun
+
+ammo_limit		 			= 60
+ammo_current		 			= 10
+ammo_elapsed		 			= 7
+
+ammo_mag_size		 			= 7
+ammo_class		 			= ammo_12x70_buck, ammo_12x70_kart, ammo_12x76_dart, ammo_12x76_zhekan, ammo_zhekan_izomorf
+
+fire_dispersion_base				= 0.34  	;угол (в градусах) базовой дисперсии оружия (оружия зажатого в тисках)
+
+;отдача
+cam_relax_speed         			= 5.0		;скорость возврата в исходное положение
+cam_dispersion          			= 3.0		;увеличения угла (в градусах) с каждым выстрелом
+cam_dispersion_inc				= 0.0		;увеличениe cam_dispersion с каждым выстрелом
+cam_dispertion_frac				= 1.0   
+cam_max_angle					= 12		;максимальный угол отдачи
+cam_max_angle_horz				= 9.0		;(degree) maximum shot horizontal degree 
+cam_step_angle_horz				= 1.15		;(degree) size of step camera moved in horizontal position while shooting
+
+fire_dispersion_condition_factor 		= 1.5		;увеличение дисперсии в процентах при максимальном износе 
+misfire_probability 				= 0.0008	    	;вероятность осечки при максимальном износе 
+misfire_condition_k				= 0.05
+condition_shot_dec 				= 0.000045	;увеличение износа при каждом выстреле
+
+hand_dependence 	 			= 1
+single_handed					= 0
+
+slot 				 		= 13 ;2		
+animation_slot		 			= 9		
+
+inv_name					= wpn-toz194
+inv_weight					= 2.9
+
+inv_grid_width     				= 4
+inv_grid_height    				= 1
+inv_grid_x         				= 26
+inv_grid_y         				= 2
+
+direction                			= 0, 0, 1
+fire_point               			= 0.0, 0.158, 0.700
+fire_point2              			= 0.0, 0.158, 0.647
+
+flame_particles				= amik\weapons\smoke_particles\smoke_particles_03
+smoke_particles     			= amik\weapons\smoke_particles\smoke_particles_pump_01
+
+rpm_empty_click 	   			= 200
+
+PDM_disp_base 					= 1.0
+PDM_disp_vel_factor 				= 1.7
+PDM_disp_accel_factor 				= 1.7
+PDM_crouch	 				= 1.0
+PDM_crouch_no_acc 				= 1.0
+
+;;;;;; Для ОП-2.1
+hit_power        				= 1.1
+hit_impulse      				= 88
+hit_type 					= fire_wound
+hit_rate	                                = 2.0
+fire_distance            			= 65
+bullet_speed			 		= 400
+rpm                      			= 60
+
+hud                      			= wpn_toz194_hud
+normal                   			= 0, 1, 0
+position                 			= -0.024, -0.097, 0.0
+orientation              			= 0, 0, 0
+
+;под мишкой
+strap_position         				= -0.26,-0.10,0.05			
+strap_orientation      				= -15,-9,110				
+strap_bone0					= bip01_spine2
+strap_bone1					= bip01_spine1
+
+startup_ammo             			= 10
+visual                   			= weapons\toz194\wpn_toz194.ogf
+
+light_color		 			= 0.6,0.5,0.3
+light_range		 			= 6.0
+light_var_color		 			= 0.05
+light_var_range		 			= 0.5
+light_time 		 			= 0.2
+
+ph_mass			 			= 3
+
+;addons
+scope_status					= 0
+silencer_status					= 0
+grenade_launcher_status				= 0
+
+zoom_enabled					= true
+scope_zoom_factor	    			= 65
+
+;звуки
+snd_draw					= weapons\winchester\draw
+snd_holster					= weapons\winchester\holster
+snd_shoot					= weapons\rem870\rem870_shot3
+snd_empty					= weapons\winchester\empty
+snd_reload					= weapons\toz34_reload
+snd_shoot_duplet				= weapons\toz34_shoot_both
+
+snd_open_weapon				        = weapons\winchester\draw		
+snd_add_cartridge				= weapons\winchester\load		
+snd_close_weapon				= weapons\winchester\toz194_reload_end
+
+[wpn_toz194_hud]
+
+shell_point			 		= 0.0, 0.0, -1.5
+
+fire_point      				= 0.0, 0.022,-0.475 ;0.0, 0.0,-0.5
+fire_point2				    	= 0.0, 0.0,0.0
+fire_bone                			= muzzle
+
+position                 			= -0.0525,-0.162,0.0775 ;-0.025,-0.14,0.08
+orientation              			= 2.0,2.75,0 ;2,2,0
+
+visual                   			= weapons\toz194\wpn_toz194_hud.ogf
+
+anim_idle					= idle
+anim_reload					= draw
+anim_draw					= draw
+anim_holster					= holster
+anim_shoot					= shoot
+anim_shoot_both 				= shoot
+anim_idle_aim					= aim
+anim_idle_sprint				= sprint
+
+anim_open_weapon				= reload_start
+anim_add_cartridge				= reload
+anim_close_weapon				= reload_end
+
+zoom_offset					= -0.09940,0.07825,-0.0050 ;-0.126850,0.055800,-0.050000
+zoom_rotate_x					= 0.04720 ;0.033900
+zoom_rotate_y					= 0.03475 ;0.034700
+
+zoom_hide_crosshair				= true
+rotate_time					= 0.18

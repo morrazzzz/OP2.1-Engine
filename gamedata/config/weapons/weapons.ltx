@@ -1,0 +1,264 @@
+
+;;;;;;;;;;;;;;;;;;;       Патроны     ;;;;;;;;;;;;;;;;;;;;
+#include "ammo.ltx"
+;;;;;;;;;;;;;;;;;;;       Гранаты     ;;;;;;;;;;;;;;;;;;;;
+#include "grenade.ltx"
+;;;;;;;;;;;;;;;;;;;     Пистолеты        ;;;;;;;;;;;;;;;;;;;;
+#include "w_Raging_Bull.ltx"
+#include "w_hpsa.ltx"
+#include "w_pm.ltx"
+#include "w_pb.ltx"
+#include "w_walther.ltx"
+#include "w_ups.ltx"
+#include "w_fort.ltx"
+#include "w_colt1911.ltx"
+#include "w_beretta.ltx"
+#include "w_desert_eagle.ltx"
+#include "w_sig220.ltx"
+#include "w_aps_sk1.ltx"
+;;;;;;;;;;;;;;;;;;; Пистолеты-пулеметы   ;;;;;;;;;;;;;;;;;;;;
+#include "w_mp5.ltx"
+#include "w_p90.ltx"
+#include "w_ppsh41_sk2.ltx"
+#include "w_bizon.ltx"
+#include "w_bizon1.ltx"
+#include "w_kriss_super_v.ltx"
+#include "w_mp7.ltx"
+#include "w_uzi.ltx"
+#include "w_scorpion.ltx"
+#include "w_mp5k.ltx"
+;;;;;;;;;;;;;;;;;;;     Дробовики        ;;;;;;;;;;;;;;;;;;;;
+#include "w_toz34.ltx"
+#include "w_toz34h.ltx"
+#include "w_bm16.ltx"
+#include "w_spas12.ltx"
+#include "w_wincheaster1300.ltx"
+#include "w_saiga12c.ltx"
+#include "w_m4super90.ltx"
+#include "w_protecta.ltx"
+;;;;;;;;;;;;;;;;;;;      Автоматы         ;;;;;;;;;;;;;;;;;;;;
+#include "w_abakan.ltx"
+#include "w_ak47.ltx"
+#include "w_ak74.ltx"
+#include "w_ak74u.ltx"
+#include "w_ak74_m1.ltx"
+#include "w_aks74m.ltx"
+#include "w_fn2000.ltx"
+#include "w_lr300.ltx"
+#include "w_groza.ltx"
+#include "w_l85.ltx"
+#include "w_sig550.ltx"
+#include "w_g36.ltx"
+#include "w_tavor.ltx"
+;;;;;;;;;;;;;;;;;;;      Винтовки         ;;;;;;;;;;;;;;;;;;;;
+#include "w_svd.ltx"
+#include "w_svu.ltx"
+#include "w_m1891_30_scope.ltx"
+#include "w_awm.ltx"
+#include "w_b94.ltx"
+#include "w_walther_wa2000.ltx"
+;;;; Оружие специальное (или уникально-специальное :) ) ;;;;;;
+#include "w_vintorez.ltx"
+#include "w_vintorez_m1.ltx"
+#include "w_gauss.ltx"
+#include "w_gauss_krayzis.ltx"
+#include "w_val.ltx"
+#include "w_flame.ltx"
+#include "w_gungauss.ltx"
+#include "w_fn2000_sniper.ltx"
+;;;;;;;;;;;;;;;;;;;      Пулеметы         ;;;;;;;;;;;;;;;;;;;;
+#include "w_pkm.ltx"
+#include "w_m_134.ltx"
+;;;;;;;;;;;;;;;;;;;      Гранатометы      ;;;;;;;;;;;;;;;;;;;;
+#include "w_rpg7.ltx"
+#include "w_rg6.ltx"
+#include "w_m79.ltx"
+;;;;;;;;;;;;;;;;;;;       Разное         ;;;;;;;;;;;;;;;;;;;;
+#include "knife.ltx"
+#include "w_bolt.ltx"
+#include "w_binoc.ltx"
+#include "w_mounted.ltx"
+#include "w_crossbow.ltx"
+#include "w_gravigun.ltx"
+#include "w_soulcube.ltx"
+#include "w_fot.ltx"
+#include "arsenal.ltx"
+#include "unique.ltx"
+#include "upgrade.ltx"
+#include "explosive.ltx"
+
+[bullet_manager]
+tracer_width					= 0.08
+tracer_length_max				= 10.0	;24.0 ;14.0	
+tracer_length_min				= 2		;0.2
+
+;расстояние после которого учитывается hit_probabilty полностью
+hit_probability_max_dist		= 10;
+
+gravity_const					= 9.81
+;сопротивление воздуха, процент, который отнимается от скорости полета пули
+air_resistance_k				= 1.82
+
+;размер шага времени (в милисекундах), по которому проигрываются 
+time_step						= 33
+;минимальная скорость (м/с), на которой пуля еще считается и показывается
+min_bullet_speed				= 0.3
+;cколько процентов энергии потеряет пуля при столкновении с материалом (при падении под прямым углом)
+collision_energy_min			= 0.7 ;0.80 ;0.75; 0.90
+;сколько процентов энергии останется у пули при любом столкновении
+collision_energy_max			= 0.6 ;0.5 ;0.7;0.50
+
+whine_sounds					= weapons\whine_1, weapons\whine_2, weapons\whine_3, weapons\whine_4, weapons\whine_5, weapons\whine_6, weapons\whine_7, weapons\whine_8, weapons\whine_9, weapons\whine_10, weapons\whine_11, weapons\whine_12, weapons\whine_13, weapons\whine01, weapons\whine02
+explode_particles				= amk\flame ;explosions\expl_bullet,explosions\expl_bullet_00,explosions\expl_bullet_01
+
+[tracers_color_table]	;color_table
+color_0 = 0.0, 1.1, 0.1	; yellow
+color_1 = 1.0, 1.0, 1.0	; white
+color_2 = 1.0, 0.1, 0.0	; red
+color_3 = 1.0, 0.1, 0.0	; green
+color_4 = 0.3, 1.0, 0.3 ; blue
+
+;	WEAPON ADDON
+[wpn_addon_scope]:WP_SCOPE
+visual          = weapons\upgrade\wpn_scope.ogf
+description		= enc_weapons1_wpn-addon-scope
+cost			= 200
+
+holder_range_modifier	= 1.2
+holder_fov_modifier		= 0.3
+
+inv_name		= wpn_addon_scope
+inv_name_short	= wpn_addon_scope_s
+inv_weight		= 0.60
+
+inv_grid_width		= 2
+inv_grid_height		= 1
+inv_grid_x			= 18
+inv_grid_y			= 2
+scope_texture		= Arsenal_Mod\Crosshairs\cro_pso1 ;wpn\wpn_crosshair
+scope_zoom_factor	      = 28		;4.26666	;4.5	;Kahles CSX 1.1-4x24, 2x
+
+[wpn_addon_scope_susat]:WP_SCOPE
+visual          = weapons\upgrade\wpn_scope_susat.ogf
+description		= enc_weapons1_wpn-addon-scope-susat
+cost			= 200
+
+holder_range_modifier	= 1.3
+holder_fov_modifier		= 0.3
+
+inv_name		= wpn-addon-scope-susat
+inv_weight		= .2
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 19
+inv_grid_y			= 1
+scope_texture		= Arsenal_Mod\Crosshairs\wpn_l85 ;wpn\SUSAT-AMK-N
+scope_zoom_factor	= 28		;4.27	;4.5	;30		;SUSAT 2X 
+
+[wpn_addon_silencer]:W_SILENC
+visual          = weapons\upgrade\wpn_silencer.ogf
+description		= enc_weapons1_wpn-addon-silencer
+
+cost			= 100
+inv_name		= wpn-addon-silencer
+inv_weight		= 0.15
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 18
+inv_grid_y			= 1
+
+bullet_hit_power_k	= 1.0   ;0.9
+bullet_speed_k	 	= 1.0	  ;0.9
+fire_dispersion_base_k  = 1.05  ;2
+cam_dispersion_k	      = 1.0
+
+[wpn_9mm_nato_silencer]:wpn_addon_silencer
+visual          	= weapons\upgrade\wpn_silencer_9mm_nato.ogf
+description		= enc_weapons1_wpn-9mm_nato-silencer
+inv_name		= wpn_9mm_silencer
+inv_name_short	= wpn_9mm_silencer_s
+cost			= 650
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x		      = 7
+inv_grid_y		      = 58
+
+[wpn_addon_silencer_pistol]:W_SILENC
+visual                 = death_mod\upgrades\silencer_pistol.ogf
+description		    = enc_weapons1_wpn-addon-silencer-big
+
+cost				 = 700
+inv_name		         = "Глушитель"
+inv_weight		    	= 0.1
+
+inv_grid_width		= 2
+inv_grid_height		= 1
+inv_grid_x			= 34
+inv_grid_y			= 42
+
+bullet_hit_power_k	    = 1
+bullet_speed_k	 	    = 1
+fire_dispersion_base_k      = 1.05;2
+cam_dispersion_k	          = 1.0
+
+[wpn_addon_grenade_launcher]:W_GLAUNC
+visual          = weapons\upgrade\wpn_grenade_launcher.ogf
+description		= enc_weapons1_wpn-addon-grenade-launcher
+ammo_class		= ammo_vog-25, ammo_vog-25p
+fire_dispersion_base		= 0.24
+
+cost				= 250
+inv_name			= wpn-addon-grenade-launcher
+inv_weight			= 1.5
+inv_grid_width		= 2
+inv_grid_height		= 1
+inv_grid_x			= 18
+inv_grid_y			= 0
+
+[wpn_addon_grenade_launcher_m203]:W_GLAUNC
+visual          = weapons\upgrade\wpn_grenade_launcher_m203.ogf
+description		= enc_weapons1_wpn-addon-grenade-launcher-m203
+ammo_class		= ammo_m209
+fire_dispersion_base		= 0.24
+
+cost				= 250
+inv_name			= wpn-addon-grenade-launcher-m203
+inv_weight			= 1.36
+inv_grid_width		= 2
+inv_grid_height		= 1
+inv_grid_x		= 50
+inv_grid_y		= 32
+
+[wpn_addon_sil_9_p]:W_SILENC
+visual          = Arsenal_Mod\addons\sil_9_p.ogf
+description		= enc_arsenal_sil_9_p
+
+cost			= 600
+inv_name		= ars_sil_9p
+inv_name_short	= ars_sil_9p_s
+inv_weight		= 0.16
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 5
+inv_grid_y			= 57
+
+bullet_hit_power_k	= 1
+bullet_speed_k	 	= 1
+fire_dispersion_base_k  = 1.05
+cam_dispersion_k	      = 1
+
+; ПГ Steyr HE M10
+[wpn_addon_shotgun]:W_GLAUNC
+visual          = weapons\upgrade\wpn_addon_shotgun.ogf
+description		= enc_wpn_addon_shotgun
+
+cost			= 1050
+inv_name		= wpn_addon_shotgun
+inv_weight		= 1.25
+inv_grid_width		= 2
+inv_grid_height		= 1
+inv_grid_x			= 48
+inv_grid_y			= 49

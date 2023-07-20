@@ -1,0 +1,366 @@
+-- Инвентарь ГГ
+class "CInventory"
+
+function CInventory:__init()
+	self.need_update = true
+
+	self.sack = {}				-- Инвентарь ГГ
+	self.good = {}				-- Исправное оружие/стволы ГГ
+	self.belt = {}				-- Пояс ГГ
+	self.belt_id = {}			-- Пояс ГГ по ИД
+
+	self.inventory_open = false
+	self.separator_spawned = false
+	self.af_idol_monolita_on_belt = false
+
+	-- Проверка на иммунитеты и удаление с пояса лишних артов
+	self.imm_limits = {100, 86, 73, 60}
+	self.immunities = {
+		{sect = "burn_immunity",			name = "Ожог",				total = 0},
+		{sect = "strike_immunity",			name = "Удар",				total = 0},
+		{sect = "shock_immunity",			name = "Электрошок",		total = 0},
+		{sect = "wound_immunity",			name = "Разрыв",			total = 0},
+		{sect = "radiation_immunity",		name = "Радиация",			total = 0},
+		{sect = "telepatic_immunity",		name = "Телепатия",			total = 0},
+		{sect = "chemical_burn_immunity",	name = "Химический ожог",	total = 0},
+		{sect = "explosion_immunity",		name = "Взрыв",				total = 0},
+		{sect = "fire_wound_immunity",		name = "Пулестойкость",		total = 0}
+	}
+end
+
+-- Имеем ли предметы?
+function CInventory:has(sect, count)
+	if self.sack[sect] then
+		return self.sack[sect] >= (count or 1) 
+	else
+		return false
+	end
+end
+
+-- Имеем ли исправные предметы?
+function CInventory:has_good(sect, count)
+	if self.good[sect] then
+		return self.good[sect] >= (count or 1) 
+	else
+		return false
+	end
+end
+
+-- Получаем предметы
+function CInventory:got(sect, count)
+	if not count then count = 1 end
+	
+	for i = 1,count do
+		create(sect,xyz(0,0,0),0,0,0)
+	end
+	news_manager.relocate_item("in", sect, count)
+end
+
+-- Теряем предметы
+function CInventory:lost(sect, count)
+	if not count then count = 1 end
+	
+	local cnt = 0
+	db.actor:iterate_inventory(function(dummy, item) 
+		if item:section() == sect and cnt < count then
+			release(item)
+			cnt = cnt+1
+		end
+	end)
+	news_manager.relocate_item("out", sect, count)
+end
+
+-- Теряем исправные предметы
+function CInventory:lost_good(sect, count)
+	if not count then count = 1 end
+	
+	local cnt = 0
+	db.actor:iterate_inventory(function(dummy, item) 
+		if item:section() == sect and cnt < count and item:condition() > 0.95 then
+			release(item)
+			cnt = cnt+1
+		end
+	end)
+	news_manager.relocate_item("out", sect, count)
+end
+
+-- Теряем все предметы
+function CInventory:lost_all(sect)
+	local count = 0
+	db.actor:iterate_inventory(function(dummy, item) 
+		if item:section() == sect then
+			release(item)
+			count = count + 1
+		end
+	end)
+	if count > 0 then
+		news_manager.relocate_item("out", sect, count)
+	end
+end
+
+-- Передаем один предмет
+function CInventory:transfer(victim, sect, type)
+	if type == "in" then
+		victim:transfer_item(victim:object(sect), db.actor)
+	elseif type == "out" then
+		db.actor:transfer_item(db.actor:object(sect), victim)
+	end
+	news_manager.relocate_item(type, sect)
+end
+
+function CInventory:update()
+	if not self.need_update or has_info("paused_on_load") then return end
+
+	-- Спавним сепаратор
+	if not self.separator_spawned then
+		self:spawn_separator()
+		return
+	end
+
+	self.good = {}			-- Исправное оружие/броню апдейтим здесь, ибо у них нет quest_item = true
+	self.belt = {}
+	self.belt_id = {}
+	self.scanning_belt = false
+
+	-- Сначала перебираются предметы в рюкзаке, потом на поясе, потом в видимых слотах
+	-- inventory_for_each не перебирает предметы с quest_item = true!
+	db.actor:inventory_for_each(function(item) 
+		self.section = item:section()
+
+		if self.section == "separator" then
+			-- Сепаратор только что заспавнен - он последний в рюкзаке, дальше идет пояс
+			self.scanning_belt = true
+			return
+		end
+
+		if condition_item(self.section) and item:condition() > 0.95 then	-- Максимальный износ, при котором предмет считается исправным
+			table.add(self.good, self.section)
+		end
+
+		if self.scanning_belt then
+			-- Пошел пояс
+			if self:slot_item(item) then
+				-- Пояс кончился
+				self.scanning_belt = false
+			else
+				table.add(self.belt, self.section)
+				self.belt_id[item:id()] = true
+			end
+		end
+	end)
+
+	self:check_immunities()
+	self:check_idol_monolita()
+	
+	self.need_update = false
+
+	-- Удаляем сепаратор
+	if self.separator_spawned then
+		self:del_separator()
+	end
+
+	--print_table(self.sack)
+	--print_table(self.good)
+	--print_table(self.belt)
+end
+
+-- Спавн сепаратора
+function CInventory:spawn_separator()
+	create("separator",xyz(0,0,0),0,0,0)
+	self.separator_spawned = true
+end
+
+-- Удаление сепаратора
+function CInventory:del_separator()
+	db.actor:inventory_for_each(function(item) 
+		if item:section() == "separator" then
+			release(item)
+		end
+	end)
+	self.separator_spawned = false
+end
+
+-- Определение наличия предмета в одном из слотов
+function CInventory:slot_item(item)
+	local obj
+	for i=0,db.actor.slots-1 do
+		obj = db.actor:item_in_slot(i)
+		if obj and item:id() == obj:id() then
+			return i
+		end
+	end
+
+	return nil
+end
+
+-- Калбек на поднятие предмета
+function CInventory:on_item_take(item)
+	if item:section() == "separator" then return end
+
+	table.add(self.sack, item:section())
+	
+	if not self.inventory_open then
+		if self.separator_spawned then
+			self:del_separator()
+		end
+
+		self.need_update = true
+	end
+end
+
+-- Калбек на потерю предмета
+function CInventory:on_item_drop(item)
+	if item:section() == "separator" then return end
+
+	table.sub(self.sack, item:section())
+
+	if not self.inventory_open then
+		if self.separator_spawned then
+			self:del_separator()
+		end
+
+		self.need_update = true
+	end
+end
+
+-- Открытие/закрытие инвентаря
+function CInventory:on_inventory_info(info)
+	if info == "ui_inventory" then
+		self.inventory_open = true
+	elseif info == "ui_inventory_hide" then
+		self.inventory_open = false
+		self.need_update = true
+	end
+end
+
+function CInventory:check_immunities()
+	if db.actor:object("af_invul") then return end
+
+	self.imm_limit = self.imm_limits[level.get_game_difficulty()+1]
+	if self.belt["af_zvezda_proroka2"] or self.belt["af_zvezda_proroka3"] then
+		self.imm_limit = 100
+	end
+	
+	repeat
+		-- считаем иммунитеты
+		self:total_immunities()
+		
+		-- проверяем иммунитеты
+		self.bad_imm = self:bad_immunity()
+		if self.bad_imm then 
+			-- есть перебор в иммунитете - удаляем лишний арт и вновь считаем иммунитеты
+			self:imm_remove_art(self.bad_imm)
+		else
+			-- все ок
+			break
+		end
+	until false
+end
+
+function CInventory:imm_remove_art(imm)
+	local sobj
+	for k, v in pairs(self.belt_id) do
+		sobj = server_object(k)
+		if sobj then
+			self.section = sobj:section_name()
+			if config:r_clsid(self.section, "class") == clsid.artefact then
+				self.imm_sect = config:r_string(self.section, "hit_absorbation_sect")
+				if config:r_float(self.imm_sect, self.immunities[imm].sect) < 1 then -- арт увеличивает иммунитет
+					release(sobj)
+					create(self.section,xyz(0,0,0),0,0,0)
+					table.sub(self.belt, self.section)
+					self.belt_id[k] = nil
+					sms("Для текущего уровня сложности создаваемый артефактами имммунитет "..self.immunities[imm].name.." не должен превышать "..tostring(self.imm_limit).."%. Артефакт "..game.translate_string(amk.get_inv_name(self.section)).." убран с пояса.", nil, "nano", 20000)
+					return
+				end
+			end
+		end
+	end
+end
+
+function CInventory:bad_immunity()
+	for i=1,#self.immunities do
+		if self.immunities[i].total > self.imm_limit then
+			return i
+		end
+	end
+	return nil
+end
+
+function CInventory:total_immunities()
+	for i=1,#self.immunities do
+		self.immunities[i].total = 0
+	end
+	
+	local sobj
+	for k, v in pairs(self.belt_id) do
+		sobj = server_object(k)
+		if sobj then
+			self.section = sobj:section_name()
+			if config:r_clsid(self.section, "class") == clsid.artefact then
+				self.imm_sect = config:r_string(self.section, "hit_absorbation_sect")
+
+				-- считаем иммунитеты
+				for i=1,#self.immunities do
+					self.immunities[i].total = self.immunities[i].total+100-math.floor(config:r_float(self.imm_sect, self.immunities[i].sect)*100+0.1)
+				end
+			end
+		end
+	end
+end
+
+-- предмет на поясе
+function CInventory:on_belt(sect)
+	return self.belt[sect]
+end
+
+function CInventory:on_belt_by_id(sect)
+	return self.belt_id[sect]
+end
+
+function CInventory:items_on_belt()
+	local count = 0
+	for k,v in pairs(self.belt) do
+		count = count+v
+	end
+	return count
+end
+
+function CInventory:is_free_belt_slot()
+	return self:items_on_belt() < config:r_u32("inventory", "max_belt")
+end
+
+function CInventory:get_free_belt_slot()
+	if self:is_free_belt_slot() then return end
+	
+	for k,v in pairs(self.belt_id) do
+		self.section = level_object(k):section()
+		
+		if not string.find(self.section, "bioradar") 
+			and self.section ~= "af_invul" 
+			and self.section ~= "runner_tele" 
+			and config:r_string(self.section, "class") ~= "D_SIMDET"
+		then
+			release(k)
+			create(self.section,xyz(0,0,0),0,0,0)
+			table.sub(self.belt, self.section)
+			self.belt_id[k] = nil
+			return
+		end
+	end
+end
+
+-- Идол Монолита на поясе
+function CInventory:check_idol_monolita()
+	if not has_info("snp_shadows_start") then return end
+
+	if self.belt["af_idol_monolita"] then
+		if not self.af_idol_monolita_on_belt then
+			-- одели арт
+			self.af_idol_monolita_on_belt = true
+			level.set_weather("grey",true)
+		end
+	else
+		self.af_idol_monolita_on_belt = false
+	end
+end

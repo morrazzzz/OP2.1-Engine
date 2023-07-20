@@ -1,0 +1,59 @@
+[smart_terrains]
+none = true
+
+[logic]
+active = walker@genka
+combat_ignore = combat_ignore
+on_death = mob_death
+
+[walker@genka]
+path_walk = genka_walk
+path_look = genka_look
+anim = wait
+meet = meet@genka
+show_spot = false
+danger = danger_condition
+combat_ignore_cond = always
+on_actor_dist_le = 15|remark@genka
+
+[remark@genka]
+no_rotate = true
+no_move = true
+snd = help
+anim = wait_trade
+meet = meet@genka
+danger = danger_condition
+combat_ignore_cond = always
+on_info = {+saper_code_have} kamp@genka
+
+[kamp@genka]
+anim = kurit
+center_point  = zaton_genka_camp_center
+path_walk     = zaton_genka_camp_center_task
+snd = help_thanx  ;esc_tolik_thanks
+meet = meet
+danger = danger_condition
+combat_ignore_cond = always
+radius = 1.0
+
+[danger_condition]
+ignore_distance = 0
+ignore_distance_corpse = 0
+ignore_distance_sound = 0
+ignore_distance = 0
+ignore_types = corpse
+
+[combat_ignore]
+combat_ignore_cond = always
+
+[meet@genka]
+meet_state = 15|wait
+meet_state_wpn = 15|wait
+victim = 30|nil
+victim_wpn = 30|nil
+use = true
+use_wpn = false
+meet_talk_enabled = true
+
+[mob_death]
+on_info = %+saper_code_fail%

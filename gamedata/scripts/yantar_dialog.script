@@ -1,0 +1,13 @@
+function yantar_give_bad_psy_helmet(first_speaker, second_speaker)
+	got("bad_psy_helmet")
+end
+function yantar_give_good_psy_helmet(first_speaker, second_speaker)
+	got("good_psy_helmet")
+end
+
+function yantar_give_quest_artefact(first_speaker, second_speaker)
+    if not has_info("yantar_ecolog_give_reward") then
+	    got("af_cristall_flower")
+        give_info("yantar_ecolog_give_reward")
+    end
+end

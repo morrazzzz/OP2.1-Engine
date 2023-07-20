@@ -1,0 +1,75 @@
+-----------------------------------------------------------------------------
+-- u3_utils.script
+-- zestawik maіych funkcji i klas, przydatnych w innych skryptach.
+-- tam, gdzie nie jest napisane inaczej, autor: utak3r.
+-- 
+-- Last update: 2009.12.29
+-----------------------------------------------------------------------------
+
+--
+-- Sprawdzenie, czy jest gra i czy aktor jest їywy
+--
+function isGameOn()
+	return level.present() and db.actor and db.actor:alive()
+end
+
+--
+-- Zapis stanu gry (save)
+--
+function savegame(save_name, save_anyway)
+	if not isGameOn() then return end
+	if not save_anyway and not ui_mm_opt_main.GetOption("autosave_enable") then return end
+	if has_info("no_autosave") then
+        cant_save("Сейв не создан - во время выполнения этого задания сохраняться нельзя")
+		return
+	end
+	if amk.has_timer("af_transform_universal") then
+        cant_save("Автосохранение не создано - запущена варка артефактов")
+        return
+    end
+	if amk.has_timer("no_save") then
+--        cant_save("Автосохранение не создано - прошло мало времени с момента последней загрузки")
+        return
+    end
+
+	save_name = save_name:clear()
+	if string.len(save_name)>60 then
+		save_name = string.sub(save_name,1,58).."..."
+	end
+	console:execute("save "..save_name)
+end
+
+function savegame_date(save_name)
+	savegame(save_name..". "..game.translate_string(level.name())..". День "..amk.game_days()+1)
+end
+function savegame_lc(name, to_level)
+	savegame(name.." "..game.translate_string(level.name()).." - "..game.translate_string(to_level)..". День "..amk.game_days()+1)
+end
+function savegame_on_level()
+	savegame("Сохранение на уровне. "..game.translate_string(level.name())..". День "..amk.game_days()+1, true)
+end
+
+function can_save() -- не сохраняем во время открытых окон, когда нельзя сделать квиксейв
+	return level.main_input_receiver() == nil
+end
+
+function cant_save(reason) -- сообщение, что нельзя сохраняться во время определенных действий
+	local _hud = hud:AddCustomStatic("cant_walk", true)
+	_hud:wnd():SetText(reason)
+end
+
+-- Создание именного автосейва при переходе на другой уровень
+function copy_autosave(old_lvl, new_lvl)
+	local save_name = old_user_name().."_autosave.sav"
+	local fs = getFS()
+	if fs:exist("$game_saves$", save_name) then
+		local new_svname = "Переход "..game.translate_string(old_lvl)..
+			" - "..game.translate_string(new_lvl)..". День "..amk.game_days()+1
+		new_svname = new_svname:clear()
+		
+		local f1 = fs:update_path("$game_saves$", save_name)
+		local f2 = fs:update_path("$game_saves$", new_svname..".sav")
+		fs:file_rename(f1, f2, true)
+	end
+end
+

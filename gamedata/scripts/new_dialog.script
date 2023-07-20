@@ -1,0 +1,927 @@
+local nagrad = {
+	level_buusty = {
+		"outfit_lethalspeed_exo_m1",
+		"seva_scient_outfit",
+		"exo_military_outfit"  
+	},
+	level_1 = {
+		"ammo_5.45x39_ap",
+		"ammo_5.45x39_fmj",
+		"ammo_7.62x39_ap",
+		"ammo_9x39_pab9",
+		"ammo_5.56x45_ap",
+		"ammo_5.56x45_ss190"
+	},
+	level_2 = {
+		"af_babka_1",
+		"af_cry_1",
+		"af_dik_1",
+		"af_kol_1",
+		"af_pudd_1",
+		"af_spirit_1",
+		"af_night_star",
+		"af_gold_fish",
+		"af_electra_moonlight",
+		"af_rusty_sea-urchin",
+		"af_dummy_glassbeads"
+	},
+	level_3 = {
+		"af_babka_2",
+		"af_cry_2",
+		"af_dik_2",
+		"af_kol_2",
+		"af_pudd_2",
+		"af_spirit_2",
+		"af_simbion"
+	},
+	level_4 = {
+		"wpn_ak9",
+		"wpn_awm",
+		"wpn_g3",
+		"wpn_rpk74_sk1",
+		"wpn_g41",
+		"wpn_l85_m2",
+		"wpn_sr25_mk11_mod0_sk1",
+		"wpn_mp5_m3",
+		"wpn_vint14"
+	},
+	level_5 = {
+		"af_cry_3",
+		"af_babka_4",
+		"af_dik_4",
+		"af_spirit_4",
+		"af_armor_4",
+		"af_pudd_4",
+		"af_kol_4"
+	},
+	level_6 = {
+		"ammo_7.62x54_7h14",
+		"ammo_7.62x54_7h1",
+		"ammo_7.62x54_ap",
+		"ammo_7.62x51_fmj",
+		"ammo_7.62x51_ap",
+		"ammo_9x39_ap",
+		"ammo_9x39_sp5",
+		"ammo_minigun",
+		"ammo_og-7b",
+		"ammo_gauss"
+	},
+	level_7 = {
+		"ammo_357_hp_mag",
+		"ammo_357_ap_mag",
+		"ammo_9x19_7h21",
+		"ammo_9x21_11",
+		"ammo_9x21_10",
+		"ammo_40sw_hp",
+		"ammo_40sw_ap",
+		"ammo_10x25_fmj",
+		"ammo_10x25_hp",
+		"ammo_11.43x23_fmj",
+		"ammo_11.43x23_hydro",
+		"part_fang_wolf",
+		"part_nosales_tongue",
+		"part_bear_paw",
+		"part_winger_liver",
+		"part_rotan_heart",
+		"grenade_f1",
+		"grenade_rgd5",
+		"grenade_m61",
+		"ammo_vog-25p",
+		"ammo_vog-25",
+		"ammo_m209"
+	}
+}
+
+function prines_kopyto(first_speaker, second_speaker)
+	return has("part_boar_leg",3)
+end
+function otdal_kopyto(first_speaker, second_speaker)
+	lost("part_boar_leg", 3)
+    got(nagrad.level_2[math.random(table.getn(nagrad.level_2))])
+end
+
+function prines_hvost(first_speaker, second_speaker)
+	return has("part_dog_tail",3)
+end
+function otdal_hvost(first_speaker, second_speaker)
+	lost("part_dog_tail", 3)
+    got(nagrad.level_1[math.random(table.getn(nagrad.level_1))], math.random(3,4))
+end
+
+function add_man()
+	local obj = amk.spawn_item("mil_monolit_rush_respawn_1",xyz(32.9309,-0.00135,197.588),1242,20400)
+	netpacket:modify(obj, "story_id", 9498, "health", 0.2, "upd.health", 0.2)
+end 
+
+function metka_man()
+	level_tasks.add_location(507,"green_location","Раненый")
+end
+
+
+function voronin_flesh_have(task, objective) 
+	return has("crazy_flash")
+end
+
+
+function voronin_flesh_done()
+	lost("crazy_flash",1)
+	got("wpn_grach",1)
+end	
+
+
+function prapor_jaw_have(task, objective) 
+	return has("wpn_addon_shtyk_nozh")
+end
+
+
+function prapor_jaw_done(first_speaker, second_speaker) 
+	lost("wpn_addon_shtyk_nozh")
+	got("wpn_spas12")
+end	
+
+function informator_pda_have(task, objective) 
+	return has("bar_tiran_pda")
+end
+
+
+function informator_pda_done(first_speaker, second_speaker) 
+	lost("bar_tiran_pda")
+	got("af_medusa")
+end
+
+function pda_take(first_speaker, second_speaker)
+	got("bar_tiran_pda")
+	sms("%c[255,160,160,160]".."КУЗНЕЦОВ:".."\\n".."%c[255,255,128,128]Меченый, здесь у нас на мосту какие-то наймы объявились. Начальство нам приказало их не трогать, видать, проплачены большие бабки, но я был бы не против от них избавиться. Стоят тут, как бельмо на глазу, следят за нами, со сталкерами не пообщаешься, водочки не попьёшь... Не мог бы ты кардинально решить вопрос?", nil, nil, 25000, nil, [[sms\kuznecov\pda_take_1]])
+	sms("%c[255,160,160,160]".."МЕЧЕНЫЙ:".."\\n".."%c[255,255,128,128]Надеюсь, они не по мою душу. Разберёмся!", 25, nil, 10000)
+end
+
+function gavr_pda_have(task, objective) 
+	return has("mil_bolt_pda")
+end
+
+function gavr_pda_done(first_speaker, second_speaker)
+	lost("mil_bolt_pda")
+    got(nagrad.level_3[math.random(table.getn(nagrad.level_3))])
+end	
+
+
+function saharov_pda_have(task, objective) 
+	return has("pda_priz")
+end
+
+
+function saharov_pda_done(first_speaker, second_speaker) 
+	lost("pda_priz")
+    got(nagrad.level_2[math.random(table.getn(nagrad.level_2))])
+end	
+
+function freeman_eagle_have(task, objective) 
+	return has("wpn_eagle_m1")
+end
+
+function freeman_eagle_done(first_speaker, second_speaker)
+	lost("wpn_eagle_m1")
+    got(nagrad.level_3[math.random(table.getn(nagrad.level_3))])
+end
+
+function ghange_set(npc) 
+	npc:set_character_community("killer", 0, 0)
+end
+
+function freeman_case_have(task, objective) 
+	return has("case_freeman")
+end
+
+function freeman_case_done(first_speaker, second_speaker)
+	lost("case_freeman")
+    got(nagrad.level_5[math.random(table.getn(nagrad.level_5))])
+end
+
+function gavr_doc_have(task, objective) 
+	return has("lab_x10_documents")
+end
+
+function gavr_doc_done(first_speaker, second_speaker)
+	lost("lab_x10_documents")
+    got(nagrad.level_3[math.random(table.getn(nagrad.level_3))])
+end
+
+function bland_flash_have(task, objective) 
+	return has("bland_flash")
+end
+
+function bland_flash_done(first_speaker, second_speaker)
+	lost("bland_flash")
+    got(nagrad.level_3[math.random(table.getn(nagrad.level_3))])
+end	
+
+-- Akill begin
+function krov_kamen()
+	return has("part_flesh_eye",3)
+end
+function otdal_kamen()
+	lost("part_flesh_eye",3)
+	got("ammo_9x19_pbp",2)
+end
+
+function prines_gravi()
+	return has("part_face_tushkano",5)
+end
+function otdal_gravi()
+	lost("part_face_tushkano",5)
+	got("ammo_11.43x23_hydro",2)
+end
+
+function prines_ruki()
+	return has("part_hand_kontroler",2)
+end
+function otdal_ruki()
+	lost("part_hand_kontroler",2)
+	got("ammo_5.45x39_ap",3)
+end
+
+-- Лимит диалогов. Дэн 12 раз
+function trade_dan_not_enough()
+	return not dialogs.dialog_is_enough("trade_dan_enough",12)
+end
+function trade_dan_enough()
+	return dialogs.dialog_is_enough("trade_dan_enough",12)
+end
+function trade_dan_count()
+	return dialogs.dialog_count("trade_dan_enough",12)
+end
+
+local foto_arts = {
+	"af_cry_1",
+	"af_babka_2",
+	"af_dik_2",
+	"af_spirit_2",
+	"af_armor_2",
+	"af_pudd_2",
+	"af_kol_2"
+}
+function give_foto_arts()
+	got(foto_arts[math.random(#foto_arts)],1)
+	
+	if	has_info("monster_stealth_done_boar_s") and
+		has_info("monster_stealth_done_bloodsucker_s") and
+		has_info("monster_stealth_done_dog_s") and
+		has_info("monster_stealth_done_flesh_s") and
+		has_info("monster_stealth_done_pseudodog_s") and
+		has_info("monster_stealth_done_burer_s") and
+		has_info("monster_stealth_done_cat_s") and
+		has_info("monster_stealth_done_chimera_s") and
+		has_info("monster_stealth_done_controller_s") and
+		has_info("monster_stealth_done_fracture_s") and
+		has_info("monster_stealth_done_gigant_s") and
+		has_info("monster_stealth_done_tushkano_s") and
+		has_info("monster_stealth_done_snork_s")
+	then
+		give_info("silent_hunt_done")
+	end
+end
+-- Akill end
+
+function dan_grab_have(task, objective) 
+	return has("bad_psy_helmet")
+end
+
+
+function dan_grab_done(first_speaker, second_speaker) 
+	lost("bad_psy_helmet")
+    got(nagrad.level_3[math.random(table.getn(nagrad.level_3))])
+end	
+
+function yakut_help_have(task, objective) 
+	return has("new_book")
+end
+
+
+function yakut_help_done(first_speaker, second_speaker) 
+	lost("new_book")
+    got(nagrad.level_1[math.random(table.getn(nagrad.level_1))], math.random(4,5))
+end
+
+function yakut_treasure_have(task, objective) 
+	return has("notebook_new")
+end
+
+function yakut_treasure_done(first_speaker, second_speaker) 
+    lost("notebook_new")
+end
+
+function dan_flash_have(task, objective) 
+	return has("nauch_flash")
+end
+
+function dan_flash_done(first_speaker, second_speaker) 
+    lost("nauch_flash")
+	got("good_psy_helmet")
+end	
+
+function treasure_ecolog_have(task, objective) 
+	return has("new_book_prizrak")
+end
+
+function treasure_ecolog_done(first_speaker, second_speaker) 
+	lost("new_book_prizrak")
+    got(nagrad.level_6[math.random(table.getn(nagrad.level_6))], math.random(2,3))
+end					
+
+function barmen_simbion_start()
+	local sids = {5032, 5037, 5043, 5049, 5051, 5053, 5054}
+	local obj = story_object(sids[math.random(#sids)])
+	for i =1,4 do
+		create("plastinka", obj.position, obj.m_level_vertex_id, obj.m_game_vertex_id, obj.id)
+		level.map_add_object_spot_ser(obj.id, "crlc_big", "Возможное местоположение схрона")
+	end
+end
+function barmen_simbion_have() 
+	return has("plastinka",4)
+end
+function barmen_simbion_done() 
+	lost("plastinka",4)
+end	
+
+function system_ecolog_have(task, objective) 
+	return has("computer_new")
+end
+
+function system_ecolog_done(first_speaker, second_speaker) 
+	lost("computer_new")
+    got(nagrad.level_6[math.random(table.getn(nagrad.level_6))], math.random(2,3))
+end	
+
+function prizrak_zver_have(task, objective) 
+	return has("sniper_flash")
+end
+
+function prizrak_zver_done(first_speaker, second_speaker) 
+    lost("sniper_flash")
+	got("wpn_dark_gauss")
+end	
+
+function prizrak_finalzver_have(task, objective) 
+	return has("new_document_sniper")
+end
+
+function prizrak_finalzver_done(first_speaker, second_speaker) 
+	lost("new_document_sniper")
+    got(nagrad.level_6[math.random(table.getn(nagrad.level_6))], math.random(2,3))
+end
+
+function yakut_ograblen_have(task, objective) 
+	return has("inventory_new_box")
+end
+
+function yakut_ograblen_done(first_speaker, second_speaker) 
+    lost("inventory_new_box")
+	got("ammo_5.56x45_ss190",5)
+	got("antirad",3)
+	got("medkit_army",4)
+end	
+-- Akill begin
+function helmet_est()
+	return has("good_psy_helmet",2)
+end
+function helmet_otdal()
+	lost("good_psy_helmet",1)
+	got("ammo_super_gauss",5)
+end
+-- Akill end
+function left_arhara(first_speaker, second_speaker) 
+    got("device_torch")
+end
+
+function atak_larger_done(first_speaker, second_speaker) 
+	got(nagrad.level_2[math.random(table.getn(nagrad.level_2))])
+end
+
+function tri_kristal()
+	return has("af_cristall",5)
+end
+   
+function otdal_kristal(first_speaker, second_speaker)
+	lost("af_cristall", 5)
+    got(nagrad.level_5[math.random(table.getn(nagrad.level_5))])
+end
+
+function prines_lomot()
+	return has("af_mincer_meat",10)
+end
+   
+function otdal_lomot(first_speaker, second_speaker)
+	lost("af_mincer_meat", 10)
+    got(nagrad.level_4[math.random(table.getn(nagrad.level_4))])
+end
+
+function prines_odingrav()
+	return has("af_gravi",1)
+end
+   
+function otdal_odingrav(first_speaker, second_speaker)
+	lost("af_gravi",1) 
+end
+
+function nagrada_odingrav(first_speaker, second_speaker)
+	got("antirad",3)
+end
+
+function zahar_naemnik_done(first_speaker, second_speaker) 
+	got(nagrad.level_1[math.random(table.getn(nagrad.level_1))], math.random(3,4))
+end
+
+function prapor_apt_have()
+	return has("medkit_scientic",10)
+end
+   
+   
+function prapor_apt_done(first_speaker, second_speaker)
+	lost("medkit_scientic",10) 
+end
+
+function barrem_talk_have()
+	return has("af_cry_2",1)
+end
+
+function vzal_pda_voen(first_speaker, second_speaker)
+    got("voen_pda")
+end
+
+function otdal_pda_voen(first_speaker, second_speaker)
+    lost("voen_pda")
+end
+
+function prizrak_tainiy_have(first_speaker, second_speaker)
+    return has("plan_document",1)
+end
+
+function prizrak_tainiy_done(first_speaker, second_speaker)
+    lost("plan_document")
+end
+
+function gold_art_have()
+	return has("af_gold_mincer_meat",10)
+end
+
+function gold_art_done()
+	lost("af_gold_mincer_meat",10)
+	got("wpn_usp_9")
+end
+
+function tri_tainik_first()
+	return has("new_prizrak_document1",1)
+end
+
+function tri_tainik_second()
+	return has("new_prizrak_document2",1)
+end
+
+function tri_tainik_third()
+	return has("new_prizrak_document3",1)
+end
+
+function tri_tainik_have()
+	return has("new_prizrak_document1",1) and
+		has("new_prizrak_document2",1)  and 
+		has("new_prizrak_document3",1)
+end
+
+function tri_tainik_done()
+	lost("new_prizrak_document1",1)
+	lost("new_prizrak_document2",1)
+	lost("new_prizrak_document3",1)
+end
+
+
+function inform_20_pda_have()
+    return has("device_pda_npc",20) 
+end
+
+function inform_40_pda_have()
+    return has("device_pda_npc",40) 
+end
+
+function inform_20_pda(first_speaker, second_speaker)
+	lost("device_pda_npc", 20)
+	got(nagrad.level_7[math.random(table.getn(nagrad.level_7))], math.random(2,3))
+end
+
+function inform_40_pda(first_speaker, second_speaker)
+	lost("device_pda_npc", 40)
+end
+
+function dyak_dal(first_speaker, second_speaker)
+	got("medkit", 2)   
+	got("ammo_5.45x39_ap", 3)
+end
+
+function dyak_nagrad(first_speaker, second_speaker)
+	got(nagrad.level_7[math.random(table.getn(nagrad.level_7))], math.random(4,5))
+end
+
+function kalmyak_need_done(first_speaker, second_speaker)
+	lost("box_kalmyak",1)
+	got(nagrad.level_2[math.random(table.getn(nagrad.level_2))])
+end
+
+function kalmyak_dal(first_speaker, second_speaker)
+	got("medkit", 2) 
+end
+
+function kalmyak_need_have()
+	return has("box_kalmyak",1)
+end
+
+function kalmyak_3_vodka()
+	return has("vodka",3) 
+end
+
+function kalmyak_3_sigaret()
+	return has("sigaret",3) 
+end
+
+function kalmyak_3_vodka_otdal(first_speaker, second_speaker)
+	lost("vodka",3)
+	got("maz")
+end
+
+function kalmyak_3_sigaret_otdal(first_speaker, second_speaker)
+	lost("sigaret",3)
+	got("maz")
+end
+
+function marsh_remont_have()
+	return has("maz",3) 
+end
+
+function marsh_remont_done()
+	lost("maz",3)
+end
+
+function dyak_maz_have()
+	return has("af_soul",1) 
+end
+
+function dyak_maz_done(first_speaker, second_speaker)
+	lost("af_soul",1)
+	got("maz", 3) 
+end
+
+
+function controller_hutor_have()
+	return has("red_mozg",1) 
+end
+
+function controller_hutor_done()
+	lost("red_mozg",1)
+	got("wpn_cz550",1)
+	got("ammo_7.92x57_fmj",1)
+	got("ammo_7.92x57_ap",1)
+end
+
+function burer_red_hand_est()
+	return has("part_burer_red_hand",1) 
+end
+
+function burer_red_hand_otdal(first_speaker, second_speaker)
+   lost("part_burer_red_hand",1)
+   got(nagrad.level_2[math.random(table.getn(nagrad.level_2))]) 
+end
+
+function krovosos_red_jaw_est()
+	return has("part_krovosos_red_jaw",1) 
+end
+
+function krovosos_red_jaw_otdal(first_speaker, second_speaker)
+   lost("part_krovosos_red_jaw",1)
+   got(nagrad.level_4[math.random(table.getn(nagrad.level_4))]) 
+end
+
+function sveeblov_ferma_have()
+	return has_info("sveeblov_ferma_begin") and has_good("wpn_pkm",1) 
+end
+
+function sveeblov_ferma_done(first_speaker, second_speaker)
+	lost_good("wpn_pkm",1)
+	got(nagrad.level_4[math.random(table.getn(nagrad.level_4))]) 
+end
+
+
+function kot_need_doc_have()
+	return has("mono_dead_doc",1) 
+end
+
+function kot_need_doc_done()
+	lost("mono_dead_doc",1)
+end
+
+function kot_need_next_have()
+	return has("mono_note",1) 
+end
+
+function kot_need_next_done()
+	lost("mono_note",1)
+end
+
+function need_televizor_have()
+	return has("televizor",1) 
+end
+
+function need_televizor_done()
+	lost("televizor",1)
+end
+
+function marsh_barman_dal(first_speaker, second_speaker)
+	got("wpn_awm_new") 
+	got("ammo_igl_new")
+end
+
+function marsh_barman_have()
+	return has("wpn_awm_new",1) 
+end
+
+function marsh_barman_zabral(first_speaker, second_speaker)
+	lost("wpn_awm_new")  
+	got(nagrad.level_3[math.random(table.getn(nagrad.level_3))]) 	
+end
+
+
+function borman_sniper_done(first_speaker, second_speaker)
+	got("ammo_5.56x45_ss190", 3)
+	got("ammo_7.62x51box", 3)   
+end
+
+function borman_glushitel_begin()
+	return has("glushitel",1) 
+end
+
+function borman_glushitel_next(first_speaker, second_speaker)
+	got("glushitel") 
+end
+
+function borman_glushitel_done(first_speaker, second_speaker)
+	got("ammo_5.56x45_ap", 3)
+	got("ammo_7.62x51_ap", 1) 
+	got("ammo_7.62x54_ap", 1) 
+	got("ammo_7.62x25_ps", 1) 
+	got("ammo_7.62x51box", 1)    
+end
+
+function kot_kalmyak_lekar_next()
+	return has("af_night_star",1) and
+		has("part_snork_leg",10)  
+end
+
+function kot_kalmyak_lekar_est()
+	lost("af_night_star",1)
+	lost("part_snork_leg",10)
+end
+
+function kot_kalmyak_lekar_have(first_speaker, second_speaker)
+	got("lekar_kalmyak") 
+end
+
+function kot_kalmyak_lekar_done(first_speaker, second_speaker)
+	lost("lekar_kalmyak",1)
+	got("monolit_black_outfit_plus")
+	got("wpn_akm_m3") 
+end
+
+function lekar_kalmyak_actor()
+	return has("lekar_kalmyak",1) 
+end
+
+function kot_holod_lekar_next()
+	return has("af_simbion",1) 
+end
+
+function kot_holod_lekar_est(first_speaker, second_speaker)
+	got("lekar_kalmyak") 
+	lost("af_simbion",1)
+end
+
+function kot_holod_lekar_done(first_speaker, second_speaker)
+	got("monolit_black_outfit_plus") 
+	lost("lekar_kalmyak",1)
+end
+
+
+function holod_af_gravi_have()
+	return has("af_gravi",1) 
+end
+
+function holod_af_gravi_dal(first_speaker, second_speaker)
+	got("grenade_f1", 3) 
+	lost("af_gravi",1)
+end
+
+function holod_af_mincer_meat_have()
+	return has("af_mincer_meat",1) 
+end
+
+function holod_af_mincer_meat_dal(first_speaker, second_speaker)
+	got("grenade_f1", 3) 
+	lost("af_mincer_meat",1)
+end
+
+function holod_two_af_vyvert_have()
+	return has("af_vyvert",2) 
+end
+
+function holod_two_af_vyvert_dal(first_speaker, second_speaker)
+	got("grenade_f1", 3) 
+	lost("af_vyvert",2)
+end
+
+function holod_af_ameba_slug_have()
+	return has("af_ameba_slug",1) 
+end
+
+function holod_af_ameba_slug_dal(first_speaker, second_speaker)
+	got("medkit", 4) 
+	lost("af_ameba_slug",1)
+end
+
+function holod_two_af_electra_sparkler_have()
+	return has("af_electra_sparkler",2) 
+end
+
+function holod_two_af_electra_sparkler_dal(first_speaker, second_speaker)
+	got("medkit", 4) 
+	lost("af_electra_sparkler",2)
+end
+
+function holod_two_af_blood_have()
+	return has("af_blood",2) 
+end
+
+function holod_two_af_blood_dal(first_speaker, second_speaker)
+	got("medkit", 4) 
+	lost("af_blood",2)
+end
+
+function xalyava_nebo_have(task, info)
+    if (has_info("xalyava_naem1_dead") and has_info("xalyava_naem2_dead") and has_info("xalyava_naem3_dead") and has_info("xalyava_naem4_dead") and has_info("xalyava_naem5_dead") and has_info("xalyava_naem6_dead") and has_info("xalyava_naem7_dead") and has_info("xalyava_naem8_dead"))
+	then
+		return give_info("xalyava_nebo_have") 
+	end
+	return false
+end
+
+function xalyava_nebo_done(first_speaker, second_speaker)
+	got(nagrad.level_buusty[math.random(table.getn(nagrad.level_buusty))]) 
+end
+
+function francuz_have()
+	return has("pda_francuz",1) 
+end
+
+function francuz_done()
+	lost("pda_francuz",1)
+	got("wpn_glock31",1)
+	got("ammo_357_hp_mag",2)
+end
+
+function actor_have_tri_vo()
+	return has("vodka",3) 
+end
+
+function nebo_clear_dal(first_speaker, second_speaker)
+	got("case_nebo") 
+end
+
+function nebo_clear_have()
+	return has("case_nebo",1) 
+end
+
+function nebo_clear_done()
+	lost("case_nebo",1)
+end
+
+function nebo_kurier_doc_est(first_speaker, second_speaker)
+	got(nagrad.level_2[math.random(table.getn(nagrad.level_2))])
+end
+
+function nebo_kurier_done(first_speaker, second_speaker)
+	got("nebo_clear") 
+end
+
+function act_have_nebo_exo_outfit() 
+	return has_good("nebo_exo_outfit")
+end
+
+function act_have_nebo_scientific_outfit() 
+	return has_good("nebo_scientific_outfit")
+end
+
+function act_have_monolit_black_outfit() 
+	return has_good("monolit_black_outfit")
+end
+
+function act_have_10000()
+	return db.actor:money()>=10000
+end
+
+function act_have_15000()
+	return db.actor:money()>=15000
+end
+
+function act_have_20000()
+	return db.actor:money()>=20000
+end
+
+function act_have_25000()
+	return db.actor:money()>=25000
+end
+
+function act_have_30000()
+	return db.actor:money()>=30000
+end
+
+function shadowman_zver_have(task, info)
+    if (has_info("shadowman_zver1_dead") and has_info("shadowman_zver2_dead") and has_info("shadowman_zver3_dead") and has_info("shadowman_zver4_dead") and has_info("shadowman_zver5_dead") and has_info("shadowman_zver6_dead") and has_info("shadowman_zver7_dead") and has_info("shadowman_zver8_dead") and has_info("shadowman_zver9_dead") and has_info("shadowman_zver10_dead") and has_info("shadowman_zver11_dead") and has_info("shadowman_zver12_dead") and has_info("shadowman_zver13_dead") and has_info("shadowman_zver14_dead") and has_info("shadowman_zver15_dead") and has_info("shadowman_zver16_dead") and has_info("shadowman_zver17_dead") and has_info("shadowman_zver18_dead") and has_info("shadowman_zver19_dead") and has_info("shadowman_zver20_dead") and has_info("shadowman_zver21_dead") and has_info("shadowman_zver22_dead") and has_info("shadowman_zver23_dead") and has_info("shadowman_zver24_dead") and has_info("shadowman_zver25_dead") and has_info("shadowman_zver26_dead") and has_info("shadowman_zver27_dead") and has_info("shadowman_zver28_dead") and has_info("shadowman_zver29_dead") and has_info("shadowman_zver30_dead"))
+	then
+		return give_info("shadowman_zver_have") 
+	end
+	return false
+end
+
+function shadowman_zver_done(first_speaker, second_speaker)
+    got("ammo_12x70_buck", 5)
+end
+
+function shadowman_forest_done(first_speaker, second_speaker)
+    got("medkit_army", 6)
+end
+
+function act_have_tri_grib()
+	return has("mushroom",3) 
+end
+
+function grib_4_762x25_ps(first_speaker, second_speaker)
+    got("ammo_7.62x25_ps", 4)
+	lost("mushroom",3)	
+	archievements.acv_count_event("acv_grib", 40, "Грибник", 3) 
+end
+
+function grib_1_762x51box(first_speaker, second_speaker)
+    got("ammo_7.62x51box", 1)
+	lost("mushroom",3)	
+	archievements.acv_count_event("acv_grib", 40, "Грибник", 3) 
+end
+
+function grib_2_medkit_army(first_speaker, second_speaker)
+    got("medkit_army", 2)
+	lost("mushroom",3)	
+	archievements.acv_count_event("acv_grib", 40, "Грибник", 3) 
+end
+
+function grib_3_antirad(first_speaker, second_speaker)
+    got("antirad", 3)
+	lost("mushroom",3)	
+	archievements.acv_count_event("acv_grib", 40, "Грибник", 3) 
+end
+
+function grib_2_545x39_fmj(first_speaker, second_speaker)
+    got("ammo_5.45x39_fmj", 2)
+	lost("mushroom",3)	
+	archievements.acv_count_event("acv_grib", 40, "Грибник", 3) 
+end
+
+function grib_2_556x45_ss190(first_speaker, second_speaker)
+    got("ammo_5.56x45_ss190", 2)
+	lost("mushroom",3)	
+	archievements.acv_count_event("acv_grib", 40, "Грибник", 3) 
+end
+
+function grib_2_9x39_pab9(first_speaker, second_speaker)
+    got("ammo_9x39_pab9", 2)
+	lost("mushroom",3)	
+	archievements.acv_count_event("acv_grib", 40, "Грибник", 3) 
+end
+
+function klyak_forest_doc_next(first_speaker, second_speaker)
+	got("rukzak_green") 
+end
+
+function actor_has_rukzak_green()
+	return has("rukzak_green",1) 
+end
+
+function klyak_forest_doc_green()
+	lost("rukzak_green",1)	
+end
+
+function klyak_forest_doc_have()
+	return has("klyak_forest_doc",1) 
+end
+
+function klyak_forest_doc_done()
+	lost("klyak_forest_doc",1)	
+end
+
+--' Проверим наличие бритвы для Волка
+function kvest_britva_have(task, objective)
+	return has("britva")
+end

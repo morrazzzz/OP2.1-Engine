@@ -1,0 +1,75 @@
+[spawn]
+wpn_groza
+ammo_9x39_ap 
+
+[logic] 
+active = remark@my_nps_len 
+combat_ignore = combat_ignore 
+meet = meet 
+on_combat = combat 
+danger = danger_condition
+;on_death = death 
+
+[danger_ignore] 
+ignore_distance = 10 
+
+[remark@my_nps_len] 
+anim = claim  
+meet = meet
+target = actor 
+combat_ignore_cond = always 
+danger = danger_condition@scout 
+on_info = {+info_panic_idler_1} remark@mochi 
+
+[remark@mochi] 
+anim = claim 
+no_move = true 
+meet = no_meet 
+combat_type = camper 
+on_info = {+info_panic_idler_2 +info_panic_idler_1} remark@sdayus  
+
+[remark@sdayus] 
+anim = prisoner 
+snd = agr_dont_shoot 
+no_move = true 
+meet = meet@sdacha 
+combat_ignore_cond = always  
+on_actor_dist_le = 4|remark@ya_ne_vinovat 
+danger = danger_condition@scout 
+ignore_distance = 0 
+
+[meet@sdacha] 
+meet_state = 10|prisoner@agr_dont_shoot 
+meet_state_wpn = 10|prisoner@agr_dont_shoot 
+victim = 10|actor 
+victim_wpn = 10|actor 
+;use = true 
+;use_wpn = true 
+use = false 
+use_wpn = false
+
+[remark@ya_ne_vinovat] 
+anim = salut 
+no_move = true 
+combat_ignore_cond = always 
+meet = meet 
+ignore_distance = 0 
+on_actor_dist_ge = 10|remark@my_nps_len  
+
+[meet] 
+meet_state = 5|salut|2|salut_free 
+meet_state_wpn = 5|salut|2|salut_free 
+victim = 5|actor 
+victim_wpn = 5|actor 
+use = true 
+use_wpn = true 
+
+[danger_condition@scout] 
+danger_expiration_time = 30 
+ignore_distance = 0 
+
+[smart_terrains] 
+none = true 
+
+ 
+ 

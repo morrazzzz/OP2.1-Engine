@@ -1,0 +1,23 @@
+[smart_terrains]
+none = true
+
+[logic]
+active = walker@greshnik
+combat_ignore = combat_ignore
+on_death = mob_death
+
+[danger_ignore]
+ignore_distance = 0
+
+[combat_ignore]
+combat_ignore_cond = always
+
+[walker@greshnik]
+path_walk = upi_greshnik_walk
+path_look = upi_greshnik_look
+def_state_standing = sit_ass
+danger = danger_ignore
+combat_ignore_cond = always
+
+[mob_death]
+on_info = %+greshnik_trap_fail%

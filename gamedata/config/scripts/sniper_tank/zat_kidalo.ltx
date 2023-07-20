@@ -1,0 +1,71 @@
+[smart_terrains]
+none = true
+
+[logic]
+active = walker
+meet = no_meet
+
+[walker]
+path_walk = zat_kidalo_walk
+path_look = zat_kidalo_look
+danger = danger_ignore@zat_kidalo
+on_actor_dist_le = 5|remark@wait
+on_info = {+zat_kidalo_start} walker1
+
+[remark@wait]
+anim = psycho_pain
+combat_ignore_cond = true
+combat_ignore_keep_when_attacked = true
+target = actor
+snd = agr_dont_shoot
+meet = no_meet
+on_timer = 18000|remark@wait2
+on_info = {+zat_kidalo_start} walker1 
+
+[walker1]
+path_walk = zat_kidalo1_walk
+path_look = zat_kidalo1_look
+def_state_moving = run
+on_signal = kidalo_sbegaet|%+zat_kidalo_have =buusty_dialog.zat_kidalo_sms1%
+on_info = {+zat_kidalo_have} remark@wait1
+meet = no_meet
+
+[remark@wait1]
+path_walk = zat_kidalo1_walk
+path_look = zat_kidalo1_look
+danger = danger_ignore@zat_kidalo
+meet = no_meet
+on_timer = 25000|walker2
+
+[walker2]
+path_walk = zat_kidalo2_walk
+path_look = zat_kidalo2_look
+def_state_moving = walk
+danger = danger_ignore@zat_kidalo
+meet = no_meet
+on_signal = kidalo_ischez|%-zat_kidalo_start +zat_kidalo_done =buusty_dialog.delete_zat_kidalo =buusty_dialog.zat_kidalo_sms =buusty_dialog.delete_peshera_zaton_tele%
+
+[remark@wait2]
+;anim = hide_no_wpn
+anim = wait_trade
+target = actor
+danger = danger_ignore@zat_kidalo
+on_info = {+zat_kidalo_start} walker1
+on_info2 = {+neverish_nenado} walker4
+meet = meet
+
+[walker4]
+path_walk = zat_kidalo_walk
+path_look = zat_kidalo_look
+on_actor_dist_ge = 25| %=killactor%
+;danger = danger_ignore@zat_kidalo
+
+[meet]
+;meet_state_wpn  = 8|hands_up@agr_dont_shoot
+victim = 7|actor
+use = true
+use_wpn = false
+meet_talk_enabled = true
+
+[danger_ignore@zat_kidalo]
+ignore_distance = 0

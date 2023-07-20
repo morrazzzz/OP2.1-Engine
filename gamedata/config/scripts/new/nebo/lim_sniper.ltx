@@ -1,0 +1,21 @@
+[smart_terrains]
+none = true
+
+[logic]
+active=camper
+danger = danger_ignore
+on_death = death
+
+[camper]
+sniper = true
+def_state_campering = threat_na
+radius = 80
+path_walk = lim_sniper_walk
+path_look = lim_sniper_look
+show_spot = false
+
+[danger_ignore]
+ignore_distance = 0
+
+[death]
+on_info = %+borman_sniper_have%

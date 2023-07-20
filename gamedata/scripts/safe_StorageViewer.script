@@ -1,0 +1,1189 @@
+--небольшие настройки, значения по умолчанию, перекрываются значениями из конфига, длинныйМнемоническийИндентификатор в данном случае лучше чем длн_мн_инд, как по мне
+local ignoreFullConditionItem=false --не выводить 100% значение состояние оружия и брони
+local ignoreMostGroupSelection=false --игнорировать выбор еденичной группы при открытии рюкзака
+local changeFilterOnTransfer=true --изменять фильтр при перемещении итемов
+local showWeightInSpot=true  --показывать вес в мапспоте для каждого итема
+local showGGDynamicName=false --показывать динамическое имя ГГ в заголовке 
+
+--всяко разно
+local systemIniReader=ini_reader.iniReader()
+local itemElector
+local artefactInformer
+MAXCAPACITY=2500 --7000 --вместимость хранилища (ограничение на запись в нетпакет), в xml задано статически
+MAPSPOTTYPE="habar_location_safe"
+LINESONSCREEN=38 --количество линий на экране ПДА для спота
+
+local parseConditionFromSection=function(inputSection) --парсим секцию с износом
+	local amp_index=inputSection:find("&")
+	local section
+	local condition=0
+	if amp_index then --выделяем состояние из id 
+		section=inputSection:sub(1,amp_index-1)
+		condition=inputSection:sub(amp_index+1,inputSection:len())
+	else
+		section=inputSection
+		condition=100
+	end
+	return section,condition
+end
+
+
+class "StorageViewer" (CUIScriptWnd)
+function StorageViewer:__init(binderObject) super()
+	if itemElector==nil then 	--определитель типов итемов , singleton 
+		itemElector=safe_ItemElector.GetItemElectorClass()
+	end
+	if artefactInformer==nil then --информация о артефактах , singleton
+		artefactInformer=safe_ArtefactInformer.GetArtefactInformerClass()
+	end
+	-- модификаторы
+	self.shiftPressed=false 
+	self.controlPressed=false
+	--инфо о хранилище
+	self.classname="StorageViewer"
+	--читаем параметры
+	local reader=ini_reader.iniReader("misc\\safe_config.ltx")
+	--узнать имя переменной без изъ....ва нельзя, посему как строка
+	ignoreFullConditionItem=reader:readBool(self.classname,"ignoreFullConditionItem",ignoreFullConditionItem) 
+	ignoreMostGroupSelection=reader:readBool(self.classname,"ignoreMostGroupSelection",ignoreMostGroupSelection)  
+	changeFilterOnTransfer=reader:readBool(self.classname,"changeFilterOnTransfer",changeFilterOnTransfer)  
+	showWeightInSpot=reader:readBool(self.classname,"showWeightInSpot",showWeightInSpot) 
+	showGGDynamicName=reader:readBool(self.classname,"showGGDynamicName",showGGDynamicName) 
+	--последнее выбранное инфоокно
+	self.lastSelectedWindow=nil
+	--данные из биндера
+	self.binderObject=binderObject
+	--размер данных в биндере
+	self.binderDataSize=self.binderObject:GetDataSize()
+	self.ActorInventory={}
+	self.StorageInventory={}
+	self:InitControls()
+	self:InitCallbacks()
+	self:FillStorageInventory()
+	self:FillActorInventory()
+	local mostGroupIndex=0
+	if not ignoreMostGroupSelection then
+	--выбираем единственную группу в рюкзаке
+		mostGroupIndex=self:CalcMostGroup()
+	end
+	self:FilterSelectionChange(self.actor_inv,true,mostGroupIndex)
+	self:FilterSelectionChange(self.storage_inv,true,mostGroupIndex)
+	give_info("biznes_remove_special_item") --устанавливаем на весь сеанс спец флаг
+	give_info("ui_rukzak")
+end
+
+--закрытие хранилища
+function StorageViewer:CloseViewer()
+	self.binderObject.binderDataTable=nil
+	self.binderObject.binderDataTable={}
+	--если раньше была метка - удаляем
+	level.map_remove_object_spot(self.binderObject.object:id(), MAPSPOTTYPE)
+	local totalSpotTexts={}
+	local linesCount=0
+	local singleLine=false
+	for index,tbl in pairs(self.StorageInventory) do
+		local unSortedSection={}
+		if tbl then
+			for section,params in pairs(tbl) do
+				if section then
+					--заполняем таблицу биндера для сохранения
+					self.binderObject.binderDataTable[section]={count=params.count,itemsType=params.itemsType}
+					--заодно переформировываем текст мапспота
+					local sectionWOCond=parseConditionFromSection(section)
+					--local descFromIni=suGet_TS_FromIni(sectionWOCond,"inv_name")
+					local descFromIni=systemIniReader:readTranslatedString(sectionWOCond,"inv_name")
+					local weight,weightTotal=self:GetWeight(sectionWOCond,index,params.count)
+					if not descFromIni then
+						descFromIni="empty"
+					end
+					if unSortedSection[descFromIni] then
+						local currentDesc=unSortedSection[descFromIni]
+						unSortedSection[descFromIni]={count=currentDesc.count+params.count,weight=currentDesc.weight+weightTotal}
+					else
+						unSortedSection[descFromIni]={count=params.count,weight=weightTotal}
+					end	
+					--считаем количество линий
+					linesCount=linesCount+1
+				end	
+			end
+			totalSpotTexts[index]=unSortedSection
+		end
+	end
+	--размещаем мапспот
+	if linesCount > LINESONSCREEN then --если не влазит на экран, помещаем все в одну строку
+		singleLine=true
+	end
+	local spotText=""
+	local getTypeColor=function(itemType) --цвета в споте
+		if itemType==1 then --weapons
+			return "%c[254,243,122,11]"
+		elseif itemType==2 then --ammos
+			return "%c[254,129,129,11]"
+		elseif itemType==3 then --grenades
+			return "%c[208,100,100,255]"
+		elseif itemType==4 then --outfits
+			return "%c[100,200,200,1]"
+		elseif itemType==5 then --kits
+			return "%c[0,128,64,1]"
+		elseif itemType==6 then --medics
+			return "%c[128,128,192,1]"
+		elseif itemType==7 then --artefacts
+			return "%c[207,255,085,085]"
+		elseif itemType==8 then --mparts
+			return "%c[50,1,150,1]"
+		elseif itemType==9 then --others
+			return "%c[208,100,100,255]"
+		else
+			return "%c[default]"
+		end
+	end
+	local delimiterSection="\\n" --разделитель в секции
+	local delimiterTotal=" \\n" --разделитель секций
+	if singleLine then
+		delimiterSection=", "
+		--delimiterTotal=" , " --некрасиво...
+	end
+	local totalWeight=0
+	local totalCount=0
+	for index,unsortedSpotTexts in pairs(totalSpotTexts) do
+		local text=""
+		for desc,params in safe_utils.spairs(unsortedSpotTexts) do --сортируем дескрипшины по алфавиту
+			if text~="" then
+				text=text..delimiterSection --если надо - разделитель
+			end
+			local weightText=""
+			totalWeight=totalWeight+params.weight
+			totalCount=totalCount+params.count
+			if showWeightInSpot then --если надо - добавляем вес группы вещей
+				weightText=params.weight.."кг"
+			end	
+			if params.count>1 then
+				text=string.format("%s (%i%s",text..desc,params.count,iif(weightText~=""," "..weightText..")",")")) --если в группе много итемов
+			else
+				text=string.format("%s%s",text..desc,iif(weightText~="","("..weightText..")","\t")) --\t костыль для непустой строки.... рррррр....
+			end	
+		end
+		if text~=""	 then
+			if spotText~="" then
+				spotText=spotText..getTypeColor(0)..delimiterTotal..getTypeColor(index)..text..getTypeColor(0)
+			else
+				spotText=getTypeColor(index)..text..getTypeColor(0)
+			end
+		end
+	end
+	if spotText=="" then
+		spotText=game.translate_string("txt_safe_empty_storage")
+	else
+		spotText="Всего "..totalCount.." предметов, "..math.round(totalWeight,2).." кг.\\n"..spotText --добавляем общий вес рюкзака
+	end	
+	level.map_add_object_spot_ser(self.binderObject.object:id(), MAPSPOTTYPE,spotText)
+	self:GetHolder():start_stop_menu(self, true)
+	disable_info("biznes_remove_special_item")
+	disable_info("ui_rukzak")
+end
+
+--для тестов
+function StorageViewer:SetCondition()
+	local selectedIndex=self.actor_inv.list:GetSelectedItem()
+	if (selectedIndex) then
+		local selectedItem=self.actor_inv.list:GetItem(selectedIndex)
+		local section,condition=parseConditionFromSection(selectedItem.section)
+		for id=0, 65535 do
+			obj = level_object(id)
+			if obj ~= nil and	obj:section() == section then
+				local cond=math.random()
+				obj:set_condition(cond)
+				local sobj=server_object(obj:id())
+				netpacket:modify(sobj, "condition", cond)
+				return
+			end
+		end
+	end
+end
+
+--выбираем основную группу в рюкзаке
+function StorageViewer:CalcMostGroup() 
+	local prevGroup=0
+	for index=1,#self.StorageInventory do --есть ли у нас несколько групп? проверим количество в каждой, посчитав в каждом типе итемов
+		local itemsCount=0
+		for k in pairs(self.StorageInventory[index]) do --считаем количество элементов в хеше,lua его не индексирует... может когда нибуть на metatable переделаю
+			itemsCount=itemsCount+1
+		end
+		if itemsCount~=0 then
+			if prevGroup==0 then
+				prevGroup=index --есть только одна группа в рюкзаке
+			else
+				return 0 --иначе все группы
+			end
+		end
+	end
+	return prevGroup 
+end
+
+--забираем все из хранилища
+function StorageViewer:TakeAllFromStorage()
+	for index,tbl in pairs(self.StorageInventory) do
+		if tbl then
+			for itemSection,params in pairs(tbl) do
+				if itemSection then
+					local itemType=params.itemsType
+					local itemsCount=params.count
+					local boxSize=1
+					--спавним итемы в инвентаре актора
+					if itemType==2 then --спавн патронов
+						boxSize=systemIniReader:readUInt(itemSection,"box_size")
+						if not boxSize then
+							boxSize=1
+						end
+						self:SpawnAmmoItem(itemSection,itemsCount,boxSize)
+					else --спавн других итемов 
+						for c=1,itemsCount do 
+							self:SpawnOrdinaryItem(itemSection,itemType)
+						end
+					end
+				end	
+			end
+		end
+	end
+	--добавляем в инвентарь игрока пустой рюкзак
+	create("treasure_item",db.actor:position(), db.actor:level_vertex_id(), db.actor:game_vertex_id(), db.actor:id())
+	--закрываем UI
+	self:GetHolder():start_stop_menu(self, true)
+	--удаляем с уровня хранилище
+	safe_StealManager.GetStealManagerClass():UnRegisterStorage(self.binderObject.object:id())
+	local storageObject=server_object(self.binderObject.object:id())
+	if storageObject then
+		release(storageObject)
+	end
+	disable_info("biznes_remove_special_item")
+	disable_info("ui_rukzak")
+end
+
+--спавн в инвентори актора патронов
+function StorageViewer:SpawnAmmoItem(itemSection,transferCount,boxSize)
+	local newIds={}
+	local transferred=0
+	while transferred+boxSize<=transferCount do --спавн по полной пачке патронов
+		local sobj=create(itemSection,db.actor:position(), db.actor:level_vertex_id(), db.actor:game_vertex_id(), db.actor:id())
+		newIds[sobj.id]=true
+		transferred=transferred+boxSize
+	end
+	if transferred<transferCount then --осталась неполная пачка
+		transferred=transferCount-transferred
+		local sobj=ai:create_ammo(itemSection,db.actor:position(), db.actor:level_vertex_id(), db.actor:game_vertex_id(), db.actor:id(),transferred) -- число патронов
+		newIds[sobj.id]=true
+	end
+	return newIds
+end
+
+--спавн в инвентори актора итема, отличного от патронов
+function StorageViewer:SpawnOrdinaryItem(condSection,itemType)
+	local section,condition=parseConditionFromSection(condSection) --извлекаем из section&condition
+	local sobj=create(section,db.actor:position(), db.actor:level_vertex_id(), db.actor:game_vertex_id(), db.actor:id())
+	condition=condition/100
+	if itemType==4 then --если броня 
+		level.client_spawn_manager():add(sobj.id, 0, 
+			function (cond, id, obj)
+				obj:set_condition(cond)
+			end
+		, condition)
+	elseif itemType==1 then --или оружие, устанавливаем состояние
+		level.client_spawn_manager():add(sobj.id,0,
+			function(cond,id,obj) 
+				if obj:section()=="wpn_shmel" then --РПО
+					obj:set_ammo_elapsed(iif(cond==0,0,1))
+				else
+					obj:set_ammo_elapsed(0) --у заспавненного оружия чистим магазин
+				end
+				obj:set_condition(cond)
+			end,condition)		
+	end
+	return sobj.id
+end										
+										
+--рисуем инвентарь хранилища в листе
+function StorageViewer:PaintStorageInventoryItems(filterIndex)
+	if filterIndex~= 0 then
+		self.storage_inv.list:AddItem(separator(filterIndex,self.storage_inv))
+		self:PaintTable(self.StorageInventory[filterIndex],self.storage_inv)
+	else
+		for index=1,#self.StorageInventory do
+			self.storage_inv.list:AddItem(separator(index,self.storage_inv))
+			self:PaintTable(self.StorageInventory[index],self.storage_inv)
+		end
+	end
+end
+
+--рисуем инвентарь актора в листе
+function StorageViewer:PaintActorInventoryItems(filterIndex)	
+	if filterIndex~= 0 then
+		self.actor_inv.list:AddItem(separator(filterIndex,self.actor_inv))	
+		self:PaintTable(self.ActorInventory[filterIndex],self.actor_inv)
+	else
+		for index=1,#self.ActorInventory do
+			self.actor_inv.list:AddItem(separator(index,self.actor_inv))
+			self:PaintTable(self.ActorInventory[index],self.actor_inv)
+		end
+	end
+end
+
+--рисуем список итемов в контроле
+function StorageViewer:PaintTable(items,paintControl)
+	--таблица для сортировки
+	local sortedItems={}
+	table.foreach(items,
+		function(section,tbl)
+			local sect,condition=parseConditionFromSection(section)
+			--local descFromIni=suGet_TS_FromIni(sect,"inv_name")
+			local descFromIni=systemIniReader:readTranslatedString(sect,"inv_name")
+			if not descFromIni then
+				descFromIni="unknow section in configs "..sect
+			end
+			table.insert(sortedItems,InventoryListItem(descFromIni,tbl.count,section,tbl.itemsType,tonumber(condition),paintControl))
+		end
+	)
+	 table.sort(sortedItems,
+		function (i1,i2) 
+			return i1.column1:GetText() < i2.column1:GetText()  
+		end
+	)
+	table.foreach(sortedItems,
+		function(i,k) 
+			paintControl.list:AddItem(k) 
+		end
+	)
+end
+
+--заполняем таблицу инвентаря стоража
+function StorageViewer:FillStorageInventory()
+	self.StorageInventory[1]={}
+	self.StorageInventory[2]={}
+	self.StorageInventory[3]={}
+	self.StorageInventory[4]={}
+	self.StorageInventory[5]={}
+	self.StorageInventory[6]={}
+	self.StorageInventory[7]={}
+	self.StorageInventory[8]={}
+	self.StorageInventory[9]={}
+	if self.binderObject.binderDataTable then
+		for section,params in pairs(self.binderObject.binderDataTable) do
+			if section then
+				local count=params.count
+				local itemsType=params.itemsType
+				self:InsertToTableGrouped(self.StorageInventory[itemsType],section,itemsType,nil,count)
+			end
+		end
+	end
+end
+
+--заполняем таблицу инвентаря актора
+function StorageViewer:FillActorInventory()
+	--пропускаем итемы в слотах
+	local excludeItems={}
+	for slot=0,db.actor.slots-1 do
+		local item=db.actor:item_in_slot(slot)
+		if item then
+			excludeItems[item:id()]=true
+		end
+	end
+	--посчитаем максимальный вес инвентаря ГГ
+	local maxWeight=80 --[[ макс вес актора без брони ]] 
+	local outfit = db.actor:item_in_slot(inventory_slots.OUTFIT) --параметр увеличения веса брони
+	if outfit and outfit:section() then 
+		local section=outfit:section()
+		if systemIniReader:SectionExist(section) and systemIniReader:LineExist(section, "additional_inventory_weight") then 
+			local diff = level.get_game_difficulty()
+			local cond = outfit:condition()
+			maxWeight =maxWeight + systemIniReader:readFloat(section, "additional_inventory_weight")*(cond+(1-cond)*(3-diff)/3) -- вес в зависимости от уровня сложности
+		end
+	end
+	self.maxWeight=math.round(maxWeight,2)
+	--	таблицы типов итемов
+	local wpns={}
+	local ammos={}
+	local grenades={}
+	local others={}
+	local outfits={}
+	local medics={}
+	local kits={}
+	local artefacts={}
+	local mparts={}
+	local currentWeight=0 --текущий вес итемов в инвентаре
+	db.actor:iterate_inventory(
+		function (dummy, item) 
+			local excluded = 
+						_G.Inventory:on_belt_by_id(item:id()) or --пропускаем итемы на поясе 
+						itemElector:is_quest_item(item) or -- пропускаем с установенным параметром quest_item=true 
+						string.find(item:section(),"np_pda") or string.find(item:section(),"tm_pda") or --пропускаем служебные нетпакеты
+						excludeItems[item:id()] --пропускаем в слотах
+			if not excluded then
+				if itemElector:is_weapon(item) then --это оружие
+					local condition=math.round(item:condition(),2)*100
+					condition=math.modf(condition)
+					local weaponTableId=item:section().."&"..condition
+					self:InsertToTableGrouped(wpns,weaponTableId,1,item:id())
+					local weightSingle,weightTotal=self:GetWeight(item:section(),1,1)
+					currentWeight=currentWeight+weightTotal
+					local ammoInMagazineSection,ammoInMagazineCount=safe_utils.GetCurrentAmmoTypeInMagazine(item)
+					if ammoInMagazineSection~=nil then --пытаемся посчитать вес патронов в стволе
+						local w1,w2=self:GetWeight(ammoInMagazineSection,2,ammoInMagazineCount)
+						currentWeight=currentWeight+w2
+					end
+				elseif itemElector:is_ammo(item) then --это боеприпас
+					local ammoSize=safe_utils.GetAmmoSizeByObj(item)
+					if ammoSize==0 then
+						ammoSize=1
+					end
+					self:InsertToTableGrouped(ammos,item:section(),2,item:id(),ammoSize)
+					local weightSingle,weightTotal=self:GetWeight(item:section(),2,ammoSize)
+					currentWeight=currentWeight+weightTotal
+				elseif itemElector:is_grenade(item) then --это гранаты
+					self:InsertToTableGrouped(grenades,item:section(),3,item:id())
+					local weightSingle,weightTotal=self:GetWeight(item:section())
+					currentWeight=currentWeight+weightTotal
+				elseif itemElector:is_outfit(item) then --это броня
+					local condition=math.round(item:condition(),2)*100
+					condition=math.modf(condition)
+					local outfitTableId=item:section().."&"..condition
+					self:InsertToTableGrouped(outfits,outfitTableId,4,item:id())					
+					local weightSingle,weightTotal=self:GetWeight(item:section())
+					currentWeight=currentWeight+weightTotal
+				elseif itemElector:is_kit(item)	then --это обвес
+					self:InsertToTableGrouped(kits,item:section(),5,item:id())
+					local weightSingle,weightTotal=self:GetWeight(item:section())
+					currentWeight=currentWeight+weightTotal
+				elseif itemElector:is_medics(item) then --это что то медицинское
+					self:InsertToTableGrouped(medics,item:section(),6,item:id())	
+					local weightSingle,weightTotal=self:GetWeight(item:section())
+					currentWeight=currentWeight+weightTotal					
+				elseif itemElector:is_artefact(item)	then --это артефакт
+					self:InsertToTableGrouped(artefacts,item:section(),7,item:id())
+					local weightSingle,weightTotal=self:GetWeight(item:section())
+					currentWeight=currentWeight+weightTotal
+				elseif itemElector:is_mpart(item) then --это части мутантов
+					self:InsertToTableGrouped(mparts,item:section(),8,item:id())
+					local weightSingle,weightTotal=self:GetWeight(item:section())
+					currentWeight=currentWeight+weightTotal
+				 else --все остальное
+					self:InsertToTableGrouped(others,item:section(),9,item:id())
+					local weightSingle,weightTotal=self:GetWeight(item:section())
+					currentWeight=currentWeight+weightTotal
+				end
+			else
+				local weightSingle,weightTotal=self:GetWeight(item:section())
+				currentWeight=currentWeight+weightTotal
+			end
+		end
+	,db.actor)
+	self.ActorInventory[1]=wpns			
+	self.ActorInventory[2]=ammos
+	self.ActorInventory[3]=grenades
+	self.ActorInventory[4]=outfits		
+	self.ActorInventory[5]=kits
+	self.ActorInventory[6]=medics
+	self.ActorInventory[7]=artefacts	
+	self.ActorInventory[8]=mparts
+	self.ActorInventory[9]=others	
+	self.currentWeight=math.round(currentWeight,1)
+	self.actor_inv.weight_caption:SetText("Всего "..self.currentWeight.." из "..self.maxWeight.." кг")
+end
+
+--заполнение таблицы для хранения 
+function StorageViewer:InsertToTableGrouped(tbl,itemKey,itemType,itemId,itemsCount)
+	if itemsCount==nil then
+		itemsCount=1
+	end
+	if tbl[itemKey]~=nil then --секция уже есть
+		tbl[itemKey].count=tbl[itemKey].count+itemsCount
+		if itemId then --id для будущего удаления
+			if not tbl[itemKey].itemsIds[itemId] then
+				tbl[itemKey].itemsIds[itemId]=true
+			end	
+		end
+	else
+		tbl[itemKey]={} --новая секция 
+		tbl[itemKey].count=itemsCount --количество
+		tbl[itemKey].itemsType=itemType --тип
+		tbl[itemKey].itemsIds={}
+		if itemId then --id для удаления из инвентаря актора
+				tbl[itemKey].itemsIds[itemId]=true
+		end	
+	end
+end
+
+--заполняем список фильтров
+function StorageViewer:FillComboboxList(filter)
+	local index=0
+	while true do
+		local ini_text="txt_safe_filter_"..index
+		local description=game.translate_string(ini_text)
+		if description ~= ini_text then
+			filter.list_frame.list:AddItem(FilterListItem(description))
+		else
+			break
+		end
+		index=index+1
+	end
+	if filter.index>index then
+		filter.index=0
+	end
+	filter:SetText(filter.list_frame.list:GetItem(filter.index).desc)
+end
+
+--рисуем UI элементы
+function StorageViewer:InitControls()
+   	self:Init(0,0,1024,768)
+	self:SetAutoDelete(true)
+	self:SetFont(GetFontMedium())
+	
+	self.xml = CScriptXmlInit()
+	self.xml:ParseFile("safe_storage_viewer.xml")
+	
+	-- рисуем "инвентарь актора"
+	self.actor_inv=self.xml:InitFrame("actor_inv", self)
+	self.actor_inv.inventory_info={desc="actorinventory",inventory=self.ActorInventory} --load inventory
+    self.actor_inv.caption=self.xml:InitLabel("actor_inv:caption", self.actor_inv)
+	if showGGDynamicName then
+		self.actor_inv.caption:SetText(user_name())
+	else
+		self.actor_inv.caption:SetText("Меченый")
+	end	
+	--список итемов
+	self.actor_inv.background=self.xml:InitFrame("actor_inv:background_frame",self.actor_inv)
+	self.xml:InitFrame("actor_inv:background_frame:vert_separator",self.actor_inv.background)
+	self.xml:InitFrame("actor_inv:background_frame:vert_separator2",self.actor_inv.background)
+	self.actor_inv.background.column1=self.xml:InitLabel("actor_inv:background_frame:column1", self.actor_inv.background)
+	self.actor_inv.background.column1:SetText(game.translate_string("txt_safe_column1"))
+	self.actor_inv.background.column2=self.xml:InitLabel("actor_inv:background_frame:column2", self.actor_inv.background)
+	self.actor_inv.background.column2:SetText(game.translate_string("txt_safe_column2"))
+	self.actor_inv.background.column3=self.xml:InitLabel("actor_inv:background_frame:column3", self.actor_inv.background)
+	self.actor_inv.background.column3:SetText(game.translate_string("txt_safe_column3"))
+	
+	self.actor_inv.weight_caption=self.xml:InitLabel("actor_inv:weight_caption", self.actor_inv)
+	
+	self.actor_inv.list=self.xml:InitList("actor_inv:background_frame:list",self.actor_inv.background)
+	self.actor_inv.list:ShowSelectedItem(true)
+	self:Register(self.actor_inv.list,"actor_inv.list")
+	-- фильтр
+	self.actor_inv.filter=self.xml:Init3tButton("actor_inv:filter",self.actor_inv)
+	self:Register(self.actor_inv.filter,"actor_inv.filter")
+	self.actor_inv.filter.parent=self.actor_inv
+	self.actor_inv.filter.index=0
+	-- рисуем выпадающий список 
+	self.actor_inv.filter.list_frame=self.xml:InitFrame("actor_inv:filter:list_frame",self.actor_inv)
+	--список строиться относительно координат фрейма списка
+	self.actor_inv.filter.list_frame.list=self.xml:InitList("actor_inv:filter:list_frame:list",self.actor_inv.filter.list_frame) 
+	self.actor_inv.filter.list_frame.list:ShowSelectedItem(true)
+	self.actor_inv.filter.list_frame:Show(false)
+	self:Register(self.actor_inv.filter.list_frame.list,"actor_inv.filter.list")
+	-- заполняем данными список и тектс фильтра
+	self:FillComboboxList(self.actor_inv.filter)
+
+	
+	-- рисуем "инвентарь стораджа"
+	self.storage_inv=self.xml:InitFrame("storage_inv",self)
+	self.storage_inv.inventory_info={desc="storageinventory",inventory=self.StorageInventory} --load inventory
+    self.storage_inv.caption=self.xml:InitLabel("storage_inv:caption", self.storage_inv)
+	local desc=game.translate_string("txt_safe_storage_short_name")
+	self.storage_inv.caption:SetText(desc)
+	--список итемов
+	self.storage_inv.background=self.xml:InitFrame("storage_inv:background_frame",self.storage_inv)
+	self.xml:InitFrame("storage_inv:background_frame:vert_separator",self.storage_inv.background)
+	self.xml:InitFrame("storage_inv:background_frame:vert_separator2",self.storage_inv.background)
+	self.storage_inv.list=self.xml:InitList("storage_inv:background_frame:list",self.storage_inv.background)
+	self.storage_inv.background.column1=self.xml:InitLabel("storage_inv:background_frame:column1", self.storage_inv.background)
+	self.storage_inv.background.column1:SetText(game.translate_string("txt_safe_column1"))
+	self.storage_inv.background.column2=self.xml:InitLabel("storage_inv:background_frame:column2", self.storage_inv.background)
+	self.storage_inv.background.column2:SetText(game.translate_string("txt_safe_column2"))
+	self.storage_inv.background.column3=self.xml:InitLabel("storage_inv:background_frame:column3", self.storage_inv.background)
+	self.storage_inv.background.column3:SetText(game.translate_string("txt_safe_column3"))
+	self.xml:InitFrame("storage_inv:background_frame:frame_filling_back",self.storage_inv.background)
+	self.storage_inv.background.frame_filling=self.xml:InitProgressBar("storage_inv:background_frame:frame_filling",self.storage_inv.background)
+	self.storage_inv.background.frame_filling:SetProgressPos(self.binderDataSize)
+	self.storage_inv.list:ShowSelectedItem(true)
+	self:Register(self.storage_inv.list,"storage_inv.list")
+	-- рисуем "фильтр инвентаря стораджа"
+	self.storage_inv.filter=self.xml:Init3tButton("storage_inv:filter",self.storage_inv)
+	self:Register(self.storage_inv.filter,"storage_inv.filter")
+	self.storage_inv.filter.parent=self.storage_inv
+	self.storage_inv.filter.index=0
+	--выпадающий список 
+	self.storage_inv.filter.list_frame=self.xml:InitFrame("storage_inv:filter:list_frame",self.storage_inv)
+	--список строиться относительно координат фрейма списка
+	self.storage_inv.filter.list_frame.list=self.xml:InitList("storage_inv:filter:list_frame:list",self.storage_inv.filter.list_frame) 
+	self.storage_inv.filter.list_frame.list:ShowSelectedItem(true)
+	self.storage_inv.filter.list_frame:Show(false)
+	self:Register(self.storage_inv.filter.list_frame.list,"storage_inv.filter.list")
+	-- заполняем данными список и текст фильтра
+	self:FillComboboxList(self.storage_inv.filter)
+	--кнопка "забрать все" из хранилища
+	self.storage_inv.take_all=self.xml:Init3tButton("storage_inv:take_all",self.storage_inv)
+	self:Register(self.storage_inv.take_all,"storage_inv.take_all")
+	
+	--рисуем "информация о выделеном"
+	self.info_box=self.xml:InitFrame("info_box",self)
+	self.info_box.item_icon=self.xml:InitFrame("info_box:item_icon",self.info_box)
+	self.info_box.frame_name=self.xml:InitLabel("info_box:frame_name",self.info_box) 
+	self.info_box.scroll=self.xml:InitScrollView("info_box:scroll_frame",self.info_box) 
+	
+	self.info_box.frame_description=self.xml:InitStatic("info_box:scroll_frame:frame_description",self.info_box.scroll) 
+	self.info_box.frame_condition=self.xml:InitProgressBar("info_box:frame_condition",self.info_box)
+	self.info_box.frame_cost=self.xml:InitLabel("info_box:frame_cost",self.info_box)
+	self.info_box.frame_weight=self.xml:InitLabel("info_box:frame_weight",self.info_box)
+
+	--памятка 
+	self.info_transfer=self.xml:InitFrame("info_transfer",self)
+	self.info_transfer.frame_text=self.xml:InitStatic("info_transfer:frame_text",self.info_transfer)
+	self.info_transfer.frame_text:SetText(game.translate_string("txt_safe_transfer_info"))
+
+	self.message_box = CUIMessageBoxEx()
+	self:Register(self.message_box, "message_box")	
+	self.message_box:Init("message_box_error_safe")
+end
+
+--калбеки
+function StorageViewer:InitCallbacks()
+	self:AddCallback("actor_inv.filter", ui_events.BUTTON_CLICKED, self.FilterButtonClicked,  self.actor_inv.filter)  
+	self:AddCallback("actor_inv.filter.list", ui_events.LIST_ITEM_CLICKED, self.FilterSelectionChangeActor, self) 
+		
+	self:AddCallback("storage_inv.filter", ui_events.BUTTON_CLICKED, self.FilterButtonClicked,  self.storage_inv.filter) 
+	self:AddCallback("storage_inv.filter.list", ui_events.LIST_ITEM_CLICKED, self.FilterSelectionChangeStorage, self) 
+	self:AddCallback("storage_inv.take_all", ui_events.BUTTON_CLICKED, self.TakeAllFromStorage, self) 
+			
+	self:AddCallback("actor_inv.list", ui_events.LIST_ITEM_CLICKED, self.InventoryListClickedActor, self) 
+	self:AddCallback("storage_inv.list", ui_events.LIST_ITEM_CLICKED, self.InventoryListClickedStorage, self) 
+	
+	self:AddCallback("actor_inv.list",ui_events.WINDOW_LBUTTON_DB_CLICK,self.StartTransferActorToStorage,self)		
+	self:AddCallback("storage_inv.list",ui_events.WINDOW_LBUTTON_DB_CLICK,self.StartTransferStorageToActor,self)
+end
+
+--вывод диалогового окна
+function StorageViewer:ShowMessageBox(message)
+	self.message_box:SetText(message)
+	self:GetHolder():start_stop_menu(self.message_box, true)
+end
+
+--итем хранилище->актор
+function StorageViewer:StartTransferStorageToActor()
+	local selectedIndex=self.storage_inv.list:GetSelectedItem()
+	local selectedItem=self.storage_inv.list:GetItem(selectedIndex)
+	if selectedItem==nil or selectedItem.separator then
+		return
+	end
+	local itemSection=selectedItem.section
+	local itemType=selectedItem.itemType
+	local itemsCount=selectedItem.count
+	local transferCount=1
+	local boxSize=1
+	--считаем сколько нужно переместить
+	if itemType==2 then --патроны перемещаем по пачкам
+		boxSize=systemIniReader:readUInt(itemSection,"box_size")
+		if not boxSize then
+			boxSize=1
+		end
+		transferCount=boxSize
+	end	
+	--смотрим, нажаты ли модификаторы
+	if (self.shiftPressed and not self.controlPressed) then
+		transferCount=boxSize*3
+	elseif (not self.shiftPressed and self.controlPressed) then
+		transferCount=boxSize*10
+	end
+	if (self.shiftPressed and self.controlPressed) then
+		transferCount=itemsCount
+	end
+	--так, на всякий случай...
+	if (transferCount>itemsCount) then
+			transferCount=itemsCount
+	end
+	local newIds={}
+	--спавним итемы в инвентаре актора
+	if itemType==2 then --спавн патронов
+		newIds=self:SpawnAmmoItem(itemSection,transferCount,boxSize)
+	else --спавн других итемов 
+		for c=1,transferCount do 
+			local newId=self:SpawnOrdinaryItem(itemSection,itemType)
+			newIds[newId]=true
+			if string.find(itemSection,"arc_art_box_") ~= nil then
+				local obj=level_object(newId)
+				if obj then
+					arc_main.get_item(obj)
+				end	
+			end
+		end
+	end
+
+	--чистим считанные ранее данные в таблице, дабы не перечитывать все (перенос итемов)
+	if itemsCount>transferCount then  
+		selectedItem:set_count(itemsCount-transferCount)
+		self.StorageInventory[itemType][itemSection].count=itemsCount-transferCount
+	elseif itemsCount<=transferCount then
+		transferCount=itemsCount
+		self.StorageInventory[itemType][itemSection]=nil
+		self.storage_inv.list:RemoveItem(selectedIndex)
+	end
+	self.storage_inv.list:ShowSelectedItem(false)
+	local dataSize=0
+	if self.StorageInventory[itemType][itemSection]==nil then --полность перенесли предметы данной секции
+		dataSize=itemSection:len()+1+1+2
+		self.binderDataSize=self.binderDataSize-dataSize
+		if self.binderDataSize<0 then
+			self.binderDataSize=0
+		end
+	end
+	-- добавляем итемы в массив стораджа 
+	self:InsertToTableGrouped(self.ActorInventory[itemType],itemSection,itemType,nil,transferCount)
+	-- добавляем id итемов в массив стораджа 
+	table.foreach(newIds,
+		function (id,v)
+			self.ActorInventory[itemType][itemSection].itemsIds[id]=true
+		end)
+	--перерисовываем по текущему фильтру
+	if self.actor_inv.filter.index~=itemType and changeFilterOnTransfer then
+		self:FilterSelectionChange(self.actor_inv,true,itemType)
+	else
+		self:FilterSelectionChange(self.actor_inv,true,self.actor_inv.filter.index)
+	end
+	--прогрес заполненности хранилища 
+	self.storage_inv.background.frame_filling:SetProgressPos(self.binderDataSize)
+	--обновление веса инвентаря ГГ
+	local weightSingle,weightTotal=self:GetWeight(parseConditionFromSection(itemSection),itemType,transferCount)
+	self.currentWeight=math.round(self.currentWeight+weightTotal,1)
+	self.actor_inv.weight_caption:SetText("Всего "..self.currentWeight.." из "..self.maxWeight.." кг")	
+end
+
+--итем актор->хранилище
+function StorageViewer:StartTransferActorToStorage()
+	local selectedIndex=self.actor_inv.list:GetSelectedItem()
+	local selectedItem=self.actor_inv.list:GetItem(selectedIndex)
+	if selectedItem==nil or selectedItem.separator then
+		return
+	end
+	local itemSection=selectedItem.section
+	local itemType=selectedItem.itemType
+	if not db.debug_mode then
+		--можем ли вообще переносить. в связи с групповым переносом - проверяем на любой итем в группе
+		if itemType==1 then--проверяем оружие
+			if string.find(itemSection,"wpn_gravigun")==nil and string.find(itemSection,"wpn_shmel")==nil then --игнорим гравипушку,РПО
+				for id in pairs(self.ActorInventory[itemType][itemSection].itemsIds) do 
+					local weapon=level_object(id)
+					if weapon:get_ammo_in_magazine() > 0 then 
+						self:ShowMessageBox("Разрядите оружие перед перемещением.")	
+						return
+					end
+					--собираем инфу о обвесах
+					if safe_utils.GetAddonsStatus(weapon) then
+						self:ShowMessageBox("Снимите обвесы перед перемещением.")	
+						return
+					end
+				end
+			end
+		elseif string.find(itemSection,"player") ~= nil then --проверяем флешку в плеере
+			local flash=player_ogg.work_flash_return()
+			if flash~=nil and flash~=0 then
+				self:ShowMessageBox("Отключите флешку от плеера перед перемещением.")	
+				return
+			end
+		elseif 	string.find(itemSection,"arc_art_box_") ~= nil then --артефакты в боксе для артов
+			for id in pairs(self.ActorInventory[itemType][itemSection].itemsIds) do
+				local arts=arc_containers.get_container_arts(id) --получаем список артов в контейнере
+				if arts~=nil then
+					for i=1,arc_containers.get_container_slots(arc_containers.get_inv_index(id)),1 do
+						if arts[i] and arts[i]~="_" then --есть артефакт в контейнере в каком нибуть слоте
+							self:ShowMessageBox("Освободите контейнер от артефактов перед перемещением.")	
+							return
+						end
+					end
+				end
+			end
+		end
+	end
+	--проверка вместимости
+	if self.StorageInventory[itemType][itemSection]==nil then --новая секция, для существующей уже посчитано
+		local dataSize=itemSection:len()+1+1+2
+		if self.binderDataSize+dataSize > MAXCAPACITY then
+			self:ShowMessageBox("Рюкзак полон.")	
+			return
+		else	
+			self.binderDataSize=self.binderDataSize+dataSize
+		end		
+	end
+	local itemsCount=selectedItem.count
+	local transferCount=1
+	local boxSize=1
+	--считаем сколько нужно переместить
+	if itemType==2 then --патроны перемещаем по пачкам
+		boxSize=systemIniReader:readUInt(itemSection,"box_size")
+		if not boxSize then
+			boxSize=1
+		end
+		transferCount=boxSize
+	end	
+	--смотрим, нажаты ли модификаторы
+	if (self.shiftPressed and not self.controlPressed) then
+		transferCount=boxSize*3
+	elseif (not self.shiftPressed and self.controlPressed) then
+		transferCount=boxSize*10
+		end
+	if (self.shiftPressed and self.controlPressed) then
+		transferCount=itemsCount
+	end
+	--так, на всякий случай...
+	if (transferCount>itemsCount) then
+			transferCount=itemsCount
+	end
+	-- выбираем ids для удаления итемов из инвентаря
+	local itemsIds=self.ActorInventory[itemType][itemSection].itemsIds
+	local remove_ids={}
+	local remove_count=0
+	if itemType==2 then -- удаление патронов
+		local t1={} --сортируем пачки патронов по убыванию, вначале полные
+		for id in pairs(itemsIds) do
+			t1[#t1+1]=id
+		end
+		table.sort(t1,
+			function(id1,id2) 
+				return safe_utils.GetAmmoSizeById(id1) > safe_utils.GetAmmoSizeById(id2)
+			end)
+		for i,id in ipairs(t1) do
+			remove_ids[id]=true
+			remove_count=remove_count+safe_utils.GetAmmoSizeById(id)
+			if remove_count>=transferCount then --набрали нужное количество из пачек... либо немного перебрали неполной пачкой
+				transferCount=remove_count
+				break
+			end
+		end
+	else --удаление других итемов
+		for id in pairs(itemsIds) do 
+			remove_ids[id]=true
+			remove_count=remove_count+1
+			if remove_count==transferCount then
+				break
+			end		
+		end
+	end
+
+	--удаляем итемы с онлайна и инвентаря актора... спасибо всем за повешенные калбеки на все что не лень
+	--ачивменты работают? лень проверять....
+	for remove_id in pairs(remove_ids)	do 
+		local remove_obj = server_object(remove_id)
+		if remove_obj then
+			ai:set_switch_online(remove_obj.id, false) 
+			ai:set_switch_offline(remove_obj.id, true)
+			release(remove_obj, true)
+			self.ActorInventory[itemType][itemSection].itemsIds[remove_id]=nil
+		end
+	end
+	
+	if itemsCount>transferCount then  --по сути дела - сам перенос :)
+		selectedItem:set_count(itemsCount-transferCount)
+		self.ActorInventory[itemType][itemSection].count=itemsCount-transferCount
+	elseif itemsCount<=transferCount then
+		transferCount=itemsCount
+		self.ActorInventory[itemType][itemSection]=nil
+		self.actor_inv.list:RemoveItem(selectedIndex)
+	end
+	self.actor_inv.list:ShowSelectedItem(false)
+	-- добавляем итемы в массив стораджа и перерисовываем по текущему фильтру
+	self:InsertToTableGrouped(self.StorageInventory[itemType],itemSection,itemType,nil,transferCount)
+	if self.storage_inv.filter.index~=itemType and changeFilterOnTransfer then
+		self:FilterSelectionChange(self.storage_inv,true,itemType)
+	else
+		self:FilterSelectionChange(self.storage_inv,true,self.storage_inv.filter.index)
+	end
+	--прогрес заполненности хранилища 
+	self.storage_inv.background.frame_filling:SetProgressPos(self.binderDataSize)
+	--обновление веса инвентаря ГГ	
+	local weightSingle,weightTotal=self:GetWeight(parseConditionFromSection(itemSection),itemType,transferCount)
+	self.currentWeight=math.round(self.currentWeight-weightTotal,1)
+	self.actor_inv.weight_caption:SetText("Всего "..self.currentWeight.." из "..self.maxWeight.." кг")
+end
+
+--выбрали чего то в листе актора
+function StorageViewer:InventoryListClickedActor()
+	self.storage_inv.list:ShowSelectedItem(false)
+	self:InventoryListClicked(self.actor_inv)
+end
+
+--выбрали чего то в листе хранилища
+function StorageViewer:InventoryListClickedStorage()
+	self.actor_inv.list:ShowSelectedItem(false)
+	self:InventoryListClicked(self.storage_inv)
+end
+
+--рисуем информацию о выбранном итеме
+function StorageViewer:InventoryListClicked(inventoryControl)
+	local selectedIndex=inventoryControl.list:GetSelectedItem()
+	local selectedItem=inventoryControl.list:GetItem(selectedIndex)
+	self.info_box.scroll:ScrollToBegin()
+	if self.lastSelectedWindow~=nil then --уже чего то выбиралось ранее
+		self.info_box.item_icon:DetachChild(self.lastSelectedWindow)
+		self.info_box.frame_name:SetText("")
+		self.lastSelectedWindow=nil
+		self.info_box.frame_condition:SetProgressPos(0)
+		self.info_box.frame_description:SetText("")
+		self.info_box.frame_cost:SetText("")
+		self.info_box.frame_weight:SetText("")
+	end
+	if selectedItem.separator then --пропускаем выбранный разделитель
+		inventoryControl.list:ShowSelectedItem(false)
+		return
+	end
+	local section,condition=parseConditionFromSection(selectedItem.section)
+	self.info_box.frame_condition:SetProgressPos(tonumber(condition)) --состояние
+	local texture_rect={
+				x=systemIniReader:readUInt(section, "inv_grid_x")*50,
+				y=systemIniReader:readUInt(section, "inv_grid_y")*50,
+				width=systemIniReader:readUInt(section, "inv_grid_width")*50,
+				height = systemIniReader:readUInt(section, "inv_grid_height")*50
+			}
+	self.lastSelectedWindow=CUIStatic() --иконка
+	self.lastSelectedWindow:SetWindowName(selectedItem.section)
+	self.lastSelectedWindow:InitTexture("ui\\ui_icon_equipment")
+	self.lastSelectedWindow:SetOriginalRect(texture_rect.x,texture_rect.y,texture_rect.width,texture_rect.height)	
+	self.lastSelectedWindow:SetStretchTexture(true)
+	self.lastSelectedWindow:SetAutoDelete(true) 
+	local calc_x=self.info_box.item_icon:GetWidth()/2-texture_rect.width/2
+	local calc_y=self.info_box.item_icon:GetHeight()/2-texture_rect.height/2
+	self.lastSelectedWindow:Init(calc_x,calc_y,texture_rect.width,texture_rect.height)
+	self.info_box.item_icon:AttachChild(self.lastSelectedWindow)		
+	--local descFromIni=suGet_TS_FromIni(section,"inv_name") --название
+	local descFromIni=systemIniReader:readTranslatedString(section,"inv_name")
+	if not descFromIni then
+		descFromIni="Error in configs for section "..section
+	end
+	self.info_box.frame_name:SetText(descFromIni)
+	--descFromIni=suGet_TS_FromIni(section,"description") --описание
+	descFromIni=systemIniReader:readTranslatedString(section,"description")
+	if not descFromIni then
+		descFromIni="No description field in section "..section
+	end
+	--descFromIni="%c[ui_clr_1]"..descFromIni.."%c[default]"
+	if selectedItem.itemType == 7 then
+		local artInfo=artefactInformer:GetArtefactInfo(section)
+		if artInfo~="" then
+			descFromIni=artInfo.." \\n"..descFromIni
+		end
+		self.info_box.frame_description:SetText(descFromIni)
+	else
+		self.info_box.frame_description:SetText(descFromIni)
+	end
+	local cost=systemIniReader:readUInt(section,"cost") --стоимость
+	if not cost then
+		cost="No cost field in section "..section
+	end
+	self.info_box.frame_cost:SetText(" Стоимость: "..cost.." RU")
+	local weight,weightTotal=self:GetWeight(section,selectedItem.itemType,selectedItem.count)
+	self.info_box.frame_weight:SetText(" Вес: "..weight.." кг / Всего: "..weightTotal.." кг")
+	inventoryControl.list:ShowSelectedItem(true)
+end
+
+--возвращаем вес итемов
+function StorageViewer:GetWeight(section,itemType,itemsCount)
+	if itemType==nil then
+		itemType=1
+	end
+	if itemsCount==nil then
+		itemsCount=1
+	end
+	local weight=systemIniReader:readFloat(section,"inv_weight") --вес
+	if not weight then
+		weight=0
+	end
+	if itemType==2 then --считаем вес патронов
+		local boxSize=systemIniReader:readUInt( section,"box_size")
+		if not boxSize then
+			boxSize=1
+		end
+		local boxes,wo_boxes=math.modf(itemsCount/boxSize) --количество пачек
+		wo_boxes=math.round(wo_boxes,2)
+		local weightBox=weight*boxes
+		local wwob=math.round(weight*wo_boxes,2)
+		weightBox=math.round(weightBox+wwob,2)
+		return math.round(weight,2),weightBox 
+	else
+		return math.round(weight,2),math.round(weight*itemsCount,2)
+	end
+end
+
+--показать / скрыть список фильтров
+function StorageViewer:FilterButtonClicked()
+	local filter_control=self
+	filter_control.list_frame:Show(not filter_control.list_frame:IsShown())
+end
+
+--изменился фильтр хранилища
+function StorageViewer:FilterSelectionChangeStorage()
+	self:FilterSelectionChange(self.storage_inv)
+end
+
+--изменился фильтр актора
+function StorageViewer:FilterSelectionChangeActor()
+	self:FilterSelectionChange(self.actor_inv)
+end
+
+--изменение фильтра
+function StorageViewer:FilterSelectionChange(inventoryControl,forceReselect,forceIndex)
+	local filter_control=inventoryControl.filter
+	local index 
+	if forceIndex==nil then
+		index = filter_control.list_frame.list:GetSelectedItem()
+	else
+		index=forceIndex
+	end
+	if forceReselect==nil then --по умолчанию не перерисовываем при выборе выбранного фильтра
+		forceReselect=false
+	end
+	if index==-1 then
+		index=0
+	end
+	local filtered_inventory_info=filter_control.parent.inventory_info
+	filter_control.list_frame:Show(false)
+	if (filter_control.index ~= index or forceReselect) then
+		filter_control:SetText(filter_control.list_frame.list:GetItem(index).desc)
+		inventoryControl.list:RemoveAll()
+		filter_control.index=index
+		if filtered_inventory_info.desc=="actorinventory" then --попытка унифицировать
+			self:PaintActorInventoryItems(filter_control.index)	
+		else
+			self:PaintStorageInventoryItems(filter_control.index)	
+		end
+	end
+end
+
+function StorageViewer:OnKeyboard(dik, keyboard_action)  
+	CUIScriptWnd.OnKeyboard(self,dik,keyboard_action)
+	if keyboard_action == ui_events.WINDOW_KEY_PRESSED then
+		if dik==DIK_keys.DIK_LSHIFT or dik==DIK_keys.DIK_RSHIFT then --модификаторы переноса
+			self.shiftPressed=true
+		end	
+		if dik==DIK_keys.DIK_LCONTROL or dik==DIK_keys.DIK_RCONTROL then
+			self.controlPressed=true
+		end		
+		local dikUseKey=hotkeys.bind_to_keyname(key_bindings.kUSE) --определяем клавишу "использовать"
+		if dikUseKey and #dikUseKey>0 then
+			dikUseKey="DIK_"..dikUseKey[1]:upper()
+		else
+			dikUseKey="DIK_ESCAPE" --по умолчанию выход esc
+		end
+		if (dik == DIK_keys.DIK_ESCAPE) or (dik == DIK_keys[dikUseKey]) then --выход
+			self:CloseViewer()
+		end
+	elseif keyboard_action==ui_events.WINDOW_KEY_RELEASED then
+		if dik==DIK_keys.DIK_LSHIFT or dik==DIK_keys.DIK_RSHIFT then --модификаторы переноса
+			self.shiftPressed=false
+		end		
+		if dik==DIK_keys.DIK_LCONTROL or dik==DIK_keys.DIK_RCONTROL then
+			self.controlPressed=false
+		end		
+	end
+	return true
+end
+
+function StorageViewer:__finalize()
+end
+
+
+
+--итемы для списка инвентаря
+class "separator" (CUIListItemEx) --разделитель
+function separator:__init(index,paintControl)  super()
+	self.mainRect={x=0,y=0,w=324,h=19}
+	if paintControl then
+		self.mainRect.w=paintControl.background:GetWidth()
+		self.mainRect.h=paintControl.background.column1:GetHeight()
+	end
+	self:SetWndRect(self.mainRect.x,self.mainRect.y,self.mainRect.w,self.mainRect.h)
+	self.column1= CUIStatic()
+	self.column1:SetAutoDelete(true)
+	self.column1:SetWndRect(self.mainRect.x,self.mainRect.y,self.mainRect.w,self.mainRect.h)
+	self.column1:SetFont(GetFontLetterica18Russian())
+	self.column1:SetTextAlign(CGameFont.alCenter)
+	self.column1:SetText(game.translate_string("txt_safe_filter_"..index))
+	self:AttachChild(self.column1)
+	self.separator=true
+end
+
+class "InventoryListItem" (CUIListItemEx) --основной итем, строиться на основе координат из нарисованных столбцов
+function InventoryListItem:__init(description,count,section,itemType,condition,paintControl) super() --как же не хватает getRect
+	self.section=section
+	self.count=count
+	self.itemType=itemType
+	self.mainRect={x=0,y=0,w=324,h=19}
+	if paintControl then
+		self.mainRect.w=paintControl.background:GetWidth()
+		self.mainRect.h=paintControl.background.column1:GetHeight()
+	end
+	self:SetWndRect(self.mainRect.x,self.mainRect.y,self.mainRect.w,self.mainRect.h)
+	self.column1Rect={x=0,y=0,w=paintControl.background.column1:GetWidth()-5,h=paintControl.background.column1:GetHeight()}
+	self.column1= CUIStatic()
+	self.column1:SetAutoDelete(true)
+	self.column1:SetWndRect(self.column1Rect.x,self.column1Rect.y,self.column1Rect.w,self.column1Rect.h)
+	self.column1:SetFont(GetFontLetterica18Russian())
+	self.column1:SetTextColor(255,216,186,140)
+	self.column1:SetTextAlign(CGameFont.alLeft)
+	self.column1:ClipperOn()
+	if description then
+		-- if description:len() > 40 then
+			-- description=description:sub(1,37).."..."
+		-- end
+		self.column1:SetText(description)
+	else
+		self.column1:SetText("nil")
+	end
+	self:AttachChild(self.column1)
+	
+	--где метод getwindowrect, а, пысы??? 
+	--нельзя получить координату X - посему на границе предыдущего
+	self.column2Rect={x=self.column1Rect.x+self.column1Rect.w-5,y=0,w=paintControl.background.column2:GetWidth()+5,h=paintControl.background.column2:GetHeight()}	
+	if not ignoreFullConditionItem or condition~=100 then
+		if self.itemType==1 or self.itemType==4 then	--выводим состояние для всего оружия и брони
+			self.column2= CUIStatic()
+			self.column2:SetAutoDelete(true) 
+			self.column2:SetWndRect(self.column2Rect.x,self.column2Rect.y,self.column2Rect.w,self.column2Rect.h)
+			self.column2:SetFont(GetFontLetterica18Russian())
+			self.column2:SetTextAlign(CGameFont.alCenter)
+			self.column2:SetText(condition.."%")
+			self:AttachChild(self.column2)
+		end
+	end
+	
+	
+	self.column3= CUIStatic()
+	self.column3:SetAutoDelete(true)
+	self.column3Rect={x=self.column2Rect.x+self.column2Rect.w+10,y=0,w=paintControl.background.column3:GetWidth(),h=paintControl.background.column3:GetHeight()}
+	self.column3:SetWndRect(self.column3Rect.x,self.column3Rect.y,self.column3Rect.w,self.column3Rect.h)
+	self.column3:SetFont(GetFontLetterica18Russian())
+	self.column3:SetTextColor(255,216,186,140)
+	self.column3:SetTextAlign(CGameFont.alLeft)
+	if count then
+		self.column3:SetText(tostring(count))
+	else	
+		self.column3:SetText("nil")
+	end
+	self:AttachChild(self.column3)
+end
+
+function InventoryListItem:set_count(count)
+	if count==nil then
+		count=1
+	end
+	self.count=count
+	self.column3:SetText(tostring(count))
+end
+
+-- итем для фильтра
+class "FilterListItem" (CUIListItemEx)
+function FilterListItem:__init(desc) super()
+	self.mainRect={x=0,y=0,w=150,h=19}
+	self:SetWndRect(self.mainRect.x,self.mainRect.y,self.mainRect.w,self.mainRect.h)
+	self.cl1= CUIStatic()
+	self.cl1:SetAutoDelete(true)
+	self:AttachChild(self.cl1)
+	self.cl1:SetWndRect(self.mainRect.x+3,0,self.mainRect.w-3,self.mainRect.h-3)
+	self.cl1:SetFont(GetFontLetterica18Russian())
+	self.cl1:SetTextColor(255,216,186,140)
+	self.cl1:SetText(desc)
+	self.desc=desc
+end
+

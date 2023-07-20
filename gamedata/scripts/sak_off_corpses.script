@@ -1,0 +1,177 @@
+-- Уборщик трупов и мусора
+local corpses = {}		-- трупы сталкеров
+local stalkers = {}		-- живые сталкеры
+local parents = {}		-- id трупов с неудаляемыми предметами
+
+local outfit_additional_max = 1 -- количество бронежилетов, которые сталкеры оставят себе про запас (останется самый ценный)
+local outfits = {}
+
+function off_corpses()
+	meceniy_outfit.is_pleer = false
+
+	local actor_level = object_level(db.actor)
+
+	local obj, obj_clsid, obj_level, obj_name, obj_sect, strn_id, strn
+	
+	-- главный цикл
+	for a=1,65535 do
+		obj = server_object(a)
+		
+		if obj then
+			obj_level = object_level(obj)
+			if obj_level ~= actor_level then
+				obj_id = obj.id
+				obj_parent_id = obj.parent_id
+				obj_clsid = obj:clsid()
+				obj_name = obj:name()
+				obj_sect = obj:section_name()
+				if (string.find(obj_name,"m_phantom")) then
+					release(obj)
+				elseif IAmAStalker[obj_clsid] then				-- сталкер
+					if obj:alive() then 
+						-- живой сталкер - в список на раскуркуливание
+						if not protected_items.is_no_offline_alife_npc(obj_sect) then
+							table.insert(stalkers, obj_id)
+						end
+					else
+						-- проверка трупа сталкера, если не в исключениях - в таблицу и бум удалять
+						if protected_items.is_corps_keep_by_story_id(obj)==false and
+							sak.can_be_resurrected(obj)==false and
+							protected_items.corps_keep(obj)==false
+						then 
+							if obj.m_story_id > 9510 then -- меньше 9510 трупы пысовские - оставляем для антуража
+								--	console:execute("load ~#I#:"..string.format("Удаляем "..obj_name))
+								corpses[obj_id] = obj
+							end
+						else
+							--	console:execute("load ~#I#:"..string.format("Не удаляем "..obj_name))
+						end
+					end
+				
+				-- монстр
+				elseif IAmAMonster[obj_clsid] then
+					if not obj:alive() then
+						--	console:execute("load ~#I#:"..string.format("Удаляем монстра "..obj_name))
+						release(obj)
+					end
+
+				-- предмет валяется на земле
+				elseif obj_parent_id == 65535 then
+
+					local lvl_name=ai:level_name(obj_level)
+					-- оружие на земле убираем все подряд кроме исключений
+					if string.find(obj_name,"wpn_") or string.find(obj_name,"grenade_") then
+						if protected_items.wpn_keep(obj) == false then
+							--	console:execute("load ~#I#:"..string.format("Удаляем оружие "..obj_name))
+							release(obj)
+						else
+							-- Здесь можно увидеть, валяется ли на земле исключенное из уборки оружие
+							--	console:execute("load ~#I#:"..string.format("Не удаляем оружие "..obj_name))
+						end
+
+					-- проблемые арты в Пещере
+					elseif (lvl_name == "peshera") and (string.find(obj_name,"af_ameba_slime") or string.find(obj_name,"af_ameba_slug") or string.find(obj_name,"af_ameba_mica"))
+					then
+						--	console:execute("load ~#I#:"..string.format("Удаляем в Пещере "..obj_name))
+						release(obj)
+
+					-- проблемые арты в СД
+					elseif (lvl_name == "lost_village") and (string.find(obj_name,"af_life_heart") or string.find(obj_name,"af_rusty_thorn") or string.find(obj_name,"af_rusty_sea-urchin") or string.find(obj_name,"af_rusty_kristall")) 
+					then
+						--	console:execute("load ~#I#:"..string.format("Удаляем в Старой Деревне "..obj_name))
+						release(obj)
+						
+					-- проблемые арты в X-5
+					elseif (lvl_name == "l38u_labx5") and (string.find(obj_name,"af_rusty_thorn") or string.find(obj_name,"af_rusty_sea-urchin") or string.find(obj_name,"af_rusty_kristall"))
+					then
+						--	console:execute("load ~#I#:"..string.format("Удаляем в Лаборатории X-5 "..obj_name))
+						release(obj)
+						
+					-- трупы ворон
+					elseif string.find(obj_name,"mutant_crow") then
+						-- console:execute("load ~#I#: Удаляем труп вороны "..obj_id)
+						release(obj)
+
+					-- фикс рандомного невозврата тайников в онлайн - принудительно возвращаем
+					elseif obj_clsid == clsid.inventory_box and obj_sect ~= "m_inventory_box" and transparent_treasure.IsChangeable(obj_sect) then
+						-- console:execute("load ~#I#: Возвращаем тайник в онлайн "..obj_id)
+						ai:set_switch_online(obj_id, true)
+						ai:set_switch_offline(obj_id, true)
+					end
+					
+				-- предмет в инвентаре, но не у актора
+				elseif obj_parent_id ~= 0 then
+					if config:line_exist(obj_sect, "outfit") and not string.find(obj_name, "meceniy_outfit_new") and not string.find(obj_name, "exo_mil_exoskeleton")
+					then
+						-- броники у сталкеров
+						if not outfits[obj_parent_id] then outfits[obj_parent_id] = {} end
+						table.insert(outfits[obj_parent_id], obj)
+						--	console:execute("load ~#I#: Броник на чистку "..obj_name)
+					else
+						if protected_items.items_keep(obj)
+							or protected_items.wpn_keep(obj)
+							or protected_items.is_unique_wpn_keep(obj_sect)
+						then
+							-- если предмет нельзя удалять, запомним id трупа
+							parents[obj_parent_id] = true
+						end
+					end
+				end
+				
+				-- фикс кривых smart_terrain
+				if (IAmAStalker[obj_clsid] or IAmAMonster[obj_clsid]) and obj:alive() then
+					strn_id = obj:smart_terrain_id()
+					if strn_id ~= 65535 then
+						strn = server_object(strn_id)
+
+						if strn and strn:clsid() ~= clsid.smart_terrain then
+							console:execute("load ~~~ Уборщик: Обнаружена привязка к несуществующему smart_terrain: "..obj_name..", smart_terrain_id: "..tostring(strn_id)..". Привязка удалена.")
+							obj:clear_smart_terrain()
+						end
+					end
+				end
+			end
+		end
+	end -- for
+		
+	-- зачистка трупов сталкеров
+	for id,obj in pairs(corpses) do
+		-- удаляем только трупы без неудаляемых предметов
+		if not parents[id] then
+			-- console:execute("load ~#I#:"..string.format("corpses: Удалили "..obj:name()))
+			release(obj)
+		end
+	end
+	
+	-- раскуркуливание живых сталкеров по броникам
+	local outfits_on_stalker, money
+	for _,id in ipairs(stalkers) do
+		if outfits[id] and #outfits[id] > outfit_additional_max then
+			-- больше броников чем нужно - чистим
+			table.sort(outfits[id], max_outfit)
+			
+			outfits_on_stalker = 0
+			money = 0
+			for _,otf in ipairs(outfits[id]) do
+				outfits_on_stalker = outfits_on_stalker+1
+				if outfits_on_stalker > outfit_additional_max then
+					money = money+math.floor(amk_offline_alife.get_item_cost(otf)/10)
+					--	console:execute("load ~#I#: Удаляем броник "..otf:name())
+					release(otf)
+				end
+			end
+			
+			-- даем сталкеру деньги
+			if money > 0 then
+				local npc = server_object(id)
+				local tbl = netpacket:get(npc) 
+				tbl.money = tbl.money+money
+				netpacket:set(tbl, npc) 
+			end
+		end
+	end
+end 
+
+function max_outfit(i1,i2) -- возвращает true если i1 больше i2 (самые ценные в начале таблицы)
+	return amk_offline_alife.get_item_cost(i1) > amk_offline_alife.get_item_cost(i2)
+end

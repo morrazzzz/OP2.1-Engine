@@ -1,0 +1,304 @@
+<ui_texture>
+    <file_name>ui\ui_iconsTotal</file_name>
+    <texture id="ui_iconsTotal_found_money" 	x="0" y="0" width="83" height="47" />
+    <texture id="ui_iconsTotal_lost_money" 		x="0" y="47" width="83" height="47" />    
+    <texture id="ui_iconsTotal_found_thing" 	x="0" y="94" width="83" height="47" />
+    <texture id="ui_iconsTotal_lost_thing" 		x="0" y="141" width="83" height="47" />
+    <texture id="ui_iconsTotal_find_item"		x="0" y="329" width="83" height="47" />
+    <texture id="ui_iconsTotal_chain"			x="0" y="188" width="83" height="47" />
+    <texture id="ui_iconsTotal_kill_stalker" 	x="0" y="235" width="83" height="47" />
+    <texture id="ui_iconsTotal_artefact" 		x="0" y="282" width="83" height="47" />
+    <texture id="ui_iconsTotal_artefacts" 		x="0" y="329" width="83" height="47" />
+    <texture id="ui_iconsTotal_eliminate_lager" x="0" y="376" width="83" height="47" />
+    <texture id="ui_iconsTotal_deficit" 		x="0" y="423" width="83" height="47" /> 
+	<texture id="ui_iconsTotal_monster_part" 	x="0" y="470" width="83" height="47" />
+    <texture id="ui_iconsTotal_weapons" 		x="0" y="517" width="83" height="47" />
+    <texture id="ui_iconsTotal_mutant" 			x="0" y="564" width="83" height="47" />
+    <texture id="ui_iconsTotal_technique" 		x="0" y="611" width="83" height="47" />
+    <texture id="ui_iconsTotal_grouping" 		x="0" y="658" width="83" height="47" />
+    <texture id="ui_iconsTotal_locations" 		x="0" y="705" width="83" height="47" />
+	<texture id="ui_iconsTotal_dead" 			x="0" y="752" width="83" height="47" />
+	<texture id="ui_iconsTotal_radio" 			x="0" y="799" width="83" height="47" />
+    <texture id="ui_iconsTotal_taynik" 			x="0" y="846" width="83" height="47" />
+	<texture id="ui_iconsTotal_bunker" 			x="0" y="893" width="83" height="47" />
+	<texture id="ui_iconsTotal_agroprom" 		x="0" y="940" width="83" height="47" />
+
+    <texture id="ui_iconsTotal_storyline_eliminate_gunslinger" 	x="83" y="0" width="83" height="47" />
+    <texture id="ui_iconsTotal_tutorial_find_artefact" 			x="83" y="47" width="83" height="47" />
+    <texture id="ui_iconsTotal_tutorial_help_wounded" 			x="83" y="94" width="83" height="47" />
+    <texture id="ui_iconsTotal_esc_dinamit_to_volk" 			x="83" y="141" width="83" height="47" />
+    <texture id="ui_iconsTotal_esc_help_wounded_from_raid" 		x="83" y="188" width="83" height="47" />
+    <texture id="ui_iconsTotal_garbage_meet_stalker" 			x="83" y="235" width="83" height="47" />
+    <texture id="ui_iconsTotal_agroprom_get_military_documents" x="83" y="282" width="83" height="47" />
+    <texture id="ui_iconsTotal_agr_agr_help_krot" 				x="83" y="329" width="83" height="47" />
+    <texture id="ui_iconsTotal_gar_help_dymon" 					x="83" y="376" width="83" height="47" />
+    <texture id="ui_iconsTotal_gar_car_graveyard_quest" 		x="83" y="423" width="83" height="47" />
+    <texture id="ui_iconsTotal_esc_blockpost_case_to_trader" 	x="83" y="470" width="83" height="47" />
+    <texture id="ui_iconsTotal_esc_defend_lager" 				x="83" y="517" width="83" height="47" />
+    <texture id="ui_iconsTotal_gar_kill_boars" 					x="83" y="564" width="83" height="47" />
+    <texture id="ui_iconsTotal_doctor_meet" 					x="83" y="611" width="83" height="47" />
+    <texture id="ui_iconsTotal_val_captive_help" 				x="83" y="658" width="83" height="47" />
+    <texture id="ui_iconsTotal_val_sos_help" 					x="83" y="705" width="83" height="47" />
+    <texture id="ui_iconsTotal_val_prisoner_help" 				x="83" y="752" width="83" height="47" />
+    <texture id="ui_iconsTotal_bar_darklab_documents" 			x="83" y="799" width="83" height="47" />
+    <texture id="ui_iconsTotal_bar_darklab_documents2" 			x="83" y="846" width="83" height="47" />
+    <texture id="ui_iconsTotal_yan_find_scientist" 				x="83" y="893" width="83" height="47" />
+    <texture id="ui_iconsTotal_yan_find_vasilyev_task" 			x="83" y="940" width="83" height="47" />
+
+    <texture id="ui_iconsTotal_yan_kill_brain_task" 		x="166" y="0" width="83" height="47" />
+    <texture id="ui_iconsTotal_mil_kill_sniper" 			x="166" y="47" width="83" height="47" />
+    <texture id="ui_iconsTotal_mil_kill_lukash" 			x="166" y="94" width="83" height="47" />
+    <texture id="ui_iconsTotal_kill_mil_hunters_task" 		x="166" y="141" width="83" height="47" />
+    <texture id="ui_iconsTotal_mil_kill_controller" 		x="166" y="188" width="83" height="47" />
+    <texture id="ui_iconsTotal_mil_lukash_job" 				x="166" y="235" width="83" height="47" />
+    <texture id="ui_iconsTotal_mil_mad_job" 				x="166" y="282" width="83" height="47" />
+    <texture id="ui_iconsTotal_mil_courier_job" 			x="166" y="329" width="83" height="47" />
+    <texture id="ui_iconsTotal_bar_radar_deactivate" 		x="166" y="423" width="83" height="47" />
+    <texture id="ui_iconsTotal_sar_monolith" 				x="166" y="470" width="83" height="47" />
+    <texture id="ui_iconsTotal_sar_secret_lab" 				x="166" y="517" width="83" height="47" />
+    <texture id="ui_iconsTotal_agr_meet_krot_band" 			x="166" y="564" width="83" height="47" />
+    <texture id="ui_iconsTotal_agr_find_ghost" 				x="166" y="611" width="83" height="47" />
+    <texture id="ui_iconsTotal_dar_codedoor_1" 				x="166" y="658" width="83" height="47" />
+    <texture id="ui_iconsTotal_dar_codedoor_2" 				x="166" y="705" width="83" height="47" />
+    <texture id="ui_iconsTotal_yan_kill_brain_task_2" 		x="166" y="752" width="83" height="47" />
+    <texture id="ui_iconsTotal_yan_find_scientist_semenov" 	x="166" y="799" width="83" height="47" />
+    <texture id="ui_iconsTotal_yan_scientist_return_task" 	x="166" y="846" width="83" height="47" />
+    <texture id="ui_iconsTotal_yan_provodnik_task" 			x="166" y="893" width="83" height="47" />
+    <texture id="ui_iconsTotal_mil_blockpost_job" 			x="166" y="940" width="83" height="47" />
+
+    <texture id="ui_iconsTotal_mil_freedom_rg6_task" 		x="249" y="0" width="83" height="47" />
+    <texture id="ui_iconsTotal_mil_go_to_miser" 			x="249" y="47" width="83" height="47" />
+    <texture id="ui_iconsTotal_bar_resque_information" 		x="249" y="94" width="83" height="47" />
+	<texture id="ui_iconsTotal_bar_resque_information_2" 	x="249" y="141" width="83" height="47" />
+    <texture id="ui_iconsTotal_bar_hunter_rifle" 			x="249" y="188" width="83" height="47" />
+    <texture id="ui_iconsTotal_bar_crazy_veterans_quest" 	x="249" y="235" width="83" height="47" />
+    <texture id="ui_iconsTotal_bar_dolg_base_rules" 		x="249" y="282" width="83" height="47" />
+    <texture id="ui_iconsTotal_bar_dolg_svoboda_ambush_quest" x="249" y="329" width="83" height="47" />
+    <texture id="ui_iconsTotal_bar_x16_documents" 			x="249" y="376" width="83" height="47" />
+    <texture id="ui_iconsTotal_sar_monolith_destroy" 		x="249" y="423" width="83" height="47" />
+    <texture id="ui_iconsTotal_sar_warlab" 					x="249" y="470" width="83" height="47" />
+    <texture id="ui_iconsTotal_aes_military_task" 			x="249" y="517" width="83" height="47" />
+	<texture id="ui_iconsTotal_defend_lager" 				x="249" y="564" width="83" height="47" />
+	<texture id="ui_iconsTotal_esc_trader_job" 				x="249" y="611" width="83" height="47" />
+	<texture id="ui_iconsTotal_bar_barman_job" 				x="249" y="658" width="83" height="47" />
+	<texture id="ui_iconsTotal_yan_scientist_job" 			x="249" y="705" width="83" height="47" />
+	<texture id="ui_iconsTotal_find_railroad_passage" 		x="249" y="752" width="83" height="47" />
+	<texture id="ui_iconsTotal_rad_get_to_aes" 				x="249" y="799" width="83" height="47" />
+	<texture id="amk_ui_flame_quest" 						x="249" y="846" width="83" height="47"/>
+	<texture id="ui_iconsTotal_generators" 					x="249" y="893" width="83" height="47" />
+	<texture id="ui_iconsTotal_nodata" 						x="249" y="940" width="83" height="47" />
+
+	<texture id="ui_iconsNpc_soldier_bandana_6" 		x="332" y="0" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_neytral_rukzak_4" 	x="332" y="47" width="83" height="47"/>
+	<texture id="ui_iconsNpc_soldier_beret" 			x="332" y="94" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_neytral_balon_6" 	x="332" y="141" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_bar_security" 		x="332" y="188" width="83" height="47"/>
+	<texture id="ui_iconsNpc_barman" 					x="332" y="235" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_do_balon_1" 		x="332" y="282" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_do_balon_5" 		x="332" y="329" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_do_balon_3" 		x="332" y="376" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_do_komandir" 		x="332" y="423" width="83" height="47"/>
+	<texture id="ui_iconsNpc_ucheniy_2" 				x="332" y="470" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_ki_head_5" 		x="332" y="517" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_bandit_borov" 		x="332" y="564" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_do_balon_7" 		x="332" y="611" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_do_balon_6" 		x="332" y="658" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_neytral_balon_4" 	x="332" y="705" width="83" height="47"/>
+	<texture id="ui_iconsNpc_soldier_beret_1" 			x="332" y="752" width="83" height="47"/>
+	<texture id="ui_iconsNpc_green_stalker_8" 			x="332" y="799" width="83" height="47"/>
+	<texture id="ui_iconsNpc_green_stalker_1" 			x="332" y="846" width="83" height="47"/>
+	<texture id="ui_iconsNpc_trader" 					x="332" y="893" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_neytral_balon_1" 	x="332" y="940" width="83" height="47"/>
+	<texture id="ui_iconsNpc_kostya" 					x="332" y="1598" width="83" height="47"/>
+
+	<texture id="ui_iconsNpc_stalker_neytral_balon_5" 	x="415" y="0" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_do_balon_4" 		x="415" y="47" width="83" height="47"/>
+	<texture id="ui_iconsNpc_green_stalker_11" 			x="415" y="94" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_neytral_hood_4" 	x="415" y="141" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_sv_balon_10" 		x="415" y="188" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_sv_leader" 		x="415" y="235" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_sv_max" 			x="415" y="282" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_sv_cook" 			x="415" y="329" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_sv_balon_1" 		x="415" y="376" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_ki_informator" 	x="415" y="423" width="83" height="47"/>
+	<texture id="ui_iconsNpc_soldier_beret_2" 			x="415" y="470" width="83" height="47"/>
+	<texture id="ui_iconsNpc_soldier_beret_3" 			x="415" y="517" width="83" height="47"/>
+	<texture id="ui_iconsNpc_soldier_beret_5" 			x="415" y="564" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_neytral_rukzak_1" 	x="415" y="611" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_neytral_rukzak_3" 	x="415" y="658" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_prizrak" 			x="415" y="705" width="83" height="47"/>
+	<texture id="ui_iconsNpc_green_stalker_7" 			x="415" y="752" width="83" height="47"/>
+	<texture id="ui_iconsNpc_stalker_sv_rukzak_1" 		x="415" y="799" width="83" height="47"/>
+	
+	<texture id="ui_iconsTotal_gravik" 		x="498" y="188" width="83" height="47" />
+	<texture id="ui_iconsTotal_liker" 		x="498" y="235" width="83" height="47" />
+	<texture id="ui_iconsTotal_gigant" 		x="498" y="282" width="83" height="47" />
+	<texture id="ui_iconsTotal_food" 		x="498" y="329" width="83" height="47" />
+	<texture id="ui_iconsTotal_toolkit" 	x="498" y="376" width="83" height="47" />
+	<texture id="ui_iconsTotal_binocular" 	x="498" y="423" width="83" height="47" />
+	<texture id="ui_iconsTotal_helicopter" 	x="498" y="470" width="83" height="47" />
+	<texture id="ui_iconsTotal_medsumka" 	x="498" y="517" width="83" height="47" />
+	<texture id="ui_iconsTotal_docs" 		x="498" y="564" width="83" height="47" />
+	<texture id="ui_iconsTotal_arts" 		x="498" y="611" width="83" height="47" />
+	<texture id="ui_iconsTotal_pda" 		x="498" y="658" width="83" height="47" />
+	<texture id="ui_iconsTotal_pda2" 		x="498" y="705" width="83" height="47" />
+	<texture id="ui_iconsTotal_detector" 	x="498" y="752" width="83" height="47" />
+	<texture id="ui_iconsTotal_notebook" 	x="498" y="799" width="83" height="47" />
+	<texture id="ui_iconsTotal_vintovka" 	x="498" y="846" width="83" height="47" />
+	<texture id="ui_iconsTotal_medkit" 		x="498" y="893" width="83" height="47" />
+	<texture id="ui_iconsTotal_klad" 		x="498" y="940" width="83" height="47" />
+
+	<texture id="ui_iconsTotal_keis" 		x="581" y="0" width="83" height="47" />
+	<texture id="ui_iconsTotal_keis2" 		x="581" y="47" width="83" height="47" />
+	<texture id="ui_iconsTotal_papka" 		x="581" y="94" width="83" height="47" />
+	<texture id="ui_iconsTotal_psydog" 		x="581" y="141" width="83" height="47" />
+	<texture id="ui_iconsTotal_flower" 		x="581" y="188" width="83" height="47" />
+	<texture id="ui_iconsTotal_skadovsk" 	x="581" y="235" width="83" height="47" />
+	<texture id="ui_iconsTotal_fotik" 		x="581" y="282" width="83" height="47" />
+	<texture id="ui_iconsTotal_vert" 		x="581" y="329" width="83" height="47" />
+	<texture id="ui_iconsTotal_find_art" 	x="581" y="376" width="83" height="47" />
+	<texture id="ui_iconsTotal_volna" 		x="581" y="423" width="83" height="47" />
+	<texture id="ui_iconsTotal_plen" 		x="581" y="470" width="83" height="47" />
+	<texture id="ui_iconsTotal_obmen" 		x="581" y="517" width="83" height="47" />
+	<texture id="ui_iconsTotal_sdelka" 		x="581" y="564" width="83" height="47" />
+	<texture id="ui_iconsTotal_pda3" 		x="581" y="611" width="83" height="47" />
+	<texture id="ui_iconsTotal_weapon_keis" x="581" y="658" width="83" height="47" />
+	<texture id="ui_iconsTotal_grenade" 	x="581" y="705" width="83" height="47" />
+	<texture id="ui_iconsTotal_eye" 		x="581" y="752" width="83" height="47" />
+	<texture id="ui_iconsTotal_oborona" 	x="581" y="799" width="83" height="47" />
+	<texture id="ui_iconsTotal_oborona2" 	x="581" y="846" width="83" height="47" />
+	<texture id="ui_iconsTotal_justice" 	x="581" y="893" width="83" height="47" />
+	<texture id="ui_iconsTotal_pnv" 		x="581" y="940" width="83" height="47" />
+    
+    <texture id="ui_iconsTotal_radioactive1" x="664" y="0" width="83" height="47" />
+    <texture id="ui_iconsTotal_radioactive2" x="664" y="47" width="83" height="47" />
+    <texture id="ui_iconsTotal_radioactive3" x="664" y="94" width="83" height="47" />
+    <texture id="ui_iconsTotal_radioactive4" x="664" y="141" width="83" height="47" />
+    <texture id="ui_iconsTotal_radioactive5" x="664" y="188" width="83" height="47" />
+    <texture id="ui_iconsTotal_anomaly1" 	x="664" y="235" width="83" height="47" />
+    <texture id="ui_iconsTotal_anomaly2" 	x="664" y="282" width="83" height="47" />
+    <texture id="ui_iconsTotal_anomaly3" 	x="664" y="329" width="83" height="47" />
+    <texture id="ui_iconsTotal_anomaly4" 	x="664" y="376" width="83" height="47" />
+    <texture id="ui_iconsTotal_anomaly5" 	x="664" y="423" width="83" height="47" />
+    <texture id="ui_iconsTotal_anomaly6" 	x="664" y="470" width="83" height="47" />
+    <texture id="ui_iconsTotal_ammo" 		x="664" y="517" width="83" height="47" />
+    <texture id="ui_iconsTotal_compass" 	x="664" y="564" width="83" height="47" />
+    <texture id="ui_iconsTotal_pripyt1" 	x="664" y="611" width="83" height="47" />
+    <texture id="ui_iconsTotal_find_fenrir" x="664" y="658" width="83" height="47" />
+    <texture id="ui_iconsTotal_gauss" 		x="664" y="705" width="83" height="47" />
+    <texture id="ui_iconsTotal_map1" 		x="664" y="752" width="83" height="47" />
+    <texture id="ui_iconsTotal_map2" 		x="664" y="799" width="83" height="47" />
+    <texture id="ui_iconsTotal_box1" 		x="664" y="846" width="83" height="47" />
+    <texture id="ui_iconsTotal_door1" 		x="664" y="893" width="83" height="47" />
+    <texture id="ui_iconsTotal_oasis" 		x="664" y="940" width="83" height="47" />
+
+    <texture id="ui_iconsTotal_psy1" 		x="747" y="0" width="83" height="47" />
+    <texture id="ui_iconsTotal_psy2" 		x="747" y="47" width="83" height="47" />
+    <texture id="ui_iconsTotal_psy3" 		x="747" y="94" width="83" height="47" />
+    <texture id="ui_iconsTotal_pirog" 		x="747" y="141" width="83" height="47" />
+    <texture id="ui_iconsTotal_shadows" 	x="747" y="188" width="83" height="47" />
+    <texture id="ui_iconsTotal_chimera" 	x="747" y="235" width="83" height="47" />
+    <texture id="ui_iconsTotal_super_gun" 	x="747" y="282" width="83" height="47" />
+    <texture id="ui_iconsTotal_money_out" 	x="747" y="329" width="83" height="47" />
+    <texture id="ui_iconsTotal_money_in" 	x="747" y="376" width="83" height="47" />
+    <texture id="ui_iconsTotal_item_out" 	x="747" y="423" width="83" height="47" />
+    <texture id="ui_iconsTotal_item_in" 	x="747" y="470" width="83" height="47" />
+    <texture id="ui_iconsTotal_to_nowhere" 	x="747" y="517" width="83" height="47" />
+    <texture id="ui_iconsTotal_sniper1" 	x="747" y="564" width="83" height="47" />
+    <texture id="ui_iconsTotal_people1" 	x="747" y="611" width="83" height="47" />
+    <texture id="ui_iconsTotal_map3" 		x="747" y="658" width="83" height="47" />
+    <texture id="ui_iconsTotal_map4" 		x="747" y="705" width="83" height="47" />
+    <texture id="ui_iconsTotal_find_wolf" 	x="747" y="752" width="83" height="47" />
+    <texture id="ui_iconsTotal_stalker1" 	x="747" y="799" width="83" height="47" />
+    <texture id="ui_iconsTotal_map5" 		x="747" y="846" width="83" height="47" />
+    <texture id="ui_iconsTotal_map6" 		x="747" y="893" width="83" height="47" />
+    <texture id="ui_iconsTotal_stalker2" 	x="747" y="940" width="83" height="47" />
+
+    <texture id="ui_iconsTotal_sniper2" 	x="830" y="0" width="83" height="47" />
+    <texture id="ui_iconsTotal_help" 		x="830" y="47" width="83" height="47" />
+    <texture id="ui_iconsTotal_verdict" 	x="830" y="94" width="83" height="47" />
+    <texture id="ui_iconsTotal_find_docs" 	x="830" y="141" width="83" height="47" />
+    <texture id="ui_iconsTotal_stalker11" 	x="830" y="188" width="83" height="47" />
+    <texture id="ui_iconsTotal_bronik" 		x="830" y="235" width="83" height="47" />
+    <texture id="ui_iconsTotal_bomb" 		x="830" y="282" width="83" height="47" />
+    <texture id="ui_iconsTotal_box2" 		x="830" y="329" width="83" height="47" />
+    <texture id="ui_iconsTotal_stalker3" 	x="830" y="376" width="83" height="47" />
+    <texture id="ui_iconsTotal_stalker4" 	x="830" y="423" width="83" height="47" />
+    <texture id="ui_iconsTotal_stalker5" 	x="830" y="470" width="83" height="47" />
+    <texture id="ui_iconsTotal_chaes1" 		x="830" y="517" width="83" height="47" />
+    <texture id="ui_iconsTotal_detonate" 	x="830" y="564" width="83" height="47" />
+    <texture id="ui_iconsTotal_artefact2" 	x="830" y="611" width="83" height="47" />
+    <texture id="ui_iconsTotal_badge" 		x="830" y="658" width="83" height="47" />
+    <texture id="ui_iconsTotal_stalker6" 	x="830" y="705" width="83" height="47" />
+    <texture id="ui_iconsTotal_stalker7" 	x="830" y="752" width="83" height="47" />
+    <texture id="ui_iconsTotal_prometey" 	x="830" y="799" width="83" height="47" />
+    <texture id="ui_iconsTotal_abstract1" 	x="830" y="846" width="83" height="47" />
+    <texture id="ui_iconsTotal_abstract2" 	x="830" y="893" width="83" height="47" />
+    <texture id="ui_iconsTotal_abstract3" 	x="830" y="940" width="83" height="47" />
+
+    <texture id="ui_iconsTotal_abstract4" 	x="913" y="0" width="83" height="47" />
+    <texture id="ui_iconsTotal_abstract5" 	x="913" y="47" width="83" height="47" />
+    <texture id="ui_iconsTotal_abstract6" 	x="913" y="94" width="83" height="47" />
+    <texture id="ui_iconsTotal_abstract7" 	x="913" y="141" width="83" height="47" />
+    <texture id="ui_iconsTotal_v_puteprovod" x="913" y="188" width="83" height="47" />
+    <texture id="ui_iconsTotal_map5" 		x="913" y="235" width="83" height="47" />
+    <texture id="ui_iconsTotal_shaxta" 		x="913" y="282" width="83" height="47" />
+    <texture id="ui_iconsTotal_stalker8" 	x="913" y="329" width="83" height="47" />
+    <texture id="ui_iconsTotal_stalker9" 	x="913" y="376" width="83" height="47" />
+    <texture id="ui_iconsTotal_stalker10" 	x="913" y="423" width="83" height="47" />
+    <texture id="ui_iconsTotal_strelok_arts" x="913" y="470" width="83" height="47" />
+    <texture id="ui_iconsTotal_volazar" 	x="913" y="517" width="83" height="47" />
+    <texture id="ui_iconsTotal_volazar_new" x="913" y="564" width="83" height="47" />
+    <texture id="ui_iconsTotal_ozersky" 	x="913" y="611" width="83" height="47" />
+    <texture id="ui_iconsTotal_sidor" 		x="913" y="658" width="83" height="47" />
+    <texture id="ui_iconsTotal_strelok" 	x="913" y="705" width="83" height="47" />
+    <texture id="ui_iconsTotal_nano_suit" 	x="913" y="752" width="83" height="47" />
+    <texture id="ui_iconsTotal_error" 		x="913" y="799" width="83" height="47" />
+	
+	<texture id="ui_iconsTotal_oboroten" 	x="0" y="1081" width="83" height="47" />
+	<texture id="ui_iconsTotal_biblik" 		x="0" y="1175" width="83" height="47" />
+    <texture id="ui_iconsTotal_shahter" 	x="166" y="1034" width="83" height="47" />
+	<texture id="ui_iconsTotal_kontrik" 	x="166" y="1457" width="83" height="47" />
+	<texture id="ui_iconsTotal_sviblov" 	x="166" y="1645" width="83" height="47" />
+    <texture id="ui_iconsTotal_tolik" 		x="249" y="1504" width="83" height="47" />
+    <texture id="ui_iconsTotal_gila" 		x="332" y="1786" width="83" height="47" />
+	<texture id="ui_iconsTotal_dnevnik" 	x="415" y="1081" width="83" height="47" />
+    <texture id="ui_iconsTotal_dnevnik2" 	x="415" y="1128" width="83" height="47" />
+    <texture id="ui_iconsTotal_kniga" 		x="415" y="1175" width="83" height="47" />
+    <texture id="ui_iconsTotal_lekarstvo" 	x="415" y="1222" width="83" height="47" />
+	<texture id="ui_iconsTotal_playboy" 	x="415" y="1269" width="83" height="47" />
+	<texture id="ui_iconsTotal_explose" 	x="415" y="1316" width="83" height="47" />
+	<texture id="ui_iconsTotal_foto" 		x="415" y="1363" width="83" height="47" />
+	<texture id="ui_iconsTotal_troika" 		x="415" y="1410" width="83" height="47" />
+	<texture id="ui_iconsTotal_disk" 		x="415" y="1457" width="83" height="47" />
+	<texture id="ui_iconsTotal_disketa" 	x="415" y="1504" width="83" height="47" />
+	<texture id="ui_iconsTotal_kolba" 		x="415" y="1551" width="83" height="47" />
+	<texture id="ui_iconsTotal_vodka" 		x="415" y="1598" width="83" height="47" />
+	<texture id="ui_iconsTotal_ten_monolita" x="83" y="1880" width="83" height="47" />
+	<texture id="ui_iconsTotal_televizor" 	x="415" y="1645" width="83" height="47" />
+	<texture id="ui_iconsTotal_sistemnik" 	x="415" y="1692" width="83" height="47" />
+    <texture id="ui_iconsTotal_lesnik" 		x="415" y="1833" width="83" height="47" />
+	
+	<texture id="ui_iconsTotal_rpg" 		x="581" y="987" width="83" height="47" />
+	<texture id="ui_iconsTotal_pistolet" 	x="581" y="1034" width="83" height="47" />
+	<texture id="ui_iconsTotal_ak" 			x="581" y="1081" width="83" height="47" />
+	<texture id="ui_iconsTotal_antenna" 	x="581" y="1128" width="83" height="47" />
+	<texture id="ui_iconsTotal_bpla" 		x="581" y="1175" width="83" height="47" />
+	<texture id="ui_iconsTotal_electro" 	x="581" y="1222" width="83" height="47" />
+	<texture id="ui_iconsTotal_face" 		x="581" y="1269" width="83" height="47" />
+	<texture id="ui_iconsTotal_alone" 		x="581" y="1316" width="83" height="47" />
+	<texture id="ui_iconsTotal_vertuha" 	x="581" y="1363" width="83" height="47" />
+	<texture id="ui_iconsTotal_ftf" 		x="581" y="1410" width="83" height="47" />
+	<texture id="ui_iconsTotal_stalker12" 	x="581" y="1457" width="83" height="47" />
+	<texture id="ui_iconsTotal_timer" 		x="581" y="1504" width="83" height="47" />
+	<texture id="ui_iconsTotal_casseta" 	x="581" y="1551" width="83" height="47" />
+	<texture id="ui_iconsTotal_kubik" 		x="581" y="1598" width="83" height="47" />
+	<texture id="ui_iconsTotal_saving" 		x="581" y="1645" width="83" height="47" />
+	<texture id="ui_iconsTotal_sniper3" 	x="581" y="1692" width="83" height="47" />
+	<texture id="ui_iconsTotal_sniper4" 	x="581" y="1739" width="83" height="47" />
+	<texture id="ui_iconsTotal_target" 		x="581" y="1786" width="83" height="47" />
+	<texture id="ui_iconsTotal_volkolak" 	x="581" y="1833" width="83" height="47" />
+	<texture id="ui_iconsTotal_zombie" 		x="581" y="1880" width="83" height="47" />
+	<texture id="ui_iconsTotal_turret" 		x="581" y="1927" width="83" height="47" />
+	<texture id="ui_iconsTotal_knife" 		x="581" y="1974" width="83" height="47" />
+</ui_texture>

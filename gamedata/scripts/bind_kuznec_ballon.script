@@ -1,0 +1,37 @@
+-- Биндер баллона для квеста Договор с военными
+function init(obj)
+    local new_binder = kuznec_ballon_binder(obj)
+    obj:bind_object(new_binder)
+end
+
+---------------------------------------------------------------------------------------------
+-- Порядок загрузки:
+-- reload
+-- reinit
+-- load
+-- net_spawn
+---------------------------------------------------------------------------------------------
+class "kuznec_ballon_binder" (object_binder)
+function kuznec_ballon_binder:__init(obj) super(obj)
+end
+
+function kuznec_ballon_binder:net_spawn(data)
+    if not object_binder.net_spawn(self, data) then
+        return false
+    end
+--	console:execute("load ~~~ net_spawn: "..self.object:id())
+    return true
+end
+
+function kuznec_ballon_binder:net_destroy()
+--	console:execute("load ~~~ net_destroy: "..self.object:id())
+
+	if self.object:position():distance_to(db.actor:position()) < config:r_float("alife","switch_distance") and not has_info("teleport_started") then
+
+		if not has_info("kuznec_ballon_have") then
+			give_info("kuznec_ballon_fail")
+		end
+	end
+
+    object_binder.net_destroy(self)
+end

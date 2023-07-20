@@ -1,0 +1,2746 @@
+<!--
+	game_task id = "tm_[тип][порядковый номер вендора]"
+	Типы смотрите self.type в cycle_task.script
+	Типы: eliminate_lager = 0, defend_lager = 1, kill_stalker = 2, monster_part = 3, artefact = 4, find_item = 5, chain = 6.
+	Номера вендоров смотрите в cycle_task.ltx секция [vendor].
+	При добавлении вендору заданий нового типа нужно здесь добавить ему соответствующий таск.
+-->
+
+<!-- Сидорович -->
+<game_task id="tm_0000" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_1000" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_defend_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2000" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_3000" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4000" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5000" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Бармен -->
+<game_task id="tm_0001" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_1001" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_defend_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2001" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_3001" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4001" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5001" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Сахаров -->
+<game_task id="tm_0002" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_3002" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4002" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5002" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Воронин -->
+<game_task id="tm_0003" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_1003" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_defend_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2003" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_3003" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5003" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6003" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Лукаш -->
+<game_task id="tm_0004" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_1004" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_defend_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2004" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_3004" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4004" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5004" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Волк -->
+<game_task id="tm_0005" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2005" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5005" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Шустрый -->
+<game_task id="tm_1006" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_defend_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_3006" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4006" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5006" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6006" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Бром (которому ружье принести нужно) -->
+<game_task id="tm_5007" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Охотник в Баре -->
+<game_task id="tm_0008" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5008" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6008" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Киценко (командир южного блокпоста) -->
+<game_task id="tm_0009" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Петренко -->
+<game_task id="tm_0010" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2010" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5010" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6010" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Лысый -->
+<game_task id="tm_2011" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+<game_task id="tm_5011" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Осведомитель -->
+<game_task id="tm_2012" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4012" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5012" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6012" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Захар -->
+<game_task id="tm_0013" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_3013" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4013" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5013" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6013" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Ааз -->
+<game_task id="tm_0014" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2014" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_3014" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4014" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5014" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6014" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Адреналин -->
+<game_task id="tm_0015" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2015" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_3015" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4015" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5015" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Акилл -->
+<game_task id="tm_5016" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Аким -->
+<game_task id="tm_6017" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Александрыч -->
+<game_task id="tm_6018" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Сэр Бармалей -->
+<game_task id="tm_4019" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6019" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Андерсен -->
+<game_task id="tm_6020" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Арни -->
+<game_task id="tm_4021" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Архара -->
+<game_task id="tm_0022" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2022" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4022" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5022" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Барин -->
+<game_task id="tm_4023" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6023" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Бес -->
+<game_task id="tm_3024" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4024" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6024" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Борман -->
+<game_task id="tm_0025" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5025" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Боров -->
+<game_task id="tm_0026" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2026" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_3026" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4026" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5026" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6026" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Василий -->
+<game_task id="tm_4027" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5027" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6027" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Витамин -->
+<game_task id="tm_6028" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Вожак -->
+<game_task id="tm_4029" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Ворон -->
+<game_task id="tm_4030" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5030" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6030" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Гинеколог -->
+<game_task id="tm_6031" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Даша -->
+<game_task id="tm_5032" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Димак -->
+<game_task id="tm_0033" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2033" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_3033" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4033" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5033" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6033" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Доктор -->
+<game_task id="tm_0034" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4034" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5034" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Долговязый -->
+<game_task id="tm_5035" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6035" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Доцент -->
+<game_task id="tm_4036" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5036" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Химик -->
+<game_task id="tm_6037" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Дьяк -->
+<game_task id="tm_0038" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2038" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5038" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6038" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Дэн -->
+<game_task id="tm_0039" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2039" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_3039" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5039" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6039" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Жила -->
+<game_task id="tm_5040" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Жора Аномалия -->
+<game_task id="tm_4041" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Земляк -->
+<game_task id="tm_0042" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4042" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5042" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Иванцов -->
+<game_task id="tm_6043" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Калинин -->
+<game_task id="tm_0044" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2044" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4044" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5044" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6044" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Калмык -->
+<game_task id="tm_0045" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2045" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_3045" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4045" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5045" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Кленов -->
+<game_task id="tm_5046" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6046" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Колмогор -->
+<game_task id="tm_0047" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2047" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4047" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5047" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Крест -->
+<game_task id="tm_0048" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2048" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4048" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5048" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Крот -->
+<game_task id="tm_4049" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5049" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Круглов -->
+<game_task id="tm_4050" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6050" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Кузнецов -->
+<game_task id="tm_0051" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2051" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4051" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5051" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Кулинар -->
+<game_task id="tm_0052" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2052" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4052" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5052" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6052" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Кэп -->
+<game_task id="tm_0053" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2053" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5053" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6053" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Лесник -->
+<game_task id="tm_4054" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Лис -->
+<game_task id="tm_4055" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5055" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6055" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Макс -->
+<game_task id="tm_0056" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_1056" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_defend_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2056" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_3056" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5056" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6056" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Макс Любер -->
+<game_task id="tm_6057" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Маша -->
+<game_task id="tm_3058" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5058" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Мессер -->
+<game_task id="tm_4059" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5059" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6059" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Назар -->
+<game_task id="tm_0060" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5060" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Ной -->
+<game_task id="tm_0061" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4061" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5061" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Обитель зла -->
+<game_task id="tm_6062" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Отшельник -->
+<game_task id="tm_0063" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2063" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5063" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6063" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Петруха -->
+<game_task id="tm_6064" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Пличко -->
+<game_task id="tm_4065" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6065" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Повар -->
+<game_task id="tm_3066" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5066" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6066" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Прайм -->
+<game_task id="tm_0067" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_3067" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4067" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5067" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Прапор -->
+<game_task id="tm_0068" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5068" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6068" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Проводник -->
+<game_task id="tm_4069" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5069" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6069" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Пропер 70 -->
+<game_task id="tm_6070" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Пуля -->
+<game_task id="tm_6071" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Свиблов -->
+<game_task id="tm_0072" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_1072" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_defend_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2072" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4072" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5072" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6072" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Скряга -->
+<game_task id="tm_3073" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4073" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5073" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Стаханов -->
+<game_task id="tm_3074" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5074" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Сяк -->
+<game_task id="tm_0075" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_1075" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_defend_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2075" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_3075" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4075" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5075" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6075" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Тень Монолита -->
+<game_task id="tm_0076" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2076" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4076" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5076" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Толик -->
+<game_task id="tm_0077" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_3077" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4077" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5077" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Фанат -->
+<game_task id="tm_0078" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_1078" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_defend_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2078" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5078" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Фима Уголь -->
+<game_task id="tm_6079" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Фримен -->
+<game_task id="tm_3080" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4080" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6080" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Холод  -->
+<game_task id="tm_4081" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5081" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6081" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+
+<!-- Шедоумен -->
+<game_task id="tm_0082" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_2082" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_kill_stalker</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4082" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5082" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Шахтер -->
+<game_task id="tm_0083" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_3083" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_monster_part</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4083" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5083" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Шерстюк -->
+<game_task id="tm_0084" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_eliminate_lager</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_4084" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_5084" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_find_item</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6084" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Шуруп -->
+<game_task id="tm_4085" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6085" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Якут -->
+<game_task id="tm_4086" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_artefact</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<game_task id="tm_6086" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+
+<!-- Юрик -->
+<game_task id="tm_6087" prio="0" remove="1" cycle="1">
+	<title>title</title>
+	<objective>
+		<text>objective</text>
+		<icon>ui_iconsTotal_chain</icon>
+		<function_complete>cycle_task.task_complete</function_complete>
+		<function_fail>cycle_task.task_fail</function_fail>
+	</objective>
+</game_task>
+

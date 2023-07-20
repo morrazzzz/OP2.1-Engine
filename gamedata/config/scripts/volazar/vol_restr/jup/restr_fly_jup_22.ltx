@@ -1,0 +1,44 @@
+[logic] 
+active = sr_idle
+
+[sr_idle] 
+on_actor_inside = {+vol_info} sr_idle@one %=nano_suit_moduls.disable_tel =volazar_del_tel.del_nano_tel_jup%
+
+[sr_idle@one]
+on_actor_inside = {-vol_info} sr_idle@two %=nano_suit_moduls.vol_sms_2 =spawn_nano_restr(193)%
+
+[sr_idle@two]
+on_timer = 5000| sr_idle@three %=nano_suit_moduls.vol_sms_3%
+on_info = {+taynik_nayti_oz_10_fail} nil
+
+[sr_idle@three]
+on_timer = 5000| sr_idle@four %=nano_suit_moduls.vol_sms_4%
+on_info = {+taynik_nayti_oz_10_fail} nil
+
+[sr_idle@four]
+on_timer = 10000| sr_idle@five %+vol_sosich_go =nano_suit_moduls.vol_sms_5%
+on_info = {+taynik_nayti_oz_10_fail} nil
+
+[sr_idle@five]
+on_timer = 10000| sr_idle@six %=nano_suit_moduls.vol_sms_6%
+on_info = {+taynik_nayti_oz_10_fail} nil
+
+[sr_idle@six]
+on_timer = 10000| sr_idle@seven %=nano_suit_moduls.vol_sms_7%
+on_info = {+taynik_nayti_oz_10_fail} nil
+
+[sr_idle@seven]
+on_timer = 15000| sr_idle@eight %=nano_suit_moduls.vol_sms_8%
+on_info = {+taynik_nayti_oz_10_fail} nil
+
+[sr_idle@eight]
+on_timer = 10000| sr_idle@nine %+ozersky_spawn =nano_suit_moduls.spawn_snork =nano_suit_moduls.vol_sms_9%
+on_info = {+taynik_nayti_oz_10_fail} nil
+
+[sr_idle@nine]
+on_timer = 5000| sr_idle@ten %=nano_suit_moduls.vol_sms_10 =nano_suit_moduls.oz_music_good =run_postprocess(radar_psi)%
+on_info = {+taynik_nayti_oz_10_fail} nil
+
+[sr_idle@ten]
+on_timer = 4000| nil %=run_postprocess(deadcity_wake)%
+on_info = {+taynik_nayti_oz_10_fail} nil

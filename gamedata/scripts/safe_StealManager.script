@@ -1,0 +1,706 @@
+--переменные
+local pdaPacketId
+
+traderDistanceState={nearby=1,beth=2,afar=3,stolen=4}
+--[[
+	типы "обслуживания" хранилища
+	nearby - ежедневная оплата
+	beth - обкрадываемая с повышающейся вероятностью
+	afar - стандартные условия
+--]]
+
+--кешируем многократный вызов 
+local stealManagerClass=nil
+
+function init(reinit) --вызывать в начале сеанса игры
+	if reinit==nil then --reinit вызвали не из GetStealManagerClass, для упреждающей инициализации
+		reinit=false
+	end
+	if stealManagerClass==nil or reinit then 
+		pdaPacketId=netpacket_pda_create.create_pda() --сюда будем писать чего нибуть свое
+		stealManagerClass=StealManager()
+	end
+end
+
+function GetStealManagerClass(reinit) --вернуть сам класс
+	if reinit==nil then
+		reinit=false
+	end
+	if stealManagerClass==nil or reinit then --если вызвали без init(), вернее - раньше инита, мало ли в каком скрипте
+		init(reinit)
+	end
+	return stealManagerClass
+end
+
+local npcNotesCount=0
+local actorNotesCount=0
+
+function ActorHasMoneyForBuyout()
+	return db.actor:money()>50000*npcNotesCount
+end
+
+function ActorHasMoneyForBuyoutTrader()
+	return db.actor:money()>60000*actorNotesCount
+end
+
+function GetNotesCount(npc)
+	local count=0
+	if npc then
+		npc:iterate_inventory(
+			function(dummy,item)
+				if item:section()=="safe_stolen_note" then
+					count=count+1
+				end
+			end
+		,npc)
+	end
+	return count
+end
+
+--дилог переехал в конфиги, precondition теперь тут
+function TraderDialogPrecondition(firstSpeaker,secondSpeaker,dialogId)
+	--0-я фраза за актором, он первый
+	actorNotesCount=GetNotesCount(firstSpeaker)
+	npcNotesCount=GetNotesCount(secondSpeaker)
+	if npcNotesCount==0 and actorNotesCount>0 then
+		return true
+	end
+	return false
+end
+
+function SpecificNPCPrecondition(firstSpeaker,secondSpeaker,dialogId)
+	--0-я фраза за актором, он первый
+	npcNotesCount=GetNotesCount(secondSpeaker)
+	if npcNotesCount>0 then
+		return true
+	end
+	return false
+end
+
+function CheckAndSetDialogs(firstSpeaker,secondSpeaker) --попытка склонить нпс для разговора
+	--0-я фраза за нпс, он первый
+	local manager=safe_StealManager.GetStealManagerClass()
+	if manager.specificNPC and manager.specificNPC[firstSpeaker:profile_name():lower()] then --дилог на украденное задан в конфигах для этих персонажей, форсить не надо
+		return 
+	end
+	if db.actor and secondSpeaker and secondSpeaker:id()==db.actor:id() then
+		npcNotesCount=GetNotesCount(firstSpeaker)--записки с шифром у нпс
+		if npcNotesCount>0 then
+			firstSpeaker:set_start_dialog("safe_dialog_stolen") --все остальное пофиг - главное поговорить с вором
+		end
+	end
+end
+
+
+
+--функции таймеров
+function IncreaseStealChanceFunc(params_string)
+	local manager=safe_StealManager.GetStealManagerClass()
+	if not manager.enable then
+		return
+	end
+	local moving={}
+	if manager.registeredStorages[traderDistanceState.beth] then --рюкзаки в опасной зоне
+		for i=1,#manager.registeredStorages[traderDistanceState.beth] do
+			local storageId=manager.registeredStorages[traderDistanceState.beth][i]
+			local chance=manager.chances[storageId]
+			if not chance then --первый раз под раздачу шанса
+				chance=1
+			end
+			chance=chance+16 --повысим
+			if chance>100 then --ну все, слишком долго лежал, в украдываемые его, примерно 6 более часов игровых
+				table.insert(moving,storageId)
+			else
+				manager.chances[storageId]=chance
+			end
+		end
+		for index,id in pairs(moving) do
+			manager:MoveStorageSingle(id,traderDistanceState.afar) 
+			manager.chances[id]=nil
+		end
+		if table.size(manager.chances)>0 then
+			amk.g_start_timer("smsct",0,1,0,"") --рестартим таймер
+		end
+	end
+end
+
+function PayDayFunc(params_string)
+	local manager=safe_StealManager.GetStealManagerClass()
+	if not manager.enable then
+		return
+	end
+	local nearby=manager.registeredStorages[traderDistanceState.nearby] 
+	if nearby then
+		local totalDayPay=table.size(nearby)*manager.protectionCostDayPay
+		if totalDayPay>db.actor:money() then
+			--не хватает денег на взнос ежедневный
+			sms("%c[255,160,160,160]".."ЛОКАЛЬНАЯ СЕТЬ:".."\\n".."%c[255,255,128,128]В связи с нехваткой денег на счету охрана рюкзаков прекращена.", nil, nil, 10000, nil, [[sms\net\safe_no_pay_day]])
+			manager:MoveStorageGroup(traderDistanceState.nearby,traderDistanceState.beth) --переносим в опасную зону
+		elseif totalDayPay>0 and totalDayPay<db.actor:money() then
+			sms("%c[255,160,160,160]".."ЛОКАЛЬНАЯ СЕТЬ:".."\\n".."%c[255,255,128,128]C вашего счета удержана плата за охрану рюкзаков "..totalDayPay.." руб.", nil, nil, 10000, nil, [[sms\net\safe_pay_day]])
+			db.actor:give_money(-totalDayPay) --забираем ежедневный взнос
+			game_stats.money_quest_update(-totalDayPay) 
+			amk.g_start_timer("smpdt",1,0,0,"") --рестартим таймер 
+		end	
+	end
+end
+
+
+--[[--беда. нельзя сгенерировать одну фразу из диалога. либо весь в хмл, либо весь в генерации
+-- function GenerateHello(dialog) --генерация первой фразы  
+	-- local helloIndex=math.random(1,4) --количество хелло фраз , первый и последний индекс
+	-- local helloPhrase="txt_safe_hello_0_"..tostring(helloIndex)
+	-- dialog:AddPhrase(helloPhrase,"0","",-10000)
+	-- --dialog:AddPhrase(текст фразы, айди фразы, айди предыдущей фразы, отношение к ГГ?)
+	-- --в lua_help 2 и 3 параметры число, в движке строка, однако...
+-- end
+--]]
+
+function ReturnStorage(firstSpeaker,secondSpeaker,dialogId)
+	local sm=GetStealManagerClass()	
+	sm:UnStealStorage(secondSpeaker,dialogId)
+end
+
+function TakeItem(item)
+	if item:section()=="safe_stolen_note" then --если забираем записку с трупа - убрать мапспот
+		local alifeItem=server_object(item:id()) 
+		local netPacket=netpacket:get(alifeItem) 
+		local stolenCustomData=netPacket.custom_data:getTable() --пытаемся найти наши данные
+		if stolenCustomData.stealManagerData  and stolenCustomData.stealManagerData.npcId then --нашли
+			level.map_remove_object_spot(stolenCustomData.stealManagerData.npcId, safe_StorageViewer.MAPSPOTTYPE) --убираем "черную" метку
+		end
+	end
+end
+
+class "StealManager" --класс управления воровством новых рюкзаков
+
+function StealManager:__init()
+	self.classname="StealManager"
+	self.enable=true
+	self.tradersConfig={}
+	self.specificNPC={}
+	self.firstSpawn=true
+	self.spawnParam={}
+	self.bethDistance=0
+	self.registeredStorages={}
+	self.protectionCostFirstPay=0
+	self.protectionCostDayPay=0
+	self.icons={}
+	self.chances={} --с нового сеанса игры новые "вероятности"... не нравиться сохранять еще и их
+	self:LoadConfiguration()
+end
+
+function StealManager:UnStealStorage(npc,dialogId) --возвращаем украденное, проверку на enable делать смысла нет, так как раз сюда дошли, то точно true
+	local collectInfo=
+		function(victim)
+			local storageIds={}
+			local noteIds={}
+			victim:iterate_inventory(
+				function(dummy,item)
+					if item and item:section()=="safe_stolen_note" then --нашли записку
+						table.insert(noteIds,item:id())
+						local alifeItem=server_object(item:id()) 
+						if alifeItem then --а еще и с алайфом все хорошо
+							local netPacket=netpacket:get(alifeItem) 
+							local stolenCustomData=netPacket.custom_data:getTable() --пытаемся найти наши данные
+							if stolenCustomData.stealManagerData  then --нашли
+								table.insert(storageIds,stolenCustomData.stealManagerData.stolenId)
+							else
+								log("Invalid custom data in netPacket... WTF???")
+							end
+						end
+					end
+				end
+			,victim)
+			-- for i=1,#noteIds do
+				-- release(noteIds[i]) --заодно убираем записки
+			-- end
+			return storageIds,noteIds
+		end
+	local returnStorage=
+		function(sId)
+			local alifeStorage=server_object(sId)
+			if alifeStorage then
+				self:UnRegisterStorage(sId,traderDistanceState.stolen)--почистим данные
+				local storagePacket=m_netpk.get(alifeStorage)
+				if storagePacket:isOk() then
+					local data=storagePacket:get()
+					data.visual_name="equipments\\item_rukzak"
+					storagePacket:set(data)
+					if alifeStorage.online then
+						local onlineStorage=level_object(sId)
+						if onlineStorage then
+							local storageData=onlineStorage:binded_object():CopyOfData() --дабы не терять данные
+							transparent_treasure.add_to_convert(sId, --TODO: переписать на свой апдейтер...
+								function(inputData,id) 
+									local levelStorage=level_object(id)
+									if levelStorage then
+										levelStorage:binded_object():CopyDataFrom(inputData) --на коллбек выхода в онлайн назад записать их
+									else
+										log("Unknown bug in alife, storage id is nil.")
+									end	
+								end	
+							,storageData)
+						end
+					end
+				else
+					log("Invalid packet from m_netpk!") --надо бы крешнутся
+				end
+				level.map_add_object_spot_ser(sId, safe_StorageViewer.MAPSPOTTYPE,game.translate_string("txt_safe_returned_storage"))
+			else
+				log("Gabela...")--ну что тут сказать...
+			end
+		end
+	if dialogId=="safe_dialog_stolen" or dialogId=="safe_dialog_specific_stolen" then --был разговор со сталкером
+		local stolenStorages,notes=collectInfo(npc) --собираем данные с записок
+		local count=#stolenStorages
+		if count>0 then 
+			lost_money(50000*count)--заберем денег у ГГ
+			for i=1,count do --восстановим нычки
+				local storageId=tonumber(stolenStorages[i]) --а id строкой
+				returnStorage(storageId)
+				level.map_remove_object_spot(npc:id(), safe_StorageViewer.MAPSPOTTYPE) --убираем "черную" метку		
+			end
+		else
+			log("Again trouble... alg bug?") --это какого????
+		end
+		for i=1,#notes do
+			release(server_object(notes[i]), true) --поудаляем купленные записки
+		end
+	else
+		local stolenStorages,notes=collectInfo(db.actor) --собираем данные с записок
+		local count=#stolenStorages
+		if count>0 then 
+			lost_money(60000*count)--заберем денег у ГГ
+			for i=1,count do --восстановим нычки
+				local storageId=tonumber(stolenStorages[i]) --а id строкой
+				returnStorage(storageId)
+			end
+		else
+			log("Again trouble... alg bug?") --это какого????
+		end
+		for i=1,#notes do
+			release(server_object(notes[i]), true) --поудаляем купленные записки
+		end
+	end
+	npc:restore_default_start_dialog()
+end
+
+function StealManager:StealStorage(npc,storageId) --кража рюкзака
+	if not self.enable then
+		return
+	end
+	local alifeStorage=server_object(storageId)
+	if not alifeStorage then
+		return
+	end
+	if not self.registeredStorages[traderDistanceState.stolen] then
+		self.registeredStorages[traderDistanceState.stolen]={}
+	end	
+	table.insert(self.registeredStorages[traderDistanceState.stolen],storageId) --регистрируем украденный, из существующего не перемещаем!
+	level.map_remove_object_spot(storageId, safe_StorageViewer.MAPSPOTTYPE) --удаляем спот украденного рюкзака
+	--прячем украденное
+	local storagePacket=m_netpk.get(alifeStorage)
+	if storagePacket:isOk() then
+		local data=storagePacket:get()
+		data.visual_name="equipments\\item_rukzak00"
+		storagePacket:set(data)
+		if alifeStorage.online then
+			local onlineStorage=level_object(storageId)
+			if onlineStorage then
+				onlineStorage:set_tip_text_default()
+				local storageData=onlineStorage:binded_object():CopyOfData()				
+				transparent_treasure.add_to_convert(storageId, --TODO: переписать на свой апдейтер...
+					function(inputData,id) 
+						local levelStorage=level_object(id)
+						if levelStorage then
+							levelStorage:binded_object():CopyDataFrom(inputData) --на коллбек выхода в онлайн назад записать их
+						else
+							log("Unknown bug in alife, storage id is nil.")
+						end	
+					end	
+				,storageData)
+			end
+		end
+	else
+		log("Invalid packet from m_netpk!") --надо бы крешнутся
+	end
+	local noteStolen=create("safe_stolen_note",npc:position(),npc:level_vertex_id(),npc:game_vertex_id(),npc:id()) --даем вору записку с шифром
+	local netPacket=netpacket:get(noteStolen) --добавляем id украденного рюкзака в кастомдату записки
+	local stolenCustomData=netPacket.custom_data:getTable() --ну мало ли было чего
+	if not stolenCustomData.stealManagerData then --не, таки не было нашего
+		stolenCustomData.stealManagerData={}
+	end
+	stolenCustomData.stealManagerData.stolenId=storageId
+	stolenCustomData.stealManagerData.npcId=npc:id()
+	netpacket:set(netPacket,noteStolen) 
+	local spotText=npc:character_name().." "..game.translate_string("txt_safe_npc_ganef_postfix")
+	level.map_add_object_spot_ser(npc:id(), safe_StorageViewer.MAPSPOTTYPE,spotText) --ставим метку на вора
+	--уведомляем ГГ
+	sms("%c[255,160,160,160]".."ЛОКАЛЬНАЯ СЕТЬ:".."\\n".."%c[255,255,128,128]На территории "..game.translate_string(object_level_name(alifeStorage)).." обнаружена кража тайника.", nil, nil, 10000, nil, [[sms\net\ukrali_taynik]])
+end
+
+function StealManager:IsStolen(storageId) --таки да, украден был
+	if not self.enable then
+		return false
+	end
+	local stolenItems=self.registeredStorages[traderDistanceState.stolen]
+	if stolenItems then
+		for i=1,#stolenItems do
+			if stolenItems[i]==storageId then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+function StealManager:MoveStorageGroup(fromType,toType)--переместить хранилища между типами
+	if self.registeredStorages[fromType] then
+		if not self.registeredStorages[toType] then
+			self.registeredStorages[toType]={}
+		end
+		for i=1,#self.registeredStorages[fromType] do
+			table.insert(self.registeredStorages[toType],self.registeredStorages[fromType][i])
+		end
+		self.registeredStorages[fromType]=nil
+		self.registeredStorages[fromType]={}
+	end
+	self:CheckTimers()
+end
+
+function StealManager:MoveStorageSingle(storageId,toType) --переместить одно хранилище в другой тип
+		if not self.registeredStorages[toType] then
+			self.registeredStorages[toType]={}
+		end
+		self:UnRegisterStorage(storageId)
+		self:RegisterStorage(storageId,toType)
+		self:CheckTimers()
+end
+
+function StealManager:IsMyTrader(traderName)
+	for levelId in pairs(self.tradersConfig) do
+		if self.tradersConfig[levelId][traderName]==nil then --меньше итераций! еще меньше! выше, быстрее, ...
+			return false
+		end
+		if self.tradersConfig[levelId][traderName] then
+			return true
+		end
+	end
+	return false
+end
+
+function StealManager:SpawnStorage(spawnPosition,spawnLevelVertexId,spawnGameVertexId) --управление спавном 
+	level.start_stop_menu(level.main_input_receiver(), true)
+	--по умолчанию по координатам актора
+	if spawnPosition==nil then
+		spawnPosition=db.actor:position()
+	end
+	if spawnLevelVertexId==nil then
+		spawnLevelVertexId=db.actor:level_vertex_id()
+	end
+	if spawnGameVertexId==nil then
+		spawnGameVertexId=db.actor:game_vertex_id()
+	end	
+	--близко ли торговец?
+	local traderIsClose=function ()
+		--проверяем, есть ли рядом торговцы
+		local levelTraders=self.tradersConfig[level.name()]
+		if levelTraders==nil then
+			return traderDistanceState.afar,nil --на этом уровне никого
+		end
+		local count=table.size(levelTraders)
+		local found=0
+		local foundTraders={}
+		for id,_ in pairs(db.storage) do --искаем наших торговцев, проверить придется максимум
+			local alifeObj=server_object(id) --в alife-е точно должны быть
+			if alifeObj and ((IsStalker(alifeObj) and alifeObj:name()~="single_player") or (alifeObj:section_name()=="m_trader"))then
+				local name=alifeObj:profile_name():lower()
+				if levelTraders[name] then
+					found=found+1
+					local delta=db.actor:position():distance_to(alifeObj.position)-levelTraders[name]
+					foundTraders[name]=delta --выходить нельзя, ибо дальше могут быть еще
+					if found==count then --нашли всех для данного уровне
+						break
+					end
+				end
+			end
+		end
+		--проверим досягаемость найденных торговцев
+		local traderName=nil
+		local minDelta=10000
+		for name, delta in pairs(foundTraders) do --по всем найденным ближайшего
+			if minDelta>delta then
+				minDelta=delta
+				traderName=name
+			end
+		end 
+		if minDelta <0 then
+			return traderDistanceState.nearby,traderName
+		elseif minDelta>0 and minDelta<=self.bethDistance then
+			return traderDistanceState.beth,traderName
+		else
+			return traderDistanceState.afar,nil --никого нигде не нашли, либо далеко совсем...
+		end
+	end
+	--спавн самого хранилища 
+	local storageSpawn=function (position,levelVertexId,gameVertexid)
+		local obj= create("m_inventory_box", position,levelVertexId,gameVertexid)
+		-- фиксируем объект 
+		local packet = m_netpk.get(obj) 
+		if packet:isOk() then
+			local params = packet:get()
+			params.fixed_bones = "link" -- кость в визуале для фиксации
+			--params.custom_data:set("[collide]\nignore_static") -- убираем эффект пинания
+			params.custom_data:set("[collide]\nignore_ragdoll\nnot_collide_parts\nignore_small_objects\n") -- убираем эффект пинания
+			params.physic_type=0
+			params.mass=1000
+			packet:set(params)
+		end
+		--добавляем пустую метку
+		local spotText = game.translate_string("txt_safe_empty_storage")
+		level.map_add_object_spot_ser(obj.id, safe_StorageViewer.MAPSPOTTYPE,spotText)
+		ai:set_switch_online(obj.id, true)
+		ai:set_switch_offline(obj.id, false)
+		return obj.id
+	end
+	
+	if not self.enable then
+		storageSpawn(spawnPosition,spawnLevelVertexId,spawnGameVertexId)
+		return
+	end
+	if self.firstSpawn then --первый спавн, нет предусловий
+		local traderState,traderName=traderIsClose()
+		if traderState==traderDistanceState.nearby then --есть вблизи хоть один торговец
+			self.spawnParam={position=spawnPosition,lvertex=spawnLevelVertexId,gvertex=spawnGameVertexId,trader=traderName} --запоминаем позицию спавна возле торговца
+			local message=string.format(game.translate_string("txt_safe_pay_store"),self.protectionCostFirstPay,self.protectionCostDayPay)
+			local sender,header=self:GetIconInfo(traderName)
+			amk.send_tip(message,header,nil,10,sender)--отправляем уведомление о платной нычке
+			create("treasure_item",db.actor:position(), db.actor:level_vertex_id(), db.actor:game_vertex_id(), db.actor:id()) --возвращем рюкзак актору
+			self.firstSpawn=false --возможно, далее будет повторный спавн
+		elseif traderState==traderDistanceState.beth then --если между близко и далеко :)
+			local sender,header=self:GetIconInfo(traderName)
+			amk.send_tip(game.translate_string("txt_safe_warning_store"),header,nil,10,sender)--отправляем уведомление о платной нычке
+			self:RegisterStorage(storageSpawn(spawnPosition,spawnLevelVertexId,spawnGameVertexId),traderState) --заспавнили хранилище с регистрацией но без смс
+			self.firstSpawn=true --повторного спавна не будет
+		elseif traderState==traderDistanceState.afar then--ну далековато, чего уж тут
+			self:RegisterStorage(storageSpawn(spawnPosition,spawnLevelVertexId,spawnGameVertexId),traderState) --заспавнили хранилище с регистрацией но без смс
+			self.firstSpawn=true --повторного спавна не будет
+		end
+	else
+		if self.spawnParam.position then --спавн возле торговца
+			local sender,header=self:GetIconInfo(self.spawnParam.trader)
+			if db.actor:position():distance_to(self.spawnParam.position)<0.1 then --с позиции предыдущей попытки спавна не сходили
+				if db.actor:money() > self.protectionCostFirstPay then
+					lost_money(self.protectionCostFirstPay)--забираем первоначальный взнос
+					amk.send_tip(game.translate_string("txt_safe_protect_store"),header,nil,10,sender)--отправляем уведомление о платной нычке
+					self:RegisterStorage(storageSpawn(spawnPosition,spawnLevelVertexId,spawnGameVertexId),traderDistanceState.nearby) --ну наконец то заспавнили хранилище
+				else
+					amk.send_tip(game.translate_string("txt_safe_no_honey"),header,nil,10,sender)--отправляем уведомление о нехватке денег
+				end	
+			else
+				amk.send_tip(game.translate_string("txt_safe_move_pos"),header,nil,10,sender) --ну раз отошел,пересчет по следующему вызову функции. никаких рекурсий!
+				create("treasure_item",db.actor:position(), db.actor:level_vertex_id(), db.actor:game_vertex_id(), db.actor:id()) --возвращем рюкзак актору				
+			end
+			self.firstSpawn=true 
+			self.spawnParam={} 
+		else
+			log("Strange data for second spawn")
+		end
+	end
+end
+
+function StealManager:RegisterStorage(storageId,storageType) --регистрируем хранилище
+	if not self.enable then
+		return 
+	end
+	if storageId and storageType then
+		if self.registeredStorages[storageType] then --уже есть такой тип
+			local registered=false
+			for storageTypeKey,storages in pairs(self.registeredStorages) do --проверяем во всех типах
+				for i=1,#storages do
+					if self.registeredStorages[storageTypeKey][i]==storageId then
+						registered=true --уже зарегестрирован был раньше
+						break
+					end
+				end
+			end
+			if not registered then --новая регистрация в существующем типе 
+				table.insert(self.registeredStorages[storageType],storageId)
+			else
+				log("Storage already registered. alg bug???")
+			end
+		else --новый тип
+			self.registeredStorages[storageType]={}
+			table.insert(self.registeredStorages[storageType],storageId)
+		end
+		self:CheckTimers()
+	end	
+end
+
+function StealManager:CheckTimers()
+	local nearby=self.registeredStorages[traderDistanceState.nearby]
+	if nearby and table.size(nearby)>0 then --ежедневный таймер
+		if not amk.has_g_timer("smpdt") then --раньше не запускали
+			amk.g_start_timer("smpdt",1,0,0,"")
+		end
+	end
+	local beth=self.registeredStorages[traderDistanceState.beth]
+	if beth and table.size(beth)>0 then --ежечасовой таймер
+		if not amk.has_g_timer("smsct") then --раньше не запускали
+			amk.g_start_timer("smsct",0,1,0,"")
+		end
+	end
+end
+
+function StealManager:UnRegisterStorage(storageId,storageType)--удаляем регистрацию хранилища 
+	if not self.enable then
+		return 
+	end
+	if storageType then
+		for i=1,#self.registeredStorages[storageType] do
+			if self.registeredStorages[storageType][i]==storageId then
+				table.remove(self.registeredStorages[storageType],i)
+			end
+		end
+		return
+	end
+	if storageId then
+		local unreg=false
+		for storageTypeKey,storages in pairs(self.registeredStorages) do --проверяем во всех типах
+			for i=1,#storages do
+				if self.registeredStorages[storageTypeKey][i]==storageId then
+					if unreg then --уже удален был раньше, wtf????
+						log("Already unregister storage! alg bug???")
+					end
+					table.remove(self.registeredStorages[storageTypeKey],i)
+					unreg=true 
+					break
+				end 
+			end
+		end
+	end
+end
+
+function StealManager:PackData() --упаковываем данные для записи в сейв
+	if db.storage[pdaPacketId] and db.storage[pdaPacketId].pstor then
+		local dataSize=0
+		local pstorTypes={["smns"]=traderDistanceState.nearby,
+						  ["smbs"]=traderDistanceState.beth,
+						  ["smas"]=traderDistanceState.afar,
+						  ["smss"]=traderDistanceState.stolen}
+		for pt in pairs(pstorTypes) do
+			db.storage[pdaPacketId].pstor[pt]=nil
+		end
+		for pt,dis in pairs(pstorTypes) do
+			if self.registeredStorages[dis] and table.size(self.registeredStorages[dis])>0 then
+				db.storage[pdaPacketId].pstor[pt]=amk.pack_array_to_string(self.registeredStorages[dis])
+				dataSize=dataSize+db.storage[pdaPacketId].pstor[pt]:len()+1
+			end
+		end
+		if dataSize>2500 then
+			log("Warning! Data size to big! alg problem?")
+		end
+	end
+end
+
+function StealManager:UnPackData()	--распаковываем данные после чтения из сейва
+	if db.storage[pdaPacketId] and db.storage[pdaPacketId].pstor then
+		local pstorTypes={["smns"]=traderDistanceState.nearby,
+						  ["smbs"]=traderDistanceState.beth,
+						  ["smas"]=traderDistanceState.afar,
+						  ["smss"]=traderDistanceState.stolen}
+		for pt,dis in pairs(pstorTypes) do
+			self.registeredStorages[dis]={} --во избежание...
+		end
+		for pt,dis in pairs(pstorTypes) do
+			if db.storage[pdaPacketId].pstor[pt] then
+				self.registeredStorages[dis]=amk.unpack_array_from_string(db.storage[pdaPacketId].pstor[pt])
+			end
+		end
+	end
+	self:CheckTimers()
+end
+
+function StealManager:LoadConfiguration() --загрузка начальной конфигурации
+	local reader=ini_reader.iniReader("misc\\safe_stealmanager_config.ltx")
+	self.enable=reader:readBool(self.classname,"enable",true)
+	self.protectionCostDayPay=reader:readUInt(self.classname,"protectionCostDayPay",500)
+	self.protectionCostFirstPay=reader:readUInt(self.classname,"protectionCostFirstPay",10000)
+	self.bethDistance=reader:readUInt(self.classname,"bethDistance",60)
+	if not self.enable then
+		return
+	end
+	local iniData=reader:readString(self.classname,"traderSections",nil) --список уровней с торговцами
+	if iniData then
+		local mainDistance=reader:readUInt(self.classname,"traderDistance",6)
+		local levelSections=safe_utils.splitString(",",iniData) 
+		for i=1,#levelSections do
+			if not self.tradersConfig[levelSections[i]] then --уровня нет в конфиге менеджера
+				if reader:SectionExist(levelSections[i]) then --есть описание уровня в конфиге
+					local levelDistance=reader:readUInt(levelSections[i],"traderDistance",mainDistance) --если дистанции для уровня - то значение глобальное
+					if reader:LineExist(levelSections[i],"traders") then --есть описание торговцев уровня в конфиге
+						local iniData=reader:readString(levelSections[i],"traders",nil)
+						local parsedData=safe_utils.splitString(",",iniData) --парсим инфо о торговцах
+						if #parsedData~=0 then --описание торговцев не пустое
+							local traderFirst="" --вначале был торговец
+							for j=1,#parsedData do
+								local chunkData=parsedData[j]
+								if tonumber(chunkData)==nil then --торговец
+									local duplicate=false --проверим на дубли торговцев на текущем уровне
+									if self.tradersConfig[levelSections[i]] then --уровень добавлялся раньше
+										if self.tradersConfig[levelSections[i]][chunkData]~=nil then
+											duplicate=true
+										end	
+									else
+										self.tradersConfig[levelSections[i]]={} --новый уровень
+									end	
+									if not duplicate then
+										self.tradersConfig[levelSections[i]][chunkData]=levelDistance
+										traderFirst=chunkData
+									else
+										log("Level section "..levelSections[i].." has duplicate traders info '"..chunkData.."', ignore.")
+									end
+								else--if type(parsedData[j]=="number") then --дистанция до него
+									if traderFirst~="" then --а потом дистанция до него
+										if self.tradersConfig[levelSections[i]][traderFirst] then
+											self.tradersConfig[levelSections[i]][traderFirst]=tonumber(chunkData) --устанавливаем расстояние для конкретного торговца, иначе - для уровня
+										end
+										traderFirst=""
+									else
+										log("Level section "..levelSections[i].." has strange traders info '"..chunkData.."', ignore part.")
+									end
+								end
+							end
+						else
+							log("Level section "..levelSections[i].." empty, ignore.")
+						end
+					else
+						log("Level section "..levelSections[i].." without traders, ignore.")
+					end
+				else
+					log("Level section "..levelSections[i].." not exist, ignore.")
+				end
+			end
+		end
+	end
+	if reader:SectionExist("icons") then --читаем соответсвие иконок
+		self.icons=reader:readSection("icons")
+	end
+	if reader:SectionExist("specific_npc") then --читаем соответсвие неписей
+		self.specificNPC=reader:readSection("specific_npc")
+	end
+end
+
+function StealManager:GetIconInfo(npcCharId) --вернуть инфу для send_tips
+	if not npcCharId then
+		npcCharId="default"
+	end
+	local tipsSender=self.icons[npcCharId]
+	if not tipsSender then
+		tipsSender=npcCharId
+	end
+	local iconInfo=news_manager.get_sender_icon_full(tipsSender)
+	return tipsSender,iconInfo[4]
+end
+

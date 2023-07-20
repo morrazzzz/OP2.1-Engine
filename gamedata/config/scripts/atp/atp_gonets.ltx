@@ -1,0 +1,14 @@
+[logic]
+active = walker@gonets
+
+[walker@gonets]
+path_walk = atp_gonets_meet_walk
+path_look = atp_gonets_meet_look
+def_state_standing = caution
+meet = meet
+on_info = {+gonets_spasti_have} walker2@gonets
+on_info2 = {+gonets_spasti_done} walker2@gonets
+
+[walker2@gonets]
+path_walk = atp_gonets_walk
+path_look = atp_gonets_look

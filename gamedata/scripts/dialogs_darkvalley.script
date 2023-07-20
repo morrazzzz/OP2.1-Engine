@@ -1,0 +1,12 @@
+function val_rob_actor_has_money(actor, npc)
+	return actor:money() >= 800
+end
+
+function val_rob_actor_reloc_money(actor, npc)
+	lost_money(800)
+end
+
+function val_escort_reward(npc, actor)
+    got_money(1300)
+    got("wpn_addon_scope")
+end

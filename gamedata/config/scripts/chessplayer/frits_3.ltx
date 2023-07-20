@@ -1,0 +1,57 @@
+[logic]
+active = remark@nemec_sidass
+combat_ignore = combat_ignore
+meet = meet
+
+[remark@nemec_sidass]
+anim = sit_knee
+meet = no_meet
+target = nil
+combat_ignore_cond = always
+on_actor_dist_le = 15|remark@nemec_vstal
+
+[remark@nemec_vstal]
+anim = ward
+no_move = true
+target = actor
+meet = no_meet
+combat_ignore_cond = always
+on_info = {+info_biorobot_message_send} remark@nemec_upal
+
+[remark@nemec_upal]
+anim = trans_0
+no_move = true
+meet = meet@zombi
+combat_ignore_cond = always
+on_timer = 15000|remark@nemec_sms
+
+[meet@zombi]
+meet_state = 8|trans_0
+meet_state_wpn = 8|trans_0
+use = false
+use_wpn = false
+
+[remark@nemec_sms]
+anim = refuse
+no_move = true
+meet = no_meet
+combat_ignore_cond = always
+on_timer = 57000|remark@nemec_vrag
+
+[remark@nemec_vrag]
+anim = claim
+no_move = true
+meet = no_meet
+on_timer = 3000|remark@nemec_vrag1
+
+[remark@nemec_vrag1] 
+anim = backoff2
+on_timer = 2000|%=nemec_vrag%  
+no_move = true 
+meet = no_meet 
+
+[smart_terrains]
+none = true
+
+[spawner]
+cond = {-info_quarrel_vitamin}

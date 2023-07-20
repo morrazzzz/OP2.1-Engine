@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="windows-1251" ?>
+<main_window>
+
+		<actor_inv x="1" y="1" width="350" height="767" stretch="1"> <!-- главное окно инвентаря актора-->
+			<texture>ui_frame_03</texture>
+
+			<caption x="11" y="11" width="100" height="21" stretch="1"> <!-- заголовок -->
+		            <texture>ui_linetextSmall_e</texture>
+					<text r="238" g="153" b="26" font="letterica18" vert_align="c" align="c"/>
+			</caption>
+
+			<!-- combobox фильтра-->
+			<filter x="222" y="11" width="115" height="25" stretch="1" hint="txt_safe_change_filter_desc"> <!-- кнопка фильтра -->
+				<texture>ui_button_ordinary</texture>
+	            <text r="238" g="153" b="26" font="letterica18" vert_align="c" align="c">Все</text>
+				<!-- фрейм в координатах фрейма actor_inv -->
+				<list_frame x="227" y="38" width="109" height="195" stretch="1" > <!-- фон раскрытого списка -->
+					<texture>ui_cb_listbox</texture>
+					<list x="3" y="4" width="105" height="195" item_height="19" always_show_scroll="0" active_bg="1">	 <!-- сам список -->
+						<font r="238" g="153" b="26" font="letterica18" vert_align="c" align="c"/>
+					</list>
+				</list_frame>
+			</filter>
+			<!-- combobox -->
+			<background_frame x="11" y="40" width="327" height="690"> <!-- фон окна актора  -->
+				<texture>ui_icons_PDA_dialog_frame</texture>
+				<column1 x="0" y="0" width="220" height="22">	<!-- столбец названия -->
+					<text r="238" g="153" b="26" font="letterica18" vert_align="c" align="c"/>
+					<texture>ui_icons_PDA_dialog_string</texture>
+				</column1>
+				<vert_separator x="0" y="0" width="220" height="690" vertical="1"> <!-- эмуляция разделителя -->
+					<texture>ui_icons_PDA_dialog_frame</texture>
+				</vert_separator>
+				<column2 x="219" y="0" width="42" height="22"> - <!-- столбец износа -->
+					<text r="238" g="153" b="26" font="letterica18" vert_align="c" align="c"/>
+					<texture>ui_icons_PDA_dialog_string</texture>
+				</column2>
+				<vert_separator2 x="260" y="0" width="67" height="690" vertical="1"> <!-- эмуляция разделителя -->
+					<texture>ui_icons_PDA_dialog_frame</texture>
+				</vert_separator2>
+				<column3 x="260" y="0" width="67" height="22"> <!-- столбец количества -->
+					<text r="238" g="153" b="26" font="letterica18" vert_align="c" align="c"/>
+					<texture>ui_icons_PDA_dialog_string</texture>
+				</column3>
+				<list x="2" y="23" width="324" height="664" item_height="19" always_show_scroll="0" active_bg="1">	<!-- сам список итемов -->
+					<font r="238" g="153" b="26" font="letterica18" vert_align="c" align="c"/>
+				</list>
+			</background_frame>
+			<!-- заи...ь, забыли сделать експорт SetRange для прогрессбара, посему текст-->
+			<weight_caption x="100" y="733" width="150" height="21" stretch="1"> 
+				<texture>ui_linetextSmall_e</texture>
+				<text r="238" g="153" b="26" font="letterica18" vert_align="c" align="c" complex="1"></text>
+			</weight_caption>
+		</actor_inv>
+
+		<!-- для стораджа аналогично -->
+		<storage_inv x="673" y="1" width="350" height="767" stretch="0">
+			<texture>ui_frame_03</texture>
+			<caption x="239" y="11" width="100" height="21" stretch="1">
+		            <texture>ui_linetextSmall_e</texture>
+		            <text r="238" g="153" b="26" font="letterica18" vert_align="c" align="c" complex="1"></text>
+			</caption>
+
+						<!-- combobox -->
+			<filter x="8" y="11" width="115" height="25" stretch="1" hint="txt_safe_change_filter_desc">
+				<texture>ui_button_ordinary</texture>
+				<text r="238" g="153" b="26" font="letterica18" vert_align="c" align="c">Все</text>
+				<!-- фрейм в координатах фрейма actor_inv -->
+				<list_frame x="14" y="38" width="109" height="195" stretch="1" >
+					<texture>ui_cb_listbox</texture>
+					<list x="2" y="4" width="105" height="195" item_height="19" always_show_scroll="0" active_bg="1">	
+						<font r="238" g="153" b="26" font="letterica18" vert_align="c" align="c"/>
+					</list>
+				</list_frame>
+			</filter>
+			<!-- combobox -->
+			
+			<take_all x="120" y="11" width="115" height="25" stretch="1"> <!-- кнопка забрать все-->
+				<texture>ui_button_ordinary</texture>
+				<text r="238" g="153" b="26" font="letterica18" vert_align="c" align="c">txt_safe_take_all_desc</text>
+			</take_all>
+			
+			<background_frame x="11" y="40" width="327" height="690">
+				<texture>ui_icons_PDA_dialog_frame</texture>
+				<column1 x="0" y="0" width="220" height="22">
+					<text r="238" g="153" b="26" font="letterica18" vert_align="c" align="c"/>
+					<texture>ui_icons_PDA_dialog_string</texture>
+				</column1>
+				<vert_separator x="0" y="0" width="220" height="690" vertical="1">
+					<texture>ui_icons_PDA_dialog_frame</texture>
+				</vert_separator>
+				<column2 x="219" y="0" width="42" height="22">
+					<text r="238" g="153" b="26" font="letterica18" vert_align="c" align="c"/>
+					<texture>ui_icons_PDA_dialog_string</texture>
+				</column2>
+				<vert_separator2 x="260" y="0" width="67" height="690" vertical="1">
+					<texture>ui_icons_PDA_dialog_frame</texture>
+				</vert_separator2>
+				<column3 x="260" y="0" width="67" height="22">
+					<text r="238" g="153" b="26" font="letterica18" vert_align="c" align="c"/>
+					<texture>ui_icons_PDA_dialog_string</texture>
+				</column3>
+				<list x="2" y="23" width="324" height="664" item_height="19" always_show_scroll="0" active_bg="1">	
+					<font r="238" g="153" b="26" font="letterica18" vert_align="c" align="c"/>
+				</list>
+				<frame_filling_back x="15" y="700" width="292" height="14" vertical="1">
+					<texture>ui_icons_PDA_dialog_frame</texture>
+				</frame_filling_back>
+				<!--visual capacity set here , must be equal safe_StorageViewer.MAXCAPACITY-->
+				<frame_filling x="16" y="702" width="289" height="10" horz="1" min="0" max="2500" inertion="-1"> 
+					<max_color r="255" g="36" b="0"/>
+					<min_color r="0" g="255" b="0"/>
+					<progress>
+						<texture>ui\safe_progress</texture> <!--ui_patch_progress ui_mg_progress_efficiency_full-->
+					</progress>
+				</frame_filling>
+			</background_frame>
+			
+		</storage_inv>
+		
+		<info_box x="352" y="1" width="321" height="530" stretch="1">
+			<texture>ui_icons_PDA_dialog_frame</texture>
+			<item_icon x="0" y="0" width="321" height="180">
+					<texture>ui_icons_PDA_dialog_frame</texture>
+			</item_icon>
+			<frame_condition x="2" y="181" width="317" height="10" horz="1" min="0" max="100" inertion="-1">
+				<min_color r="255" g="36" b="0"/>
+				<max_color r="0" g="255" b="0"/>
+				<progress>
+					<texture>ui\safe_progress</texture> <!--ui_patch_progress ui_mg_progress_efficiency_full-->
+				</progress>
+			</frame_condition>
+			<frame_name x="0" y="193" width="321" height="20" >
+				<texture>ui_icons_PDA_dialog_string</texture> 
+				<text r="238" g="153" b="26" font="letterica18" vert_align="c" align="c"/>
+			</frame_name>
+			<scroll_frame x="3" y="216" width="317" height="268" always_show_scroll="0"> <!-- i hate this control....-->
+				<frame_description x="3" y="0" width="300" height="400" > <!-- <frame_description x="3" y="215" width="320" height="150" > -->
+					<text font="letterica16" vert_align="t" align="l" complex_mode="1" /> <!-- r="238" g="153" b="26"-->
+				</frame_description>
+			</scroll_frame>
+			<frame_weight x="0" y="485" width="321" height="20">
+				<texture>ui_icons_PDA_dialog_string</texture> 
+				<text font="letterica18" vert_align="c" align="l" r="216" g="186" b="140"/>
+			</frame_weight>
+			<frame_cost x="0" y="507" width="321" height="20">
+				<texture>ui_icons_PDA_dialog_string</texture> 
+				<text font="letterica18" vert_align="c" align="l" r="216" g="186" b="140"/>
+			</frame_cost>
+		</info_box>
+		
+		<info_transfer x="352" y="540" width="321" height="220" stretch="1">
+			<texture>ui_icons_PDA_dialog_frame</texture> 
+			<frame_text x="3" y="3" width="319" height="217">
+				<text font="letterica18" vert_align="t" align="l" complex_mode="1" />
+			</frame_text>
+		</info_transfer>
+		
+</main_window>

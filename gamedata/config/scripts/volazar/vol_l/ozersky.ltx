@@ -1,0 +1,41 @@
+[logic]
+active = walker@ozersky
+combat_ignore = combat_ignore
+
+[walker@ozersky]
+path_walk = ozersky_walk_1
+path_look = ozersky_look_1
+meet = no_meet
+show_spot = false 
+danger = danger_condition
+combat_ignore_cond = always
+on_info = {+vol_pizdec_tvoritsya6} walker@ozersky_2
+
+[walker@ozersky_2]
+path_walk = ozersky_walk_2
+path_look = ozersky_look_2
+def_state_moving2 = patrol
+def_state_moving3 = patrol
+meet = no_meet
+show_spot = false 
+danger = danger_condition
+combat_ignore_cond = always
+on_signal = meet_on| walker@ozersky_3
+
+[walker@ozersky_3]
+path_walk = ozersky_walk_3
+path_look = ozersky_look_3
+meet = meet@on
+show_spot = false 
+danger = danger_condition
+combat_ignore_cond = always
+
+[meet@on]
+use = true
+use_wpn = true
+
+[danger_condition]
+ignore_distance = 0
+
+[combat_ignore]
+combat_ignore_cond = always

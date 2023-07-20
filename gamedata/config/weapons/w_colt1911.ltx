@@ -1,0 +1,401 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Армейский пистолет Colt M1911 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[wpn_colt1911]:WP_PM
+min_radius 			= 1
+max_radius 			= 10
+description			= enc_weapons1_wpn-colt1911
+
+ef_main_weapon_type		= 0
+ef_weapon_type			= 5
+
+holder_range_modifier		= 1.0			; во сколько раз увеличивается eye_range 
+holder_fov_modifier		= 1.5			; во сколько раз увеличивается eye_fov
+
+cost				= 1100
+
+ammo_limit			= 120
+ammo_current			= 120
+ammo_elapsed			= 7
+ammo_mag_size			= 7
+
+ammo_class			= ammo_11.43x23_hydro, ammo_11.43x23_fmj
+
+hand_dependence			= 1
+single_handed			= 1
+
+slot 				      = 1
+animation_slot			= 1			; type of the animation that will be used
+
+inv_name			      = wpn-colt1911
+inv_weight			= 1.07
+
+inv_grid_width		= 2
+inv_grid_height		= 1
+inv_grid_x			= 19
+inv_grid_y			= 4
+
+;базовая дисперсия
+dispersion_start		= 0
+fire_dispersion_base		= 0.18		;угол (в градусах) базовой дисперсии оружия (оружия зажатого в тисках)
+control_inertion_factor		= 1.19f
+
+;отдача
+cam_relax_speed 		= 15.33		;скорость возврата в исходное положение
+cam_dispersion 			= 0.15		;увеличения угла (в градусах) с каждым выстрелом
+cam_dispersion_inc		= 0.0		;увеличениe cam_dispersion с каждым выстрелом
+cam_dispertion_frac		= 0.15		;ствол будет подыматься на cam_dispersion*cam_dispertion_frac +- cam_dispersion*(1-cam_dispertion_frac)
+cam_max_angle			= 4.0		;максимальный угол отдачи
+cam_max_angle_horz		= 6.0		;(degree) maximum shot horizontal degree 
+cam_step_angle_horz		= 0.12		;(degree) size of step camera moved in horizontal position while shooting
+
+fire_dispersion_condition_factor= 5		;увеличение дисперсии в процентах при максимальном износе 
+misfire_probability 		= 0.001		;вероятность осечки при максимальном износе 
+misfire_condition_k		= 0.05
+condition_shot_dec		= 0.00017 	;увеличение износа при каждом выстреле
+
+direction           	      = 0, 0, 1
+fire_point               	= 0.0000,0.2130,0.1900
+flame_particles		 	= weapons\generic_weapon03
+smoke_particles		 	= weapons\generic_shoot_00
+
+shell_point		 	= 0.0, 0.127, 0.035
+shell_dir		 	= 0.0, 0.0, 0.4
+shell_particles	 		= weapons\arsenal_shells1
+
+PDM_disp_base 			= 1.0
+PDM_disp_vel_factor 		= 0.7
+PDM_disp_accel_factor 		= 0.7
+PDM_crouch	 		= 0.8
+PDM_crouch_no_acc 		= 0.6
+
+hit_power 			= 0.67
+hit_impulse		 	= 56
+hit_type 			= fire_wound
+hit_rate	            = 1.88
+fire_distance 		= 65
+bullet_speed		= 355		;начальная скорость пули
+rpm 				= 250
+rpm_empty_click 	 	= 100
+
+use_aim_bullet		= true		;Поддерживается ли первая суппер пуля
+time_to_aim			= 0.5	
+
+hud 				= wpn_colt1911_hud
+normal 				= 0, 1, 0
+position                 	= -0.021, -0.15, 0.0
+orientation 			= 0, 0, 0
+
+;strap_position 		= -0.1, -0.45, 0.2	; position (offset) and orientation of the weapon when it is strapped
+;strap_orientation 		= 1.57,0,0		; (3rd person view)
+;strap_bone0			= bip01_spine2
+;strap_bone1			= bip01_spine1
+
+visual 				= weapons\colt1911\wpn_colt1911.ogf
+
+light_color		 	= 0.6, 0.5, 0.3
+light_range		 	= 3.0
+light_var_color		= 0.05
+light_var_range		= 0.5
+light_time 		 	= 0.2
+
+ph_mass			 	= 1
+
+;addons
+scope_status			= 0
+silencer_status			= 2
+grenade_launcher_status		= 0
+
+zoom_enabled		= true
+scope_zoom_factor	 	= 56
+
+;глушитель
+silencer_name 		= wpn_addon_sil_1143_p		; section name for the attachable silencer
+silencer_x 			= 68				; offset in inventory icon
+silencer_y 			= -12					
+
+;sounds (name of the sound, volume (0.0 - 1.0), delay (sec))
+snd_draw					= weapons\colt\colt_draw
+snd_holster					= weapons\colt\colt_holster
+snd_shoot					= weapons\colt\colt_shoot
+snd_empty					= weapons\colt\colt_empty
+snd_reload					= weapons\colt\reload
+snd_close					= weapons\colt\colt_close
+snd_silncer_shot				= weapons\colt\colt_shot_sil
+
+;params when silencer is attached 
+;similar to corresponding params without prefix silencer_
+
+;silencer_flame_particles 	= weapons\generic_weapon01
+silencer_smoke_particles 	= weapons\generic_shoot_00
+
+silencer_hit_power 		= 0.64
+silencer_hit_impulse	 	= 36
+silencer_fire_distance 		= 60
+silencer_bullet_speed	 	= 325
+
+silencer_light_color		= 0.6,0.5,0.3
+silencer_light_range		= 2
+silencer_light_var_color	= 0.05
+silencer_light_var_range	= 0.5
+silencer_light_time 		= 0.2
+
+[wpn_colt1911_hud]
+allow_inertion			= true
+
+shell_point          			= 0.025, 0.02, -0.1
+fire_point					= 0.0000,0.030,-0.1725
+fire_bone                		= wpn_body
+position					= -0.050,-0.145,-0.0500
+orientation					= 0,0,0
+
+visual                   	= weapons\colt1911\wpn_colt1911_hud.ogf
+
+anim_holster			= holster
+anim_idle				= idle
+anim_empty				= empty
+anim_reload				= reload
+anim_reload_empty			= reload_full
+anim_draw				= draw
+anim_draw_empty			= draw_empty
+anim_shoot				= shoot_1
+anim_shot_last			= shoot_last_1
+anim_close				= holster_empty
+anim_idle_aim			= idle_aim
+anim_idle_sprint			= idle_sprint
+
+zoom_offset				= -0.0702,0.03645,-0.055 
+zoom_rotate_x			= -0.0007   
+zoom_rotate_y			= 0.00000
+
+;прячем перекрестие прицела в зуме
+zoom_hide_crosshair		= true
+
+;время поворота HUD (сек)
+zoom_rotate_time			= 0.2
+rotate_time				= 0.2
+
+;;;;;;;;;;;;; Кольт Кунан под магнум патрон ;;;;;;;;;;;;;;
+[wpn_colt_coonan]:wpn_colt1911
+description			= enc_weapons1_wpn-colt_coonan
+inv_name			= wpn-colt_coonan
+inv_grid_x			= 59
+inv_grid_y			= 68
+
+ammo_mag_size			= 8
+ammo_class			= ammo_357_hp_mag, ammo_357_ap_mag
+
+fire_dispersion_base		= 0.14
+condition_shot_dec		= 0.000085
+
+hit_power 			= 0.78
+hit_impulse		 	= 65
+fire_distance 		= 85
+bullet_speed		= 425
+rpm 			= 285
+silencer_hit_power 		= 0.74
+silencer_hit_impulse	 	= 56
+silencer_fire_distance 		= 80
+silencer_bullet_speed	 	= 375
+silencer_name 		= wpn_addon_silencer
+silencer_x 		= 65
+silencer_y 		= -19
+
+visual 				= weapons\colt1911\wpn_colt_coonan.ogf
+hud 				= wpn_colt_coonan_hud
+[wpn_colt_coonan_hud]:wpn_colt1911_hud
+visual                   	= weapons\colt1911\wpn_colt_coonan_hud.ogf
+
+;;;;;;;;;;;; Smith & Wesson 1006 10mm Auto ;;;;;;;;;;;;
+[wpn_sw1006]:wpn_colt1911
+description				= enc_arsenal_sw1006
+inv_name			= ars-sw1006
+inv_grid_x			= 60
+inv_grid_y			= 71
+
+ammo_mag_size			= 9
+ammo_class		 	= ammo_10x25_fmj, ammo_10x25_hp
+inv_weight			= 1.18
+cost				= 1500
+
+fire_point			= 0.000000,0.1350,0.1830
+shell_point		 	= 0.0, 0.127, 0.02
+
+cam_relax_speed         	= 10.0
+cam_dispersion          	= 6.0
+cam_dispertion_frac		= 1.25
+cam_max_angle			= 60.0
+cam_max_angle_horz		= 10.0
+cam_step_angle_horz		= 0.25
+
+position                 	= -0.020, -0.093, -0.0012
+visual                   	= weapons\swp\wpn_sw1006.ogf
+hud                      	= wpn_sw1006_hud
+
+snd_shoot				= weapons\colt\automag_shoot
+snd_silncer_shot			= weapons\valter\walther_shot_sil
+
+silencer_x 				= 82
+silencer_y 				= -15
+
+[wpn_sw1006_hud]
+shell_point          			= 0.025, 0.02, -0.1
+fire_point				= 0.0000,0.0482,-0.130
+fire_bone                		= wpn_body
+
+position				= 0,-0.18,-0.05
+orientation				= 4,4,0
+
+visual                   		= weapons\swp\wpn_sw1006_hud.ogf
+
+anim_holster				= holster
+anim_idle				= idle
+anim_empty				= empty
+anim_reload				= reload
+anim_reload_empty			= reload_full
+anim_draw				= draw
+anim_draw_empty				= draw_empty
+anim_shoot				= shoot_1
+anim_shot_last				= shoot_last_1
+anim_close				= holster_empty
+anim_idle_aim				= idle_aim
+anim_idle_sprint			= idle_sprint
+
+zoom_offset			= -0.116300,0.06375,-0.05
+zoom_rotate_x			= 0.0650
+zoom_rotate_y			= 0.0700
+
+;;;;;;;;;;;; Smith & Wesson 4006 .40S&W ;;;;;;;;;;;;
+[wpn_sw4006]:wpn_sw1006
+description				= enc_arsenal_sw4006
+inv_name				= ars-sw4006
+inv_grid_x					= 60
+inv_grid_y					= 70
+ammo_class		 	= ammo_40sw_hp, ammo_40sw_ap
+ammo_mag_size			= 11
+inv_weight			= 1.02
+
+cam_relax_speed 		= 15.33
+cam_dispersion 			= 0.15
+cam_dispertion_frac		= 0.15
+cam_max_angle			= 4.0
+cam_max_angle_horz		= 6.0
+cam_step_angle_horz		= 0.12
+ 
+visual           = weapons\swp\wpn_sw4006.ogf
+hud            = wpn_sw4006_hud
+
+silencer_x 				= 78
+silencer_y 				= -16
+snd_shoot				= weapons\colt\sw40_shoot
+snd_reload				= weapons\usp\reload
+
+[wpn_sw4006_hud]
+shell_point		       	= 0.03, 0.012, -0.135
+
+fire_point			= 0,0.0323,-0.215
+fire_bone                	= wpn_body
+orientation              	= 0,0,0
+position                 	= -0.031,-0.157,0
+visual           = weapons\swp\wpn_sw4006_hud.ogf
+
+anim_holster				= holster
+anim_idle				= idle
+anim_empty				= idle_empty
+anim_reload				= reload
+anim_reload_empty			= reload_full 
+anim_draw				= draw
+anim_draw_empty				= draw_empty
+anim_shoot				= shoot
+anim_shot_last				= shoot_last
+anim_close				= holster 
+anim_idle_aim				= idle_aim
+anim_idle_sprint			= idle_sprint
+
+;смещения HUD для режима приближения
+zoom_offset		= -0.085550,0.036750,-0.055
+zoom_rotate_x		= -0.006520
+zoom_rotate_y		= 0.00000
+
+;;;;;;;;;;;; Smith & Wesson Model SW1911 ;;;;;;;;;;;;
+[wpn_sw1911ta]:wpn_colt1911
+description				= enc_arsenal_sw1911ta
+inv_name				= ars-sw1911ta
+inv_grid_x					= 62
+inv_grid_y					= 71 
+inv_weight			= 1.09
+cost				= 1350
+ammo_mag_size			= 8
+fire_point					= 0.0000,0.1330,0.2000
+position                 	                = -0.021, -0.093, -0.0012
+condition_shot_dec		= 0.000075
+visual                   			= weapons\swp\wpn_sw1911ta.ogf
+hud                                             = wpn_sw1911ta_hud
+silencer_x 				= 82
+silencer_y 				= -15
+
+[wpn_sw1911ta_hud]:wpn_sw1006_hud
+fire_point	 = 0.0000,0.0425,-0.1225
+visual           = weapons\swp\wpn_sw1911ta_hud.ogf
+
+zoom_offset			= -0.116105,0.05950,-0.05
+zoom_rotate_x			= 0.05750
+zoom_rotate_y			= 0.0705
+
+;;;;;;;;;;;; Colt Delta Elite ;;;;;;;;;;;;
+[wpn_delta_elite]:wpn_sw1006
+description				= enc_arsenal_delta_elite
+inv_name				= ars-delta_elite
+inv_grid_x					= 64
+inv_grid_y					= 71 
+inv_weight			= 1.077
+cost				= 1450
+ammo_mag_size			= 8
+
+fire_point					= 0.0, 0.135, 0.200
+shell_point		 			= 0.0, 0.133, 0.0275
+position 					= -0.021, -0.088, -0.0012
+visual                          = weapons\swp\wpn_delta_elite.ogf
+hud                      	= wpn_delta_elite_hud
+
+silencer_x 				= 77
+silencer_y 				= -15
+
+[wpn_delta_elite_hud]
+
+allow_inertion		= true
+
+shell_point			= 0.0425,0.025,-0.100
+shell_dir			= 0.0, 1.0, 0.0
+fire_point			= 0.000,0.0465,-0.192 
+fire_bone			= wpn_body
+
+orientation			= 2.349998,2.749999,1.149998 
+position			= 0.003000,-0.179500,0.039000
+
+visual           = weapons\swp\wpn_delta_elite_hud.ogf
+
+anim_holster		= holster
+anim_holster_empty	= holster_empty
+anim_idle		= idle
+anim_empty		= idle_empty
+anim_reload		= reload
+anim_reload_empty	= reload_full
+anim_draw		= draw
+anim_draw_empty		= draw_empty
+anim_shoot		= shoot
+anim_shot_last		= shoot_last
+anim_close		= holster
+anim_idle_aim		= idle_aim
+anim_idle_aim_empty	= idle_aim_empty
+anim_idle_sprint	= idle_sprint
+
+;смещения HUD для режима приближения
+zoom_offset		= -0.122000,0.059000,-0.075
+zoom_rotate_x		= 0.038000
+zoom_rotate_y		= 0.033875
+
+;прячем перекрестие прицела в зуме
+zoom_hide_crosshair	= true
+
+
+
+

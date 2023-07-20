@@ -1,0 +1,330 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; SIG SG 552 Commando ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[wpn_sg552_sk1]:WP_AK74
+min_radius          	= 30
+max_radius          	= 100
+description				= enc_arsenal_sg552
+	
+ef_main_weapon_type		= 2
+ef_weapon_type			= 6
+
+holder_range_modifier	= 1.0		       ; во сколько раз увеличивается eye_range 
+holder_fov_modifier		= 0.7              ; во сколько раз увеличивается eye_fov
+
+cost					= 7200
+weapon_class			= assault_rifle	; Type of the weapon
+	
+ammo_limit				= 210
+ammo_current			= 180
+ammo_elapsed			= 30
+	
+ammo_mag_size			= 30
+ammo_class				= ammo_5.56x45_ss190, ammo_5.56x45_ap, ammo_5.56x45_gd
+grenade_class			= ammo_m209 ;ammo_vog-27
+fire_modes				= 1, -1
+launch_speed			= 0
+hand_dependence			= 1
+single_handed			= 0	
+
+slot 					= 2		; // secondary
+animation_slot			= 2		; type of the animation that will be used
+
+inv_name	        	= ars-sg552 
+inv_weight			= 3.2
+
+inv_grid_width			= 5
+inv_grid_height			= 2
+inv_grid_x			= 36
+inv_grid_y			= 0
+
+
+;базовая дисперсия
+fire_dispersion_base		= 0.16	;угол (в градусах) базовой дисперсии оружия (оружия зажатого в тисках)
+control_inertion_factor		= 1.15f
+
+;отдача
+cam_relax_speed        		= 8.5 ;скорость возврата в исходное положение
+cam_dispersion         		= 0.15 ;увеличения угла (в градусах) с каждым выстрелом
+cam_dispersion_inc		= 0.1	 ;увеличениe cam_dispersion с каждым выстрелом
+cam_dispertion_frac		= 0.25 ;ствол будет подыматься на cam_dispersion*cam_dispertion_frac +- cam_dispersion*(1-cam_dispertion_frac)
+cam_max_angle			= 6.2	 ;максимальный угол отдачи
+cam_max_angle_horz		= 8.0	 ;(degree) maximum shot horizontal degree 
+cam_step_angle_horz		= 0.35 ;0.4	;(degree) size of step camera moved in horizontal position while shooting
+
+fire_dispersion_condition_factor = 1.5	;увеличение дисперсии в процентах при максимальном износе 
+misfire_probability 		   = 0.0025	;вероятность осечки при максимальном износе 
+misfire_condition_k			= 0.05
+condition_shot_dec 			= 0.0001 ;увеличение износа при каждом выстреле
+
+direction              	= 0, 0, 1
+fire_point		= 0.0, 0.165, 0.474 ;0.000000,0.137000,0.44400
+fire_point2            	= 0.0, 0.000, 0.655
+
+flame_particles			= weapons\generic_weapon05
+smoke_particles			= weapons\generic_shoot_00
+grenade_flame_particles		= weapons\generic_weapon01
+	
+shell_point			      = 0.0000,0.160,0.020
+shell_dir		 		= 0.0, 0.0, 0.4
+shell_particles	 		= weapons\arsenal_shells1
+
+rpm_empty_click 	 		= 200
+
+PDM_disp_base 			= 1.0
+PDM_disp_vel_factor 		= 1.4
+PDM_disp_accel_factor 		= 1.4
+PDM_crouch	 		= 1.0
+PDM_crouch_no_acc 		= 1.0
+
+;;;;;;; Для ОП-2.1
+hit_power        	      = 0.74
+hit_impulse		      = 62
+hit_type 			     = fire_wound
+hit_rate	            = 1.88
+fire_distance           = 280
+bullet_speed		= 860	;начальная скорость пули
+rpm                     = 700
+
+use_aim_bullet				= true		;Поддерживается ли первая суппер пуля
+time_to_aim					= 1.0	
+
+hud                      	= wpn_sig552_hud
+normal                   	= 0, 1, 0
+
+position         	        = -0.021, -0.122, 0.10 ;-0.016, -0.102, 0.00
+orientation      	        = 0, 0, 0
+
+;под мишкой
+strap_position         		= -0.128,-0.250,0.15 ;-0.26,-0.11,0.25			; position (offset) and orientation of the weapon when it is strapped
+strap_orientation      		= -10,-5,10 ;-15,-9,110				; (3rd person view in degrees)
+strap_bone0					= bip01_spine2
+strap_bone1					= bip01_spine1
+
+startup_ammo   		        = 90
+visual         		        = weapons\sig550\wpn_sig550_m1_camo.ogf ;wpn_sig552.ogf
+	
+light_color					= 0.6,0.5,0.3
+light_range					= 5
+light_var_color				= 0.05
+light_var_range				= 0.5
+light_time 					= 0.2
+
+ph_mass						= 4
+;cost						= 2100
+
+;addons
+scope_status				= 0 ;2
+silencer_status				= 2
+grenade_launcher_status		        = 2
+
+zoom_enabled				= true						; (on,off)zoom mode (right mouse button)
+scope_zoom_factor	    	        = 65						; fov for zoom mode
+
+scope_name 					= wpn_addon_acog
+scope_x 					= 79
+scope_y 					= -3
+silencer_name  				= wpn_addon_sil_556_ar
+silencer_x 					= 210
+silencer_y 					= 12
+grenade_launcher_name 		      = wpn_addon_grenade_launcher_m203 ;wpn_kollim_sig
+grenade_launcher_x 			= 127
+grenade_launcher_y 			= 22
+
+;звуки
+snd_draw					= weapons\generic_draw
+snd_holster					= weapons\generic_holster
+snd_shoot					= weapons\sig550\sig551_shoot ;sg552_shot
+snd_empty					= weapons\gen_empty
+snd_reload					= weapons\sig550\sig550_reload_empty ;reload, 3.5, 0.22 
+snd_shoot_grenade				= weapons\m203_shot
+snd_reload_grenade			        = weapons\sig550\m203_grenload
+snd_switch					= weapons\sig550\m203_switch
+snd_silncer_shot			      = weapons\sig550\sig552_shot_sil
+
+;настройки для глушителя
+silencer_hit_power       	= 0.70
+silencer_hit_impulse	 	= 53
+silencer_fire_distance   	= 220
+silencer_bullet_speed	 	= 815
+
+;silencer_flame_particles 	= weapons\generic_weapon01
+silencer_smoke_particles 	= weapons\generic_shoot_00
+
+silencer_light_color		= 0.6,0.5,0.3
+silencer_light_range		= 2
+silencer_light_var_color	= 0.05
+silencer_light_var_range	= 0.5
+silencer_light_time 		= 0.2
+
+ 
+[wpn_sig552_hud]
+shell_point     	   	 	= 0.055,-0.027,-0.80 ;0.1,0,-0.75 
+shell_dir			     	= 0.0, 1.0, 0.0
+
+fire_point			= 0,-0.0075,-0.520 ;0,0,-0.5
+fire_point2              	= 0,-0.09,-0.5
+fire_bone               	= muzzle
+position			= -0.044,-0.1750,0.14
+orientation			= 2,2,0
+
+visual                  	= weapons\sig550\wpn_sig550_m1_camo_hud.ogf
+grenade_bone            	= grenade
+
+anim_idle				= sig550_idle1	;idle
+anim_idle_aim				= sig550_idle_aim
+anim_reload				= sig550_reload1	;reload
+anim_draw				= sig550_draw
+anim_holster				= holster
+anim_shoot				= sig550_shoot1	;shoot
+anim_idle_sprint			= sprint
+
+anim_idle_g				= sig550_idle_g	;idle_g
+anim_idle_g_aim				= aim_g
+anim_reload_g				= sig550_reload_g
+anim_shoot_g				= sig550_shoot_g
+anim_switch_grenade_on		        = sig550_switch_on ;aim_g ;
+anim_switch_grenade_off		        = sig550_switch_off ;aim_g ;
+anim_draw_g				= draw_g
+anim_holster_g				= holster_g
+
+;(режим обычной стрельбы)			  
+anim_idle_gl				= sig550_idle_w_gl	;idle_w_gl
+anim_idle_gl_aim			= aim_w_gl
+anim_reload_gl				= sig550_reload_w_gl	;reload_w_gl
+anim_draw_gl				= draw_w_gl
+anim_holster_gl				= holster_w_gl
+anim_shoot_gl				= sig550_shoot_w_gk	;shoot_w_gl
+
+;смещения HUD для режима приближения
+zoom_offset		= -0.1125,0.0307,-0.033 ;-0.1125,0.0307,0.05
+zoom_rotate_x		= 0.0412
+zoom_rotate_y		= 0.03495
+
+grenade_normal_zoom_offset		= -0.1125,0.0307,-0.033 ;-0.1125,0.0515,0.05 
+grenade_normal_zoom_rotate_x		= 0.0412              
+grenade_normal_zoom_rotate_y		= 0.03495 
+
+;режим подствольника
+grenade_zoom_offset		= -0.1125,0.0307,-0.033 ;-0.112,-0.015,0.1
+grenade_zoom_rotate_x		= 0.0412 ;-0.018
+grenade_zoom_rotate_y		= 0.03495
+
+;прячем перекрестие прицела в зуме
+zoom_hide_crosshair	= true
+
+
+;;;;;;;;;;;;;;;;;;;; SIG SG 552 "Camo" ;;;;;;;;;;;;;;;;;;;;;;;
+[wpn_sig552camo]:wpn_sg552_sk1
+inv_name	        	= ars-sg552camo
+description			= enc_arsenal_sg552camo
+inv_grid_x         = 16
+inv_grid_y         = 70
+inv_weight				= 2.65
+fire_dispersion_base			= 0.08
+cam_relax_speed         		= 9
+cam_dispersion          		= 0.09
+misfire_probability 		   = 0.0003
+fire_point			= 0.0000,0.1370,0.3875
+shell_point			= -0.020,0.1365,0.085
+bullet_speed		= 920
+silencer_bullet_speed	= 855
+position         	        = -0.023, -0.092, 0.0
+visual         		  = weapons\sig550\wpn_sig552camo.ogf
+
+scope_status				= 2
+scope_name 	                   = wpn_addon_acog_r
+scope_x 					= 69
+scope_y 					= 0
+silencer_x 					= 181
+silencer_y 					= 20
+grenade_launcher_name 		        = wpn_kollim_sig
+grenade_launcher_x 			= 78
+grenade_launcher_y 			= 5
+
+snd_draw			= weapons\sig550\draw
+snd_holster			= weapons\sig550\holster
+snd_shoot			= weapons\sig550\sg552_shot
+snd_reload			= weapons\sig550\sg550_sr_reload, 1.0, 0.15
+snd_silncer_shot		= weapons\sig550\sg550_silent
+
+hud                      	= wpn_sig552camo_hud
+
+[wpn_sig552camo_hud]
+
+allow_inertion		= true
+shell_point          	= -0.008, 0.0125, -0.80 ;-0.008, 0.035, -0.85
+shell_dir		 	= 0.0, 0.0, 0.0
+
+fire_point			= 0.00,0.0175,-0.585
+fire_point2			= -0.0228,0.03,-0.8
+fire_bone               = muzzle
+orientation             = 2.75, 2.15, 0	
+position                = 0.10,-0.0480,0.3670
+visual                  = weapons\sig550\wpn_sig552camo_hud.ogf
+
+grenade_bone            	= wpn_grenade
+
+; animation names
+
+anim_idle			= idle
+anim_idle_aim		= idle_aim
+anim_reload			= reload
+anim_draw			= draw
+anim_holster		= holster
+anim_shoot			= shoot
+			
+; animation names
+; attached grenade launcher [GRENADE fire mode]
+anim_idle_g					= idle_grenade
+anim_idle_g_aim				= idle_g_aim
+anim_reload_g				= reload_grenade
+anim_shoot_g				= shoot_grenade
+anim_draw_g					= draw_grenade_mode
+anim_holster_g				= holster_grenade_mode
+
+anim_switch_grenade_on		= switch_grenade_on 
+anim_switch_grenade_off		= switch_grenade_off
+
+; attached grenade launcher [NORMAL fire mode]
+anim_idle_gl				= idle_w_gl
+anim_idle_gl_aim			= idle_w_gl_aim
+anim_reload_gl				= reload_w_gl
+anim_draw_gl				= draw_w_gl
+anim_holster_gl				= holster_w_gl
+anim_shoot_gl				= shoot_w_gl
+anim_idle_sprint			= idle_sprint
+
+;HUD offset in zoom mode (to all)
+zoom_offset			= -0.1170,0.0266,-0.033
+zoom_rotate_x		= 0.0200
+zoom_rotate_y		= 0.048
+
+zoom_hide_crosshair	= true						;to hide crosshair in zoom 
+
+; in NORMAL shoot mode
+
+grenade_normal_zoom_offset		= -0.1170,0.0185,-0.033
+grenade_normal_zoom_rotate_x		= 0.0470
+grenade_normal_zoom_rotate_y		= 0.0472
+
+; in GRENADE mode
+
+grenade_zoom_offset		= -0.1170,0.0266,-0.033
+grenade_zoom_rotate_x		= 0.0200
+grenade_zoom_rotate_y		= 0.048
+
+
+;;;;;;;;;; Коллиматорный прицел Barska ;;;;;;;;;;
+[wpn_kollim_sig]:W_GLAUNC
+visual            = Arsenal_Mod\Addons\wpn_eotech.ogf
+description		= enc_arsenal_kollim_sig     
+ammo_class		= ammo_m209
+fire_dispersion_base		   = 0.14
+
+cost			 = 2500
+inv_name		 = ars_kollim_sig
+inv_name_short = ars_kollim_sig_s
+inv_weight		 = 0.113
+inv_grid_width     = 1
+inv_grid_height    = 1
+inv_grid_x         = 46
+inv_grid_y         = 55

@@ -1,0 +1,32 @@
+--[-[
+	give_info("teleport_started")
+	give_info("teleport_finished")
+	local pos=db.actor:position()
+	db.actor:set_actor_position(xyz(pos.x,pos.y+10,pos.z))
+--	db.actor:set_actor_position(xyz(-119.45238494873,3.59414339065552,-37.9627380371094),310973,977)
+--	db.actor:set_actor_position(xyz(165.264083862305,-9.26233863830566,-38.1896209716797),214467,3759)
+--	db.actor:set_actor_position(level.vertex_position(675831))
+--	local a = volazar_tbl_restr.volazar_restr()[14] db.actor:set_actor_position(xyz(a.x,a.y,a.z))
+--	db.actor:set_actor_position(patrol("vol_bloodsucker_walk_8"):point(0))
+--]]
+
+--	_G.cycle_task = nil _G.Cycle_Task = nil	_G.Cycle_Task = cycle_task.CCycleTask()
+--	_G.Cycle_Task:stats()
+--	got("part_psevdodog_tail",1)
+--	got("af_medusa",10)
+--	give_info("sak_repair_box_done")
+--	disable_info("agroprom_military_case_have")
+--	snp.invul_on()
+
+--[[ тест позиции
+	if prev_art then
+		release(prev_art)
+		prev_art = nil
+	end
+	if prev_art2 then
+		release(prev_art2)
+		prev_art2 = nil
+	end
+
+	prev_art = create("m_inventory_box", db.actor:position(),db.actor:level_vertex_id(),db.actor:game_vertex_id())
+--]]

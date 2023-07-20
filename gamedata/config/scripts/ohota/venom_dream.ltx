@@ -1,0 +1,89 @@
+[smart_terrains]
+none = true
+ 
+[logic]
+active = mob_walker
+
+[mob_walker]
+braindead = true
+path_walk = venom_dream_walk0
+path_look = venom_dream_walk1
+on_info = {+venom_dream_spawn} mob_home1 %=alien_control(true) =disable_ui%
+
+[mob_home1]
+braindead = true
+path_home = venom_dream_walk1
+home_min_radius = 20
+home_max_radius = 40
+on_timer = 1000 | mob_walker1
+
+[mob_walker1]
+braindead = true
+path_walk = venom_dream_walk1
+path_look = venom_dream_look11
+on_timer = 41000 | mob_home2
+
+[mob_home2]
+braindead = true
+path_home = venom_dream_walk1
+home_min_radius = 20
+home_max_radius = 40
+on_timer = 1000 | mob_walker2 %=akill.venom_dream_sound2%
+
+[mob_walker2]
+braindead = true
+path_walk = venom_dream_walk1
+path_look = venom_dream_look12
+on_timer = 5000 | mob_home3 %=akill.venom_dream_sound1%
+
+[mob_home3]
+braindead = true
+path_home = venom_dream_walk1
+home_min_radius = 20
+home_max_radius = 40
+on_timer = 1000 | mob_walker3
+
+[mob_walker3]
+braindead = true
+path_walk = venom_dream_walk2
+path_look = venom_dream_look21
+on_timer = 18000 | mob_home4
+
+[mob_home4]
+braindead = true
+path_home = venom_dream_walk2
+home_min_radius = 20
+home_max_radius = 40
+on_timer = 1000 | mob_walker4
+
+[mob_walker4]
+braindead = true
+path_walk = venom_dream_walk2
+path_look = venom_dream_look22
+on_timer = 5000 | mob_home5 %=akill.venom_dream_sound1%
+
+[mob_home5]
+braindead = true
+path_home = venom_dream_walk2
+home_min_radius = 20
+home_max_radius = 40
+on_timer = 1000 | mob_walker5
+
+[mob_walker5]
+braindead = true
+path_walk = venom_dream_walk3
+path_look = venom_dream_look31
+on_timer = 14000 | mob_home6
+
+[mob_home6]
+braindead = true
+path_home = venom_dream_walk3
+home_min_radius = 20
+home_max_radius = 40
+on_timer = 1000 | mob_walker6 %=akill.venom_dream_sound3%
+
+[mob_walker6]
+braindead = true
+path_walk = venom_dream_walk3
+path_look = venom_dream_look32
+on_timer = 7000 | nil %=alien_control(false) =enable_ui =akill.venom_dream_delete%

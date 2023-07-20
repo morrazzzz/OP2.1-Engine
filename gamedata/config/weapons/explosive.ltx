@@ -1,0 +1,1151 @@
+; Здесь вся взрывчатка кроме уникальной
+
+[explosive_fuelcan]:II_EXPLO
+visual		 		= physics\balon\balon_01.ogf
+inv_name			= Fuelcan
+inv_weight			= .1
+cost				= 50
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 9
+inv_grid_y			= 9
+
+blast				= 1.50
+blast_r				= 8
+blast_impulse		= 210
+frags				= 5
+frags_r			= 15
+frag_hit			= 0.75
+frag_hit_impulse	= 150
+hit_type_blast		= explosion
+hit_type_frag		= burn
+up_throw_factor		= 1.0
+wm_size                  = 0.1
+
+explode_particles		 = explosions\explosion_fuelcan
+light_color		         = 1.9,1.3,0.5
+light_range		         = 30.0
+light_time 		         = 1.5
+fragment_speed				= 100
+explode_duration		 = 5		;подолжительность взрыва (с)
+snd_explode = weapons\explo\fuelcan_boom
+
+immunities_sect			= explosive_fuelcan_immunities_sect
+[explosive_fuelcan_immunities_sect]
+burn_immunity			= 1.0
+strike_immunity			= 1.0
+shock_immunity			= 1.0
+wound_immunity			= 1.0
+radiation_immunity		= 1.0
+telepatic_immunity		= 1.0
+chemical_burn_immunity	= 1.0
+explosion_immunity		= 1.0
+fire_wound_immunity		= 0.7
+
+[explosive_tank]:II_EXPLO
+visual				= physics\balon\bomb_01.ogf
+inv_name			= Fuelcan
+inv_weight			= .1
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 9
+inv_grid_y			= 9
+cost				= 50
+
+blast				= 1.50
+blast_r				= 8
+blast_impulse		= 210
+frags				= 5
+frags_r				= 15
+frag_hit			= 0.75
+frag_hit_impulse	= 150
+hit_type_blast		= explosion
+hit_type_frag		= burn
+up_throw_factor		= 1.0
+wm_size                  = 0.1
+
+explode_particles		 = explosions\explosion_mobiltank
+light_color		         = 1.9,1.3,0.5
+light_range		         = 30.0
+light_time 		         = 1
+fragment_speed				= 100		;скорость осколков (м/с)
+explode_duration		 = 5		;подолжительность взрыва (с)
+snd_explode = weapons\explo\mobiltank_boom
+
+immunities_sect			= explosive_tank_immunities_sect
+[explosive_tank_immunities_sect]
+burn_immunity			= 1.0
+strike_immunity			= 1.0
+shock_immunity			= 1.0
+wound_immunity			= 1.0
+radiation_immunity		= 1.0
+telepatic_immunity		= 1.0
+chemical_burn_immunity	= 1.0
+explosion_immunity		= 1.0
+fire_wound_immunity		= 0.7
+
+[explosive_barrel_low]:II_EXPLO
+visual				= physics\balon\bochka_fuel.ogf
+inv_name			= Barrel
+inv_weight			= .1
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 9
+inv_grid_y			= 9
+cost				= 500
+
+blast				= 1.50
+blast_r				= 8
+blast_impulse		= 210
+frags				= 5
+frags_r				= 15
+frag_hit			= 0.75
+frag_hit_impulse	= 150
+hit_type_blast		= explosion
+hit_type_frag		= burn
+up_throw_factor		= 1.0
+wm_size                  = 0.1
+
+explode_particles		 = explosions\explosion_barrel
+light_color		         = 1.9,1.4,0.5
+light_range		         = 14.0
+light_time 		         = 0.85
+fragment_speed				= 100		;скорость осколков (м/с)
+explode_duration		 = 5		;подолжительность взрыва (с)
+snd_explode = weapons\explo\barrel_boom
+
+immunities_sect			= explosive_barrel_low_immunities_sect
+[explosive_barrel_low_immunities_sect]
+burn_immunity			= 1
+strike_immunity			= 1
+shock_immunity			= 1
+wound_immunity		= 1
+radiation_immunity		= 1
+telepatic_immunity		= 1
+chemical_burn_immunity = 1
+explosion_immunity		= 1
+fire_wound_immunity	= 1
+
+[explosive_barrel]:II_EXPLO
+visual				= physics\balon\bochka_fuel.ogf
+inv_name			= Barrel
+inv_weight			= .1
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 9
+inv_grid_y			= 9
+cost				= 500
+
+blast				= 1.50
+blast_r				= 8
+blast_impulse		= 210
+frags				= 5
+frags_r				= 15
+frag_hit			= 0.75
+frag_hit_impulse	= 150
+hit_type_blast		= explosion
+hit_type_frag		= burn
+up_throw_factor		= 1.0
+wm_size                  = 0.1
+
+explode_particles		 = explosions\explosion_barrel
+light_color		         = 1.9,1.4,0.5
+light_range		         = 14.0
+light_time 		         = 0.85
+fragment_speed				= 100		;скорость осколков (м/с)
+explode_duration		 = 5		;подолжительность взрыва (с)
+snd_explode = weapons\explo\barrel_boom
+
+immunities_sect			= explosive_barrel_immunities_sect
+[explosive_barrel_immunities_sect]
+burn_immunity			= 1
+strike_immunity			= 1
+shock_immunity			= 1
+wound_immunity			= 1
+radiation_immunity		= 1
+telepatic_immunity		= 1
+chemical_burn_immunity	= 1
+explosion_immunity		= 1
+fire_wound_immunity		= 0.7
+
+[explosive_mobiltank]:II_EXPLO
+visual				= physics\balon\kanistra.ogf
+inv_name			= Barrel
+inv_weight			= .1
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 9
+inv_grid_y			= 9
+cost				= 500
+
+blast				= 1.50
+blast_r				= 8
+blast_impulse		= 170
+frags				= 5
+frags_r				= 15
+frag_hit			= 0.75
+frag_hit_impulse	= 150
+hit_type_blast		= explosion
+hit_type_frag		= burn
+up_throw_factor		= 1.0
+wm_size                  = 0.1
+
+explode_particles		 = explosions\explosion_mobiltank
+light_color		         = 1.9,1.2,0.5
+light_range		         = 30.0
+light_time 		         = 1
+fragment_speed				= 100		;скорость осколков (м/с)
+explode_duration		 = 5		;подолжительность взрыва (с)
+snd_explode = weapons\explo\mobiltank_boom
+
+immunities_sect			= explosive_mobiltank_immunities_sect
+[explosive_mobiltank_immunities_sect]
+burn_immunity			= 1.0
+strike_immunity			= 1.0
+shock_immunity			= 1.0
+wound_immunity			= 1.0
+radiation_immunity		= 1.0
+telepatic_immunity		= 1.0
+chemical_burn_immunity	= 1.0
+explosion_immunity		= 1.0
+fire_wound_immunity		= 0.7
+
+[explosive_dinamit]:II_EXPLO
+visual		 		= physics\box\expl_dinamit.ogf
+inv_name			= Dimanit
+inv_weight			= 10.0
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 9
+inv_grid_y			= 9
+cost				= 50
+
+blast				= 2.00
+blast_r				= 5
+blast_impulse		= 210
+frags				= 5
+frags_r				= 8
+frag_hit			= 0.55
+frag_hit_impulse	= 150
+hit_type_blast		= chemical_burn ;explosion
+hit_type_frag		= burn
+up_throw_factor		= 1.0
+wm_size                  = 0.1
+
+explode_particles		 = explosions\explosion_dynamite
+light_color		         = 1.9,1.3,0.5
+light_range		         = 30.0
+light_time 		         = 1.5
+fragment_speed				= 100
+explode_duration		 = 5		;подолжительность взрыва (с)
+snd_explode = weapons\explo\dynamite_boom
+
+immunities_sect			= dinamit_immunities_sect
+[dinamit_immunities_sect]
+burn_immunity			= 0.0
+strike_immunity			= 0.0
+shock_immunity			= 0.0
+wound_immunity			= 0.0
+radiation_immunity		= 0.0
+telepatic_immunity		= 0.0
+chemical_burn_immunity	= 1.0
+explosion_immunity		= 0.0
+fire_wound_immunity		= 0.0
+
+;Ядерная бомба. Работа Хабарыча. 
+[explosive_bomba]:II_EXPLO
+visual				= weapons\grenade\yadrena_bomba.ogf
+inv_name				= Fuelcan
+inv_weight			= .1
+description			= enc_weapons1_grenade-f1
+inv_grid_width			= 1
+inv_grid_height		= 1
+inv_grid_x			= 9
+inv_grid_y			= 9
+can_take			    = true
+cost				    = 50
+
+blast				= 1
+blast_r				= 70
+blast_impulse			= 1
+frags				= 0
+frags_r				= 70
+frag_hit				= 1
+frag_hit_impulse		= 1
+hit_type_blast			= explosion
+hit_type_frag			= fire_wound
+up_throw_factor		= 1.2
+wm_size                 = 0.1
+
+explode_particles		= a_ufp_particles\atom_blow
+light_color		     = 1.9,1.4,0.5
+light_range		     = 25.0
+light_time 		     = 0.85
+fragment_speed			= 1500
+explode_duration		= 20		;подолжительность взрыва (с)
+snd_explode             = weapons\nucleus_blast        
+snd_checkout            = weapons\generic_checkout
+
+immunities_sect		= explosive_bomba_immunities_sect
+[explosive_bomba_immunities_sect]
+burn_immunity			= 1.2
+strike_immunity			= 1.2
+shock_immunity			= 1.0
+wound_immunity		= 1.0
+radiation_immunity		= 1.0
+telepatic_immunity		= 1.0
+chemical_burn_immunity = 1.0
+explosion_immunity		= 1.0
+fire_wound_immunity	= 1.2
+
+; фейковые гранаты
+[fake_grenades_base]
+inv_name				= .
+inv_name_short			= .
+immunities_sect			= fake_grenades_immunities
+inv_grid_width			= 1
+inv_grid_height			= 1
+inv_grid_x				= 100
+inv_grid_y				= 100
+ammo_mag_size		= 1
+rpm 					= 1
+
+; материал, который используется в моделях для фейковых гранат: creatures\phantom
+[grenade_f1_fake]:explosive_barrel,grenade_f1,fake_grenades_base
+class					= II_EXPLO
+visual					= grenadier\wpn_f_1.ogf
+
+[grenade_rgd5_fake]:explosive_barrel,grenade_rgd5,fake_grenades_base
+class					= II_EXPLO
+visual					= grenadier\wpn_rgd_5.ogf
+
+[grenade_flash_fake]:explosive_barrel,grenade_flash,fake_grenades_base
+class					= II_EXPLO
+visual					= grenadier\wpn_f_1.ogf
+
+[grenade_gd-05_fake]:explosive_barrel,grenade_gd-05,fake_grenades_base
+class					= II_EXPLO
+visual					= grenadier\wpn_f_1.ogf
+
+[grenade_f1_test]:grenade_f1,fake_grenades_base
+visual					= grenadier\wpn_f_1.ogf
+
+[grenade_rgd5_test]:grenade_rgd5,fake_grenades_base
+visual					= grenadier\wpn_rgd_5.ogf
+
+[grenade_flash_test]:grenade_flash,fake_grenades_base
+visual					= grenadier\wpn_f_1.ogf
+
+[grenade_gd-05_test]:grenade_gd-05,fake_grenades_base
+visual					= grenadier\wpn_f_1.ogf
+
+[fake_grenades_immunities]
+burn_immunity			= 0
+strike_immunity			= 0
+shock_immunity			= 0
+wound_immunity		= 0
+radiation_immunity		= 0
+telepatic_immunity		= 0
+chemical_burn_immunity = 0
+explosion_immunity		= 0
+fire_wound_immunity	= 0
+
+; Для стрельбы из подстволов неписями
+[delayed_action_fuse]
+condition_to_explode	= 0.f
+time_to_explode			= 1.f
+set_timer_particles		= vehiclefx\exhaust_1
+
+[gl_test_shell]:delayed_action_fuse,grenade_rgd5,wpn_fake_missile
+class				= II_EXPLO
+visual				= grenadier\ammo_vog-25.ogf
+inv_name			= .
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 50
+inv_grid_y			= 50
+immunities_sect		= gl_test_shell_immunities
+wm_size				= 0.1
+ph_mass				= 5
+
+[gl_test_shell_ammo_vog-25]:gl_test_shell
+visual					= grenadier\ammo_vog-25.ogf
+[gl_test_shell_ammo_vog-25p]:gl_test_shell
+visual					= grenadier\ammo_vog-25p.ogf
+[gl_test_shell_ammo_m209]:gl_test_shell
+visual					= grenadier\ammo_m209.ogf
+
+[gl_fake_missile]:II_EXPLO
+cost				= 100
+inv_name			= .
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 50
+inv_grid_y			= 50
+can_take			= true
+immunities_sect		= gl_test_shell_immunities ;gl_fake_missile_immunities
+time_to_explode		= 0.f
+wm_size				= 0.1
+ph_mass				= 5
+explode_duration	= 3
+
+[gl_fake_missile_ammo_vog-25]:wpn_fake_missile,gl_fake_missile
+[gl_fake_missile_ammo_vog-25p]:wpn_fake_missile1,gl_fake_missile
+[gl_fake_missile_ammo_m209]:wpn_fake_missile2,gl_fake_missile
+
+[gl_fake_missile_immunities]
+burn_immunity			= 0.6
+strike_immunity			= 1
+shock_immunity			= 1
+wound_immunity			= 0.1
+radiation_immunity		= 0
+telepatic_immunity		= 0
+chemical_burn_immunity	= 0.3
+explosion_immunity		= 1
+fire_wound_immunity		= 0.7
+
+[gl_test_shell_immunities]
+burn_immunity			= 0
+strike_immunity			= 0
+shock_immunity			= 0
+wound_immunity			= 0
+radiation_immunity		= 0
+telepatic_immunity		= 0
+chemical_burn_immunity		= 0
+explosion_immunity		= 0
+fire_wound_immunity		= 0
+
+; Квестовая и другая взрывчатка
+[bomba]:explosive_barrel
+visual             = weapons\trotil.ogf
+inv_name		= bomba_name
+description		= enc_bomba-trotil
+inv_weight		= 0.2
+inv_grid_width    = 3
+inv_grid_height  = 1
+inv_grid_x         	= 18
+inv_grid_y         	= 50
+can_take		= true
+cost			= 250
+
+blast			= 10
+blast_r			= 2.5
+blast_impulse	= 70
+frags			= 0
+hit_type_blast	= explosion
+up_throw_factor	= 0.2
+
+explode_particles	= explosions\explosion_01c
+light_color		= 1.9,1.3,0.5
+light_range		= 3.0
+light_time 		= 1.5
+snd_explode        = weapons\explo\dynamite_boom
+immunities_sect	= bomba_babah
+time_to_explode	= 0.1f
+
+[bomba_big]:explosive_barrel
+visual             = weapons\bomb_samodel.ogf
+inv_name		= bomba_big_name
+description		= enc_bomba-samodel
+inv_weight		= 0.7
+inv_grid_width    = 2
+inv_grid_height  = 1
+inv_grid_x         	= 42
+inv_grid_y         	= 44
+can_take		= true
+cost			= 2000
+
+blast			= 12
+blast_r			= 6
+blast_impulse	= 100
+frags			= 24
+frags_r			= 12
+frag_hit			= 0.20
+frag_hit_impulse	= 3
+hit_type_blast		= explosion
+hit_type_frag		= fire_wound
+up_throw_factor	= 0.2
+
+explode_particles	=explosions\explosion_01
+light_color		= 1.9,1.3,0.5
+light_range		= 3.0
+light_time 		= 1.5
+snd_explode        = weapons\explo\t_f1_explosion 
+immunities_sect	= bomba_babah
+time_to_explode			= 0.1f
+
+[bomba_small]:explosive_barrel
+visual             = weapons\bomb_small.ogf
+inv_name			= bomba_small_name
+description		= enc_bomba-small
+inv_weight			     	= 0.4
+inv_grid_width			= 2
+inv_grid_height			= 1
+inv_grid_x				= 16
+inv_grid_y				= 50
+can_take			        = true
+cost				        = 2000
+
+blast					= 10
+blast_r					= 5
+blast_impulse			= 90
+frags					= 0
+hit_type_blast			= explosion
+up_throw_factor		     = 0.2
+
+explode_particles		     = explosions\explosion_01c
+light_color		          = 1.9,1.3,0.5
+light_range		          = 1.0
+light_time 		          = 1.5
+snd_explode                  = weapons\explo\dynamite_boom
+immunities_sect			= bomba_babah
+time_to_explode			= 0.1f
+
+[bomba_mina_n]:bomba
+inv_name			= mina_n_name
+description		= enc_mina-n
+visual             = weapons\mines\wpn_mine.ogf
+inv_weight		= 1.0
+inv_grid_width     = 2
+inv_grid_height    = 1
+inv_grid_x         = 18
+inv_grid_y         = 47
+cost				= 1000
+
+blast			= 9
+blast_r			= 2
+blast_impulse		= 60
+frags			= 16
+frags_r			= 5
+frag_hit			= 0.20
+frag_hit_impulse	= 3
+hit_type_blast		= explosion
+hit_type_frag		= fire_wound
+
+time_to_explode			= 0.1f
+
+[bomba_mina_b]:bomba_big
+inv_name			= mina_b_name
+description		= enc_mina-b
+visual             = weapons\mines\wpn_mine.ogf
+inv_weight		= 1.1
+inv_grid_width     = 2
+inv_grid_height    = 1
+inv_grid_x         		= 62
+inv_grid_y         		= 11
+cost				= 1500
+
+blast			= 11
+blast_r			= 4
+blast_impulse		= 80
+frags			= 24
+frags_r			= 10
+frag_hit			= 0.20
+frag_hit_impulse	= 3
+hit_type_blast		= explosion
+hit_type_frag		= fire_wound
+
+time_to_explode			= 0.1f
+
+[bomba_timer_n_10_base]:bomba
+inv_name			= bomba_timer_n10_name
+description		= enc_timer-bomb10
+visual             = weapons\timer_dinamit.ogf
+inv_weight		= 1.0
+inv_grid_width     = 2
+inv_grid_height    = 2
+inv_grid_x         = 9
+inv_grid_y         = 51
+cost				= 2700
+
+blast			= 13
+blast_r			= 7
+blast_impulse		= 110
+
+time_to_explode			= 0.1f
+
+[bomba_timer_n_10]:bomba_timer_n_10_base,II_ANTIR
+
+[bomba_timer_n_10_activated]:bomba_timer_n_10_base
+inv_name			= bomba_timer_n10_activated_name
+description		= "Взрывчатка активирована. Надо выложить её, иначе через 10 секунд будет взрыв."
+inv_grid_width     = 2
+inv_grid_height    = 2
+inv_grid_x         = 8
+inv_grid_y         = 53
+
+[bomba_timer_b_30_base]:bomba_big
+inv_name			= bomba_timer_b30_name
+description		= enc_bomba-timer-30
+visual             = weapons\chemodan_c4.ogf
+inv_weight		= 1.4
+inv_grid_width     = 3
+inv_grid_height    = 2
+inv_grid_x         = 6
+inv_grid_y         = 51
+cost				     = 3200
+
+blast			= 14
+blast_r			= 7
+blast_impulse		= 120
+
+time_to_explode			= 0.1f
+
+[bomba_timer_b_30]:bomba_timer_b_30_base,II_ANTIR
+
+[bomba_timer_b_30_activated]:bomba_timer_b_30_base
+inv_name			= bomba_timer_b30_activated_name
+description		= "Взрывчатка активирована. Надо выложить чемодан и сматываться, иначе через 30 секунд всё разнесёт по молекулам."
+inv_grid_width     = 3
+inv_grid_height    = 2
+inv_grid_x         = 5
+inv_grid_y         = 53
+
+[bomba_babah]
+burn_immunity			= 0.5
+strike_immunity			= 0.5
+shock_immunity			= 0
+wound_immunity			= 0
+radiation_immunity		= 0
+telepatic_immunity		= 0
+chemical_burn_immunity	= 0
+explosion_immunity		= 0.5
+fire_wound_immunity		= 0.5
+
+[detonator]:II_ANTIR
+visual                  = equipments\flash_01.ogf
+inv_name			     = detonator
+description		     = enc_detonator-1
+inv_weight		     = 0.1
+inv_grid_width          = 1
+inv_grid_height         = 1
+inv_grid_x              = 3
+inv_grid_y              = 19
+cost				     = 800
+
+[detonator_2]:II_ANTIR
+visual                  = equipments\upgrade_kevlar3.ogf
+inv_name			     = detonator_2
+description		     = enc_detonator-2
+inv_weight			= 0.2
+inv_grid_width          = 2
+inv_grid_height         = 1
+inv_grid_x              = 25
+inv_grid_y              = 49
+cost				     = 2000
+
+[amk_ballon]:explosive_fuelcan
+visual                 		= amk\amk_ballon.ogf
+inv_name            		= amk_ballon_name
+inv_weight            	= 8
+description            	= amk_ballon_opisalovo
+inv_grid_width        	= 2
+inv_grid_height        	= 2
+inv_grid_x            	= 10
+inv_grid_y            	= 36
+can_take            		= true
+cost                		= 7000
+
+blast				= 10
+blast_r				= 3
+blast_impulse		= 80
+frags				= 5
+frags_r				= 5
+frag_hit				= 0.60
+frag_hit_impulse	= 70
+
+[amk_kanistra]:explosive_fuelcan
+visual                 = physics\balon\kanistra
+inv_name            = amk_kanistra_name
+inv_weight            = 8
+description            = amk_kanistra_opisalovo
+inv_grid_width        = 2
+inv_grid_height        = 2
+inv_grid_x            = 8
+inv_grid_y            = 36
+can_take            = true
+cost                = 5000
+
+blast			= 7
+blast_r			= 3
+blast_impulse		= 80
+frags			= 5
+frags_r			= 5
+frag_hit			= 0.40
+frag_hit_impulse	= 70
+
+; Akill begin
+[volna_barrel]:explosive_barrel
+visual				= physics\balon\bochka_fuel.ogf
+inv_name			= volna_barrel_name
+inv_weight            	= 100
+description            	= volna_barrel
+inv_grid_width        	= 2
+inv_grid_height       	= 3
+inv_grid_x            	= 75
+inv_grid_y           		= 17
+can_take           		= true
+cost                		= 10000
+
+blast				= 27
+blast_r				= 5
+blast_impulse		= 150
+frags				= 5
+frags_r				= 10
+frag_hit				= 1.50
+frag_hit_impulse	= 100
+
+[volna_fuelcan]:explosive_fuelcan
+visual		 		= physics\balon\balon_01.ogf
+inv_name			= volna_fuelcan_name
+inv_weight            	= 60
+description            	= volna_fuelcan
+inv_grid_width        	= 1
+inv_grid_height        	= 3
+inv_grid_x            	= 79
+inv_grid_y            	= 17
+can_take            		= true
+cost                		= 7000
+
+blast				= 24
+blast_r				= 5
+blast_impulse		= 140
+frags				= 5
+frags_r				= 10
+frag_hit				= 1.30
+frag_hit_impulse	= 90
+
+; Серебро против оборотня
+[silver_explo]:explosive_fuelcan
+visual 				= physics\box\box_lab_02
+inv_name			= silver_explo_name
+description 			= silver_explo_name
+inv_weight			= 3.5
+inv_grid_width     	= 2
+inv_grid_height    	= 1
+inv_grid_x         		= 21
+inv_grid_y         		= 50
+can_take            		= false
+
+blast				= 5
+blast_r				= 2
+blast_impulse		= 50
+frags				= 10
+frags_r				= 2
+frag_hit				= 1.0
+frag_hit_impulse	= 10
+hit_type_blast		= chemical_burn
+hit_type_frag		= chemical_burn
+
+explode_particles	= explosions\explosion_concrete_box
+light_color		         = 1.9,1.4,0.5
+light_range		         = 0
+light_time 		         = 0
+snd_explode 		= material\bottle\collide\bottle_break_1
+immunities_sect		= quest_vodka_immunities_sect
+fragment_speed		= 50	;скорость осколков (м/с)
+explode_duration		= 0		;подолжительность взрыва (с)
+explode_hide_duration	= 0		;время, через которое объект надо сделать невидимым (с)
+time_to_explode		= 0.f
+
+; Дымовая шашка
+[smoke_bomba]:explosive_fuelcan
+visual 				= weapons\trotil.ogf
+inv_name			= smoke_bomba_name
+description 			= smoke_bomba
+inv_weight			= 0.4
+inv_grid_width     	= 2
+inv_grid_height    	= 1
+inv_grid_x         		= 77
+inv_grid_y         		= 16
+can_take            		= true
+
+blast				= 6
+blast_r				= 5
+blast_impulse		= 10
+frags				= 0
+frags_r				= 0
+frag_hit				= 0
+frag_hit_impulse	= 0
+hit_type_blast		= chemical_burn
+hit_type_frag		= chemical_burn
+
+explode_particles	= amik\explosion\explosion_dym
+light_color		        = 0.9,0.6,0.5
+light_range		        = 2.0
+light_time 		        = 2.85
+snd_explode 		= weapons\explo\grenade_gd05
+immunities_sect		= quest_vodka_immunities_sect
+fragment_speed		= 50
+explode_duration		= 20
+explode_hide_duration	= 20
+
+; Мины Дьяка
+[quest_mina]:bomba_mina_b
+visual             = weapons\mines\wpn_mines_1.ogf
+inv_grid_x         		= 21
+inv_grid_y         		= 50
+cost				= 2500
+
+blast				= 20
+blast_r				= 3
+blast_impulse		= 100
+frags				= 24
+frags_r				= 8
+frag_hit				= 0.30
+frag_hit_impulse	= 5
+
+; Склад горючего
+[quest_barrel]:explosive_barrel
+script_binding 		= bind_barrel.init
+visual = physics\balon\bochka_fuel.ogf
+inv_name 			= volna_barrel_name
+inv_weight 			= 100
+description 			= volna_barrel
+inv_grid_width 		= 2
+inv_grid_height 		= 3
+inv_grid_x 			= 75
+inv_grid_y 			= 17
+can_take 			= true
+cost 				= 10000
+
+blast				= 10
+blast_r				= 5
+blast_impulse		= 150
+frags				= 5
+frags_r				= 10
+frag_hit				= 0.70
+frag_hit_impulse	= 100
+time_to_explode	= 0.f
+
+; Опасная работа
+[mina_1]:II_EXPLO
+visual 				= weapons\mines\wpn_mines_1.ogf
+script_binding     	= bind_mine.init
+inv_name			= mina_volna_name
+description 			= mina_volna_name
+inv_weight			= 1.1
+inv_grid_width     	= 2
+inv_grid_height    	= 1
+inv_grid_x         		= 21
+inv_grid_y         		= 50
+cost				= 1300
+
+blast				= 22
+blast_r				= 10
+blast_impulse		= 80
+frags				= 24
+frags_r				= 15
+frag_hit				= 1.0
+frag_hit_impulse	= 10
+hit_type_blast		= explosion
+hit_type_frag		= fire_wound
+up_throw_factor		= 0.2
+wm_size             		= 0.1
+
+explode_particles	= explosions\explosion_01
+light_color			= 1.9,1.3,0.5
+light_range			= 3.0
+light_time 			= 1.5
+snd_explode        	= weapons\explo\t_f1_explosion
+immunities_sect		= bomba_babah
+fragment_speed		= 100	;скорость осколков (м/с)
+explode_duration		= 0		;подолжительность взрыва (с)
+explode_hide_duration	= 0		;время, через которое объект надо сделать невидимым (с)
+time_to_explode		= 0.f ;1.f
+
+[mina_2]:mina_1
+[mina_3]:mina_1
+[mina_4]:mina_1
+[mina_5]:mina_1
+[mina_6]:mina_1
+[mina_7]:mina_1
+[mina_8]:mina_1
+[mina_9]:mina_1
+[mina_10]:mina_1
+[mina_11]:mina_1
+[mina_12]:mina_1
+[mina_13]:mina_1
+[mina_14]:mina_1
+[mina_15]:mina_1
+[mina_16]:mina_1
+[mina_17]:mina_1
+[mina_18]:mina_1
+[mina_19]:mina_1
+[mina_20]:mina_1
+
+; Радиоглушилки
+[glus_1]:mina_1
+visual				= equipments\item_transiver
+script_binding     	= bind_mine.init
+inv_name			= glushitel_name
+description 			= glushitel_name
+inv_weight			= 10.2
+inv_grid_width		= 2
+inv_grid_height		= 2
+inv_grid_x			= 16
+inv_grid_y			= 33
+
+blast				= 0.5
+blast_r				= 0.5
+blast_impulse		= 0
+frags				= 0
+frags_r				= 0
+frag_hit				= 0
+frag_hit_impulse	= 0
+
+explode_particles	= explosions\explosion_concrete_box
+
+[glus_2]:glus_1
+[glus_3]:glus_1
+[glus_4]:glus_1
+[glus_5]:glus_1
+[glus_6]:glus_1
+[glus_7]:glus_1
+[glus_8]:glus_1
+[glus_9]:glus_1
+[glus_10]:glus_1
+
+; Бутылки Борова
+[quest_vodka]:II_EXPLO
+script_binding 		= bind_barrel.init
+visual				= weapons\vodka\vodka.ogf
+inv_name 			= "Пустая бутылка"
+inv_weight 			= 0.1
+description 			= "Пустая бутылка из-под водки"
+inv_grid_width		= 1
+inv_grid_height		= 2
+inv_grid_x			= 5
+inv_grid_y			= 2
+cost				= 50
+
+blast				= 0
+blast_r				= 0
+blast_impulse		= 0
+frags				= 0
+frags_r				= 0
+frag_hit				= 0
+frag_hit_impulse	= 0
+hit_type_blast		= strike
+hit_type_frag		= strike
+up_throw_factor		= 0
+wm_size                  	= 0.01
+
+explode_particles	= explosions\explosion_bottle
+light_color		         = 1.9,1.4,0.5
+light_range		         = 0 ;14.0
+light_time 		         = 0 ;0.85
+fragment_speed		= 0		;скорость осколков (м/с)
+explode_duration		= 0		;подолжительность взрыва (с)
+explode_hide_duration	= 0		;время, через которое объект надо сделать невидимым (с)
+time_to_explode		= 0.f ;1.f
+snd_explode = material\bottle\collide\bottle_break_1
+
+immunities_sect	 = quest_vodka_immunities_sect
+[quest_vodka_immunities_sect]
+burn_immunity				= 1
+strike_immunity				= 1
+shock_immunity				= 1
+wound_immunity			= 1
+radiation_immunity			= 1
+telepatic_immunity			= 1
+chemical_burn_immunity	= 1
+explosion_immunity			= 1
+fire_wound_immunity		= 1
+
+; Практическая стрельба
+[bottle_1]:quest_vodka
+script_binding    = bind_target.init
+[bottle_2]:bottle_1
+[bottle_3]:bottle_1
+[bottle_4]:bottle_1
+[bottle_5]:bottle_1
+[bottle_6]:bottle_1
+[bottle_7]:bottle_1
+[bottle_8]:bottle_1
+[bottle_9]:bottle_1
+[bottle_10]:bottle_1
+[bottle_11]:bottle_1
+[bottle_12]:bottle_1
+[bottle_13]:bottle_1
+[bottle_14]:bottle_1
+[bottle_15]:bottle_1
+[bottle_16]:bottle_1
+[bottle_17]:bottle_1
+[bottle_18]:bottle_1
+[bottle_19]:bottle_1
+visual	= new_item\drink_beer.ogf
+
+; Тренировочный день
+[target_1]:quest_vodka
+inv_name 			= "Мишень"
+visual	 = physics\target\target_10_mini.ogf
+script_binding    		= bind_target.init
+inv_weight 			= 5.0
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 68
+inv_grid_y			= 1
+explode_particles	= explosions\explosion_concrete_box
+
+immunities_sect		= target_immunities_sect
+[target_immunities_sect]:quest_vodka_immunities_sect
+fire_wound_immunity	= 0.4
+
+[target_2]:target_1
+[target_3]:target_1
+[target_4]:target_1
+[target_5]:target_1
+[target_6]:target_1
+[target_7]:target_1
+[target_8]:target_1
+[target_9]:target_1
+[target_10]:target_1
+[target_11]:target_1
+[target_12]:target_1
+[target_13]:target_1
+[target_14]:target_1
+[target_15]:target_1
+[target_16]:target_1
+[target_17]:target_1
+[target_18]:target_1
+[target_19]:target_1
+[target_20]:target_1
+[target_21]:target_1
+[target_22]:target_1
+[target_23]:target_1
+[target_24]:target_1
+[target_25]:target_1
+[target_26]:target_1
+[target_27]:target_1
+[target_28]:target_1
+[target_29]:target_1
+[target_30]:target_1
+[target_31]:target_1
+[target_32]:target_1
+[target_33]:target_1
+[target_34]:target_1
+[target_35]:target_1
+[target_36]:target_1
+[target_37]:target_1
+[target_38]:target_1
+[target_39]:target_1
+[target_40]:target_1
+[target_41]:target_1
+[target_42]:target_1
+[target_43]:target_1
+[target_44]:target_1
+[target_45]:target_1
+[target_46]:target_1
+[target_47]:target_1
+[target_48]:target_1
+[target_49]:target_1
+[target_50]:target_1
+[target_51]:target_1
+visual	= physics\target\target_10_red.ogf
+immunities_sect	 = quest_vodka_immunities_sect
+
+; Паучье яйцо
+[spider_egg]:quest_vodka
+inv_name 			= "Паучье яйцо"
+visual	 = alien\alien_egg_close.ogf
+script_binding 		= bind_barrel.init
+explode_particles	= explosions\explosion_concrete_box
+inv_weight 			= 15.0
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 68
+inv_grid_y			= 0
+
+immunities_sect	 = spider_egg_immunities
+[spider_egg_immunities]
+burn_immunity				= 0.3
+strike_immunity				= 0.5
+shock_immunity				= 0.05
+wound_immunity			= 0.3
+radiation_immunity			= 0
+telepatic_immunity			= 0
+chemical_burn_immunity	= 0.01
+explosion_immunity			= 0.2
+fire_wound_immunity		= 0.05
+
+; Грузовик с ПЗРК
+[vgaz66_1]:quest_vodka
+script_binding    		= bind_target.init
+visual				= vehicles\veh_ural.ogf
+inv_name 			= "УРАЛ"
+inv_weight 			= 10000.0
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 68
+inv_grid_y			= 1
+
+blast				= 20
+blast_r				= 10
+blast_impulse		= 500
+hit_type_blast		= explosion
+
+explode_particles	= a_ufp_particles\flame_grenade
+light_color			= 0.6,0.5,0.3
+light_range			= 15.0
+light_time 		        = 1.0
+snd_explode 		= weapons\heli_explosion
+explode_duration	= 10
+
+immunities_sect	 = kamaz_immunities_sect
+[kamaz_immunities_sect]
+burn_immunity				= 0.3
+strike_immunity				= 0
+shock_immunity				= 0
+wound_immunity			= 0
+radiation_immunity			= 0
+telepatic_immunity			= 0
+chemical_burn_immunity	= 0
+explosion_immunity			= 0.25
+fire_wound_immunity		= 0.001
+
+[vgaz66_2]:vgaz66_1
+[vgaz66_3]:vgaz66_1
+[vgaz66_4]:vgaz66_1
+[vgaz66_5]:vgaz66_1
+[vgaz66_6]:vgaz66_1
+
+; Баллон и мина Кузнецова
+[kuznec_mina]:bomba_mina_b
+can_take 	= false
+
+[kuznec_ballon]:quest_vodka
+script_binding 		= bind_kuznec_ballon.init
+visual				= physics\balon\bomb_01.ogf
+inv_name 			= chemical_ballon_name
+inv_weight 			= 8.3
+description 			= chemical_ballon
+inv_grid_width		= 1
+inv_grid_height		= 2
+inv_grid_x			= 77
+inv_grid_y			= 18
+can_take			= true
+
+blast				= 25
+blast_r				= 10
+blast_impulse		= 110
+frags				= 15
+frags_r				= 15
+frag_hit				= 3.5
+frag_hit_impulse	= 40
+hit_type_blast		= explosion
+hit_type_frag		= burn
+wm_size                  	= 0.1
+
+explode_particles	= explosions\explosion_mobiltank
+light_color		        = 1.9,1.2,0.5
+light_range		        = 30.0
+light_time 		        = 1
+fragment_speed	=100	;скорость осколков (м/с)
+snd_explode 		= weapons\explo\mobiltank_boom
+
+; Мина Партизана
+[partizan_mina]:bomba_mina_b
+script_binding 		= bind_partizan_mina.init
+can_take 			= false
+; Akill end

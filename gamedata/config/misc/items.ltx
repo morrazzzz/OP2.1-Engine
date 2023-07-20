@@ -1,0 +1,1301 @@
+[lights_hanging_lamp]:O_HLAMP
+script_binding      = bind_physic_object.init
+
+[lights_hanging_lamp2]:lights_hanging_lamp
+
+[physic_object]:O_PHYS_S
+remove_time     = 60; after this time  unbreaked removable bone will be removed
+script_binding      = bind_physic_object.init
+
+[physic_destroyable_object]:P_DSTRBL
+remove_time     = 60; after this time  unbreaked removable bone will be removed
+script_binding      = bind_physic_object.init
+
+[search_light]:O_SEARCH
+visual        = equipments\projector.ogf
+script_binding      = bind_physic_object.init
+
+[hand_radio]:II_ATTCH
+visual                  = equipments\item_fmradio.ogf
+cost          = 0
+inv_name        = "hand_radio"
+inv_weight        = .5
+inv_grid_width      = 2
+inv_grid_height     = 1
+inv_grid_x        = 16
+inv_grid_y        = 12
+attach_angle_offset   = -1.5708,0.1919,3.1416    ;устанавливается в радианах Angle*PI/180
+attach_position_offset  = 0.075, 0.066, 0.023
+attach_bone_name    = bip01_l_hand
+
+[script_object]:SCRPTOBJ
+
+; Мухомор
+[mushroom]:II_FOOD
+visual				= equipments\mushroom_5.ogf
+inv_name			= mushroom
+description			= mushroom_descr
+inv_weight			= 0.1
+inv_grid_width     = 1
+inv_grid_height    = 1
+inv_grid_x         = 41
+inv_grid_y         = 11
+cost				= 500
+
+eat_satiety = 0.4
+
+attach_angle_offset		= 0.440521, 1.378287, -0.644026
+attach_position_offset	= 0.104196, -0.010821, 0.076969
+attach_bone_name		= bip01_r_hand
+
+; Радиоактивый хлеб
+[bread_a]:II_ATTCH
+visual                  = weapons\bred\bre1.ogf
+cost					= 50
+inv_name				= food_bread_rad
+description				= enc_food_bread_rad
+inv_weight				= .3
+inv_grid_width			= 1
+inv_grid_height			= 1
+inv_grid_x				= 20
+inv_grid_y				= 37
+
+attach_angle_offset		= -0.287979, 1.560923, 1.544060
+attach_position_offset	= 0.096910, -0.013594, 0.107925
+attach_bone_name		= bip01_r_hand
+
+; Хлеб
+[bread]:II_FOOD
+visual				= weapons\bred\bred.ogf
+description			= enc_equipment_food_bread1
+inv_name			= Bread
+inv_weight			= 0.3	;0.2
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 11
+inv_grid_y			= 9
+cost				= 50
+
+attach_angle_offset		= -0.287979, 1.560923, 1.544060
+attach_position_offset	= 0.096910, -0.013594, 0.107925
+attach_bone_name		= bip01_r_hand
+
+eat_satiety = 0.2
+
+; Колбаса
+[kolbasa]:II_FOOD
+visual				= weapons\kolbasa\kolbasa.ogf
+description			= enc_equipment_food_kolbasa1
+inv_name			= Kolbasa
+inv_weight			= 0.5
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 19
+inv_grid_y			= 12
+cost				= 50
+
+attach_angle_offset		= 0.440521, 1.378287, -0.644026
+attach_position_offset	= 0.104196, -0.010821, 0.076969
+attach_bone_name		= bip01_r_hand
+
+eat_satiety = 0.5
+
+[kolbasa_a]:II_ATTCH
+visual                  = weapons\kolbasa\kolbasa.ogf
+cost					= 50
+inv_name				= kolbasa
+inv_weight				= .5
+inv_grid_width			= 1
+inv_grid_height			= 1
+inv_grid_x				= 19
+inv_grid_y				= 12
+
+attach_angle_offset		= 0.440521, 1.378287, -0.644026
+attach_position_offset	= 0.104196, -0.010821, 0.076969
+attach_bone_name		= bip01_r_hand
+
+[kolbasa_sleep]:kolbasa
+eat_satiety = 1.0
+
+; Консерва
+[conserva]:II_FOOD
+visual				= food\conserv1.ogf
+description			= enc_equipment_food_conserva1
+inv_name			= Conserva
+inv_weight			= 0.34
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 9
+inv_grid_y			= 13
+cost				= 100
+
+eat_satiety = 0.4
+
+attach_angle_offset		= 0.440521, 1.378287, -0.644026
+attach_position_offset	= 0.104196, -0.010821, 0.076969
+attach_bone_name		= bip01_r_hand
+
+[vodka_a]:II_ATTCH
+visual                  = weapons\vodka\vodka
+cost					= 100
+inv_name				= vodka_rad
+description				= vodka_rad_descr
+inv_weight				= .5
+inv_grid_width			= 1
+inv_grid_height			= 2
+inv_grid_x				= 5
+inv_grid_y				= 2
+
+attach_angle_offset		= 0.000000, 0.000000, 0.000000
+attach_position_offset	= 0.087266, -0.078540, 0.052360
+attach_bone_name		= bip01_r_hand
+
+; Водка
+[vodka]:II_BOTTL
+visual				= weapons\vodka\vodka
+description			= enc_equipment_food_vodka1
+inv_name			= Vodka
+inv_weight			= 0.5	;0.2
+inv_grid_width		= 1
+inv_grid_height		= 2
+inv_grid_x			= 5
+inv_grid_y			= 2
+cost				= 200 ;100
+
+attach_angle_offset		= 0.000000, 0.000000, 0.000000
+attach_position_offset	= 0.087266, -0.078540, 0.052360
+attach_bone_name		= bip01_r_hand
+
+eat_health		= -0.1
+eat_satiety		= -0.3
+eat_radiation	= -0.7
+eat_alcohol		= 0.2
+
+[guitar_a]:II_ATTCH
+visual                  = Equipments\item_guitar.ogf
+cost					= 200
+inv_name				= guitar_a
+description				= guitar_a_desc
+inv_weight				= 1.5
+inv_grid_width			= 4
+inv_grid_height			= 2
+inv_grid_x				= 10
+inv_grid_y				= 19
+
+attach_angle_offset		= -1.651084, -1.341824, 1.200789
+attach_position_offset	= 0.077492, -0.030020, 0.090059
+attach_bone_name		= bip01_l_hand
+
+[harmonica_a]:II_ATTCH
+visual                  = Equipments\item_harmonica.ogf
+cost					= 200
+inv_name				= harmonica_a
+description				= harmonica_a_desc
+inv_weight				= 0.35
+inv_grid_width			= 1
+inv_grid_height			= 1
+inv_grid_x				= 11
+inv_grid_y				= 2
+
+attach_angle_offset		= 0.000000, -1.204452, -1.262921
+attach_position_offset	= 0.081856, -0.035081, 0.011694
+attach_bone_name		= bip01_l_hand
+
+; Антирад
+[antirad]:II_ANTIR
+visual          = equipments\item_antirad.ogf
+description		= enc_equipment_medi_antirad1
+inv_name			= Antirad
+inv_weight			= 0.02
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 18
+inv_grid_y			= 12
+cost				= 300
+
+eat_satiety = -0.25
+eat_radiation = -1.0
+
+; Аптечка
+[medkit]:II_MEDKI
+visual				= equipments\item_aptechka.ogf
+description			= enc_equipment_medi_medkit1
+inv_name			= Medkit
+inv_weight			= 0.3	;0.2
+inv_grid_width		= 2
+inv_grid_height		= 1
+inv_grid_x			= 6
+inv_grid_y			= 14
+cost				= 150
+
+eat_health			= 0.3
+eat_satiety			= -0.1
+eat_power			= -0.3
+eat_radiation		= -0.1
+wounds_heal_perc	= 0.1
+eat_max_power		= 0.1
+
+; Армейская аптечка
+[medkit_army]:II_MEDKI
+visual				= equipments\item_aptechka3.ogf
+description			= enc_equipment_medi_medkit2
+inv_name			= Medkit_army
+inv_weight			= 0.3	;0.2
+inv_grid_width		= 2
+inv_grid_height		= 1
+inv_grid_x			= 16
+inv_grid_y			= 20
+cost				= 230
+
+eat_health			= 0.6
+eat_satiety			= -0.1
+eat_power			= -0.3
+eat_radiation		= -0.1
+wounds_heal_perc	= 0.2
+eat_max_power		= 0.1
+
+; Научная аптечка
+[medkit_scientic]:II_MEDKI
+visual				= equipments\item_aptechka2.ogf
+description			= enc_equipment_medi_medkit3
+inv_name			= Medkit_scientific
+inv_weight			= 0.3	;0.2
+inv_grid_width		= 2
+inv_grid_height		= 1
+inv_grid_x			= 14
+inv_grid_y			= 20
+cost				= 310
+
+eat_health			= 1.0
+eat_satiety			= 0.05
+eat_power			= -0.3
+eat_radiation		= -0.5
+wounds_heal_perc	= 0.1
+eat_max_power		= 0.1
+
+; Энергетик
+[energy_drink]:vodka
+inv_name			= energy_drink_name
+visual				= equipments\drink_stalker.ogf
+description			= enc_equipment_energydrink
+cost				= 75
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 11
+inv_grid_y			= 0
+inv_weight			= 0.33
+
+eat_power			= 1.0
+eat_max_power		= 0.2
+
+attach_angle_offset		= 0.000000, 0.000000, 0.000000
+attach_position_offset	= 0.087266, -0.078540, 0.052360
+attach_bone_name		= bip01_r_hand
+
+; Бинт
+[bandage]:II_BANDG
+visual				= equipments\item_bandage.ogf
+description			= enc_equipment_medi_bandage1
+inv_name			= bandage
+inv_weight			= 0.02
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 3
+inv_grid_y			= 18
+cost				= 50
+
+eat_health = 	0.025
+eat_power = 	-0.2
+wounds_heal_perc = 0.5
+
+[binocular_a]:II_ATTCH
+visual                  = weapons\binoculars\wpn_binoculars.ogf
+cost					= 100
+inv_name	 			= binocular
+description				= enc_equipment_devic_binocul1
+inv_weight				= .5
+inv_grid_width			= 2
+inv_grid_height			= 1
+inv_grid_x				= 16
+inv_grid_y				= 8
+attach_angle_offset		= 3.080506,-1.493053,-1.202040   ;устанавливается в радианах Angle*PI/180
+attach_position_offset	= 0.080000,0.021273,0.100000
+attach_bone_name		= bip01_r_hand
+
+[device_pda]:D_PDA
+visual				= equipments\item_pda.ogf
+description			= enc_equipment_device_pda1
+radius				= 50;0 ;75
+slot				= 7
+inv_name			= device_pda1
+inv_weight			= 0.2
+inv_grid_width		= 2
+inv_grid_height		= 1
+inv_grid_x			= 6
+inv_grid_y			= 13
+cost				= 50
+
+attach_angle_offset		= 3.080506,-1.493053,-1.202040   ;устанавливается в радианах Angle*PI/180
+attach_position_offset	= 0.080000,0.021273,0.100000
+attach_bone_name		= bip01_r_hand
+
+[device_torch]:TORCH_S
+visual				= equipments\light_night.ogf
+description			= enc_equipment_devic_device-torch1
+cost				= 100
+cheat_item = true
+inv_name			= device-torch
+inv_weight			= 0.1
+inv_grid_width		= 2
+inv_grid_height		= 1
+inv_grid_x			= 16
+inv_grid_y			= 12
+
+;вещью нельзя торговать
+can_trade			= true
+
+position			= 0.35,0.25,0.0
+light_trace_bone	= cone_bone
+attach_angle_offset		= 0, -3.14, 1.6
+attach_position_offset	= 0.115, 0.00, 0.07
+attach_bone_name		= bip01_head
+
+night_vision				= on
+night_vision_texture		= wpn\wpn_night
+night_vision_effector		= postprocess_night
+
+snd_night_vision_on			= weapons\nv_start
+snd_night_vision_off		= weapons\nv_off
+snd_night_vision_idle		= weapons\nv_loop
+snd_night_vision_broken		= weapons\nv_off
+
+night_vision_recharge_time			= 6		;(c) время зарядки аккамулятора
+night_vision_recharge_time_min		= 2		;(c) мин. время зарядки аккамулятора, после которого уст-во уже может работать
+night_vision_discharge_time			= 20	;(c) время разрядки (работы) устройства после полной зарядки
+slot								= 9
+disabled_maps						= ai_test,ai_test2, andy_test_
+
+[detector_simple]:D_SIMDET
+visual				= equipments\item_datchik1.ogf
+description			= enc_equipment_devic_detect1
+radius				= 10	;15
+buzzer_radius		= 1.5
+noise				= zone_mosquito_bald       ;detectors\geiger_noise_loop
+buzzer				= zone_mosquito_bald       ;detectors\DA-2_alarm_loop
+ef_detector_type	= 1
+inv_name			= st_detector
+inv_weight			= 0.2
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 9
+inv_grid_y			= 14
+cost				= 2000;30
+slot				= 11
+
+;описание распознаваемых детектором зон
+zone_class_1		= zone_mosquito_bald
+
+zone_sound_1_		= $no_sound
+zone_sound_1_1		= $no_sound
+zone_sound_1_2		= $no_sound
+zone_sound_1_3		= $no_sound
+
+zone_min_freq_1		= 0.1	;0.5
+zone_max_freq_1		= 40
+
+zone_class_2		= zone_mincer
+zone_sound_2_		= $no_sound
+zone_min_freq_2		= 0.1
+zone_max_freq_2		= 20
+
+zone_class_3		= zone_radioactive
+;zone_sound_3_		= detectors\DA-2_beep1
+zone_sound_3_		= detectors\geiger_1
+zone_sound_3_1		= detectors\geiger_2
+zone_sound_3_2		= detectors\geiger_3
+zone_sound_3_3		= detectors\geiger_4
+zone_sound_3_4		= detectors\geiger_5
+zone_sound_3_5		= detectors\geiger_6
+zone_sound_3_6		= detectors\geiger_1
+zone_sound_3_7		= detectors\geiger_1
+zone_sound_3_8		= detectors\geiger_1
+zone_min_freq_3		= 1
+zone_max_freq_3		= 20
+
+zone_class_4		= zone_gravi_zone
+zone_sound_4_		= $no_sound
+zone_min_freq_4		= 0.5
+zone_max_freq_4		= 30
+
+[detector_advances]:D_SIMDET
+visual				= equipments\item_datchik2.ogf
+description			= enc_equipment_devic_detect2
+radius				= 10	;15
+buzzer_radius		= 1.5
+noise				= zone_mosquito_bald       ;detectors\geiger_noise_loop
+buzzer				= zone_mosquito_bald       ;detectors\DA-2_alarm_loop
+ef_detector_type	= 1
+inv_name			= st_detector2
+inv_weight			= 0.5
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 15
+inv_grid_y			= 7
+cost				= 10000
+slot				= 11
+
+;описание распознаваемых детектором зон
+zone_class_1		= zone_mosquito_bald
+zone_sound_1_		= detectors\DA-2_beep1
+zone_min_freq_1		= 0.1	;0.5
+zone_max_freq_1		= 40
+
+zone_class_2		= zone_mincer
+zone_sound_2_		= detectors\DA-2_beep1
+zone_min_freq_2		= 0.1
+zone_max_freq_2		= 20
+
+zone_class_3		= zone_radioactive
+zone_sound_3_		= detectors\geiger_1
+zone_sound_3_1		= detectors\geiger_2
+zone_sound_3_2		= detectors\geiger_3
+zone_sound_3_3		= detectors\geiger_4
+zone_sound_3_4		= detectors\geiger_5
+zone_sound_3_5		= detectors\geiger_6
+zone_sound_3_6		= detectors\geiger_1
+zone_sound_3_7		= detectors\geiger_1
+zone_sound_3_8		= detectors\geiger_1
+zone_min_freq_3		= 1
+zone_max_freq_3		= 20
+
+zone_class_4		= zone_gravi_zone
+zone_sound_4_		= detectors\DA-2_beep1
+zone_min_freq_4		= 0.5
+zone_max_freq_4		= 30
+
+[detector_elite]:D_SIMDET
+visual				= equipments\item_datchik3.ogf
+description			= enc_equipment_devic_detect3
+radius				= 10	;15
+buzzer_radius		= 1.5
+noise				= zone_mosquito_bald       ;detectors\geiger_noise_loop
+buzzer				= zone_mosquito_bald       ;detectors\DA-2_alarm_loop
+ef_detector_type	= 1
+inv_name			= st_detector3
+inv_weight			= 0.5
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 5
+inv_grid_y			= 14
+cost				= 50000
+slot				= 11
+
+;описание распознаваемых детектором зон
+zone_class_1		= zone_mosquito_bald
+zone_sound_1_		= detectors\DA-2_beep1
+zone_min_freq_1		= 0.1	;0.5
+zone_max_freq_1		= 40
+zone_map_location_1 = anomaly_zone_location
+
+zone_class_2		= zone_mincer
+zone_sound_2_		= detectors\DA-2_beep1
+zone_min_freq_2		= 0.1
+zone_max_freq_2		= 20
+zone_map_location_2 = anomaly_zone_location
+
+zone_class_3		= zone_radioactive
+zone_sound_3_		= detectors\geiger_1
+zone_sound_3_1		= detectors\geiger_2
+zone_sound_3_2		= detectors\geiger_3
+zone_sound_3_3		= detectors\geiger_4
+zone_sound_3_4		= detectors\geiger_5
+zone_sound_3_5		= detectors\geiger_6
+zone_sound_3_6		= detectors\geiger_1
+zone_sound_3_7		= detectors\geiger_1
+zone_sound_3_8		= detectors\geiger_1
+zone_min_freq_3		= 1
+zone_max_freq_3		= 20
+zone_map_location_3 = anomaly_zone_location
+
+zone_class_4		= zone_gravi_zone
+zone_sound_4_		= detectors\DA-2_beep1
+zone_min_freq_4		= 0.5
+zone_max_freq_4		= 30
+zone_map_location_4 = anomaly_zone_location
+
+attach_angle_offset		= -0.160570,-1.425061,-0.361283
+attach_position_offset	= 0.160570,-0.060214,0.020071
+attach_bone_name		= bip01_l_hand
+
+[detector_elite_sak]:D_SIMDET
+visual				= equipments\item_datchik3.ogf
+description			= enc_equipment_devic_detect_sak
+radius				= 10	;15
+buzzer_radius		= 1.5
+noise				= zone_mosquito_bald       ;detectors\geiger_noise_loop
+buzzer				= zone_mosquito_bald       ;detectors\DA-2_alarm_loop
+ef_detector_type	= 1
+inv_name			= st_detector_sak
+inv_weight			= 0.5
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 14
+inv_grid_y			= 40
+cost				= 100000
+slot				= 11
+
+;описание распознаваемых детектором зон
+;Трамплин
+zone_class_1        = zone_mosquito_bald
+zone_sound_1_        = detectors\DA-2_beep1
+zone_min_freq_1        = 0.1    ;0.5
+zone_max_freq_1        = 40
+zone_map_location_1     = anomaly_bald_location
+;Карусель
+zone_class_2        = zone_mincer
+zone_sound_2_        = detectors\DA-2_beep1
+zone_min_freq_2        = 0.1
+zone_max_freq_2        = 20
+zone_map_location_2     = anomaly_minc_location
+;Очаг радиоактивности
+zone_class_3        = zone_radioactive
+zone_sound_3_        = detectors\geiger_1
+zone_sound_3_1        = detectors\geiger_2
+zone_sound_3_2        = detectors\geiger_3
+zone_sound_3_3        = detectors\geiger_4
+zone_sound_3_4        = detectors\geiger_5
+zone_sound_3_5        = detectors\geiger_6
+zone_sound_3_6        = detectors\geiger_1
+zone_sound_3_7        = detectors\geiger_1
+zone_sound_3_8        = detectors\geiger_1
+zone_min_freq_3        = 1
+zone_max_freq_3        = 20
+zone_map_location_3     = anomaly_rad_location
+;Воронка
+zone_class_4        = zone_gravi_zone
+zone_sound_4_        = detectors\DA-2_beep1
+zone_min_freq_4        = 0.5
+zone_max_freq_4        = 30
+zone_map_location_4     = anomaly_grav_location
+;Электра
+zone_class_5        = zone_witches_galantine
+zone_sound_5_        = detectors\DA-2_beep1
+zone_min_freq_5        = 0.1
+zone_max_freq_5        = 30
+zone_map_location_5     = anomaly_elec_location
+;Жарка
+zone_class_6        = zone_zharka_static
+zone_sound_6_        = detectors\DA-2_beep1
+zone_min_freq_6        = 0.1
+zone_max_freq_6        = 30
+zone_map_location_6     = anomaly_burn_location
+;ICE
+zone_class_7        = zone_ice
+zone_sound_7_        = detectors\DA-2_beep1
+zone_min_freq_7        = 0.1
+zone_max_freq_7        = 30
+zone_map_location_7     = anomaly_ice_location
+attach_angle_offset		= -0.160570,-1.425061,-0.361283
+attach_position_offset	= 0.160570,-0.060214,0.020071
+attach_bone_name		= bip01_l_hand
+
+[detector_elite_john]:D_SIMDET
+visual				= equipments\item_datchik3.ogf
+description			= detect_john
+radius				= 10
+buzzer_radius		= 1.5
+noise				= detectors\geiger_noise_loop
+buzzer				= detectors\DA-2_alarm_loop
+ef_detector_type	= 1
+inv_name			= detector_elite_john
+inv_weight			= 0.5
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 12
+inv_grid_y			= 45
+cost				= 150000
+slot				= 11
+cheat_item = true
+
+;описание распознаваемых детектором зон
+
+;Трамплин
+zone_class_1        = zone_mosquito_bald
+zone_sound_1_        = detectors\DA-2_beep1
+zone_min_freq_1        = 0.1    ;0.5
+zone_max_freq_1        = 40
+zone_map_location_1     = anomaly_bald_location
+
+;Карусель
+zone_class_2        = zone_mincer
+zone_sound_2_        = detectors\DA-2_beep1
+zone_min_freq_2        = 0.1
+zone_max_freq_2        = 20
+zone_map_location_2     = anomaly_minc_location
+
+;Очаг радиоактивности
+zone_class_3        = zone_radioactive
+zone_sound_3_        = detectors\geiger_1
+zone_sound_3_1        = detectors\geiger_2
+zone_sound_3_2        = detectors\geiger_3
+zone_sound_3_3        = detectors\geiger_4
+zone_sound_3_4        = detectors\geiger_5
+zone_sound_3_5        = detectors\geiger_6
+zone_sound_3_6        = detectors\geiger_1
+zone_sound_3_7        = detectors\geiger_1
+zone_sound_3_8        = detectors\geiger_1
+zone_min_freq_3        = 1
+zone_max_freq_3        = 20
+zone_map_location_3     = anomaly_rad_location
+
+;Воронка
+zone_class_4        = zone_gravi_zone
+zone_sound_4_        = detectors\DA-2_beep1
+zone_min_freq_4        = 0.5
+zone_max_freq_4        = 30
+zone_map_location_4     = anomaly_grav_location
+
+;Электра
+zone_class_5        = zone_witches_galantine
+zone_sound_5_        = detectors\DA-2_beep1
+zone_min_freq_5        = 0.1
+zone_max_freq_5        = 30
+zone_map_location_5     = anomaly_elec_location
+
+;Жарка
+zone_class_6        = zone_zharka_static
+zone_sound_6_        = detectors\DA-2_beep1
+zone_min_freq_6        = 0.1
+zone_max_freq_6        = 30
+zone_map_location_6     = anomaly_burn_location
+
+;ICE
+zone_class_7        = zone_ice
+zone_sound_7_        = detectors\DA-2_beep1
+zone_min_freq_7        = 0.1
+zone_max_freq_7        = 30
+zone_map_location_7     = anomaly_ice_location
+
+;Архара Амёба
+zone_class_8        = zone_ameba
+zone_sound_8_        = detectors\art_beep1
+zone_min_freq_8        = 0.1
+zone_max_freq_8        = 25
+zone_map_location_8     = anomaly_ameba_location
+
+;Кисель Сяка
+zone_class_9		= zone_sakbuzz
+zone_sound_9_		= detectors\art_beep1
+zone_min_freq_9		= 0.5
+zone_max_freq_9		= 30
+zone_map_location_9 	= anomaly_sakbuzz_location
+
+;Кисель
+;zone_class_10		= zone_buzz
+;zone_sound_10_		= detectors\art_beep1
+;zone_min_freq_10		= 0.1
+;zone_max_freq_10		= 25
+;zone_map_location_10 	= anomaly_buzz_location
+
+attach_angle_offset		= -0.160570,-1.425061,-0.361283
+attach_position_offset	= 0.160570,-0.060214,0.020071
+attach_bone_name		= bip01_l_hand
+
+[detector_suit]:detector_elite_john
+inv_weight            = 0
+inv_grid_width        = 0
+inv_grid_height        = 0
+cost                   = 0
+belt                   = true
+default_to_ruck        = false
+cheat_item = true
+
+; Детекторы артефактов Автор мода: Singapur22
+[det_artefact_super]:D_SIMDET
+visual				= equipments\iphone.ogf
+radius				= 10
+ef_detector_type	        = 1
+description			= det_art_ultra_info
+inv_name   		     = det_art_ultra
+inv_weight   	          = 0.35
+inv_grid_width     = 1
+inv_grid_height    = 1
+inv_grid_x         = 35
+inv_grid_y         = 43
+cost                            = 10000
+cheat_item = true
+
+[detektor_amorf]:D_SIMDET
+visual				= equipments\iphone.ogf
+radius				= 10
+ef_detector_type	        = 1
+description			= detektor_amorf_info
+inv_name   		     = detektor_amorf
+inv_weight   	          = 0.35
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 34
+inv_grid_y			= 43
+cost                     = 1000
+
+[det_artefact_indy]:D_SIMDET
+visual				= equipments\item_datchik1.ogf
+radius				= 10
+ef_detector_type	     = 1
+description			= det_art_indy_info
+inv_name   		     = det_art_indy
+inv_weight   	          = 0.3
+inv_grid_width		     = 1
+inv_grid_height		= 1
+inv_grid_x			= 12
+inv_grid_y			= 47
+cost                            = 5000
+
+
+; Сигареты
+[sigaret]:II_ATTCH
+visual                  = weapons\sigaret\sigaret.ogf
+description				= enc_sigaret
+cost					= 100
+inv_name				= sigaret
+inv_weight				= 0.03
+inv_grid_width			= 1
+inv_grid_height			= 1
+inv_grid_x				= 2
+inv_grid_y				= 36
+
+attach_angle_offset		= 9.0, 0.0, 0.0
+attach_position_offset	= 0.025, -0.02, 0.0
+attach_bone_name		= bip01_r_finger11
+
+; Сигара
+[cigara]:II_ATTCH
+visual                  = new_item\cigara.ogf
+description				= "Сигара"
+cost					= 100
+inv_name				= "Сигара"
+inv_weight				= 0.03
+inv_grid_width			     = 1
+inv_grid_height			= 1
+inv_grid_x				= 56
+inv_grid_y				= 2
+
+attach_angle_offset		= 9.0, 0.0, 0.0
+attach_position_offset	= 0.025, -0.02, 0.0
+attach_bone_name		      = bip01_r_finger11
+
+; Бутерброд
+[sandwich]:II_FOOD
+visual				= new_item\sandwich.ogf
+inv_name			= sandwich
+description			= sandwich_descr
+inv_weight			= 0.06
+inv_grid_width     	= 1
+inv_grid_height    	= 1
+inv_grid_x         		= 53
+inv_grid_y         		= 3
+cost				= 80
+
+eat_health = 0.05
+eat_satiety = 0.1
+
+attach_angle_offset		= -0.287979, 1.560923, 1.544060
+attach_position_offset	= 0.096910, -0.013594, 0.107925
+attach_bone_name		= bip01_r_hand
+
+; Пиво
+[beer_a]:vodka
+inv_name			= beer_a
+visual				= new_item\drink_beer.ogf
+description			= beer_a_descr
+cost				= 75
+inv_grid_width     	= 1
+inv_grid_height    	= 1
+inv_grid_x         		= 53
+inv_grid_y         		= 2
+inv_weight			= 0.5
+
+eat_power			= 1.0
+eat_alcohol			= 0.1
+eat_max_power		= 0.2
+
+attach_angle_offset		= 0.000000, 0.000000, 0.000000
+attach_position_offset	= 0.087266, -0.078540, 0.052360
+attach_bone_name		= bip01_r_hand
+
+; Фляжка с водой
+[flaska]:II_BOTTL
+visual				= new_item\flaska
+description			= flaska_descr
+inv_name			= flaska
+inv_weight			= 0.5
+inv_grid_width     	= 1
+inv_grid_height    	= 1
+inv_grid_x         		= 55
+inv_grid_y         		= 2
+cost				= 90
+
+attach_angle_offset		= 0.000000, 0.000000, 0.000000
+attach_position_offset	= 0.087266, -0.078540, 0.052360
+attach_bone_name		= bip01_r_hand
+
+eat_satiety		= 0.05
+eat_power		= 0.5
+wounds_heal_perc 	= 0.1
+
+; Сладость
+[sweetness]:II_FOOD
+visual				= new_item\sweetness.ogf
+description			= sweetness_descr
+inv_name			= sweetness
+inv_weight			= 0.05
+inv_grid_width     	= 1
+inv_grid_height    	= 1
+inv_grid_x         		= 54
+inv_grid_y         		= 2
+cost				= 50
+
+attach_angle_offset		= 0.440521, 1.378287, -0.644026
+attach_position_offset	= 0.104196, -0.010821, 0.076969
+attach_bone_name		= bip01_r_hand
+
+eat_satiety = 0.15
+
+[box_cigara]:II_ATTCH
+visual                  			= new_item\box_cigara.ogf
+cost					= 350
+description				= box_cigara
+inv_name				= box_cigara
+inv_weight				= 0.4
+inv_grid_width			= 2
+inv_grid_height			= 1
+inv_grid_x				= 54
+inv_grid_y				= 3
+attach_angle_offset		= -1.651084, -1.341824, 1.200789
+attach_position_offset	= 0.077492, -0.030020, 0.090059
+attach_bone_name		= bip01_l_hand
+
+[balalaika_a]:II_ATTCH
+visual                  			= new_item\item_balalaika.ogf
+cost					= 200
+description				= balalaika_a_desc
+inv_name				= balalaika_a
+inv_weight				= 1.5
+inv_grid_width			= 4
+inv_grid_height			= 2
+inv_grid_x				= 53
+inv_grid_y				= 0
+attach_angle_offset		= -1.651084, -1.341824, 1.200789
+attach_position_offset	= 0.077492, -0.030020, 0.090059
+attach_bone_name		= bip01_l_hand
+
+[ballast]:II_DOC
+visual				= amk\item_zapiska.ogf
+quest_item			= true
+description			= _
+inv_name			= _
+inv_weight			= 500
+inv_grid_width		= 0
+inv_grid_height		= 0
+inv_grid_x			= 18
+inv_grid_y			= 38
+cost				= 0
+
+[letter]:II_DOC
+visual				= amk\item_zapiska.ogf
+quest_item			= true
+description			= letter_desc
+inv_name			= letter
+inv_weight			= 0
+inv_grid_width     = 1
+inv_grid_height    = 1
+inv_grid_x         = 42
+inv_grid_y         = 12
+cost			    = 0
+
+[money_loot]:II_ANTIR
+visual				= equipments\money.ogf
+description			= money_loot_desc
+inv_name			= money_loot
+inv_weight			= 0.01
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x              = 60
+inv_grid_y              = 39
+cost				= 0
+
+[antizombie]:II_ANTIR
+visual          = equipments\item_antirak.ogf
+description		= enc_equipment_medi_antizombie
+inv_name			= antizombie
+inv_weight			= 0.1
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 40
+inv_grid_y			= 24
+cost				= 10000 ;30000
+
+eat_alcohol = 0.1
+
+; Документы Акима
+[old_doc]:II_DOC
+visual          			= amk\item_zapiska.ogf
+cost          			= 100
+inv_name        		= old_doc
+description			= "Старый пожелтевший документ. Формулы, записи на непонятном языке. По виду - бред сумасшедшего..."
+inv_weight    		= 0.01
+inv_grid_width  		= 2
+inv_grid_height 		= 1
+inv_grid_x      		= 6
+inv_grid_y      		= 19
+
+[old_doc_2]:old_doc
+inv_name        = old_doc_2
+description		= "Старый документ. По виду - очень похож на предыдущий..."
+[old_doc_3_1]:old_doc
+inv_name        = old_doc_3_1
+description		= "Первая часть какого-то документа со схемами."
+[old_doc_3_2]:old_doc
+inv_name        = old_doc_3_2
+description		= "Вторая часть какого-то документа со схемами."
+[old_doc_3_3]:old_doc
+inv_name        = old_doc_3_3
+description		= "Третья часть документа со схемами."
+[old_doc_3_4]:old_doc
+inv_name        = old_doc_3_4
+description		= "Последняя, 4 часть документа со схемами."
+[old_doc_4]:old_doc
+inv_name        = old_doc_4
+description		= "Ещё один затёртый документ. Они все похожи - пойди разберись, что к чему."
+
+[pda_info]:II_DOC
+visual			= equipments\item_pda.ogf
+description		= "Типичный ПДА, каких в Зоне много. К тому же - нерабочий и побитый. Видно, что бывший хозяин был с ним не очень бережлив."
+inv_name		= pda_info
+inv_weight		= 0.15
+inv_grid_width	= 2
+inv_grid_height	= 1
+inv_grid_x		= 6
+inv_grid_y		= 13
+cost			= 100
+
+[doc_1]:II_ANTIR
+visual          = equipments\upgrade_power.ogf
+description		= enc_doc
+inv_name		= doc_1
+inv_weight		= 0.1
+quest_item		= true
+inv_grid_width  	= 1
+inv_grid_height 	= 1
+inv_grid_x      	= 28
+inv_grid_y      	= 21
+cost			= 100
+
+[hand_teleporter]:II_ANTIR
+visual          	= equipments\item_datchik3.ogf
+description			= item_umn_tel
+inv_name			= hand_teleporter
+inv_weight			= 0.1
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 26
+inv_grid_y			= 21
+cost				= 500
+cheat_item = true
+
+eat_alcohol = 0.3
+
+[hand_teleporter_fake]:hand_teleporter
+
+[hand_teleporter_arhara]:II_DOC
+visual				= equipments\item_datchik3.ogf
+description			= item_umn_tel_1
+inv_name			= hand_teleporter_arhara
+inv_weight			= 0.1
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 26
+inv_grid_y			= 21
+cost				= 100
+
+[doc_8]:II_ANTIR
+visual              = equipments\upgrade_health.ogf
+description			= new_apgreider_1
+inv_name			= doc_8
+inv_weight			= 0.1
+quest_item			= true
+inv_grid_width    	= 1
+inv_grid_height   	= 1
+inv_grid_x      		= 29
+inv_grid_y      		= 21
+cost				= 300
+
+[acumm]:II_DOC
+visual          	= equipments\item_rakdage.ogf
+description     		= akku_anomal
+inv_name          		= akkumulytor
+inv_weight    		= 0.01
+inv_grid_width    	= 1
+inv_grid_height   	= 1
+inv_grid_x      		= 27
+inv_grid_y      		= 21
+cost           	  		= 500
+
+[doc_10]:II_ANTIR
+visual              = equipments\upgrade_kevlar1.ogf
+description			= new_apgreider_2
+inv_name			= doc_10
+inv_weight			= 0.1
+quest_item			= true
+inv_grid_width    	= 1
+inv_grid_height   	= 1
+inv_grid_x      		= 30
+inv_grid_y      		= 21
+cost				= 300
+
+[amk_transmutator]:II_ANTIR
+visual             = equipments\item_pda.ogf
+description        = item_transmutator_desc
+quest_item		= true
+inv_name           = item_transmutator
+inv_weight         = 0.3
+inv_grid_width     = 2
+inv_grid_height    = 2
+inv_grid_x         = 20
+inv_grid_y         = 27
+cost               = 0
+
+[matras]:II_ANTIR 
+visual          = equipments\item_spalnik.ogf
+description  = enc_amk_matras
+inv_name   = amk_matras
+inv_weight   = 1
+inv_grid_width  = 2
+inv_grid_height  = 2
+inv_grid_x   = 12
+inv_grid_y   = 29
+cost    = 1000
+
+[treasure_item]:matras
+visual          = equipments\item_rukzak.ogf
+description  = enc_amk_ruksak
+inv_name   = amk_ruksak
+inv_grid_width  = 2
+inv_grid_height  = 2
+inv_grid_x   = 12
+inv_grid_y   = 32
+cost    = 1000
+
+[vzn_treasure_item]:treasure_item
+cost    = 50000
+
+[treasure_seif]:matras
+visual          = physics\box\seif_01
+description  = enc_amk_ruksak
+inv_name   = amk_ruksak
+
+inv_grid_width  = 3
+inv_grid_height  = 3
+inv_grid_x   = 9
+inv_grid_y   = 35
+
+[inventory_seif]:O_INVBOX
+visual				= physics\box\seif_01
+
+[m_inventory_seif]:inventory_seif
+visual = physics\box\seif_01
+radius = 1
+
+[inventory_box_1b]:inventory_seif
+visual	= physics\box\box_1b
+radius = 1
+
+[m_sak_resiver_yantar]:inventory_seif
+visual = equipments\item_transiver
+radius = 0
+
+[amk_metka]:II_DOC
+visual                  = equipments\item_amk_gps.ogf
+description				= enc_amk_metka
+inv_name		= amk_metka
+inv_weight		= 0.05
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 44
+inv_grid_y			= 47
+cost					 = 100
+
+[repair_item_outfit]:II_ATTCH
+visual			   = equipments\irepair_box.ogf
+description		= repair_item_outfit_desc
+inv_name		= repair_item_outfit_name
+inv_weight         = 0.2
+inv_grid_width     = 2
+inv_grid_height    = 1
+inv_grid_x         = 70
+inv_grid_y         = 52
+cost			   = 2500
+
+[repair_item_weapon]:II_ATTCH
+visual			   = equipments\irepair_box.ogf
+description		= repair_item_weapon_desc
+inv_name		= repair_item_weapon_name
+inv_weight         = 0.2
+inv_grid_width     = 2
+inv_grid_height    = 1
+inv_grid_x         = 72
+inv_grid_y         = 52
+cost			   = 2500
+
+[amk_zapiska]:II_DOC
+visual                  	= amk\item_zapiska.ogf
+description       	= amk_zapiska_s
+inv_name    		= amk_zapiska
+inv_weight    	= 0.01
+inv_grid_width    = 2
+inv_grid_height  = 1
+inv_grid_x      	= 6
+inv_grid_y      	= 19
+cost           		= 100
+
+[oceanic815]:vodka
+inv_name            = energy_drink_name_dbeer
+visual                = amk\item_zapiska2.ogf
+description            = enc_equipment_energydrinka
+cost                = 750
+inv_grid_width        = 1
+inv_grid_height        = 1
+inv_grid_x            = 7
+inv_grid_y            = 39
+inv_weight            = 0.5
+
+eat_satiety		= 0.01
+eat_radiation	= -0.3
+eat_alcohol		= 0.3
+
+[bioradar]:ARTEFACT
+visual				= equipments\item_datchik3.ogf  
+description			= enc_bioradar
+inv_name			= bioradar
+inv_weight 			= 1.0
+inv_grid_x			= 25
+inv_grid_y			= 19
+cost 				= 150000
+jump_height			= 0
+slot				= 14
+belt                = false
+lights_enabled = false	
+trail_light_color = 2.5, 2.4, 0
+trail_light_range = 1.0
+
+[bioradar2]:bioradar
+description			= enc_bioradar2
+inv_name			= bioradar2
+inv_weight 			= 1.2
+cost 				= 250000
+cheat_item = true
+inv_grid_x         = 70
+inv_grid_y         = 57
+
+[separator]:bread
+inv_grid_width		= 0
+inv_grid_height		= 0
+inv_weight			= 0
+
+; Cьемные ПНВ
+[nv_bad]:II_ATTCH
+visual          = equipments\item_pnv.ogf
+description		= nv_bad_descr
+inv_name			= nv_bad
+inv_weight			= 0.2
+inv_grid_width		= 2
+inv_grid_height		= 1
+inv_grid_x			= 60
+inv_grid_y			= 14
+cost				= 2500
+ppe 				= nightvision_bad			;Эффект прицела - обязательный параметр
+light_amp 			= 1.5					;Доп усиление света - не обязательно, 1 по умолчанию
+slot				= 12
+
+[nv_good]:nv_bad
+visual          	= equipments\item_pnv2.ogf
+description			= nv_good_descr
+inv_name			= nv_good
+inv_weight			= 0.15
+inv_grid_width		= 2
+inv_grid_height		= 2
+inv_grid_x			= 60
+inv_grid_y			= 12
+cost				= 12500
+ppe = nightvision_good			;Эффект прицела - обязательный параметр
+light_amp = 2.5					;Доп усиление света - не обязательно, 1 по умолчанию
+
+[nv_bast]:nv_bad
+visual          	= equipments\item_pnv2.ogf
+description			= nv_bast_descr
+inv_name			= nv_bast
+inv_weight			= 0.13
+inv_grid_width		= 2
+inv_grid_height		= 2
+inv_grid_x			= 62
+inv_grid_y			= 12
+cost				= 45000
+ppe = bast						;Эффект прицела - обязательный параметр
+light_amp = 3.0					;Доп усиление света - не обязательно, 1 по умолчанию
+
+[detector_box_pusto]:physic_destroyable_object
+visual = physics\box\box_wood_123
+mass = 40
+
+[detector_box]:detector_box_pusto
+custom_data = scripts\taynik_detector.ltx
+
+[snotvornoe_box]:physic_destroyable_object
+visual = physics\box\box_lab_02
+custom_data = scripts\taynik_blokpost.ltx
+
+[yad]:II_ATTCH
+visual					= medic\item_yad.ogf
+description			= enc_equipment_medi_medkit1
+inv_name			= Medkit
+inv_weight			= 0.3
+
+inv_grid_width			= 0
+inv_grid_height			= 0
+inv_grid_x			= 6
+inv_grid_y			= 14
+cost				= 150
+
+attach_angle_offset		= -0.287979, 0, 0
+attach_position_offset	= 0.096910, -0.013594, 0.04
+attach_bone_name		= bip01_r_hand
+
+[rx_attach_bandage]:II_ATTCH
+visual				= equipments\item_bandage.ogf
+description			= enc_equipment_medi_bandage1
+inv_name			= bandage
+inv_weight			= 0.02
+cost				= 50
+
+inv_grid_width		= 0
+inv_grid_height		= 0
+inv_grid_x			= 3
+inv_grid_y			= 18
+
+attach_angle_offset		= 1.57, 3.14, -1.7
+attach_position_offset		= 0.11, 0.06, 0.05
+attach_bone_name			= bip01_r_hand
+
+; труп вороны
+[mutant_crow]:II_DOC
+visual				= monsters\crow\crow.ogf
+inv_name			= mutant_crow
+description			= mutant_crow_descr
+inv_weight			= 0.1
+inv_grid_width		 = 2
+inv_grid_height		 = 1
+inv_grid_x			= 78
+inv_grid_y			= 20
+cost				= 80
+
+#include "chess_items.ltx"

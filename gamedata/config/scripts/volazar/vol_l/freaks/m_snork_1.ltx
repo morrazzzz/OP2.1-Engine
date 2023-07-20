@@ -1,0 +1,39 @@
+[smart_terrains] 
+none = true 
+
+[logic]
+active = mob_walker
+on_hit = hit
+
+[mob_walker] 
+path_walk = vol_snork_walk
+path_look = vol_bloodsucker_look
+braindead = true
+on_info = {+vol_pizdec_tvoritsya6} mob_walker@sn_2
+
+[mob_walker@sn_2] 
+path_walk = vol_snork_walk_2
+path_look = vol_snork_look_2
+braindead = true
+on_info = {+vol_pizdec_tvoritsya3} mob_walker@sn_3
+
+[mob_walker@sn_3] 
+path_walk = vol_snork_walk_3
+path_look = vol_snork_look_3
+braindead = true
+on_info = {+vol_pizdec_tvoritsya4} mob_walker@sn_4
+
+[mob_walker@sn_4] 
+path_walk = vol_snork_walk_4
+path_look = vol_snork_look_4
+braindead = true
+on_info = {+vol_pizdec_tvoritsya5} mob_jump@sn_5
+
+[mob_jump@sn_5]
+path_jump = vol_snork_jump_2
+ph_jump_factor = 1.0
+offset = 0,0,0
+braindead = true
+
+[hit] 
+on_info = %+taynik_nayti_oz_10_fail%

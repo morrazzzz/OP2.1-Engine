@@ -1,0 +1,22 @@
+<ui_texture>
+    <file_name>ui\ui_npc_snp</file_name>
+
+    <texture id="ui_npc_snp_kotobegemot" x="0" y="0" width="165" height="108" />
+    <texture id="ui_npc_snp_fenrir" x="0" y="108" width="165" height="108" />
+    <texture id="ui_npc_snp_wolffrend_talk" x="0" y="216" width="165" height="108" />
+    <texture id="ui_npc_snp_resident_evil" x="0" y="324" width="165" height="108" />
+    <texture id="ui_npc_snp_bibliofrend_talk" x="165" y="0" width="165" height="108" />
+    <texture id="ui_npc_snp_bibliofrend_talk_black" x="165" y="108" width="165" height="108" />
+    <texture id="ui_npc_snp_anna" x="165" y="216" width="165" height="108" />
+    <texture id="ui_npc_snp_bubulyka" x="165" y="324" width="165" height="108" />
+    <texture id="ui_npc_snp_suslov" x="330" y="0" width="165" height="108" />
+    <texture id="ui_npc_snp_lobsang" x="330" y="108" width="165" height="108" />
+    <texture id="ui_npc_snp_proper70" x="330" y="216" width="165" height="108" />
+    <texture id="ui_npc_snp_brodaga" x="330" y="324" width="165" height="108" />
+    <texture id="ui_npc_snp_maria" x="495" y="0" width="165" height="108" />
+    <texture id="ui_npc_snp_boroda" x="495" y="108" width="165" height="108" />
+    <texture id="ui_npc_snp_snegir" x="495" y="216" width="165" height="108" />
+    <texture id="ui_npc_snp_ludmila" x="495" y="324" width="165" height="108" />
+    <texture id="ui_npc_snp_elsa" x="660" y="0" width="165" height="108" />
+    <texture id="ui_npc_snp_vesker" x="660" y="108" width="165" height="108" />
+</ui_texture>

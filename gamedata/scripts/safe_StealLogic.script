@@ -1,0 +1,213 @@
+local busyObjects={}
+local stealManagerClass
+
+
+class "evaluatorSeeStorage" (property_evaluator) --эвалуатор для определения "доступности" рюкзака
+function evaluatorSeeStorage:__init(st, name) super (nil, name)
+	self.st = st
+end
+
+function evaluatorSeeStorage:evaluate() 
+	local npc=self.object --тот кто хочет наш рюкзак
+	if self.st==nil or (self.st.enable and self.st.enabled~=true) then
+		return false
+	end
+	if not stealManagerClass or not stealManagerClass.enable then
+		return false
+	end
+	-- это вызывало зависание - видимо, происходило повторное переключение на другую логику, 
+	-- потому что неписи перед зависанием часто пытались проиграть одну и ту же анимацию по нескольку раз
+--	local npc_st = db.storage[npc:id()]
+--	if npc_st.active_scheme then
+--		xr_logic.try_switch_to_another_section(npc, npc_st[npc_st.active_scheme])
+--	end
+	if db.storage[npc:id()].active_scheme=="kamp" then --i hate this scheme
+		return false
+	end
+	if self.st.stealStorageId~=nil and busyObjects[self.st.stealStorageId] then --уже заняли рюкзак кто то или мы сами
+		local obj=level_object(self.st.stealStorageId)
+		if obj then 
+			local actorDistance=db.actor:position():distance_to(obj:position())
+			return actorDistance>30--актор вернулся к рюкзаку, к которому мы и шли
+		else 
+			busyObjects[self.st.stealStorageId]=nil --случилось чего то пока шли к рюкзаку
+			self.st.stealStorageId=nil
+			return false
+		end
+	end
+	if stealManagerClass.registeredStorages[safe_StealManager.traderDistanceState.afar] then 
+		for i,storageId in pairs(stealManagerClass.registeredStorages[safe_StealManager.traderDistanceState.afar]) do --по циклу со стандартным обсчетом вероятности
+			if not busyObjects[storageId] then --раньше его никто не занял
+				local storageObj=level_object(storageId)
+				if storageObj and not stealManagerClass:IsStolen(storageId) then --рюкзак еще не украли
+					local actorDistance=db.actor:position():distance_to(storageObj:position())
+					local distance=storageObj:position():distance_to(npc:position())
+					if (distance>1 and distance<30) and 
+						actorDistance>60 and
+						--[[WTF вообще??? так один поток или как и вообще thread safe?]] not busyObjects[storageId] then  
+						--можно тырить! 
+						busyObjects[storageId]=true
+						self.st.stealStorageId=storageId
+						return true
+					end
+				end
+			end
+		end
+	end
+	return false
+end
+
+class "evaluatorNearStorage" (property_evaluator)--эвалуатор для определения близости вора к рюкзаку
+
+function evaluatorNearStorage:__init(st, name) super (nil, name)
+	self.st=st
+end
+
+function evaluatorNearStorage:evaluate()
+	if self.st==nil or (self.st.enable and self.st.enabled~=true) then
+		return false
+	end
+	if self.st.stealStorageId==nil then --чето случилось по пути
+		return false
+	end
+	local npc=self.object
+	local storageObj=level_object(self.st.stealStorageId)
+	local nearDistance=1 --TODO: доработать если лежит не на земле...
+	local currentDistance=level.vertex_position(storageObj:level_vertex_id()):distance_to(npc:position())
+	if storageObj and currentDistance<nearDistance then --пришили! 
+		return true
+	end
+	return false
+end
+
+class "actionMoveToStorage" (action_base) --управление движением вора к рюкзаку
+
+function actionMoveToStorage:__init (action_name,st) super (nil,action_name)
+	self.st = st
+end
+
+function actionMoveToStorage:initialize()
+	action_base.initialize(self)
+	local npc=self.object
+	local st_objId = self.st.stealStorageId
+	local storageObj=st_objId and level_object(st_objId) or nil
+	npc:set_desired_position()
+	npc:set_desired_direction()
+	if storageObj then
+		self.st.dest_lvid=storageObj:level_vertex_id()
+		if  npc:accessible(self.st.dest_lvid) then
+			npc:clear_animations()
+			npc:set_detail_path_type(move.curve)
+			npc:set_path_type(game_object.level_path)
+			npc:set_body_state(move.standing)
+			npc:set_mental_state(anim.free)
+			npc:set_movement_type(move.walk)
+			npc:set_sight(look.danger,nil,0)
+			npc:movement_enabled(true)
+			self.st.go_time_end=time_global()+40000 --идти будем не более 40 секунд
+			npc:set_dest_level_vertex_id(self.st.dest_lvid)
+		else
+			busyObjects[st_objId or -1]=nil --нет, не доступна, может какую другую попробую или кто из подельников
+			self.st.stealStorageId=nil
+		end
+	else
+		busyObjects[st_objId or -1]=nil --пропал наш рюкзак
+		self.st.stealStorageId=nil
+	end
+end
+
+function actionMoveToStorage:execute() --выполняем движение
+	action_base.execute(self)
+	local npc=self.object
+	local st_objId = self.st.stealStorageId
+	local storageObj=st_objId and level_object(st_objId) or nil
+	if (self.st.go_time_end or 0)<time_global() or storageObj==nil  then --шли слишком долго или пропал рюкзак
+		if st_objId then --если наш - освобождаем
+			busyObjects[st_objId]=nil
+			self.st.stealStorageId=nil
+		end	
+	else
+		local actorDistance=100
+		if db.actor then --актор еще с нами...
+			actorDistance=db.actor:position():distance_to(storageObj:position())
+		end
+		if actorDistance<20 then --нарисовался актор поблизости
+			busyObjects[st_objId or -1]=nil
+			self.st.stealStorageId=nil
+		else
+			npc:set_dest_level_vertex_id(self.st.dest_lvid) --премся дальше
+			if 
+				self.st.dest_lvid==npc:level_vertex_id() and --вах... оказывается, за уровнем они совпадают.
+				storageObj and 
+				npc:position():distance_to(storageObj:position())<20 
+			then --пришли, можно воровать 
+				stealManagerClass:StealStorage(npc,self.st.stealStorageId)
+				busyObjects[st_objId or -1]=nil
+				self.st.stealStorageId=nil
+			end
+		end
+	end
+end
+
+function actionMoveToStorage:finalize()
+	action_base.finalize (self)
+end
+
+local evSeeStorageId=7200
+local evNearStorageId=7201
+local acSeeStorageId=7202
+
+function add_to_binder(npc, ini, scheme, section, st) --добавление в мотиватор
+	if not stealManagerClass.enable then
+		return
+	end
+	local manager = npc:motivation_action_manager()
+	local prop_idlecombat=xr_evaluators_id.state_mgr + 3
+	local prop_contact=xr_evaluators_id.stohe_meet_base + 1
+	--ниже те , к кому не цеплять логику кражи рюкзаков --TODO: переделать на конфиг
+	local zombi=npc:character_community()=="zombied" or npc:character_community()=="trader" or
+			npc:character_community()=="arena_enemy" or npc:name()=="mil_stalker0012" or 
+			npc:name()=="yantar_ecolog_general" or 	npc:name()=="mil_freedom_member0021" or 
+			protected_items.is_no_offline_alife_npc(npc:section()) or npc:name()=="doktor1"
+	if zombi then
+		manager:add_evaluator (evSeeStorageId,property_evaluator_const(false))
+		manager:add_evaluator (evNearStorageId,property_evaluator_const(false))
+	else
+		manager:add_evaluator (evSeeStorageId,evaluatorSeeStorage(st,"evaluatorSeeStorage"))
+		manager:add_evaluator (evNearStorageId,evaluatorNearStorage(st,"evaluatorNearStorage"))
+	
+		local action = actionMoveToStorage("actionMoveToStorage", st) --если нпс
+		action:add_precondition(world_property(stalker_ids.property_alive, true)) --жив
+		action:add_precondition(world_property(stalker_ids.property_enemy,	false)) --врагов нет рядом
+		action:add_precondition(world_property(prop_contact,false)) --бмп...
+		action:add_precondition(world_property(xr_evaluators_id.sidor_wounded_base,false)) --не ранен
+		action:add_precondition(world_property(blowout_scheme.evid_anomaly,false)) --не нужно обходить аномалии
+		action:add_precondition(world_property(blowout_scheme.evid_blowout,false)) --нет выброса
+		action:add_precondition(world_property(evSeeStorageId, 	true)) --видит рюкзак
+		action:add_precondition(world_property(evNearStorageId,false)) --но не рядом
+		action:add_precondition(world_property(prop_idlecombat,true)) --не в бою
+		action:add_effect(world_property(evNearStorageId,true)) --прервать если рядом
+		action:add_effect(world_property(evSeeStorageId,false)) --прервать если не видит
+		manager:add_action(acSeeStorageId, action)
+		
+		action = manager:action(xr_actions_id.alife)
+		action:add_precondition(world_property(evSeeStorageId,false))
+		action = manager:action(stalker_ids.action_danger_planner)
+		action:add_precondition(world_property(evSeeStorageId,false))
+	end
+end
+
+function set_scheme(npc, ini, scheme, section)
+	stealManagerClass=safe_StealManager.GetStealManagerClass()
+	local st = xr_logic.assign_storage_and_bind(npc, ini, scheme, section)
+	st.ini=ini
+	st.enabled=true	
+end
+
+
+function disable_scheme(npc, scheme)
+	local st = db.storage[npc:id()][scheme]
+	if st then
+		st.enabled = false
+	end
+end

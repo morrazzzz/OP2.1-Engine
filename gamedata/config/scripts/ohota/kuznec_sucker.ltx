@@ -1,0 +1,14 @@
+[smart_terrains]
+none = true
+
+[logic]
+active = mob_home
+on_death = death@sucker
+
+[mob_home]
+path_home = esc_kuznec_sucker_home
+home_min_radius = 39
+home_max_radius = 40
+
+[death@sucker]
+on_info = {=killed_by_knife} %+kuznec_sucker_dead%

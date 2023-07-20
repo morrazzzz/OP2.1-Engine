@@ -1,0 +1,255 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<w>
+    <properties_box>
+        <texture>ui_cb_listbox</texture>
+        <list x="0" y="0" width="10" height="10" item_height="18"  
+                always_show_scroll="0" can_select="1" bottom_indent="10" right_ident="10" left_ident="20">                
+				<font_s r="218" g="217" b="213"/>                
+				<font r="131" g="131" b="131" font="letterica16"/>
+        </list>
+    </properties_box>
+    
+    <main x=0 y=0 width=1024 height=768/>
+    
+	<mask_frame_window x="0" y="0" width="10" height="10">
+		<texture>ui\select</texture>		
+		<!-- <texture>ui_options_controls_frame</texture>		-->
+		<frame_color r="255" g="0" b="0" a="255"/>	
+	</mask_frame_window>
+
+    <belt_slots x="0" y="-800" width="1024" height="172" stretch="1">  <!-- 80 -->
+        <texture>ui_slots_belt</texture>        
+    </belt_slots>
+    
+    <back x="0" y="0" width="1024" height="768" stretch="1"> <!-- width="1015" height="301"> -->
+        <texture>amk_ui_bag</texture>
+    </back>
+
+    <test x=0 y=0 width=200 height=200>
+        <texture></texture>
+    </test>
+
+    <bottom_static x=0 y=736 width=1024 height=32 >
+        <texture></texture>
+    </bottom_static>
+      
+    <!-- *************************** (OP-2.1) ************************* --> 
+
+	<dragdrop_detector_arts x="354" y="31" width="60" height="60"
+            cell_width = "27" cell_height="27" rows_num="2" cols_num="2" adjust_cells="1">
+			<color_focused 	r="255" g="250" b="250" a="255"/>
+			<color_selected 	r="16" g="245" b="54" a="255"/>
+			<color_suitable 	r="16" g="245" b="54" a="255" anim_time="2500"/>
+	</dragdrop_detector_arts>
+	
+	<dragdrop_detector_anoms x="419" y="31" width="60" height="60"
+            cell_width = "27" cell_height="27" rows_num="2" cols_num="2" adjust_cells="1">
+			<color_focused 	r="255" g="250" b="250" a="255"/>
+			<color_selected 	r="16" g="245" b="54" a="255"/>
+			<color_suitable 	r="16" g="245" b="54" a="255" anim_time="2500"/>
+	</dragdrop_detector_anoms>
+	
+	<dragdrop_pnv x="484" y="31" width="60" height="60"
+            cell_width = "27" cell_height="27" rows_num="2" cols_num="2" adjust_cells="1">
+			<color_focused 	r="255" g="250" b="250" a="255"/>
+			<color_selected 	r="16" g="245" b="54" a="255"/>
+			<color_suitable 	r="16" g="245" b="54" a="255" anim_time="2500"/>
+	</dragdrop_pnv>
+	
+	<dragdrop_apparatus x="549" y="31" width="60" height="60"
+            cell_width = "27" cell_height="27" rows_num="2" cols_num="2" adjust_cells="1">
+			<color_focused 	r="255" g="250" b="250" a="255"/>
+			<color_selected 	r="16" g="245" b="54" a="255"/>
+			<color_suitable 	r="16" g="245" b="54" a="255" anim_time="2500"/>
+	</dragdrop_apparatus>
+	
+	<dragdrop_biodev x="614" y="31" width="60" height="60"
+            cell_width = "27" cell_height="27" rows_num="2" cols_num="2" adjust_cells="1">
+			<color_focused 	r="255" g="250" b="250" a="255"/>
+			<color_selected 	r="16" g="245" b="54" a="255"/>
+			<color_suitable 	r="16" g="245" b="54" a="255" anim_time="2500"/>
+	</dragdrop_biodev>
+	
+	<dragdrop_knife x="375" y="125" width="120" height="80"
+            cell_width = "37" cell_height="37" rows_num="2" cols_num="3" show_condition_bar="1">
+			<color_focused 	r="255" g="250" b="250" a="255"/>
+			<color_selected 	r="16" g="245" b="54" a="255"/>
+			<color_suitable 	r="16" g="245" b="54" a="255" anim_time="2500"/>
+	</dragdrop_knife>
+	
+    <dragdrop_pistol x="536" y="125" width="120" height="80"
+            cell_width = "37" cell_height="37" rows_num="2" cols_num="3"
+            custom_placement="0" show_condition_bar="1">
+			<color_focused 	r="255" g="250" b="250" a="255"/>
+			<color_selected 	r="16" g="245" b="54" a="255"/>
+			<color_suitable 	r="16" g="245" b="54" a="255" anim_time="2500"/>
+	</dragdrop_pistol>
+
+    <dragdrop_shotgun x="380" y="242" width="313" height="96" 
+            cell_width = "44" cell_height="46" rows_num="2" cols_num="6"
+            custom_placement="0" show_condition_bar="1">
+			<color_focused 	r="255" g="250" b="250" a="255"/>
+			<color_selected 	r="16" g="245" b="54" a="255"/>
+			<color_suitable 	r="16" g="245" b="54" a="255" anim_time="2500"/>
+	</dragdrop_shotgun>
+
+	<dragdrop_automatic x="380" y="378" width="313" height="96" 
+            cell_width = "44" cell_height="46" rows_num="2" cols_num="6"
+            custom_placement="0" show_condition_bar="1">
+			<color_focused 	r="255" g="250" b="250" a="255"/>
+			<color_selected 	r="16" g="245" b="54" a="255"/>
+			<color_suitable 	r="16" g="245" b="54" a="255" anim_time="2500"/>
+	</dragdrop_automatic>
+	
+    <dragdrop_belt x="17" y="341" width="306" height="100"
+            cell_width = "42" cell_height="48" rows_num="2" cols_num="7">
+			<color_focused 	r="255" g="250" b="250" a="255"/>
+			<color_selected 	r="16" g="245" b="54" a="255"/>
+			<color_suitable 	r="16" g="245" b="54" a="255" anim_time="2500"/>
+	</dragdrop_belt>
+
+    <dragdrop_bag x="-8" y="221" width="1002" height="260"
+            cell_width = "24" cell_height="26" rows_num="10" cols_num="41"
+            unlimited="1" group_similar="1" show_condition_bar="1">
+			<color_focused 	r="255" g="250" b="250" a="255"/>
+			<color_selected 	r="16" g="245" b="54" a="255"/>
+			<color_suitable 	r="16" g="245" b="54" a="255" anim_time="2500"/>
+	</dragdrop_bag>
+
+	<!-- outfit -->
+	<dragdrop_outfit x="200" y="40" width="104" height="260" 
+            cell_width = "37" cell_height="49" rows_num="4" cols_num="4" 
+            custom_placement="0">
+			<color_focused 	r="255" g="250" b="250" a="255"/>
+			<color_selected 	r="16" g="245" b="54" a="255"/>
+			<color_suitable 	r="16" g="245" b="54" a="255" anim_time="2500"/>
+	</dragdrop_outfit>
+
+    <!-- ************************************************************* -->
+
+	<!-- weight -->
+    <bag_static x="20" y="275" width="1012" height="480" complex_mode="1">        
+        <text x="27" y="178" font="graffiti22" r="238" g="153" b="26">ui_inv_bag</text>
+    </bag_static>
+    
+	<!-- money -->
+    <money_static x="192" y="444" width="140" height="33" stretch="1">
+        <text font="graffiti22" r="238" g="153" b="26" align="c" vert_align="c"></text>
+    </money_static>
+
+    <descr_static x="692" y="2" width="330" height="475" stretch="1">
+        <text x="36" y="9" font="graffiti22" r="238" g="153" b="26">ui_inv_description</text>
+    </descr_static>
+    
+    <character_frame_window x="0" y="0" width="268" height="460">
+        <title x="38" y="12" width="240" height="60" complex_mode="1">
+            <text font="graffiti22" r="238" g="153" b="26">ui_inv_personal</text>
+        </title>
+    </character_frame_window>
+    
+    <outfit_info x="17" y="100" width="260" height="200">
+        <auto_static x="7" y="16">
+            <text font="graffiti22" r="238" g="153" b="26">ui_st_params</text>
+        </auto_static>
+        
+		<immunities_list x="2" y="40" width="240" height="180" item_height="19" always_show_scroll="0" active_bg="0">	
+			<font r="238" g="153" b="26" font="letterica18" vert_align="c" align="c"/>
+			<static x="0" y="0" width="20" height="18" complex_mode="0">
+				<font font="letterica16"/>
+			</static>
+			<static x="20" y="0" width="90" height="18" complex_mode="1">
+				<font font="letterica16"/>
+			</static>
+			<static x="80" y="0" width="40" height="18" complex_mode="1">
+				<font font="letterica16"/>
+			</static>
+			<static x="110" y="0" width="40" height="18" complex_mode="1">
+				<font font="letterica16"/>
+			</static>
+			<static x="130" y="0" width="40" height="18" complex_mode="1">
+				<font font="letterica16"/>
+			</static>
+			
+			<icons>
+				<burn>ui_inv_icon_burn_immunity</burn>
+				<strike>ui_inv_icon_strike_immunity</strike>
+				<shock>ui_inv_icon_shock_immunity</shock>
+				<wound>ui_inv_icon_wound_immunity</wound>
+				<radiation>ui_inv_icon_radiation_immunity</radiation>
+				<telepatic>ui_inv_icon_telepatic_immunity</telepatic>
+				<chemical_burn>ui_inv_icon_chemical_burn_immunity</chemical_burn>
+				<explosion>ui_inv_icon_explosion_immunity</explosion>
+				<fire_wound>ui_inv_icon_fire_wound_immunity</fire_wound>
+			</icons>
+			
+		</immunities_list>
+
+     
+    </outfit_info>
+
+	<static_personal x=1 y=285 width=100 height=260/>
+
+    <rank x="736" y="272" width="75" height="65" stretch="1">
+        <texture>ui_inventory_rank</texture>
+        <pic x="14" y="17" width="46" height="47" stretch="1"/>
+    </rank>
+    
+    <progress_background x="28" y="50" width="300" height="215">
+         <texture></texture> 
+    </progress_background>
+    
+    <progress_back_rank x="784" y="40" width="38" height="215" stretch="1">
+        <texture>ui_scale_one</texture>        
+    </progress_back_rank>   
+
+    <progress_bar_health x="13" y="0" width="122" height="14" horz="1" min="0" max="100" pos="0">
+        <progress>
+            <texture>ui_scale_red_2</texture>
+        </progress>
+    </progress_bar_health>    
+
+    <progress_bar_psy x="13" y="19" width="122" height="14" horz="1" min="0" max="100" pos="0">
+        <progress>
+            <texture>ui_scale_green_2</texture>
+        </progress>
+    </progress_bar_psy>
+
+    <progress_bar_radiation x="13" y="37" width="122" height="14" horz="1" min="0" max="100" pos="0"> 
+        <progress>
+            <texture>ui_scale_yellow_2</texture> 
+        </progress>
+    </progress_bar_radiation>
+    
+    <progress_bar_rank x="20" y="22" width="10" height="141" horz="0" min="0" max="100" pos="0">
+        <progress>
+            <texture></texture>
+        </progress>
+    </progress_bar_rank>
+    
+	<!-- time -->
+    <time_static x="30" y="335" width="0" height="0" stretch="1">        
+        <texture></texture>
+    </time_static>
+    
+    <time_static_str x="122" y="117" width="80" height="30">        
+        <text font="graffiti22" r="238" g="153" b="26"/>
+    </time_static_str>
+
+    <exit_button x="2000" y="730" width="157" height="48" stretch="1">
+        <texture>ui_button_main02</texture>
+        <text x="-5" y="-7" font="graffiti19" r="238" g="153" b="26">ui_inv_exit</text>
+    </exit_button>
+
+    <action_sounds>
+        <snd_open>interface\inv_open</snd_open>
+        <snd_close>interface\inv_close</snd_close>
+        <snd_item_to_slot>interface\inv_slot</snd_item_to_slot>
+        <snd_item_to_belt>interface\inv_belt</snd_item_to_belt>
+        <snd_item_to_ruck>interface\inv_ruck</snd_item_to_ruck>
+        <snd_properties>interface\inv_properties</snd_properties>
+        <snd_drop_item>interface\inv_drop</snd_drop_item>
+        <snd_attach_addon>interface\inv_attach_addon</snd_attach_addon>
+        <snd_detach_addon>interface\inv_detach_addon</snd_detach_addon>
+        <snd_item_use>interface\inv_slot</snd_item_use>
+    </action_sounds>
+</w>

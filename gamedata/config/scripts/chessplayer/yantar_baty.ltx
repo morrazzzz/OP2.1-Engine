@@ -1,0 +1,44 @@
+[spawn]
+vodka
+
+[logic] 
+active = remark@my_nps 
+combat_ignore = combat_ignore 
+meet = meet 
+on_hit = hit 
+on_death = death 
+
+[danger_ignore]  
+ignore_distance = 5 
+   
+[remark@my_nps] 
+anim = hello_wpn 
+target = actor 
+on_actor_dist_le = 10 | remark@my_nps_rem 
+danger = danger_condition 
+meet = meet 
+target = actor 
+combat_ignore_cond = always 
+
+[remark@my_nps_rem] 
+anim = hello_wpn 
+no_move = true 
+target = actor 
+meet = meet 
+snd = mil_collect_phrase6 
+combat_ignore_cond = always 
+on_actor_dist_ge = 8 | remark@my_nps 
+
+[meet] 
+meet_state = 7| ward@ esc_bridge_soldiers 
+meet_state_wpn = 6 | backoff@ gar_bandits_seryi | 2 | punch 
+victim = 8|actor  
+victim_wpn = 8|actor  
+use = true  
+use_wpn = false
+
+[smart_terrains] 
+none = true      
+
+[spawner]
+cond = {-info_sugar_poll_art} 

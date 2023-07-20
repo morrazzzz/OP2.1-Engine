@@ -1,0 +1,523 @@
+; Все базовые значения по умолчанию для всех типов объектов в игре.
+; Для соблюдения порядка новые базовые секции определять исключительно здесь!
+
+[spawn_group_zone]
+GroupControlSection = spawn_group_zone
+class           	= AI_SPGRP
+
+[spawn_group]
+GroupControlSection = spawn_group
+class           	= AI_SPGRP
+
+; Иммунитеты
+[immunities]
+hit_probability_gd_novice	= 0.20
+hit_probability_gd_stalker	= 0.30
+hit_probability_gd_veteran	= 0.40
+hit_probability_gd_master	= 0.50
+immunities_sect				= default_immunities
+
+[default_immunities] ; Иммунитеты по умолчанию
+burn_immunity			= 1.0	; (+1% при + на 0.01)
+strike_immunity			= 1.0
+shock_immunity			= 1.0
+wound_immunity			= 1.0
+wound_2_immunity		= 1.0
+radiation_immunity		= 1.0
+telepatic_immunity		= 1.0
+chemical_burn_immunity	= 1.0
+explosion_immunity		= 1.0
+fire_wound_immunity		= 1.0
+
+; Параметры для задания изменения трения в момент смерти персонажа
+[friction]
+ph_skeleton_airr_lin_factor   = 2.0 ;550.0 (изменно из-за того, что убрано домножение коэффициент 0.002 из кода)
+ph_skeleton_airr_ang_factor   = 0.0 ;0.0 (изменно из-за того, что убрано домножение на коэффициент 0.3 из кода (0.0*0.3=0.0))
+ph_skeleton_hinger_factor1    = 1.0 ;1.0 (изменно из-за того, что убрано домножение на коэффициент 5.0 из кода)
+ph_skeleton_ddelay	     	  = 15.0 ;Время изменения значения трения в суставе с момента создания шелла, сек
+
+ph_skel_fatal_impulse_factor  = 6.0
+ph_after_death_velocity_factor= 0.75
+ph_skel_shot_up_factor        = 0.25
+
+ph_skeleton_skin_friction_start	= 0.0   ;Стартовое значение трения для оболочки
+ph_skeleton_skin_friction_end	= 2.0   ;Финальное значение трения для оболочки
+ph_skeleton_skin_ddelay			= 6.0		;Время изменения значения трения с момента создания шелла, сек.
+ph_skeleton_skin_ddelay_after_wound = 2.0 ;Время изменения значения трения с момента создания шелла, сек.(для персонажа после ранения)
+ph_pelvis_factor_low_pose_detect =0.3	;длинна луча на коллизию с землёй из центра пелвиса. Если коллизиться, то персонаж находиться в нижней позе(или ранен)(в этом случае для него задаються другие параметры трения и отсутствует домножение импульса для первого хита)
+ph_character_have_wounded_state = false; имеет ли персонаж состояние раненый
+
+; Базовая начальная секция
+[base]
+GroupControlSection		= spawn_group
+;$spawn 				= "actor"
+;$prefetch 				= 32
+cform           		= skeleton
+; Ненужные значения, которые читаются, но в подавляющем большинстве не используются
+;inv_name_short			= UNUSED	; Это используется только на худе, и нужно прописывать только для патронов, ножей и гранат
+
+[eatable] ; Eatable_item, все возможные параметры здесь, нулевые значения везде убраны
+eat_health        	= 0
+eat_satiety       	= 0
+eat_power         	= 0
+eat_radiation     	= 0
+eat_alcohol       	= 0
+wounds_heal_perc  	= 0
+eat_portions_num 	= 1
+
+[attachable] ; Attachable item
+auto_attach			= false
+
+; Аномалии
+[anomaly]
+GroupControlSection	= spawn_group_zone
+;$spawn 			= "zones\anom_zone"
+;$prefetch 			= 16
+attenuation     	= 1
+period				= 1
+idle_particles_dont_stop = false
+
+; спавн артефаков из аномалии отключен, поэтому это все здесь
+artefacts			=			; Список артов, которые спавнить: секция, удельная вероятность: af_dummy_spring, 0.41, af_dummy_dummy, 0.36 ...
+BirthProbability 	= 0.0
+min_artefact_count	= 0
+max_artefact_count	= 0
+artefact_spawn_idle	= 24  		; Насколько часто спавнить артефакты в офлайне, в часах
+artefact_spawn_rnd	= 50  		; Вероятность заспавнить артефакт в процентах.
+spawn_blowout_artefacts = off	; Рождение артефактов во время срабатывания в online
+;artefact_spawn_probability  = 0.09                	;вероятность, что во время срабатывания аномалии будет рожден артефакт
+;artefact_spawn_particles   = anomaly2\gravi_anomaly_shield_00  ;партиклы, которые отыграются на месте рождения артефакта (опционально)
+;artefact_born_sound        = anomaly\pux_blast     ;звук, который отыграются на месте рождения артефакта (опционально)
+;throw_out_power            = 15                	;импульс с которым артефакт будет выброшен из зоны в произвольном направлении
+;artefact_spawn_height      = 10                	;(м) высота на центром зоны где будет рожден артефакт
+
+; Монстры
+[monster]:base, friction
+monster				= true
+actor_hit_effect 	= effector_monster_hit
+DynamicObjectsCount	= 32 				; number of visible objects monster can handle
+DayTime_Begin		= 0					; начало дня для монстра
+DayTime_End			= 24				; конец дня для монстра
+hit_type			= wound				; type of attack
+script_binding		= bind_monster.bind
+killer_clsids		= Z_MINCER,Z_GALANT,ZS_BFUZZ,ZS_MBALD,ZS_GALAN,ZS_MINCE
+
+; Бронежилеты
+[outfit]:base
+class				= E_STLK
+outfit				= true
+script_description 	= descriptors.outfit
+ef_equipment_type	= 3
+slot				= 6
+sprint_allowed		= true
+additional_inventory_weight		= 0		; +max_walk_weight
+additional_inventory_weight2	= 0		; +40 kg (?)
+
+; Артефакты
+[ARTEFACT]:base, immunities
+class				= ARTEFACT
+artefact			= true
+animation_slot		= 11
+allow_inertion		= true
+attach_angle_offset	= 0,0,0
+attach_position_offset = -0.1,-0.1,0
+attach_bone_name	= bip01_root
+inv_grid_width		= 1
+inv_grid_height		= 1
+belt				= true
+af_actor_properties	= on
+actor_properties	= on
+health_restore_speed	= 0.0	; скорость восстановления здоровья (+100% при + на 0.0001)
+radiation_restore_speed = 0.0	; скорость накопления радиации (+1 при + на 0.0001)
+satiety_restore_speed	= 0.0	; скорость появления голода (+200% при + на 0.00001)
+power_restore_speed		= 0.0	; скорость восстановления выносливости (+9 при + на 0.0005)
+bleeding_restore_speed	= 0.0	; скорость кровотечения (+33.5% при + на 0.001)	
+inventory_radiation		= 0.0	; количество накапливаемой/выводимой радиации (+1 при + на 0.0001)
+hit_absorbation_sect	= default_immunities
+;artefact_activation_seq	= af_activation_gravi	; Спавн артефактов в аномалиях отключен, поэтому этот параметр везде убран. Активация присутствует только для капсул и эмбрионов.
+script_binding			= bind_art.bind
+
+hud						= artefact_hud
+[artefact_hud]
+orientation         = 0, 0, 0		
+position            = 0, 0, 0
+visual              = weapons\artefact\wpn_artefact_hud.ogf
+anim_idle			= idle
+anim_idle_sprint	= idle_sprint
+anim_hide			= holster
+anim_show			= draw
+anim_activate		= activate
+
+; Остальное
+[C_HLCP_S]:base
+class				= C_HLCP_S
+$spawn				= "vehicles\helicopter"
+$prefetch			= 1
+script_binding      = bind_heli.bind
+
+[O_INVBOX]:base
+class				= O_INVBOX
+$spawn        		= "physics\inventory_box"
+script_binding      = bind_physic_object.init
+
+[O_HLAMP]
+class       		= O_HLAMP
+GroupControlSection = spawn_group
+$spawn        		= "physics\hanging_lamp"
+
+[O_PHYS_S]
+class       		= O_PHYS_S
+GroupControlSection = spawn_group
+$spawn        		= "physics\object"
+$prefetch       	= 8
+
+[O_SEARCH]:base
+class       		= O_SEARCH
+$spawn        		= "physics\search_light"
+
+[P_DSTRBL]
+class       		= P_DSTRBL
+GroupControlSection = spawn_group
+$spawn        		= "physics\destroyable_object"
+;$prefetch      	= 8
+
+[P_SKELET]:base, immunities
+class				= P_SKELET
+
+[D_PDA]:base, immunities, attachable
+class				= D_PDA
+
+[D_SIMDET]:base, immunities, attachable
+class				= D_SIMDET
+belt				= false
+slot				= 8
+
+[TORCH_S]:base, immunities, attachable
+class				= TORCH_S
+
+[SCRPTCAR]:base
+class               = SCRPTCAR
+$spawn      		= "vehicles\car"
+script_binding      = bind_physic_object.init
+
+[SCRPTOBJ]:base
+class               = SCRPTOBJ
+$spawn            	= "script\script object"            ; option for Level Editor
+$npc            	= on                      ; option for Level Editor
+Scheduled         	= on                      ; option for ALife Simulator
+Human             	= off                     ; option for ALife Simulator
+
+[II_ANTIR]:base, immunities, eatable
+class				= II_ANTIR
+
+[II_ATTCH]:base, immunities, attachable
+class				= II_ATTCH
+;radius				= 1
+
+[II_BANDG]:base, immunities, eatable
+class				= II_BANDG
+
+[II_BOTTL]:base, immunities, eatable, attachable
+class				= II_BOTTL
+ef_weapon_type		= 0
+break_particles		= explosions\explosion_bottle
+break_sound			= material\bottle\collide\bottle_break_1
+
+[II_DOC]:base, immunities
+class				= II_DOC
+;radius				= 0
+
+[II_FOOD]:base, immunities, eatable, attachable
+class				= II_FOOD
+
+[II_MEDKI]:base, immunities, eatable
+class				= II_MEDKI
+
+; Патроны
+[AMMO]:base, immunities
+class				= AMMO
+ammo				= true
+impair				= 1		; коэффициент износа ствола от пули
+buck_shot			= 1		; кол-во составляющих в пуле, > 1 только для дроби
+tracer				= on
+tracer_color_ID		= 0
+explosive			= off
+
+; Гранаты и ракеты
+[G_F1]:base, immunities
+class				= G_F1
+
+[G_RGD5]:base, immunities
+class				= G_RGD5
+
+[G_RPG7]:base, immunities
+class				= G_RPG7
+; Свойства, которые читаются, но не используются
+inv_name			= UNUSED
+;inv_name_short		= UNUSED
+inv_weight			= 0
+
+[G_FAKE]:immunities
+class				= G_FAKE
+cform               = skeleton
+; Свойства, которые читаются, но не используются
+inv_name			= UNUSED
+;inv_name_short		= UNUSED
+inv_weight			= 0
+
+[A_OG7B]:base, immunities
+class				= A_OG7B
+can_be_unlimited 	= true	; Могут ли боеприпасы быть неограниченными
+
+[A_M209]:base, immunities
+class				= A_M209
+can_be_unlimited 	= true
+
+[A_VOG25]:base, immunities
+class				= A_VOG25
+can_be_unlimited 	= true
+
+; Взрывчатка
+[II_EXPLO]:base, immunities
+class					= II_EXPLO
+can_take				= false
+wallmark_section		= explosion_marks
+condition_to_explode	= 0.f
+time_to_explode			= 1.f
+set_timer_particles		= vehiclefx\exhaust_1
+
+; Прицел
+[WP_SCOPE]:base, immunities
+class				= WP_SCOPE
+
+; Глушитель
+[W_SILENC]:base, immunities
+class				= W_SILENC
+
+; Подствольный гранатомёт. Все одинаковые параметры здесь.
+[W_GLAUNC]:base, immunities
+class				= W_GLAUNC
+ammo_mag_size		= 1
+hit_power           = 3.00
+fire_dispersion_condition_factor = 0.00001	;увеличение дисперсии в процентах при максимальном износе 
+misfire_probability 	         = 0.000001	;вероятность осечки при максимальном износе 
+misfire_condition_k				 = 0.000001
+condition_shot_dec 				 = 0.000000001 ;увеличение износа при каждом выстреле
+grenade_vel		 	= 120
+
+; Болт
+[II_BOLT]:immunities
+class				= II_BOLT
+cform               = skeleton
+
+; Оружие
+[weapon]:base, immunities
+;$npc				= on				
+;$prefetch 			= 8
+scheduled           = off              ; option for ALife Simulator
+weapon				= true
+use_aim_bullet		= false
+auto_spawn_ammo		= false
+sprint_allowed		= true
+script_description 	= descriptors.weapon
+
+; Холодное оружие. У него почти все параметры одинаковые, поэтому они все здесь.
+[knife]:weapon
+class						= WP_KNIFE
+ef_weapon_type				= 1
+visual						= weapons\knife\wpn_knife.ogf
+inv_grid_width				= 0
+inv_grid_height				= 0
+inv_grid_x					= 0
+inv_grid_y					= 0
+script_description 			= descriptors.none
+
+show_ammo					= false
+slot						= 0
+animation_slot				= 5
+single_handed				= 1
+hand_dependence	   			= 1
+
+cam_relax_speed          	= 5.0
+cam_dispersion           	= 0.9
+cam_max_angle		     	= 7
+cam_max_angle_horz			= 5.0
+cam_step_angle_horz			= 0.5
+
+fire_dispersion          	= 0.5
+fire_dispersion_add      	= 5.3
+fire_dispersion_relax    	= 0.6
+fire_dispersion_base	 	= 0.5
+disp_vel_factor		     	= 0.9
+disp_crouch_factor	     	= 0.75
+disp_jump_factor	     	= 7
+fire_dispersion_condition_factor = 0.0
+misfire_probability 		= 0.0
+misfire_condition_k   		= 0.0
+condition_shot_dec 			= 0.0
+
+direction                	= 0, 0, 1
+shell_point		         	= 0.0, 0.0, 0.0
+fire_point               	= 0.0, 0.1, 0.4
+flame_particles			 	= 
+rpm_empty_click 	     	= 200
+
+hit_type				 	= wound
+hit_type_2				 	= wound
+bullet_speed			 	= 1000
+rpm                      	= 1000
+
+normal                   	= 0, 1, 0
+position                 	= -0.021, -0.078, 0.0
+orientation              	= 0,90,0
+light_disabled				= true
+ph_mass			         	= 4
+
+ammo_limit		         	= 180
+ammo_current		     	= 90
+ammo_elapsed		     	= 0
+ammo_mag_size		     	= 0
+ammo_class				 	= fake_ammo
+startup_ammo             	= 1000
+wm_size                  	= 0.10
+
+min_radius               	= 50
+max_radius               	= 50
+
+scope_status				= 0
+silencer_status				= 0
+grenade_launcher_status		= 0
+zoom_enabled				= false
+weapon_remove_time			= 5000	;время уничтожения оружия (с учетом TimeFactor) для мультиплеера
+
+[knife_hud]
+shell_point					= 0.0, 0.0, 0.0
+fire_point          		= 0.05, 0.0, 0.1
+fire_bone           		= wpn_knife_0
+
+orientation         		= 0,0,0
+position            		= 0,0,0
+
+anim_idle					= idle
+anim_draw					= draw
+anim_hide					= hide
+anim_shoot1_start			= shoot1_start
+anim_shoot2_start			= shoot2_start
+anim_shoot1_end				= shoot1_end
+anim_shoot2_end				= shoot2_end
+anim_idle_sprint			= idle_sprint
+
+; Огнестрельное оружие
+[WP_AK74]:weapon
+class               = WP_AK74
+
+[WP_BINOC]:weapon, attachable
+class               = WP_BINOC
+
+[WP_BM16]:weapon
+class               = WP_BM16
+
+[WP_GROZA]:weapon
+class               = WP_GROZA
+
+[WP_HPSA]:weapon
+class               = WP_HPSA
+
+[WP_LR300]:weapon
+class               = WP_LR300
+
+[WP_PM]:weapon
+class               = WP_PM
+
+[WP_RG6]:weapon
+class               = WP_RG6
+
+[WP_RPG7]:weapon
+class               = WP_RPG7
+
+[WP_SHOTG]:weapon
+class               = WP_SHOTG
+script_binding		= bind_sg.init
+
+[WP_SVD]:weapon
+class               = WP_SVD
+
+[WP_SVU]:weapon
+class               = WP_SVU
+
+[WP_USP45]:weapon
+class               = WP_USP45
+
+[WP_VAL]:weapon
+class               = WP_VAL
+
+[WP_VINT]:weapon
+class               = WP_VINT
+
+[WP_WALTH]:weapon
+class               = WP_WALTH
+
+[W_MOUNTD]:base
+class               = W_MOUNTD
+
+[W_STMGUN]:base
+class               = W_STMGUN
+
+[TURRETMG]:base
+class               = TURRETMG
+
+; Различные служебные и базовые секции
+[breakable_object]
+class           		= O_BRKBL
+remove_time         	= 10      ;after remove_time seconds object will be removed after it is breaked
+hit_break_threthhold    = 0.      ;weapon impact can stand breakable_object
+collision_break_threthhold  = 2000.f  ;collision impact can stand breakable_object
+immunity_factor       	= 1.3     ;hit power multiplier
+
+[climable_object]
+class           		= O_CLMBL
+
+[ph_skeleton_object]
+class         			= P_SKELET
+remove_time       		= 120
+
+[space_restrictor]
+class         			= SPC_RS_S
+;GroupControlSection   	= spawn_group_restrictor
+GroupControlSection   	= 
+$spawn          		= "ai\space_restrictor"
+;$prefetch        		= 64
+script_binding          = bind_restrictor.bind
+
+[level_changer]
+class     				= LVL_CHNG
+GroupControlSection 	= 
+$spawn      			= "ai\level changer"
+;$prefetch    			= 4
+script_binding  		= bind_lc.bind
+
+[script_zone]
+class     				= SCRIPTZN
+GroupControlSection 	= 
+$spawn      			= "ai\script zone"
+;$prefetch    			= 4
+script_binding  		= xr_zones.bind
+
+[respawn]
+GroupControlSection		= 
+$spawn 					= "ai\respawn"
+class					= RE_SPAWN
+script_binding			= bind_respawn.bind
+
+[smart_terrain]
+GroupControlSection		= 
+$spawn 					= "ai\smart_terrain"
+;$prefetch 				= 4
+class					= SMRTTRRN
+script_binding			= bind_smart_terrain.bind
+
+[smart_terrain_stay_time]
+quick   = 2,  5
+medium  = 6,  8
+long    = 12, 14
+default = 10000, 10001

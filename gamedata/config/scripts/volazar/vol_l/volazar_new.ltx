@@ -1,0 +1,64 @@
+[smart_terrains] 
+none = true 
+
+[logic]
+active = walker@volazar_new
+combat_ignore = combat_ignore
+
+[walker@volazar_new]
+path_walk = vol_new_war_walk
+path_look = vol_new_war_look
+meet = meet@on
+on_signal = walk_1 | walker@volazar_new2
+danger = danger_ignore
+combat_ignore_cond = always
+
+[walker@volazar_new2]
+path_walk = vol_new_war_walk2
+path_look = vol_new_war_look2
+meet = meet@on
+on_signal = walk_2 | walker@volazar_new3
+danger = danger_ignore
+combat_ignore_cond = always
+
+[walker@volazar_new3]
+path_walk = vol_new_war_walk3
+path_look = vol_new_war_look3
+meet = meet@on
+on_signal = walk_3 | walker@volazar_new4
+danger = danger_ignore
+combat_ignore_cond = always
+
+[walker@volazar_new4]
+path_walk = vol_new_war_walk4
+path_look = vol_new_war_look4
+meet = meet@on
+on_signal = walk_4 | walker@volazar_new5
+danger = danger_ignore
+combat_ignore_cond = always
+
+[walker@volazar_new5]
+path_walk = vol_new_war_walk5
+path_look = vol_new_war_look5
+meet = meet@on
+on_signal = walk_5 | walker@volazar_new6
+danger = danger_ignore
+combat_ignore_cond = always
+
+[walker@volazar_new6]
+path_walk = vol_new_war_walk6
+path_look = vol_new_war_look6
+meet = meet@on
+on_signal = walk_6 | walker@volazar_new
+danger = danger_ignore
+combat_ignore_cond = always
+
+[meet@on]
+use = true
+use_wpn = false
+
+[danger_ignore]
+ignore_distance = 0
+
+[combat_ignore]
+combat_ignore_cond = always

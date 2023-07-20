@@ -1,0 +1,153 @@
+-- Оплата долговцем наших услуг по устранению снайпера
+function mil_dolg_payment (stalker, player)
+    if not has_info("military_scull_give_reward_1") then
+      got_money(4000)
+        give_info("military_scull_give_reward_1")
+    end
+end
+
+function mil_dolg_payment2 (stalker, player)
+    if not has_info("military_scull_give_reward_2") then
+      got_money(8000)
+        give_info("military_scull_give_reward_2")
+    end
+end
+
+function lukash_payment (stalker, player)
+    got_money(7000)
+    got("wpn_spas12_m1") 
+end
+
+-- Отмечаем провал задачи
+function mil_dolg_sniper_failed (stalker, player)
+    level_tasks.set_task_state (task.fail, "mil_kill_sniper", 0)
+    level_tasks.set_task_state (task.fail, "mil_kill_sniper", 1)
+end
+
+-- отмечаем выполнение задачи
+function mil_dolg_sniper_complete (stalker, player)
+    level_tasks.set_task_state (task.completed, "mil_kill_sniper", 0)
+end
+
+function transfer_flash (player, stalker)
+	lost("crazy_flash")
+end
+
+function is_player_help (player, stalker)
+    if db.storage[db.actor:id ()] == nil then return false end
+    return db.storage[db.actor:id ()].mil_dolg["killed_by_actor"]
+end
+
+function no_player_help (stalker, player)
+    return not this.is_player_help (player, stalker)
+end
+
+function transfer_rg6 (stalker, player)
+    return
+end
+
+function set_freedom_enemy (player, stalker)
+    relation_registry.set_community_goodwill ("freedom", db.actor:id (), -5000)
+end
+
+function set_task1_complete (player, stalker)
+    if has_info("mil_leader_quest1_start") then
+       level_tasks.set_task_state (task.completed, "mil_lukash_job", 1)
+    end   
+end
+
+function set_task3_complete (player, stalker)
+    if has_info("mil_leader_quest1_start") then
+       level_tasks.set_task_state (task.completed, "mil_lukash_job", 0)
+       level_tasks.set_task_state (task.completed, "mil_lukash_job", 3)
+    end   
+end
+
+function set_courier_task_complete (stalker, player)
+end    
+
+function actor_has_weapon (stalker, player)
+    return xr_conditions.actor_has_weapon (player, stalker)
+end
+
+function actor_dont_has_weapon (stalker, player)
+    return not xr_conditions.actor_has_weapon (player, stalker)
+end
+
+function have_a_vodka (stalker, player)
+    return stalker:object ("vodka") ~= nil
+end
+
+function send_ammo_for_AK (actor, npc)
+    got("ammo_5.56x45_ap")
+end
+
+function send_ammo_for_LR (actor, npc)
+    got("ammo_11.43x23_hydro")
+end
+
+function commander_transfer (actor, npc)
+    got_money(npc:money()/2)
+end
+
+function set_ugrumy_mapspot (actor, npc)
+    level_tasks.add_location (727, "mil_ugrumy_location") 
+end
+
+function remove_ugrumy_mapspot (actor, npc)
+    level_tasks.remove_location (727, "mil_ugrumy_location") 
+end
+
+function mil_remove_base_spot (actor, npc)
+    level_tasks.remove_location (733, "mil_freedom_location")
+end
+
+function mil_cook_subtask_completed (actor, npc)
+    level_tasks.set_task_state (task.completed, "mil_freedom_rg6_task", 1)
+end
+
+function set_cook_subtask2_complete (actor, npc)
+    level_tasks.set_task_state (task.completed, "mil_freedom_rg6_task", 2)
+end
+
+function send_artefact (npc, actor)
+    got("af_cristall")
+end
+
+function send_desert_eagle (actor, npc)
+    got("wpn_br1935") 
+end
+
+function set_snipers_spots (npc, actor)
+end
+
+function killactor (actor, npc)
+    xr_gulag.setGulagEnemy ("mil_dolg", actor)
+end
+
+function set_actor_enemy_for (sid)
+    local npc = level_story_object (sid)
+    if npc == nil or npc:alive () == false then
+       return 
+    end    
+    npc:set_relation (game_object.enemy, db.actor)
+end
+
+function transfer_scope (npc, actor)
+    got("wpn_addon_scope") 
+    lost("vodka")
+end
+
+
+function actor_set_freedom (actor, npc)
+    printf ("ACTOR NOW IN FREEDOM COMMUNITY")
+    if db.actor then
+       db.actor:set_character_community ("actor_freedom", 0, 0)
+    end
+end
+
+function mil_leader_dialog_check (actor, npc)
+	return has_info("mil_lukash_delay") or has_info("mil_lukash_dolg_task_complete")
+end
+
+--db.actor:set_character_community("actor_dolg", 0, 0)

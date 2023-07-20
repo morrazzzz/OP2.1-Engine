@@ -1,0 +1,8 @@
+[logic]
+active = sr_idle@wait
+
+[sr_idle@wait]
+on_actor_inside = sr_idle@flies %=play_snd(nature\new_flies2)%
+
+[sr_idle@flies]
+on_actor_outside = sr_idle@wait

@@ -1,0 +1,12 @@
+[logic]
+active = sr_idle@one
+
+[sr_idle@one]
+on_info = {+denis_wound_have} sr_idle@two
+
+[sr_idle@two]
+on_actor_inside = sr_idle@tri %+denis_wound_next%
+
+[sr_idle@tri]
+on_timer = 10000 | nil 
+

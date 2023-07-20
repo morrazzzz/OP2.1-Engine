@@ -1,0 +1,214 @@
+;;;;;;;;;;;; Штурмовая винтовка HK-416 ;;;;;;;;;;;;;
+;---------------------------------------------------
+[wpn_hk416_m1]:WP_AK74
+min_radius               			= 0
+max_radius               			= 100
+description					= enc_arsenal_hk416_m1
+
+ef_main_weapon_type				= 2
+ef_weapon_type					= 6
+
+holder_range_modifier				= 1.0
+holder_fov_modifier				= 0.7
+
+cost						= 8500
+weapon_class					= assault_rifle
+
+ammo_limit		 			= 210
+ammo_current		 			= 30
+ammo_elapsed		 			= 30
+
+ammo_mag_size		 			= 30
+ammo_class				        = ammo_5.56x45_ss190, ammo_5.56x45_ap, ammo_5.56x45_gd
+grenade_class					= ammo_m209
+fire_modes					= 1, 3, -1
+launch_speed 					= 0
+
+hand_dependence		 			= 1
+single_handed					= 0
+
+inv_name					= ars-hk416_m1
+
+inv_weight					= 3.25
+
+inv_grid_width					= 5
+inv_grid_height					= 2
+inv_grid_x         				= 15
+inv_grid_y         				= 53
+
+slot 			 			= 2		
+animation_slot					= 2		
+
+;-----------------------------------------------------------------------------------
+fire_dispersion_base				= 0.12 	;угол (в градусах) базовой дисперсии оружия (оружия зажатого в тисках)
+control_inertion_factor				= 1.02f
+
+;отдача
+cam_relax_speed        				= 12.5	;скорость возврата в исходное положение
+cam_relax_speed_ai        	                = 360
+cam_dispersion         				= 0.15	;увеличения угла (в градусах) с каждым выстрелом
+cam_dispersion_inc				= 0.15	;увеличениe cam_dispersion с каждым выстрелом
+cam_dispertion_frac				= 0.25	;ствол будет подыматься на cam_dispersion*cam_dispertion_frac +- cam_dispersion*(1-cam_dispertion_frac)
+cam_max_angle					= 7	;максимальный угол отдачи
+cam_max_angle_horz				= 5.0	;(degree) maximum shot horizontal degree 
+cam_step_angle_horz				= 0.35	;(degree) size of step camera moved in horizontal position while shooting
+
+fire_dispersion_condition_factor 		= 5	;увеличение дисперсии в процентах при максимальном износе 
+misfire_probability 				= 0.00075 ;вероятность осечки при максимальном износе
+misfire_condition_k				= 0.05 
+condition_shot_dec 				= 0.000085 ;увеличение износа при каждом выстреле
+;-----------------------------------------------------------------------------------
+
+direction                			= 0, 0, 1
+
+fire_point               			= 0, 0.205, 0.556
+fire_point2               			= 0.0,0.130,0.600
+
+flame_particles					= weapons\generic_weapon05
+smoke_particles         			= weapons\generic_shoot_00
+grenade_flame_particles				= weapons\generic_weapon01
+
+shell_point		 			= 0.0, 0.20, 0.09
+shell_dir               			= 0.0, 1.0, 0.0
+shell_particles	 				= amik\weapons\5_56x45\5_56x45_r
+
+rpm_empty_click 	 			= 200
+
+PDM_disp_base 					= 1.5
+PDM_disp_vel_factor 				= 1.3
+PDM_disp_accel_factor 				= 1.3
+PDM_crouch	 				= 1.0
+PDM_crouch_no_acc 				= 1.0
+
+;;;;;; Для ОП-2.1
+hit_power        				= 0.74
+hit_impulse		 			= 65
+hit_type 					= fire_wound
+
+fire_distance            			= 400
+bullet_speed					= 850	
+rpm                      			= 850
+
+silencer_hit_power       			= 0.71
+silencer_hit_impulse	 			= 52
+silencer_fire_distance   			= 350
+silencer_bullet_speed	 			= 815	
+
+use_aim_bullet					= true		
+time_to_aim					= 1.0	
+
+hud                      			= wpn_hk416_m1_hud
+normal                  			= 0, 1, 0
+position                 			= -0.022, -0.140, 0.022
+orientation 					= 0, 0, 0
+
+;--STRAP PARAMETERS-----------------------------------------------------------------
+strap_position         				= -0.15,-0.37,0.2
+strap_orientation      				= -10,-5,10					
+strap_bone0					= bip01_spine2
+strap_bone1					= bip01_spine1
+
+startup_ammo             			= 1000
+visual                   			= weapons\hk416\wpn_hk416.ogf
+
+light_color		 			= 0.6,0.5,0.3
+light_range		 			= 5
+light_var_color		 			= 0.05
+light_var_range		 			= 0.1
+light_time 		 			= 0.2
+		
+ph_mass			 			= 5
+
+;addons
+scope_status					= 2
+silencer_status					= 2
+grenade_launcher_status				= 1
+
+zoom_enabled					= true
+scope_zoom_factor	    			= 70
+
+scope_name 				= wpn_addon_elcan
+scope_x 				= 98
+scope_y 				= 3
+silencer_name  			        = wpn_addon_sil_556_ar
+silencer_x 				= 203
+silencer_y 				= 14
+grenade_launcher_name			= wpn_addon_grenade_launcher_m203
+grenade_launcher_x			= 116
+grenade_launcher_y			= 22
+
+grenade_vel			= 120
+
+;звуки
+snd_draw			= weapons\lr300\lr300_draw, 0.5
+snd_holster			= weapons\rifle_holster
+snd_shoot			= weapons\lr300\hk416_shoot
+snd_empty			= weapons\lr300\lr300_empty, 0.6
+snd_reload                      = weapons\lr300\lr300_reload_empty
+snd_shoot_grenade	= weapons\m203\M203_grenshoot
+snd_reload_grenade      = weapons\lr300\m203_grenload
+snd_switch		= weapons\lr300\m203_switch
+snd_silncer_shot		= weapons\lr300\hk416_sil
+
+;silencer_flame_particles 			= weapons\generic_weapon01
+silencer_smoke_particles 			= weapons\generic_shoot_00
+
+silencer_light_color				= 0.6,0.5,0.3
+silencer_light_range				= 2
+silencer_light_var_color			= 0.05
+silencer_light_var_range			= 0.5
+silencer_light_time 				= 0.2
+
+
+[wpn_hk416_m1_hud]
+
+shell_point     	   	 		= 0.1,0.025,-0.05
+shell_dir			     		= 0, 1, 0
+
+fire_point					= 0,0.075,0.1275
+fire_point2              			= 0,0,0.170
+fire_bone               			= wpn_body
+position					= -0.044,-0.18,0.1
+orientation					= 2,2,0
+visual           	        		= weapons\hk416\wpn_hk416_hud.ogf
+
+grenade_bone            			= grenade
+
+anim_idle					= idle
+anim_idle_aim					= idle_aim
+anim_reload					= reload_empty
+anim_draw					= draw
+anim_holster					= holster
+anim_shoot					= shoot
+anim_idle_sprint				= idle_sprint
+
+anim_idle_g					= idle_g
+anim_idle_g_aim					= idle_aim_g
+anim_reload_g					= reload_g
+anim_shoot_g					= shoot_g
+anim_switch_grenade_on				= switch_on
+anim_switch_grenade_off				= switch_off
+anim_draw_g					= draw_g
+anim_holster_g					= holster_g
+			  
+anim_idle_gl					= idle_w_gl
+anim_idle_gl_aim				= idle_aim_w_gl
+anim_reload_gl					= reload_empty_w_gl
+anim_draw_gl					= draw_w_gl
+anim_holster_gl					= holster_w_gl
+anim_shoot_gl					= shoot_w_gl
+
+zoom_offset					= -0.112200,0.03000,-0.10000
+zoom_rotate_x					= 0.04100
+zoom_rotate_y					= 0.03450
+
+grenade_normal_zoom_offset			= -0.112200,0.03000,-0.10000
+grenade_normal_zoom_rotate_x			= 0.04100
+grenade_normal_zoom_rotate_y			= 0.03450
+
+zoom_hide_crosshair				= true
+
+grenade_zoom_offset				= -0.112200,-0.084500,0.0500
+grenade_zoom_rotate_x				= -0.103750
+grenade_zoom_rotate_y				= 0.034900
+

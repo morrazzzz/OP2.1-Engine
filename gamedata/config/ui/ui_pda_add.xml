@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="windows-1251" ?>
+<main>
+	<btn_off x="320" y="0" width="67" height="20" hint="pda_btn_off_hint" />
+	
+	<bsod x="25" y="32" width="975" height="698" stretch="1">
+		<texture x="0" y="0" width="1024" height="576">ui\ui_bsod</texture>
+	</bsod>
+	<bsod_back x="0" y="0" width="1024" height="768" stretch="1">
+		<texture>amk_pda</texture>
+	</bsod_back>
+</main>

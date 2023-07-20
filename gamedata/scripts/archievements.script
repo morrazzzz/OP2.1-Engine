@@ -1,0 +1,900 @@
+-- Достижения
+local medicals = {
+"suvorotka",
+"vodka",
+"antirad",
+"medkit",
+"medkit_army",
+"medkit_scientic",
+"energy_drink",
+"bandage",
+"antizombie",
+}
+
+local wpns = {
+"wpn_akms_m1",
+"wpn_kord_m1",
+"wpn_fn2000_sniper",
+"wpn_vepr12_20",
+"wpn_m500_custom",
+"wpn_akm_ves_otdaca",
+"wpn_akms_m2",
+"wpn_aug_a2",
+"wpn_fn2000_paratrooper",
+"wpn_gauss2b",
+"wpn_groza_sn",
+"wpn_oicw",
+"wpn_sks_cust",
+"wpn_val_voron",
+"wpn_ks23",
+"wpn_sayga12k",
+"wpn_ak74u_svd",
+"wpn_awp_m1",
+"wpn_sg550_sr",
+"wpn_vihlop_m1",
+"wpn_zastava_m77",
+"wpn_20w_vintorez",
+"wpn_ak74_m3",
+"wpn_ak74_m1",
+"wpn_ak104t",
+"wpn_aks74_m1",
+"wpn_g36_m1",
+"wpn_hostel",
+"wpn_m4_m1",
+"wpn_ognemet",
+"wpn_svd_m1",
+"wpn_svd_m2",
+"wpn_svd_m3",
+"wpn_b94_sil",
+"wpn_protecta_col",
+"wpn_vintorez_m1",
+"wpn_walther_wa2000",
+"wpn_spas12_m1",
+"wpn_groza_m1",
+"wpn_dark_gauss",
+"wpn_benelli_m3_short",
+"wpn_rpkcustom",
+"wpn_sw",
+"wpn_rpk47_sk1",
+"wpn_vepr12_m1",
+"wpn_sayga_un",
+"wpn_scar_snip",
+"wpn_vihlop_m2",
+"wpn_rg6_m2",
+}
+
+function acv_glaz()			send_archievement("Глазастый")		end
+function acv_cards()		send_archievement("Картёжник")		end
+function acv_prorok()		send_archievement("Пророк")			end
+function acv_sunlight()		send_archievement("Солнцедар")		end
+function acv_avianosec()	send_archievement("Авианосец")		end
+function acv_american()		send_archievement("Американец")		end
+function acv_annigilator()	send_archievement("Аннигилятор")	end
+function acv_antisniper()	send_archievement("Контрснайпер")	end
+function acv_aptekar()		send_archievement("Аптекарь")		end
+function acv_archeolog()	send_archievement("Археолог")		end
+function acv_afgan()		send_archievement("Афганец")		end
+function acv_bronenosec()	send_archievement("Броненосец")		end
+function acv_voenruk()		send_archievement("Военрук")		end
+function acv_volshednik()	send_archievement("Волшебник")		end
+function acv_vigigatel()	send_archievement("Выжигатель")		end
+function acv_glavkom()		send_archievement("Главком")		end
+function acv_gluhar()		send_archievement("Глухарь")		end
+function acv_gudvin()		send_archievement("Гудвин")			end
+function acv_bond()			send_archievement("Джеймс Бонд")	end
+function acv_dergach()		send_archievement("Дергач")			end
+function acv_jigit()		send_archievement("Джигит")			end
+function acv_zavhoz()		send_archievement("Завхоз")			end
+function acv_zoolog()		send_archievement("Зоолог")			end
+function acv_cowboy()		send_archievement("Ковбой")			end
+function acv_commandos()	send_archievement("Коммандос")		end
+function acv_korotishka()	send_archievement("Коротышка")		end
+function acv_costumer()		send_archievement("Костюмер")		end
+function acv_laborant()		send_archievement("Лаборант")		end
+function acv_luchnik()		send_archievement("Лучник")			end
+function acv_meloman()		send_archievement("Меломан")		end
+function acv_volonter()		send_archievement("Волонтёр")		end
+function acv_modeller()		send_archievement("Модельер")		end
+function acv_misucman()		send_archievement("Музыкант")		end
+function acv_nevidimka()	send_archievement("Невидимка")		end
+function acv_patriot()		send_archievement("Патриот")		end
+function acv_peredelkin()	send_archievement("Переделкин")		end
+function acv_povstanec()	send_archievement("Повстанец")		end
+function acv_podkidish()	send_archievement("Подкидыш")		end
+function acv_podrivnik()	send_archievement("Подрывник")		end
+function acv_slonik()		send_archievement("Слоник")			end
+function acv_soldafon()		send_archievement("Солдафон")		end
+function acv_smelchak()		send_archievement("Смельчак")		end
+function acv_monosniper()	send_archievement("Снайпер монолита") end
+function acv_ussrsniper()	send_archievement("Снайпер СССР")	end
+function acv_stalevar()		send_archievement("Сталевар")		end
+function acv_specialist()	send_archievement("Специалист")		end
+function acv_trangira()		send_archievement("Транжира")		end
+function acv_ufolog()		send_archievement("Уфолог")			end
+function acv_fantomas()		send_archievement("Фантомас")		end
+function acv_hvastun()		send_archievement("Хвастун")		end
+function acv_hichnik()		send_archievement("Хищник")			end
+function acv_chistula()		send_archievement("Чистюля")		end
+function acv_shekunchik()	send_archievement("Щелкунчик")		end
+function acv_estet()		send_archievement("Эстет")			end
+function acv_avstriez()		send_archievement("Австриец")		end
+function acv_newgame()		send_archievement("Новая Игра")		end
+function acv_halavshic()	send_archievement("Халявщик")		end
+function acv_homak()		send_archievement("Хомяк")			end
+function acv_lekar()		send_archievement("Доктор Айболит")	end
+function acv_lekar2()		send_archievement("Спаситель")		end
+function acv_tereza()		send_archievement("Мать Тереза")	end
+function acv_vandal()		send_archievement("Вандал")			end
+function acv_giv()			send_archievement("Живчик")			end
+function acv_found_myself()	send_archievement("Нашедший себя")	end
+function acv_mtv()			send_archievement("Монтажник-высотник") end
+function acv_sol()			send_archievement("Солянщик")		end
+function acv_kart()			send_archievement("Картограф")		end
+function acv_kro()			send_archievement("Кровельщик")		end
+function acv_ele()			send_archievement("Электрик")		end
+function acv_gromov()		send_archievement("Громов")			end
+function acv_stay1()		send_archievement("Долгожитель")	end
+function acv_stay2()		send_archievement("Аксакал")		end
+function acv_rank1()		send_archievement("Чемпион")		end
+function acv_rank2()		send_archievement("Герой Зоны")		end
+function acv_rank3()		send_archievement("Легендарный сталкер") end
+function acv_farm()			acv_count_event("acv_farm", 30, "Фармацевт") end
+function acv_coll()			send_archievement("Коллекционер")	end
+function acv_profi()		send_archievement("Профессионал")	end
+function acv_volna()		send_archievement("Защитник Зоны")	end
+function acv_shax()			send_archievement("Шахматист")		end
+
+function acv_sos()
+	if has_info("acv_sos") then return end
+	
+	if has_info("squad_is_alive") and has_info("psih_is_alive") then 
+		give_info("acv_sos")
+		send_archievement("Служба Спасения")
+	end
+end
+
+function acv_snp()
+	if has_info("acv_snp") then return end
+	
+	if  has_info("upiter_sdelka_have") and 
+		has_info("fli_chaes_have") and 
+		has_info("borov_bottle_done") and
+		has_info("viking_proverka_have")
+	then 
+		give_info("acv_snp")
+		send_archievement("Снайпер")
+	end
+end
+
+function acv_docs()
+	if not has_info("acv_docs_fail") then
+		give_info("acv_docs")
+		send_archievement("Библиотекарь")
+	end
+end
+
+function acv_aem()
+	if not has_info("acv_aem") then
+		give_info("acv_aem")
+		send_archievement("Гладиатор")
+	end
+end
+
+function acv_cognized_zone()
+	if has_info("acv_cognized_zone") then return end
+
+	for i=1,64 do
+		if not has_info("arhara_obman"..tostring(i)) then return end
+	end
+
+	give_info("acv_cognized_zone")
+	send_archievement("Познавший Зону")
+end
+
+function acv_sishik()
+	if has_info("acv_sishik") then return end
+	
+	if has_info("acv_sishik1") and has_info("acv_sishik2") and has_info("acv_sishik3") and has_info("acv_sishik4") then 
+		give_info("acv_sishik")
+		send_archievement("Сыщик")
+	end
+end
+
+function acv_task()
+	if has_info("acv_task_fail") then return end
+
+	if has_info("info_chess_dictofon_done") and has_info("snp_video_arhiv_done") then 	
+		give_info("acv_task")
+		send_archievement("Исполнитель Заданий")
+		amk.start_timer("run5", 3, "archievements.acv_stalker()")
+	end
+end
+
+function acv_real()
+	if has_info("acv_real_fail") then return end
+
+	give_info("acv_real")
+	send_archievement("Реалист")
+end
+
+function acv_nocheat()
+	for i=1,6 do
+		if db.god.u[i] or db.god.c[i] > 0 then return end
+	end
+	
+	give_info("acv_nocheat")
+	send_archievement("Не читер")
+end
+
+function acv_vzn()
+	if has_info("acv_vzn3") then return end
+
+	if     not has_info("acv_vzn1") then
+		give_info("acv_vzn1")
+		send_archievement("Спонсор")
+	elseif not has_info("acv_vzn2") then
+		give_info("acv_vzn2")
+	elseif not has_info("acv_vzn3") then
+		give_info("acv_vzn3")
+		send_archievement("Меценат")
+	end
+end
+
+function acv_life()
+	if sak.all_questmen_alive() then
+		if has_info("acv_umer") then
+			give_info("acv_resur")
+			send_archievement("Воскрешающий Мертвых")
+		else
+			give_info("acv_alive")
+			send_archievement("Хранитель Жизни")
+		end
+	end
+end
+
+function acv_money()
+	if db.actor:money() > 90000000 then return end
+	
+	if not has_info("acv_money1") and db.actor:money() >= 5000000 then
+		give_info("acv_money1")
+		send_archievement("Нумизмат")
+	end
+	if not has_info("acv_money2") and db.actor:money() >= 15000000 then
+		give_info("acv_money2")
+		send_archievement("Рокфеллер")
+	end
+	if not has_info("acv_money3") and db.actor:money() >= 30000000 then
+		give_info("acv_money3")
+		send_archievement("Жлоб")
+	end
+end
+
+function has_cheated_jump()
+	if has_info("acv_has_cheated") then return end
+
+	sms("ac".."v_".."ju".."mp_".."text", nil, "nano", 30000)
+	give_info("acv_has_cheated")
+	send_archievement("Ч".."ит".."ер")
+end
+
+function has_cheated_money()
+	if has_info("acv_has_cheated") then return end
+	
+	sms("ac".."v_".."mo".."ne".."y_".."text", nil, "nano", 30000)
+	give_info("acv_has_cheated")
+	send_archievement("Ч".."ит".."ер")
+end
+
+function has_cheated_item()
+	if has_info("acv_has_cheated") or has_info("mm_opt") then return end
+
+	sms("ac".."v_".."it".."em_".."text", nil, "nano", 30000)
+	give_info("acv_has_cheated")
+	send_archievement("Ч".."ит".."ер")
+end
+
+function has_cheated_zone()
+	if has_info("acv_has_cheated") then return end
+	
+	sms("ac".."v_".."zo".."ne_".."text", nil, "nano", 30000)
+	give_info("acv_has_cheated")
+	send_archievement("Ч".."ит".."ер")
+end
+
+function acv_angel()
+	if all_ecologs_alive() then
+		got("af_hl",1)
+		give_info("acv_angel")
+		send_archievement("Ангел-хранитель")
+	end
+end
+function all_ecologs_alive()
+	local ecologs = {
+		"bar_ecolog_professor",
+		"bar_ecolog_crush_1",
+		"bar_ecolog_crush_2",
+		"bar_ecolog_crush_3",
+		"bar_ecolog_crush_4",
+	}
+	local se_obj, obj
+	
+	for _, name in ipairs(ecologs) do
+		se_obj = server_object(name)
+		if not se_obj then return false end
+		
+		obj = level_object(se_obj.id)
+		if not obj or not obj:alive() then return false end
+	end
+	
+	return true
+end
+
+function acv_kill()
+	local value = amk.load_variable("acv_kill", 0)+1
+	amk.save_variable("acv_kill", value)
+	
+	if not has_info("acv_kill") and value >= 3000 then
+		give_info("acv_kill")
+		send_archievement("Киллер")
+	end
+	if not has_info("acv_kill2") and value >= 6000 then
+		give_info("acv_kill2")
+		send_archievement("Чёрный сталкер")
+	end
+	acv_unstoppable()
+end
+
+function acv_mons()
+	local value = amk.load_variable("acv_mons", 0)+1
+	amk.save_variable("acv_mons", value)
+	
+	if not has_info("acv_mons") and value >= 6000 then
+		give_info("acv_mons")
+		send_archievement("Браконьер")
+	end
+	if not has_info("acv_mons2") and value >= 10000 then
+		give_info("acv_mons2")
+		send_archievement("Санитар Зоны")
+	end
+	acv_unstoppable()
+end
+
+function acv_unstoppable()
+	if not has_info("acv_unstoppable") and amk.load_variable("acv_kill", 0)+amk.load_variable("acv_mons", 0) >= 20000 then
+		give_info("acv_unstoppable")
+		send_archievement("Неудержимый")
+	end
+end
+
+function acv_stalker()
+	if  has_info("acv_sishik") and 
+		has_info("acv_angel") and 
+		has_info("acv_vandal") and 
+		has_info("acv_sos") and 
+		has_info("acv_docs") and 
+		has_info("acv_cognized_zone") and 
+		has_info("acv_lekar") and 
+		has_info("acv_tereza") and 
+		has_info("acv_farm") and 
+		has_info("acv_rank2") and 
+		has_info("acv_emb") and 
+		has_info("acv_hell") and 
+		has_info("acv_snp") and 
+		has_info("acv_ct") and 
+		has_info("acv_kill") and 
+		has_info("acv_mons") and 
+		has_info("acv_zoms") and 
+		has_info("acv_task") and 
+		has_info("acv_vzn1") and 
+		has_info("acv_alive") and 
+		has_info("acv_rem") and 
+		has_info("acv_paparacci") and 
+		has_info("acv_wpn") and 
+		has_info("fli_done") and 
+		has_info("taynik_nayti_oz_10_done") and 
+		has_info("volna_day4_done") and 
+		not has_info("acv_has_cheated") and
+		not has_info("acv_halavshic3") and
+		not has_info("acv_bridge") and
+		not has_info("acv_docs_fail") and
+		not has_info("acv_money3") and
+		not has_info("acv_alk") and
+		not has_info("acv_slp") and
+		not has_info("acv_xam") and
+		not has_info("acv_task_fail") and
+		not has_info("acv_vzn3") and
+		not has_info("acv_umer")
+	then
+		give_info("acv_stalker")
+		send_archievement("S.T.A.L.K.E.R.")
+	end
+end
+
+-- единая функция обработки и выдачи подсчитываемого достижения
+function acv_count_event(acv, count, name, qty)
+	if has_info(acv) then return end
+	
+	if not qty then
+		qty = 1
+	end
+	
+	local value = amk.load_variable(acv, 0)+qty
+	
+	if value >= count then
+		amk.del_variable(acv)
+		give_info(acv)
+		send_archievement(name)
+		return
+	end
+
+	amk.save_variable(acv, value) 
+end
+
+-- единая функция обработки и выдачи 2-х последовательно подсчитываемых достижений
+function acv_count_2event(acv, count, name, acv2, count2, name2, qty)
+	if has_info(acv) and has_info(acv2) then return end
+	
+	if not qty then
+		qty = 1
+	end
+	
+	local value = amk.load_variable(acv, 0)+qty
+	
+	if not has_info(acv) and value >= count then
+		give_info(acv)
+		send_archievement(name)
+	end
+
+	if value >= count2 then
+		amk.del_variable(acv)
+		give_info(acv2)
+		send_archievement(name2)
+		return
+	end
+
+	amk.save_variable(acv, value) 
+end
+
+-- единая функция обработки и выдачи 3-х последовательно подсчитываемых достижений
+function acv_count_3event(acv, count, name, acv2, count2, name2, acv3, count3, name3, qty)
+	if has_info(acv) and has_info(acv2) and has_info(acv3) then return end
+	
+	if not qty then
+		qty = 1
+	end
+	
+	local value = amk.load_variable(acv, 0)+qty
+	
+	if not has_info(acv) and value >= count then
+		give_info(acv)
+		send_archievement(name)
+	end
+
+	if not has_info(acv2) and value >= count2 then
+		give_info(acv2)
+		send_archievement(name2)
+	end
+
+	if value >= count3 then
+		amk.del_variable(acv)
+		give_info(acv3)
+		send_archievement(name3)
+		return
+	end
+
+	amk.save_variable(acv, value) 
+end
+
+-- счетчик смертей гг
+function on_actor_death(who)
+	if has_info("peshera_go") then return end	-- сон в Пещере не считаем
+
+	set_death_count("death", get_death_count("death")+1)
+	
+	if who and amk_anoms.is_anomaly(who:clsid()) then
+		set_death_count("anoms", get_death_count("anoms")+1)
+	end
+end
+function acv_death()
+	if not has_info("acv_death") and get_death_count("death") >= 500 then
+		give_info("acv_death")
+		send_archievement("Юрий Семецкий")
+	end
+	
+	if not has_info("acv_anoms") and get_death_count("anoms") >= 20 then
+		give_info("acv_anoms")
+		send_archievement("Покоритель Аномалий")
+	end
+end
+
+-- универсальный независимый от сейвов счетчик, реализованный на файлах - считает количество смертей гг а также время прохождения
+function get_death_count(what)
+	local f = getFS()
+	local flist = f:file_list_open_ex("$game_settings$", bit_or(FS.FS_ListFiles, FS.FS_RootOnly), "*."..what)
+
+	if flist:Size() > 0 then
+		return tonumber(string.match(flist:GetAt(0):NameFull(),"(.+)[.]"))
+	else
+		local f1 = f:update_path("$game_settings$", "game_setup.ltx")
+		local f2 = f:update_path("$game_settings$", "0."..what)
+		f:file_copy(f1, f2)
+		return 0
+	end
+end
+function set_death_count(what, value)
+	local f = getFS()
+	local fileName = f:file_list_open_ex("$game_settings$", bit_or(FS.FS_ListFiles, FS.FS_RootOnly), "*."..what):GetAt(0):NameFull()
+	local fileNameNew = tostring(value).."."..what
+	if fileNameNew ~= fileName then
+		local f1 = f:update_path("$game_settings$", fileName)
+		local f2 = f:update_path("$game_settings$", fileNameNew)
+		f:file_rename(f1, f2, true)
+	end
+end
+
+function on_new_game()
+	get_death_count("game")
+	set_death_count("game", 0)
+	get_death_count("death")
+	set_death_count("death", 0)
+	get_death_count("anoms")
+	set_death_count("anoms", 0)
+end
+
+function save_gametime()
+	if alife() then
+		set_death_count("game", get_death_count("game")+math.floor(time_global()/60000+0.5))
+	end
+end
+
+-- универсальный механизм проверки, что обработан каждый объект из списка
+function has_all(tbl, info, section)
+	for i, s in ipairs(tbl) do
+		if s == section and not has_info(info..i) then
+			give_info(info..i)
+			return has_all_info(tbl, info)
+		end
+	end
+	return false
+end
+function has_all_info(tbl, info)
+	for i=1, #tbl do
+		if not has_info(info..i) then
+			return false
+		end
+	end
+	return true
+end
+
+-- взятие тайника без уникальных предметов
+function check_treasure(box)
+	local section = box:section()
+	if     section == "m_inventory_box13" then
+		give_info("acv_sishik1")
+		acv_sishik()
+	elseif section == "x_inventory_box3" then
+		give_info("acv_sishik2")
+		acv_sishik()
+	elseif section == "y_inventory_box1" then
+		give_info("acv_sishik3")
+		acv_sishik()
+	elseif section == "z_inventory_box15" then
+		give_info("acv_sishik4")
+		acv_sishik()
+	end
+end
+
+-- подъем предмета
+function on_item_take(obj)
+	local section = obj:section()
+	if     section == "mutant_wolf_cocoon" then
+		if not has_info("acv_emb") then
+			give_info("acv_emb")
+			send_archievement("Шеф-повар")
+		end
+	end
+	
+	if not has_info("acv_wpn") and has_all(wpns, "acv_wpn", section) then
+		give_info("acv_wpn")
+		send_archievement("Оружейный Барон")
+	end
+
+	if not has_info("acv_ynat") and
+		has("part_bear_paw") and
+		has("part_winger_liver") and
+		has("part_nosales_tongue") and
+		has("part_fang_wolf") and
+		has("part_spider_gland") and
+		has("part_rotan_heart") and
+		has("part_plague_hand") and
+		has("part_carlic_hand") and
+		has("part_raptor_kogot") and
+		has("part_zanoza_leg") and
+		has("part_flesh_eye") and
+		has("part_boar_leg") and
+		has("part_dog_tail") and
+		has("part_psevdodog_tail") and
+		has("part_krovosos_jaw") and
+		has("part_burer_hand") and
+		has("part_zombie_hand") and
+		has("part_snork_leg") and
+		has("part_face_tushkano") and
+		has("part_hand_kontroler") and
+		has("part_poltergeist_glas") and
+		has("part_psevdogigant_hand") and
+		has("part_tail_cat") and
+		has("part_chimera_kogot") and
+		has("part_fracture_hand") and
+		has("part_deathclaw_antler") and
+		has("part_digitis_biblio") and
+		has("part_vypolzen_hrebet") and
+		has("part_tarakan") and
+		has("part_tarakan_strong") and
+		has("part_zombie_teeth") and
+		has("part_spleen_rat")
+	then
+		give_info("acv_ynat")
+		send_archievement("Юный натуралист")
+	end
+
+	if has_info("mm_opt") and section ~= "separator" then
+		has_cheated_item()
+	end
+end
+
+-- использование предмета
+function on_use_item(obj)
+	local section = obj:section()
+	if not has_info("acv_tera") and has_all(medicals, "acv_tera", section) then
+		give_info("acv_tera")
+		send_archievement("Терапевт")
+	end
+	
+	if not has_info("acv_gurman") and (section == "vorona_egg" or section == "mozg" or section == "bezoar" or section == "mushroom") then
+		give_info("acv_gurman")
+		send_archievement("Гурман")
+	end
+
+	if section == "sweetness" then
+		acv_count_event("acv_mars", 20, "Марсианин")
+	elseif section == "suvorotka" then
+		acv_count_event("acv_nar", 20, "Наркоман")
+	elseif section == "conserva" then
+		acv_count_event("acv_kons", 40, "Консерватор")
+	elseif section == "kolbasa" then
+		acv_count_event("acv_klb", 40, "Колбасник")
+	elseif section == "bread" then
+		acv_count_event("acv_bul", 40, "Булочник")
+	end
+end
+
+-- получение поршня
+function on_info(info_id)
+	if not has_info("acv_rem") and
+		has_info("dolgovazyi_toolkit_done") and
+		has_info("dolgovazyi_voen2_done") and
+		has_info("vasily_toolkit_done") and
+		has_info("dimak_toolkit_done") and
+		has_info("atp_propusk_shurup_done") and
+		has_info("petr_sidor_vzyt_done") and
+		has_info("sidor_amulet_vzyt_done") and
+		has_info("sak_repair_box_done")
+	then
+		give_info("acv_rem")
+		send_archievement("Ремонтник")
+	end
+
+	if not has_info("acv_paparacci") and
+		not has_info("foto_ohota_fail") and
+		has_info("odnonogiy_foto_done") and
+		has_info("izomorf_dialog_have") and
+		has_info("izomorf_dialog_done") and
+		has_info("foto_ohota_done") and
+		has_info("foto_anomaly_done") and
+		has_info("silent_hunt_done") and
+		has_info("kontrik_electro_done") and
+		has_info("ohota_wolf_done") and
+		has_info("volna_foto_done") and
+		has_info("bar_dolg_petrenko_electra_flash_done") and
+		has_info("foto_strelok_done")
+	then
+		give_info("acv_paparacci")
+		send_archievement("Папарацци")
+	end
+
+	if not has_info("acv_etolog") and
+		not has_info("foto_ohota_fail") and
+		has_info("izomorf_dialog_have") and
+		has_info("izomorf_dialog_done") and
+		has_info("foto_ohota_done") and
+		has_info("silent_hunt_done") and
+		has_info("kontrik_electro_done") and
+		has_info("ohota_wolf_done") and
+		has_info("bar_dolg_petrenko_electra_flash_done")
+	then
+		give_info("acv_etolog")
+		send_archievement("Этолог")
+	end
+
+	if not has_info("acv_kulinar") and
+		has_info("info_amk_recipt_steel_kolobok") and
+		has_info("info_amk_recipt_titan_kolobok") and
+		has_info("info_amk_recipt_almaz_kolobok") and
+		has_info("info_amk_recipt_controller_skalp") and
+		has_info("info_amk_recipt_giant_small_brother") and
+		has_info("info_amk_recipt_soul_drops") and
+		has_info("info_amk_recipt_soul_fire") and
+		has_info("info_amk_recipt_soul_cristal") and
+		has_info("info_amk_recipt_soul_bengal") and
+		has_info("info_amk_recipt_tears_electra") and
+		has_info("info_amk_recipt_tears_fire") and
+		has_info("info_amk_recipt_tears_chimaera") and
+		has_info("info_amk_recipt_grandmother_glassbeards") and
+		has_info("info_amk_recipt_pra_grandmother_glassbeards") and
+		has_info("info_amk_recipt_burer_grandmother_glassbeards") and
+		has_info("info_artmod_probabka_burera") and
+		has_info("info_amk_recipt_dikoobraz") and
+		has_info("info_amk_recipt_electra_dikoobraz") and
+		has_info("info_amk_recipt_sopl_dikoobraz") and
+		has_info("info_amk_recipt_stone_dikoobraz") and
+		has_info("info_amk_recipt_shkura") and
+		has_info("info_amk_recipt_cheshya") and
+		has_info("info_amk_recipt_pancir") and
+		has_info("info_amk_recipt_simbion") and
+		has_info("info_amk_recipt_dummy_fire") and
+		has_info("info_amk_recipt_dummy_bright") and
+		has_info("info_amk_recipt_dummy_moon") and
+		has_info("info_amk_recipt_dummy_puding")
+	then
+		give_info("acv_kulinar")
+		send_archievement("Кулинар")
+	end
+
+	if not has_info("acv_trans") and
+		has_info("info_red_battery") and
+		has_info("info_red_spring") and
+		has_info("info_red_pellicle") and
+		has_info("info_artmod_blood_mincer") and
+		has_info("info_artmod_mincer_meat_mosquito_bald") and
+		has_info("info_artmod_electra_sparkler_mosquito_bald") and
+		has_info("info_artmod_ameba_slug_mosquito_bald") and
+		has_info("info_artmod_cristall_mosquito_bald") and
+		has_info("info_artmod_rusty_sea-urchin_mosquito_bald") and
+		has_info("info_artmod_dummy_dummy_mosquito_bald") and
+		has_info("info_artmod_ameba_slug_gravi_zone") and
+		has_info("info_artmod_ameba_slime_gravi_zone") and
+		has_info("info_artmod_electra_flash_gravi_zone") and
+		has_info("info_artmod_night_star_gravi_zone") and
+		has_info("info_artmod_soul_gravi_zone") and
+		has_info("info_artmod_dummy_pellicle_gravi_zone") and
+		has_info("info_artmod_cristall_flower_mincer") and
+		has_info("info_artmod_drops_mincer") and
+		has_info("info_artmod_rusty_kristall_mincer") and
+		has_info("info_artmod_electra_moonlight_mincer") and
+		has_info("info_artmod_ameba_slug_mincer") and
+		has_info("info_artmod_dummy_glassbeads_mincer") and
+		has_info("info_artmod_rusty_kristall_buzz") and
+		has_info("info_artmod_rusty_thorn_buzz") and
+		has_info("info_artmod_fireball_buzz") and
+		has_info("info_artmod_cristall_buzz") and
+		has_info("info_artmod_night_star_buzz") and
+		has_info("info_artmod_fuzz_kolobok_buzz") and
+		has_info("info_artmod_electra_flash_zharka") and
+		has_info("info_artmod_ameba_slime_zharka") and
+		has_info("info_artmod_gravi_zharka") and
+		has_info("info_artmod_night_star_zharka") and
+		has_info("info_artmod_electra_moonlight_zharka") and
+		has_info("info_artmod_dummy_battery_zharka") and
+		has_info("info_artmod_fireball_galant") and
+		has_info("info_artmod_cristall_flower_galant") and
+		has_info("info_artmod_ameba_mica_galant") and
+		has_info("info_artmod_electra_moonlight_galant") and
+		has_info("info_artmod_gold_fish_galant") and
+		has_info("info_artmod_medusa_galant") and
+		has_info("info_artmod_vyvert_buzz") and
+		has_info("info_artmod_dummy_spring_galant") and
+		has_info("life_heart_final") and
+		has_info("info_artmod_gusenica") and
+		has_info("info_artmod_globus")
+	then
+		give_info("acv_trans")
+		send_archievement("Трансмутатор")
+	end
+end
+
+local foods = {
+	["kolbasa"] = true,
+	["conserva"] = true,
+	["bread"] = true,
+	["sandwich"] = true,
+	["sweetness"] = true
+}
+local params = {}
+
+-- получение подсчитываемого предмета
+function on_receive_count_item(obj)
+	local section = obj:section()
+
+	if (not foods[section] and
+		section ~= "vodka" and
+		section ~= "af_buliz" and
+		not isMagazinedWeapon(obj))
+		or 
+		(has_info("acv_food") and
+		has_info("acv_vodka") and
+		has_info("acv_buliz") and
+		has_info("acv_weapon"))
+	then return end
+	
+	params.food = 0
+	params.vodka = 0
+	params.buliz = 0
+	params.wpn = 0
+	
+	db.actor:inventory_for_each(count_objects)
+	
+	if not has_info("acv_food") and params.food >= 200 then
+		give_info("acv_food")
+		send_archievement("Хлеборезка")
+	elseif not has_info("acv_vodka") and params.vodka >= 300 then
+		give_info("acv_vodka")
+		send_archievement("Закодированный")
+	elseif not has_info("acv_buliz") and params.buliz >= 40 then
+		give_info("acv_buliz")
+		send_archievement("Каменщик")
+	elseif not has_info("acv_weapon") and params.wpn >= 100 then
+		give_info("acv_weapon")
+		send_archievement("Терминатор")
+	end
+	
+	params = {}
+end
+function count_objects(item)
+	params.sect = item:section()
+	
+	if foods[params.sect] then
+		params.food = params.food+1
+	elseif params.sect == "vodka" then
+		params.vodka = params.vodka+1
+	elseif params.sect == "af_buliz" then
+		params.buliz = params.buliz+1
+	elseif isMagazinedWeapon(item) then
+		params.wpn = params.wpn+1
+	end
+end
+
+function send_archievement(text)
+	amk.start_timer("send_archievement", 2.5, text)
+end
+function send_archievement_chunk(text)
+	local acv_text = "%c[255,255,255,0]Новое достижение\\n%c[255,255,185,0]"..text
+	db.actor:give_game_news(acv_text, "ui\\ui_iconsTotal", Frect():set(747,517,83,47), 0, 20000)
+	voice([[device\pda\pda_objective]]):play(db.actor, 0, sound_object.s2d)
+	
+	local acv_hud = hud:AddCustomStatic("main_task", true)
+	acv_hud:wnd():SetTextST(acv_text)
+	acv_hud.m_endTime = time_global()/1000+10
+	acv_count_event("acv_acv", 100, "Достигатель")
+end
+
+function send_umer_info(obj)
+	local npc_name = get_npc_name(obj)
+
+	amk.send_tip("%c[255,255,0,0]Зафиксирована смерть сталкера по кличке "..npc_name.."%c[default]", "ЛОКАЛЬНАЯ СЕТЬ", 0, 15, "questman_death", "questman_death")
+	local acv_hud = hud:AddCustomStatic("main_task", true)
+	acv_hud:wnd():SetTextST("%c[255,255,0,0]Погиб сталкер:\\n"..npc_name)
+	acv_hud.m_endTime = time_global()/1000+10
+
+	give_info("acv_umer")
+end
+function get_npc_name(obj)
+	local tbl = netpacket:get(obj) 
+	return tbl.checked_characters
+end
+
+function mm_opt()
+	if level.present() and (db.actor ~= nil) and db.actor:alive() then
+		give_info("mm_opt")
+	end
+	amk.start_timer("mm_opt", 0.2)
+end

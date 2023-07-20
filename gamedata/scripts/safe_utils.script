@@ -1,0 +1,208 @@
+local systemIniReader=ini_reader.iniReader()
+local string_lower=string.lower
+local math_floor=math.floor
+local math_ceil=math.ceil
+local string_format=string.format
+local table_sort=table.sort
+local game_translate_string=game.translate_string
+
+
+function GetAddonsStatus(weapon)
+	local silencer=systemIniReader:readUInt(weapon:section(),"silencer_status")
+	local scope=systemIniReader:readUInt(weapon:section(),"scope_status")
+	local grenadeLauncher=systemIniReader:readUInt(weapon:section(),"grenade_launcher_status")
+	local sobj=server_object(weapon:id())
+	if not sobj then
+		return false
+	end
+	local flags=netpacket:get(sobj).addon_flags --текущие обвесы
+	if scope==2 and bit_and(flags,1)==1 then
+		return true
+	end
+	if silencer==2 and bit_and(flags,4)==4 then
+		return true
+	end
+	if grenadeLauncher==2 and bit_and(flags,2)==2 then
+		return true
+	end
+	return false
+end
+
+function GetCurrentAmmoTypeInMagazine(weapon)
+	local ammoType=nil
+	local ammoInMagazine=weapon:get_ammo_in_magazine()
+	if  ammoInMagazine>0 then --если в магазине остались патроны
+		local ammoClassesString=systemIniReader:readString(weapon:section(),"ammo_class")
+		local ammoClasses=splitString(",",ammoClassesString)
+		local sobj=server_object(weapon:id())		
+		if sobj then
+			local params=netpacket:get(sobj) --тип патронов
+			ammoType=ammoClasses[params.ammo_type+1] --секция заряженнх патронов
+		else
+			ammoType=ammoClasses[1] --бывает и такое...
+		end
+	end
+	return ammoType,ammoInMagazine
+end
+
+function GetTableKeys(inputTable)
+	local keys={}
+	local index=0
+	for key,_ in pairs(inputTable) do
+		index=index+1
+		keys[index]=key
+	end
+	return keys
+end
+
+function subGMatch(gmatchPattern,inputString)
+	local resultTable={}
+	if inputString==nil then
+		return resultTable
+	end	
+	inputString=string.trim(inputString)
+	if inputString=="" then
+		return resultTable
+	end	
+	for word in string.gmatch(inputString,gmatchPattern) do
+        table.insert(resultTable,word)
+    end
+	return resultTable
+end
+
+function splitString(delimiter,inputString) --разделитель - дюбой символ, или несколько разных... 
+	return subGMatch("[^"..delimiter.."]+",inputString)
+end
+
+function splitStringWorlds(inputString) --по словам
+	return subGMatch("[%w%_%.%-%+]+",inputString)
+end
+
+function GetAmmoSizeByObj(obj) 
+	if obj then
+		return GetAmmoSizeById(obj:id())
+	end
+	return 0
+end
+
+function GetAmmoSizeById(obj_id) 
+	local se_obj = server_object(obj_id)
+	local ammoCount=0
+	if se_obj then
+		local ammoPacket=m_netpk.get(se_obj) 
+		if ammoPacket:isOk() then
+			local data=ammoPacket:get()
+			if data.ammo_left then
+				ammoCount=data.ammo_left
+			end
+		end
+	end
+	return ammoCount
+end
+
+function set_online_state(sobj_id,state)
+	if server_object(sobj_id) then
+		ai:set_switch_online(sobj_id, state)
+		ai:set_switch_offline(sobj_id, not state)
+	end
+end
+
+--from inet stiyreno, sorted only on key in same types, иначе - беда...
+function spairs(t, order)
+    -- collect the keys
+    local keys = {}
+    for k in pairs(t) do keys[#keys+1] = k end
+
+    -- if order function given, sort by it by passing the table and keys a, b,
+    -- otherwise just sort the keys 
+    if order then
+        table.sort(keys, function(a,b) return order(t, a, b) end)
+    else
+        table.sort(keys)
+    end
+
+    -- return the iterator function
+    local i = 0
+    return function()
+        i = i + 1
+        if keys[i] then
+            return keys[i], t[keys[i]]
+        end
+    end
+end
+
+--function round(num, accuracy) --спасибо ПЫС за наше счастливое детство... пилиять, медленно, но верно..
+--    return tonumber(string_format('%0.'..(accuracy or 0)..'f', num))
+--end
+
+function round2(value, count) --странный роунд, первый работает более корректно
+	local mul = math.pow(10,count) --/ 10^count
+	return math.floor(value*mul +0.5)/mul --/>
+end
+
+function round2(val, decimal)
+  local rndval = math.floor(val)
+  local decval = val - rndval
+  if decimal and decimal ~= 0 then
+    decval = decval * 10 ^ decimal
+    return rndval + (decval % 1 > 0.5 and math.ceil(decval) or math.floor(decval)) / 10 ^ decimal
+  else
+    return decval > 0.5 and rndval + 1 or rndval 
+  end
+end
+
+function DataDeepCopy(data)
+    local dataType = type(data)
+    local copy
+    if dataType == 'table' then
+        copy = {}
+        for originalKey, originalValue in next, data, nil do
+            copy[DataDeepCopy(originalKey)] = DataDeepCopy(originalValue)
+        end
+        setmetatable(copy, DataDeepCopy(getmetatable(data)))
+    else -- number, string, boolean, etc
+        copy = data
+    end
+    return copy
+end
+
+--from inet stiyreno
+function print_r ( t )  
+    local print_r_cache={}
+    local function sub_print_r(t,indent)
+        if (print_r_cache[tostring(t)]) then
+            log(indent.."*"..tostring(t))
+        else
+            print_r_cache[tostring(t)]=true
+            if (type(t)=="table") then
+                for pos,val in pairs(t) do
+                    if (type(val)=="table") then
+                        log(indent.."["..pos.."] => "..tostring(t).." {")
+                        sub_print_r(val,indent..string.rep("_",string.len(pos)+8))
+                        log(indent..string.rep("_",string.len(pos)+6).."}")
+					elseif (type(val)=="userdata") then
+						log(indent.."["..pos.."] => USERDATA")
+					elseif (type(val)=="function") then
+						log(indent.."["..pos.."] => FUNCTION")
+                    elseif (type(val)=="string") then
+                        log(indent.."["..pos.."] => STRING:"..val)
+					elseif (type(val)=="boolean") then
+                        log(indent.."["..pos.."] => BOOL:"..iif(val,"true","false"))	
+                    else
+                        log(indent.."["..pos.."] => "..val)
+                    end
+                end
+            else
+                log(indent..tostring(t))
+            end
+        end
+    end
+    if (type(t)=="table") then
+        log(tostring(t).." {")
+        sub_print_r(t,"__")
+        log("}")
+    else
+        sub_print_r(t,"__")
+    end
+    log(" ")
+end

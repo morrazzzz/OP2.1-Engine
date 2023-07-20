@@ -1,0 +1,691 @@
+-- Биндер монстров
+local particles = {}
+ 
+function bind(obj)      
+   obj:bind_object(monster_binder(obj)) 
+end 
+
+class "monster_binder" (object_binder) 
+
+function monster_binder:__init(obj) super(obj) 
+	self.id = self.object:id()
+	self.section = self.object:section()
+	self.clsid = self.object:clsid()
+	self.loaded = false 
+	self.particles = {}
+end 
+
+function monster_binder:reinit() 
+	object_binder.reinit(self) 
+
+	db.storage[self.id] = {}
+	self.st = db.storage[self.id] 
+
+	self.timer = 0
+	self.prev_pos = vector():set(0,-100,0)
+	self.timer1000 = 0 
+	self.chimera_charge = 0
+
+	self.object:set_patrol_extrapolate_callback(monster_binder.extrapolate_callback, self) 
+	self.object:set_callback(callback.patrol_path_in_point, self.waypoint_callback, self) 
+	self.object:set_callback(callback.hit, self.hit_callback, self) 
+	self.object:set_callback(callback.death, self.death_callback, self) 
+	self.object:set_callback(callback.use_object, self.use_callback, self)
+--	self.object:set_callback(callback.on_object_hit, self.new_hit_callback, self)
+end 
+
+function monster_binder:net_spawn(sobject)
+	if not object_binder.net_spawn(self, sobject) then 
+		return false 
+	end
+
+	if not self.loaded then
+		self:random_visual_zombie()
+	end
+
+	db.add_obj(self.object) 
+	xr_gulag.setup_gulag_and_logic_on_spawn(self.object, self.st, sobject, modules.stype_mobile, self.loaded)
+
+	local particle_param = utils.cfg_get_string(config, self.section, "bones_particles", self.object, false, "", nil) 
+	if particle_param and config:section_exist(particle_param) then 
+		local tmp=amk.parse_ini_section_to_array(config,particle_param) 
+		for k,v in pairs(tmp) do 
+			local t = amk.parse_ini_section_to_array(config, v) 
+			t.obj = self.object 
+			if not t.stop_on_death or self.object:alive() then 
+				play_particle(self.object, t) 
+			end 
+		end 
+	end 
+
+	if self.object:alive() then 
+		if self.section == "dogfrend" then
+			self.object:set_tip_text("dogfrend_use")
+		elseif self.section == "chimera_quest" then
+			self.object:set_tip_text("docent_chimera_use")
+		elseif self.section == "boar_quest" then
+			self.object:set_tip_text("messer_kaban_use")
+		elseif self.section == "boar_child" then
+			self.object:set_tip_text("krest_boar_use")
+		elseif self.section == "gigant_swamp" then
+			self.object:set_tip_text("buusty_gigant_use")
+		elseif self.section == "controller_mini" then
+			self.object:set_tip_text("controller_mini_use")
+		elseif self.section == "ohota_burer" then
+			self.object:set_tip_text("ohota_burer_use")
+		else
+			self.object:set_tip_text("") 
+		end
+	end
+
+	if self.section == "zombie_plague" then
+		self.insect_particle = particles_object("ogsm\\ogsm_flies_00")
+		self.insect_sound = voice([[anomaly\flies]])
+		self.plague_on = true
+	elseif self.section == "zombie_plague_komar" then
+		self.insect_particle = particles_object("ogsm\\ogsm_flies_00")
+		self.insect_sound = voice([[anomaly\komar]])
+		self.komar_on = true
+	elseif self.section == "bloodsucker_effector" then
+		self.be_p1 = particles_object("anomaly2\\electra2_blast")
+		self.be_p2 = particles_object("static\\zharka_static")
+		self.be_snd = voice([[anomaly\electra_blast1]])
+	elseif self.clsid == clsid.zombie_s and math.random() < 0.025+level.get_game_difficulty()*0.0167 then
+		-- Рандомный чумной хит для обычных зомби
+		if math.random() > 0.5 then
+			self.insect_particle = particles_object("ogsm\\ogsm_flies_00")
+			self.insect_sound = voice([[anomaly\flies]])
+			self.plague_on = true
+		else
+			self.insect_particle = particles_object("ogsm\\ogsm_flies_00")
+			self.insect_sound = voice([[anomaly\komar]])
+			self.komar_on = true
+		end
+	end
+
+	return true 
+end 
+
+function monster_binder:update(delta)
+	battle.cleanup(self.object)
+	object_binder.update(self, delta)
+
+	if particles[self.id] and table.getn(particles[self.id])>0 then 
+		for kk,vv in pairs(particles[self.id]) do 
+			table.insert(self.particles,amk_particle.amk_particle(vv))
+			table.remove(particles[self.id],kk) 
+		end 
+	end
+	if table.getn(self.particles)>0 then 
+		for kk,vv in pairs(self.particles) do 
+			if vv:is_finished() then 
+				self.particles[kk]=nil 
+			else 
+				vv:update(delta)
+			end
+		end
+	end
+
+	self.time = time_global()
+
+	if self.object:alive() then 
+		self.distance_to_actor = self.object:position():distance_to(db.actor:position())
+		self.see_actor = self.object:see(db.actor)
+		
+		self:cat_kulon()								-- Квест на ловлю котов
+		self:defend_hospital()							-- Квест на защиту госпиталя
+
+		if not has_info("volna_goodwill") then 			-- в Волне все эффекты отключаем
+		
+			if self.clsid == clsid.zombie_s then
+				self:zombi_radiation()					-- Фонящие зомби
+				if self.plague_on then
+					self:zombie_plague()				-- Чумной зомби
+				elseif self.komar_on then
+					self:zombie_plague_komar()			-- Комариный зомби
+				end
+			elseif self.clsid == clsid.dog_s and self.section ~= "dog_fox" then
+				self:dog_attack()						-- Атака собаки
+			elseif self.clsid == clsid.pseudodog_s and self.section ~= "volkodav" and self.section ~= "dog_wolf" then
+				self:psy_dog_attack()					-- Атака пси-пса из билда 1935
+			elseif self.clsid == clsid.bloodsucker_s then
+				if self.section == "bloodsucker_effector" then
+					self:bloodsucker_effector()			-- Аномальный кровосос
+				else
+					self:bloodsucker_suck()				-- Засос кровососа
+				end
+			elseif self.clsid == clsid.controller_s then
+				self:controller_hand()					-- Удар контролёра руками из ЗП
+			elseif self.clsid == clsid.boar_s and (self.section == "boar_weak" or self.section == "boar_normal" or self.section == "boar_strong" or self.section == "boar_kachok") then
+				self:boar_kick()						-- Пинок кабана
+			elseif self.clsid == clsid.burer_s then
+				self:burer_attack()						-- Атака бюрера из ЗП
+			elseif self.clsid == clsid.cat_s then
+				self:cat_dream()						-- Сон кота-баюна
+			end
+			
+		end
+	else 
+		self.object:set_tip_text_default() 
+    end 
+ 
+	if self.st.active_section then 
+		xr_logic.issue_event(self.object, self.st[self.st.active_scheme], "update", delta) 
+	end 
+
+	-- Апдейт 1 секунда
+	if self.timer1000 < self.time then
+		self.timer1000 = self.time+1000
+		self:update1000(delta)
+	end 
+end 
+
+-- Апдейт 1 секунда
+function monster_binder:update1000(delta)
+	if self.object:alive() then
+		self:anomaly_evade() 
+		
+		if self.see_actor and self.distance_to_actor < 40 then
+			amk.enemy_see_actor(self.object,"monster")                         
+		end 
+		if db.actor:alive() and db.actor:see(self.object) and self.distance_to_actor < 80 then 
+			amk.actor_see_enemy(self.object,"monster") 
+		end 
+	end 
+end
+
+-- Эффектор монстров
+-- timeout - интервал апдейта (мс)
+-- dist - расстояние, на котором эффект работает
+-- func - функция эффекта
+function monster_binder:effector(timeout, dist, func)
+	if self.timer < self.time then
+		self.timer = self.time+timeout*math.random(80,120)/100
+		if self.see_actor and
+			self.distance_to_actor < dist and
+			self.object:get_enemy() and self.object:get_enemy():id() == 0 
+		then
+			func()
+		end
+	end
+end
+
+-- Хит по актору
+function monster_binder:hit(type, power, impulse, direction)
+	local h = hit()
+	h.type = type
+	h.power = power
+	h.impulse = impulse
+	h:bone("bip01_spine") -- чтобы учитывалась броня
+	h.draftsman = self.object 
+	h.direction = direction or self.object:direction()
+	db.actor:hit(h) 
+end
+
+-- Выбивание из рук оружия
+function monster_binder:drop(prob)
+	if math.random() < prob and not _G.Inventory:on_belt("af_idol_monolita") then 
+		local active_item = db.actor:active_item() 
+		if active_item and math.random() < level.get_game_difficulty()/40 and (db.actor:active_slot() == 1 or db.actor:active_slot() == 2) then
+			db.actor:drop_item(active_item) 
+			archievements.acv_count_event("acv_drop", 10, "Маша-растеряша")
+		end 
+	end 
+end
+
+-- Атака собаки
+function monster_binder:dog_attack()
+	self:effector(1800, 15, function()
+		level.add_pp_effector("radiation.ppe", 2012, false) 
+		self:hit(hit.telepatic, 0.05, 0)
+		self:drop(0.05)
+	end)
+end 
+
+-- Атака пси-пса из билда 1935
+function monster_binder:psy_dog_attack()
+	self:effector(4000, 20, function()
+		level.add_cam_effector("build_1935_pseudodog_effect_1.anm", 9901, false, "")
+		level.add_cam_effector("build_1935_pseudodog_effect_2.anm", 9902, false, "")
+		level.add_pp_effector("psy_antenna.ppe", 9903, false)
+		say("monsters\\pseudodog\\psy_affect_0")
+		self:hit(hit.telepatic, 0.05, 0)
+		self:drop(0.5)
+	end)
+end
+
+-- Засос кровососа
+function monster_binder:bloodsucker_suck()
+	self:effector(800, 2.5, function()
+		self:hit(hit.wound, 0.6, 100)
+		-- разворот актора
+		if math.random() < level.get_game_difficulty()/20 then
+			db.actor:set_actor_direction(vector_rotate_y(self.object:direction(), math.random(-180,180)):getH())
+		end
+	end)
+end
+
+-- Аномальный кровосос, эффекты работают для любого врага, не только для актора
+function monster_binder:bloodsucker_effector()
+	if self.timer < self.time then
+		self.timer = self.time+2000
+		self.enemy = self.object:best_enemy()
+		if self.enemy then
+			self.enemy_pos = self.enemy:position()
+			if self.object:position():distance_to(self.enemy_pos) < 2 and self.object:see(self.enemy) then
+				self:bloodsucker_effects(self.enemy)
+			end
+		end
+	end
+end
+
+function monster_binder:bloodsucker_effects(obj)
+	self.be_p1:play_at_pos(obj:position())
+	self.be_p2:play_at_pos(obj:position())
+	self.be_snd:play_at_pos(obj, obj:position(), 0, sound_object.s2d)
+
+	local h = hit()
+	h.type = hit.shock
+	h:bone("bip01_spine")
+	h.power = 0.1
+	h.impulse = 0
+	h.draftsman = self.object
+	obj:hit(h)
+end
+
+-- Удар контролёра руками из ЗП
+function monster_binder:controller_hand()
+	self:effector(1500, 2.5, function()
+		self.object:play_cycle("stand_attack_1", true)							
+		say("monsters\\controller\\controller_hit_2")
+		level.add_cam_effector("camera_effects\\hit_back_left.anm", 777, false, "")
+		self:hit(hit.wound, 0.4, 1)
+	end)
+end
+
+-- Пинок кабана
+function monster_binder:boar_kick()
+	self:effector(400, 2, function()
+		self:hit(hit.wound, 0, 1000, xyz(math.random(-10,10)/10, math.random(0,30)/10, math.random(-10,10)/10))
+	end)
+end
+
+-- Атака бюрера из ЗП
+function monster_binder:burer_attack()
+	self:effector(6000, 25, function()
+		if math.random() < level.get_game_difficulty()/10 then
+			db.actor.power = -1.0
+		end	
+		self:drop(1.0)
+	end)
+end
+
+-- Сон кота-баюна
+function monster_binder:cat_dream()
+	self:effector(5000, 10, function()
+		level.add_pp_effector("yantar_underground_psi.ppe", 6599, false)
+		level.set_pp_effector_factor(6599, 0.5)
+	end)
+end
+
+-- Фонящие зомби
+function monster_binder:zombi_radiation()
+	self:effector(2500, 3, function()
+		self:hit(hit.radiation, 0.1, 0)
+	end)
+end
+
+-- Атака насекомых при приближении к чумным зомби
+-- dist	- расстояние
+-- pp - постпроцесс
+-- pp_id - id постпроцесса
+-- power, impulse - для хита актору
+function monster_binder:plague(dist, pp, pp_id, power, impulse)
+	if self.distance_to_actor < dist then
+		level.add_pp_effector(pp, pp_id, false)
+		level.set_pp_effector_factor(pp_id, 0.1)
+
+		self.insect_pos = db.actor:position():add(xyz(0,1.8,0))
+
+		if not self.insect_particle:playing() then 
+			self.insect_particle:play_at_pos(self.insect_pos)
+		else
+			self.insect_particle:move_to(self.insect_pos, self.insect_pos)
+		end
+
+		if not self.insect_sound:playing() then 
+			self.insect_sound:play_at_pos(db.actor, self.insect_pos)
+			self:hit(hit.chemical_burn, power, impulse)
+		else
+			self.insect_sound:set_position(self.insect_pos)
+		end
+	else
+		self.insect_particle:stop()
+	end
+end
+
+-- Чумной зомби
+function monster_binder:zombie_plague()
+	self:plague(10, "dead_zone.ppe", 1001, 5, 1)
+end
+
+-- Комариный зомби
+function monster_binder:zombie_plague_komar()
+	self:plague(12, "total_recall.ppe", 1002, 8, 2)
+end
+
+function monster_binder:anomaly_evade() 
+	if self.object:story_id() == 29 then return end -- учебная плоть
+
+	if self.prev_pos:distance_to(self.object:position()) > 20 then
+		self.prev_pos = self.object:position() 
+		local list = amk_anoms.get_anomaly_list(self.object, 30) 
+		for i,o in ipairs(list) do 
+			amk_anoms.add_restriction(self.object, o.id, o.name) 
+		end 
+	end 
+	
+	if amk_anoms.have_pending_sync(self.object) then 
+		amk_anoms.syncronize(self.object) 
+	end 
+end 
+
+function monster_binder:extrapolate_callback() 
+	if self.object:get_script() == false then 
+		return false 
+	end
+	
+	local cur_pt = self.object:get_current_point_index() 
+	if patrol(self.object:patrol()):flags(cur_pt):get() == 0 then
+		--printf("_bp: monster_binder: extrapolate_callback: cur_pt = %d: true", cur_pt)
+		return true
+	end
+	--printf("_bp: monster_binder: extrapolate_callback: cur_pt = %d: false", cur_pt)
+	return false
+end
+
+function monster_binder:waypoint_callback(obj, action_type, index) 
+	if self.st.active_section then 
+		xr_logic.issue_event(self.object, self.st[self.st.active_scheme], "waypoint_callback", obj, action_type, index) 
+	end 
+end 
+
+function monster_binder:death_callback(victim, who) 
+	if self.plague_on or self.komar_on then
+		self.insect_particle:stop()
+	elseif self.section == "bloodsucker_effector" then
+		self:bloodsucker_effects(self.object)
+	end
+
+	if who:id() == db.actor:id() then 
+		kostya_dialog.kuv_hit(who)
+		xr_statistic.addKillCount(self.object) 
+		bind_soul_cube.add_soul()
+		arc_diary.monster_killed(victim, who)
+	end
+
+	if self.st.mob_death then 
+		xr_logic.issue_event(self.object, self.st.mob_death, "death_callback", victim, who) 
+	end 
+	if self.st.active_section then 
+		xr_logic.issue_event(self.object, self.st[self.st.active_scheme], "death_callback", victim, who) 
+	end 
+
+	smart_terrain.on_death(self.id) 
+
+	--' Наносим небольшой импульс вперед.
+	local h = hit() 
+	h.draftsman = self.object 
+	h.type = hit.fire_wound 
+	h.direction = db.actor:position():sub(self.object:position()) 
+	h:bone("pelvis") 
+	h.power = 1 
+	h.impulse = 10 
+	self.object:hit(h) 
+
+	if table.getn(self.particles)>0 then 
+		for kk,vv in pairs(self.particles) do 
+			vv:on_death() 
+		end 
+	end 
+
+	if rx_ai then rx_ai.monster_death(victim, who) end
+	
+	amk.on_monster_death(victim, who)
+end 
+
+function monster_binder:hit_callback(obj, amount, local_direction, who, bone_index)
+	--printf("HIT_CALLBACK: [%s] amount[%s]", obj:name(), amount)
+	if self.st.active_section then
+		xr_logic.issue_event(self.object, self.st[self.st.active_scheme], "hit_callback", obj, amount, local_direction, who, bone_index)
+	end
+	if self.st.hit then
+		xr_logic.issue_event(self.object, self.st.hit, "hit_callback", obj, amount, local_direction, who, bone_index)
+	end
+
+	kostya_dialog.kuv_hit(who)
+	amk.on_monster_hit(obj, amount, local_direction, who, bone_index)
+	akill.on_monster_hit(obj, amount, local_direction, who, bone_index) 
+	self:chimera_hitback(obj, amount, local_direction, who, bone_index)
+end 
+
+-- Ответный хит химеры
+function monster_binder:chimera_hitback(obj, amount, local_direction, who, bone_index)
+    if (obj:section() == "new_electro_chimera" or obj:section() == "electro_chimera") and who and self.time > self.chimera_charge then
+		amk_particle.amk_particle({particle="anomaly2\\electra2_blast",pos=obj:bone_position("bip01_spine"),sound="anomaly\\electra_blast1"})
+		local dist = who:position():distance_to(obj:bone_position("bip01_spine"))
+		if dist < 6 then
+			local h = hit()
+			h.impulse = 0
+			h.draftsman = who
+			h.direction = vector():set(0,0,0)
+			h:bone("bip01_spine")
+			h.power = 1/dist
+			h.type = hit.shock 
+			who:hit(h)
+			h.power = 6/dist
+			h.type = hit.shock
+			who:hit(h)
+		end
+		self.chimera_charge = self.time+3000
+	end
+
+	if obj:section() == "fire_chimera" and who and self.time > self.chimera_charge then
+		amk_particle.amk_particle({particle="amik\\monsters\\chimera\\attak_wave",pos=obj:bone_position("bip01_spine"),sound="anomaly\\polter_fire_death"})
+		local dist = who:position():distance_to(obj:bone_position("bip01_spine"))
+		if dist < 6 then
+			local h = hit()
+			h.impulse = 0
+			h.draftsman = who
+			h.direction = vector():set(0,0,0)
+			h:bone("bip01_spine")
+			h.power = 1/dist
+			h.type = hit.burn
+			who:hit(h)
+			h.power = 6/dist
+			h.type = hit.burn
+			who:hit(h)
+			level.add_pp_effector("amk_shoot.ppe", 2015, false)
+			local snd_obj = voice([[anomaly\polter_fire_idle]])
+			snd_obj:play_at_pos(who, who:position(), 0, sound_object.s2d)
+		end
+		self.chimera_charge = self.time+3000
+	end
+end
+
+--[[ новый хит
+function monster_binder:new_hit_callback(who, wpn, ammo, bone_index, bone_name, amount, hit_type)
+	log(string.format("object: [%s] who: %s, wpn: %s, ammo: %s, bone_index: %d, bone_name: %s, amount: %f, hit_type: %d", self.object:section(), who and who:id() or "nil", wpn and wpn:section() or "nil", ammo and ammo or "nil", bone_index, bone_name, amount, hit_type))
+end]]
+
+function monster_binder:net_destroy()
+	if table.getn(self.particles)>0 then 
+		for kk,vv in pairs(self.particles) do 
+			if not vv:is_finished() then 
+				vv:stop() 
+				self.particles[kk]=nil 
+			end 
+		end 
+	end
+	self.object:set_patrol_extrapolate_callback(nil)
+	self.object:set_callback(callback.patrol_path_in_point, nil) 
+	self.object:set_callback(callback.hit, nil) 
+	self.object:set_callback(callback.death, nil) 
+	self.object:set_callback(callback.use_object, nil)
+--	self.object:set_callback(callback.on_object_hit, nil)
+
+	if self.st.active_scheme then 
+		xr_logic.issue_event(self.object, self.st[self.st.active_scheme], "net_destroy") 
+	end 
+
+	db.del_obj(self.object) 
+	db.storage[self.id] = nil 
+
+	object_binder.net_destroy(self) 
+
+	-- Очистка рестрикторов АМК
+	local sobj = server_object(self.id)
+	if sobj then
+		netpacket:modify(sobj, "dynamic_in_restrictions", {})
+	end
+end 
+
+function monster_binder:reload(section) 
+	object_binder.reload(self, section) 
+end
+
+function monster_binder:net_save_relevant()
+	return true
+end 
+
+function monster_binder:save(packet)
+	printf("monster_binder:save(): self.object:name()='%s'", self.object:name())          
+	object_binder.save(self, packet) 
+
+	xr_logic.save_obj(self.object, packet) 
+end 
+
+function monster_binder:load(reader) 
+	printf("monster_binder:load(): self.object:name()='%s'", self.object:name()) 
+	object_binder.load(self, reader) 
+	self.loaded = true 
+
+	if reader:r_eof() then 
+		remove_zavis.remove_obj(self.object)
+		if not self.object then
+			return
+		end
+	end 
+
+	xr_logic.load_obj(self.object, reader) 
+end
+
+function monster_binder:use_callback(obj, who)
+	fly.returner_clear_pos()
+	
+	if self.object:alive() then
+		if self.st.active_section then
+			xr_logic.issue_event(self.object, self.st[self.st.active_scheme], "use_callback", obj, who)
+		end
+	else
+		monster_parts.on_monster_use(obj, who) -- обыск трупа
+		-- автообыск трупа
+		if ui_mm_opt_main.GetOption("autograb_body") then
+			start_transfer_all_desired(obj)
+		end
+	end
+end
+
+function monster_binder:random_visual_zombie()
+	if self.section == "zombie_blow" or self.section == "zombie_beee" or self.section == "zombie_hell" then
+		local visuals = {
+			[[monsters\zombi\zombi_1]],
+			[[monsters\zombi\zombi_2]],
+			[[monsters\zombi\zombi_trup]],
+			[[monsters\zombi\zombi_trup_2]],
+			[[monsters\zombi\zombi_1_ghost]],
+			[[monsters\zombi\zombi_3]],
+			[[monsters\zombi\zombi_4_2]],
+			[[monsters\zombi\zombi_5]],
+			[[monsters\zombi\zombi_6]],
+			[[monsters\zombi\zombi_7]],
+			[[monsters\zombi\zombi_8]],
+			[[monsters\zombi\zombi_9]],
+			[[monsters\zombi\zombi_10]],
+			[[monsters\zombi\zombi_11]],
+			[[monsters\zombi\zombi_12]],
+			[[monsters\zombi\zombi_13]],
+			[[monsters\zombi\zombi_14]],
+			[[monsters\zombi\zombi_15]],
+			[[monsters\zombi\zombi_16]],
+			[[monsters\zombi\zombi_komar]],
+		}
+		local obj = server_object(self.id)
+		netpacket:modify(obj, "visual_name", visuals[math.random(#visuals)])
+	end
+end
+
+-- Квестовые функции
+-- Квест на ловлю котов
+function monster_binder:cat_kulon()
+	if (has_info("cat_kulon_start") and not has_info("cat_kulon_have")) and (self.section == "cat_quest" or self.section == "cat_kulon") then
+		if self.distance_to_actor < 2 then
+			if self.cat_kulon_timer then
+				if self.cat_kulon_timer < self.time then
+					-- удержали рядом нужное время = поймали зверушку
+					self.cat_kulon_timer = nil
+					self.object:kill(self.object)
+					level.map_remove_object_spot(self.id,"crlc_big")
+				end
+			else
+				self.cat_kulon_timer = self.time+2000	-- время через какое кот пойман
+			end
+		else
+			-- упустили зверушку - ловим сначала
+			self.cat_kulon_timer = nil
+		end
+	end
+end
+
+-- Квест на защиту госпиталя
+function monster_binder:defend_hospital()
+	if (has_info("defend_hospital_start") and not has_info("defend_hospital_have")) and level.name() == "zaton" then
+		if (self.section == "ohota_zombi4" or self.section == "ohota_zombi5" or self.section == "zombie_hospital1" or self.section == "zombie_hospital2" or self.section == "zombie_hospital3") then
+			if self.object:position():distance_to_xz(vector():set(153.94703674316,-6.8251028060913,-138.68576049805)) < 6 then 
+				give_info("defend_hospital_fail")
+			end
+		end
+	end
+end
+
+local out_object = nil
+local time_to_move = nil
+
+function start_transfer_all_desired(npc)
+	out_object = npc
+	time_to_move = time_global()+500
+end
+
+function transfer_all_desired()
+	if time_to_move and time_to_move < time_global() then
+		if has_info("ui_car_body") then
+			give_info("biznes_remove_special_item")
+			out_object:iterate_inventory(function(npc, item)
+				out_object:transfer_item(item, db.actor)
+			end, db.actor)
+			disable_info("biznes_remove_special_item")
+		end
+		
+		out_object = nil
+		time_to_move = nil
+	end
+end
+
+function play_particle(obj,params) 
+	local id = obj:id()
+	if not particles[id] then 
+		particles[id] = {} 
+	end 
+	table.insert(particles[id], params) 
+end 
+

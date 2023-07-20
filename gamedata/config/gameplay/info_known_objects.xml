@@ -1,0 +1,519 @@
+<?xml version='1.0' encoding="windows-1251"?>
+
+<game_information_portions>
+
+<info_portion id="encyclopedy">
+	<article>tutorial_binocular</article>
+	<article>tutorial_crouch</article>
+	<article>tutorial_hide_weapon</article>
+	<article>tutorial_jump</article>
+	<article>tutorial_overload</article>
+	<article>tutorial_radiation</article>
+	<article>tutorial_relation</article>
+	<article>tutorial_sprint</article>
+	<article>tutorial_weakness</article>
+	<article>tutorial_weapon</article>
+	<article>tutorial_wound</article>
+</info_portion>
+
+  <info_portion id="encyclopedy_zone_artifact_af-medusa">
+	<article>zone_artifact_af-medusa</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_artifact_af-cristall-flower">
+	<article>zone_artifact_af-cristall-flower</article>
+ </info_portion>
+ 
+  <info_portion id="encyclopedy_zone_artifact_af-night-star">
+	<article>zone_artifact_af-night-star</article>
+ </info_portion>
+  
+  <info_portion id="encyclopedy_zone_artifact_af-vyvert">
+	<article>zone_artifact_af-vyvert</article>
+ </info_portion>
+  
+   <info_portion id="encyclopedy_zone_artifact_af-gravi">
+	<article>zone_artifact_af-gravi</article>
+ </info_portion>
+  
+    <info_portion id="encyclopedy_zone_artifact_af-gold-fish">
+	<article>zone_artifact_af-gold-fish</article>
+ </info_portion>
+ 
+  <info_portion id="encyclopedy_zone_artifact_af-blood">
+	<article>zone_artifact_af-blood</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_artifact_af-mincer-meat">
+	<article>zone_artifact_af-mincer-meat</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_artifact_af-soul">
+	<article>zone_artifact_af-soul</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_artifact_af-drops">
+	<article>zone_artifact_af-drops</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_artifact_af-fireball">
+	<article>zone_artifact_af-fireball</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_artifact_af-cristall">
+	<article>zone_artifact_af-cristall</article>
+ </info_portion>
+ 
+ <info_portion id="encyclopedy_zone_artifact_af-electra-sparkler">
+	<article>zone_artifact_af-electra-sparkler</article>
+ </info_portion>
+ 
+  <info_portion id="encyclopedy_zone_artifact_af-electra-flash">
+	<article>zone_artifact_af-electra-flash</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_artifact_af-electra-moonlight">
+	<article>zone_artifact_af-electra-moonlight</article>
+ </info_portion>
+ 
+  <info_portion id="encyclopedy_zone_artifact_af-rusty-thorn">
+	<article>zone_artifact_af-rusty-thorn</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_artifact_af-rusty-kristall">
+	<article>zone_artifact_af-rusty-kristall</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_artifact_af-rusty-sea-urchin">
+	<article>zone_artifact_af-rusty-sea-urchin</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_artifact_af-fuzz-kolobok">
+	<article>zone_artifact_af-fuzz-kolobok</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_artifact_af-ameba-slime">
+	<article>zone_artifact_af-ameba-slime</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_artifact_af-ameba-slug">
+	<article>zone_artifact_af-ameba-slug</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_artifact_af-ameba-mica">
+	<article>zone_artifact_af-ameba-mica</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_artifact_af-dummy-glassbeads">
+	<article>zone_artifact_af-dummy-glassbeads</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_artifact_af-dummy-pellicle">
+	<article>zone_artifact_af-dummy-pellicle</article>
+ </info_portion>
+ 
+  <info_portion id="encyclopedy_zone_artifact_af-dummy-battery">
+	<article>zone_artifact_af-dummy-battery</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_artifact_af-dummy-dummy">
+	<article>zone_artifact_af-dummy-dummy</article>
+ </info_portion>
+ 
+  <info_portion id="encyclopedy_zone_artifact_af-dummy-spring">
+	<article>zone_artifact_af-dummy-spring</article>
+ </info_portion>
+ 
+  <info_portion id="encyclopedy_zone_zone-story_story-2006">
+	<article>zone_zone-story_story-2006</article>
+ </info_portion>
+ 
+  <info_portion id="encyclopedy_zone_zone-story_story-2008">
+	<article>zone_zone-story_story-2008</article>
+ </info_portion>
+ 
+  <info_portion id="encyclopedy_zone_zone-story_story-2010">
+	<article>zone_zone-story_story-2010</article>
+ </info_portion>
+ 
+ <info_portion id="encyclopedy_zone_zone-story_story-raid">
+	<article>zone_zone-story_story-raid</article>
+ </info_portion>
+   <info_portion id="encyclopedy_zone_anomalies_fuzz">
+	<article>zone_anomalies_fuzz</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_anomalies_radioactive">
+	<article>zone_anomalies_radioactive</article>
+ </info_portion>
+   <info_portion id="encyclopedy_zone_locations_escape">
+	<article>zone_locations_escape</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_locations_garbage">
+	<article>zone_locations_garbage</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_locations_agroprom">
+	<article>zone_locations_agroprom</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_locations_darkdolina">
+	<article>zone_locations_darkdolina</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_locations_bar">
+	<article>zone_locations_bar</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_locations_rostok">
+	<article>zone_locations_rostok</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_locations_yantar">
+	<article>zone_locations_yantar</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_locations_military-loc">
+	<article>zone_locations_military-loc</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_locations_radar">
+	<article>zone_locations_radar</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_locations_pripiat">
+	<article>zone_locations_pripiat</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_zone_locations_stancia">
+	<article>zone_locations_stancia</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_mutant_crow_general">
+	<article>mutant_crow_general</article>
+ </info_portion>
+   <info_portion id="encyclopedy_social_military_army">
+	<article>social_military_army</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_social_military_milstalkers">
+	<article>social_military_milstalkers</article>
+ </info_portion>
+ 
+    <info_portion id="encyclopedy_social_scientists_mobile-labs">
+	<article>social_scientists_mobile-labs</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_social_stalker-clans_duty">
+	<article>social_stalker-clans_duty</article>
+ </info_portion>
+ 
+  <info_portion id="encyclopedy_social_stalker-clans_freedom">
+	<article>social_stalker-clans_freedom</article>
+ </info_portion>
+  
+  <info_portion id="encyclopedy_social_stalker-clans_monolith">
+	<article>social_stalker-clans_monolith</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_social_stalker-clans_zomstalkers">
+	<article>social_stalker-clans_zomstalkers</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_social_stalker-clans_bandits">
+	<article>social_stalker-clans_bandits</article>
+ </info_portion>
+ 
+   <info_portion id="encyclopedy_social_stalker-clans_killers">
+	<article>social_stalker-clans_killers</article>
+ </info_portion>
+  
+   <info_portion id="encyclopedy_social_stalker-clans_loners">
+	<article>social_stalker-clans_loners</article>
+ </info_portion>
+ 
+	<info_portion id="encyclopedy_tutorial_binocular">
+		<article>tutorial_binocular</article>
+	</info_portion>
+	<info_portion id="encyclopedy_tutorial_crouch">
+		<article>tutorial_crouch</article>
+	</info_portion>
+	<info_portion id="encyclopedy_tutorial_hide_weapon">
+		<article>tutorial_hide_weapon</article>
+	</info_portion>
+	<info_portion id="encyclopedy_tutorial_jump">
+		<article>tutorial_jump</article>
+	</info_portion>
+	<info_portion id="encyclopedy_tutorial_overload">
+		<article>tutorial_overload</article>
+	</info_portion>
+	<info_portion id="encyclopedy_tutorial_radiation">
+		<article>tutorial_radiation</article>
+	</info_portion>
+	<info_portion id="encyclopedy_tutorial_relation">
+		<article>tutorial_relation</article>
+	</info_portion>
+	<info_portion id="encyclopedy_tutorial_sprint">
+		<article>tutorial_sprint</article>
+	</info_portion>
+	<info_portion id="encyclopedy_tutorial_weakness">
+		<article>tutorial_weakness</article>
+	</info_portion>
+	<info_portion id="encyclopedy_tutorial_weapon">
+		<article>tutorial_weapon</article>
+	</info_portion>
+	<info_portion id="encyclopedy_tutorial_wound">
+		<article>tutorial_wound</article>
+	</info_portion>
+	
+	<info_portion id="encyclopedy_tutorial_diary"/>
+
+	<info_portion id="tutorial_artefact_activation">
+		<article>zone_anomalies_activation_basic</article>
+		<article>zone_anomalies_activation_why</article>
+		<article>zone_anomalies_activation_practice</article>
+	</info_portion>
+
+
+	<info_portion id="tr_escape_broken_car">
+		<article>tr_escape_broken_car</article>
+	</info_portion>
+
+	 <info_portion id="all_tabl_upgrade"> 
+		<article>tabl_upgrade</article> 
+	</info_portion> 
+
+<!-- Статистика, неписи -->	
+	<info_portion id="stat_neutral_novice"/>
+	<info_portion id="stat_neutral_experienced"/>
+	<info_portion id="stat_neutral_veteran"/>
+	<info_portion id="stat_neutral_master"/>
+	<info_portion id="stat_monolith_novice"/>
+	<info_portion id="stat_monolith_experienced"/>
+	<info_portion id="stat_monolith_veteran"/>
+	<info_portion id="stat_monolith_master"/>
+	<info_portion id="stat_military_novice"/>
+	<info_portion id="stat_military_experienced"/>
+	<info_portion id="stat_military_veteran"/>
+	<info_portion id="stat_military_master"/>
+	<info_portion id="stat_killer_novice"/>
+	<info_portion id="stat_killer_experienced"/>
+	<info_portion id="stat_killer_veteran"/>
+	<info_portion id="stat_killer_master"/>
+	<info_portion id="stat_ecolog_novice"/>
+	<info_portion id="stat_ecolog_experienced"/>
+	<info_portion id="stat_ecolog_veteran"/>
+	<info_portion id="stat_ecolog_master"/>
+	<info_portion id="stat_dolg_novice"/>
+	<info_portion id="stat_dolg_experienced"/>
+	<info_portion id="stat_dolg_veteran"/>
+	<info_portion id="stat_dolg_master"/>
+	<info_portion id="stat_freedom_novice"/>
+	<info_portion id="stat_freedom_experienced"/>
+	<info_portion id="stat_freedom_veteran"/>
+	<info_portion id="stat_freedom_master"/>
+	<info_portion id="stat_bandit_novice"/>
+	<info_portion id="stat_bandit_experienced"/>
+	<info_portion id="stat_bandit_veteran"/>
+	<info_portion id="stat_bandit_master"/>
+	<info_portion id="stat_zombied_novice"/>
+	<info_portion id="stat_zombied_experienced"/>
+	<info_portion id="stat_zombied_veteran"/>
+	<info_portion id="stat_zombied_master"/>
+	<info_portion id="stat_trader_novice"/>
+	<info_portion id="stat_trader_experienced"/>
+	<info_portion id="stat_trader_veteran"/>
+	<info_portion id="stat_trader_master"/>
+	<info_portion id="stat_arena_enemy_novice"/>
+	<info_portion id="stat_arena_enemy_experienced"/>
+	<info_portion id="stat_arena_enemy_veteran"/>
+	<info_portion id="stat_arena_enemy_master"/>
+	<info_portion id="stat_sniper_novice"/>
+	<info_portion id="stat_sniper_experienced"/>
+	<info_portion id="stat_sniper_veteran"/>
+	<info_portion id="stat_sniper_master"/>
+	<info_portion id="stat_green_novice"/>
+	<info_portion id="stat_green_experienced"/>
+	<info_portion id="stat_green_veteran"/>
+	<info_portion id="stat_green_master"/>
+	<info_portion id="stat_nebo_novice"/>
+	<info_portion id="stat_nebo_experienced"/>
+	<info_portion id="stat_nebo_veteran"/>
+	<info_portion id="stat_nebo_master"/>
+	<info_portion id="stat_lastday_novice"/>
+	<info_portion id="stat_lastday_experienced"/>
+	<info_portion id="stat_lastday_veteran"/>
+	<info_portion id="stat_lastday_master"/>
+	<info_portion id="stat_vermaht_novice"/>
+	<info_portion id="stat_vermaht_experienced"/>
+	<info_portion id="stat_vermaht_veteran"/>
+	<info_portion id="stat_vermaht_master"/>
+
+<!-- Статистика, монстры -->	
+	<info_portion id="stat_helicopter"/>
+	<info_portion id="stat_vehicle_btr"/>
+	<info_portion id="stat_dog_wolf"/>
+	<info_portion id="stat_dog_fox"/>
+	<info_portion id="stat_carlic"/>
+	<info_portion id="stat_vypolzen"/>
+	<info_portion id="stat_psy_dog"/>
+	<info_portion id="stat_rotan"/>
+	<info_portion id="stat_nosales"/>
+	<info_portion id="stat_snork_nosach"/>
+	<info_portion id="stat_oboroten"/>
+	<info_portion id="stat_psyonik"/>
+	<info_portion id="stat_bibliotekar"/>
+	<info_portion id="stat_new_hell"/>
+	<info_portion id="stat_zanoza"/>
+	<info_portion id="stat_spider"/>
+	<info_portion id="stat_arahnid"/>
+	<info_portion id="stat_arahnid_strong"/>
+	<info_portion id="stat_scelet"/>
+	<info_portion id="stat_ghoul"/>
+	<info_portion id="stat_fracture_weak"/>
+	<info_portion id="stat_fracture_normal"/>
+	<info_portion id="stat_fracture_strong"/>
+	<info_portion id="stat_fracture_master"/>
+	<info_portion id="stat_fracture_karlik"/>
+	<info_portion id="stat_carlic_weak"/>
+	<info_portion id="stat_carlic_strong"/>
+	<info_portion id="stat_karlito"/>
+	<info_portion id="stat_vypolzen_red"/>
+	<info_portion id="stat_pseudodog_weak"/>
+	<info_portion id="stat_pseudodog_normal"/>
+	<info_portion id="stat_pseudodog_strong"/>
+	<info_portion id="stat_pseudodog_big"/>
+	<info_portion id="stat_volkodav"/>
+	<info_portion id="stat_tushkano_normal"/>
+	<info_portion id="stat_tushkano_strong"/>
+	<info_portion id="stat_winger"/>
+	<info_portion id="stat_stinger"/>
+	<info_portion id="stat_bloodsucker_weak"/>
+	<info_portion id="stat_bloodsucker_normal"/>
+	<info_portion id="stat_bloodsucker_strong"/>
+	<info_portion id="stat_bloodsucker_mil"/>
+	<info_portion id="stat_bloodsucker_effector"/>
+	<info_portion id="stat_bloodsucker_hell"/>
+	<info_portion id="stat_zombie_hell15"/>
+	<info_portion id="stat_bloodsucker_child"/>
+	<info_portion id="stat_m_controller_normal"/>
+	<info_portion id="stat_m_controller_normal_fat"/>
+	<info_portion id="stat_m_controller_old"/>
+	<info_portion id="stat_m_controller_old_fat"/>
+	<info_portion id="stat_controller_tubeman"/>
+	<info_portion id="stat_controller_senator"/>
+	<info_portion id="stat_controller_babka"/>
+	<info_portion id="stat_m_controller_act"/>
+	<info_portion id="stat_controller_flame"/>
+	<info_portion id="stat_controller_electro"/>
+	<info_portion id="stat_gigant_normal"/>
+	<info_portion id="stat_gigant_strong"/>
+	<info_portion id="stat_gigant_red_strong"/>
+	<info_portion id="stat_gigant_big_strong"/>
+	<info_portion id="stat_gigant_virus_strong"/>
+	<info_portion id="stat_gigant_jumper_strong"/>
+	<info_portion id="stat_gigant_super_jumper"/>
+	<info_portion id="stat_burer_weak"/>
+	<info_portion id="stat_burer_normal"/>
+	<info_portion id="stat_burer_strong"/>
+	<info_portion id="stat_burer_electro"/>
+	<info_portion id="stat_burer_build"/>
+	<info_portion id="stat_chimera_weak"/>
+	<info_portion id="stat_chimera_normal"/>
+	<info_portion id="stat_chimera_strong"/>
+	<info_portion id="stat_chimera_x_ray"/>
+	<info_portion id="stat_chimera_black"/>
+	<info_portion id="stat_fire_chimera"/>
+	<info_portion id="stat_electro_chimera"/>
+	<info_portion id="stat_new_electro_chimera"/>
+	<info_portion id="stat_bear"/>
+	<info_portion id="stat_lican"/>
+	<info_portion id="stat_tarakan_normal"/>
+	<info_portion id="stat_tarakan_strong"/>
+	<info_portion id="stat_m_poltergeist_normal_tele"/>
+	<info_portion id="stat_m_poltergeist_tele_outdoor"/>
+	<info_portion id="stat_m_poltergeist_normal_flame"/>
+	<info_portion id="stat_m_poltergeist_strong_flame"/>
+	<info_portion id="stat_poltergeist_build"/>
+	<info_portion id="stat_m_poltergeist_dd"/>
+	<info_portion id="stat_electro_polter"/>
+	<info_portion id="stat_polter_xray"/>
+	<info_portion id="stat_bibliotekar_black"/>
+	<info_portion id="stat_deathclaw_weak"/>
+	<info_portion id="stat_deathclaw_normal"/>
+	<info_portion id="stat_deathclaw_strong"/>
+	<info_portion id="stat_flesh_weak"/>
+	<info_portion id="stat_flesh_normal"/>
+	<info_portion id="stat_flesh_strong"/>
+	<info_portion id="stat_flesh_swamp"/>
+	<info_portion id="stat_boar_weak"/>
+	<info_portion id="stat_boar_mini"/>
+	<info_portion id="stat_boar_normal"/>
+	<info_portion id="stat_boar_strong"/>
+	<info_portion id="stat_molerat"/>
+	<info_portion id="stat_boar_kachok"/>
+	<info_portion id="stat_kikimora"/>
+	<info_portion id="stat_snork_weak"/>
+	<info_portion id="stat_snork_normal"/>
+	<info_portion id="stat_snork_strong"/>
+	<info_portion id="stat_snork_stronger"/>
+	<info_portion id="stat_snork_outdoor"/>
+	<info_portion id="stat_snork_indoor"/>
+	<info_portion id="stat_aes_snork"/>
+	<info_portion id="stat_snork_jumper"/>
+	<info_portion id="stat_rat_weak"/>
+	<info_portion id="stat_rat_normal"/>
+	<info_portion id="stat_rat_strong"/>
+	<info_portion id="stat_cat_weak"/>
+	<info_portion id="stat_cat_normal"/>
+	<info_portion id="stat_cat_strong"/>
+	<info_portion id="stat_dog_weak"/>
+	<info_portion id="stat_dog_normal"/>
+	<info_portion id="stat_dog_strong"/>
+	<info_portion id="stat_dog_skeleton"/>
+	<info_portion id="stat_dog_green"/>
+	<info_portion id="stat_dog_sil_hill"/>
+	<info_portion id="stat_dog_zombie"/>
+	<info_portion id="stat_dog_habaruch"/>
+	<info_portion id="stat_zombie_weak"/>
+	<info_portion id="stat_zombie_normal"/>
+	<info_portion id="stat_zombie_strong"/>
+	<info_portion id="stat_zombie_trup"/>
+	<info_portion id="stat_zombie_trup2"/>
+	<info_portion id="stat_zombie_blow"/>
+	<info_portion id="stat_zombie_beee"/>
+	<info_portion id="stat_zombie_ghost"/>	
+	<info_portion id="stat_zombie_hell1"/>
+	<info_portion id="stat_zombie_hell2"/>
+	<info_portion id="stat_zombie_hell3"/>
+	<info_portion id="stat_zombie_hell4"/>
+	<info_portion id="stat_zombie_hell5"/>
+	<info_portion id="stat_zombie_hell6"/>
+	<info_portion id="stat_zombie_hell7"/>
+	<info_portion id="stat_zombie_hell8"/>
+	<info_portion id="stat_zombie_hell9"/>
+	<info_portion id="stat_zombie_hell10"/>
+	<info_portion id="stat_zombie_hell11"/>
+	<info_portion id="stat_zombie_hell12"/>
+	<info_portion id="stat_zombie_hell13"/>
+	<info_portion id="stat_zombie_hell14"/>
+	<info_portion id="stat_zombie_hell"/>
+	<info_portion id="stat_zombie_plague"/>
+	<info_portion id="stat_zombie_plague_komar"/>
+	<info_portion id="stat_zombie_babka_weak"/>
+	<info_portion id="stat_zombie_babka_normal"/>
+	<info_portion id="stat_zombie_babka_strong"/>
+	<info_portion id="stat_zombie_immortal"/>
+	<info_portion id="stat_vodjanoj"/>
+	
+<!-- Статистика, циклические задания -->
+	<info_portion id="stat_0"/>
+	<info_portion id="stat_1"/>
+	<info_portion id="stat_2"/>
+	<info_portion id="stat_3"/>
+	<info_portion id="stat_4"/>
+	<info_portion id="stat_5"/>
+	<info_portion id="stat_6"/>
+	
+</game_information_portions>

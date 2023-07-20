@@ -1,0 +1,123 @@
+-- ѕолучение предмета
+function on_item_take(obj)
+	checking_taken_item39(obj)
+	checking_taken_item40(obj)
+	checking_taken_item41(obj)
+	checking_taken_item42(obj)
+	checking_taken_item43(obj)
+end
+
+function spawn_krovosos4()
+	create("bloodsucker_strong",xyz(-24.450359344482,-23.519163131714,-13.466352462769),2739,2784) 
+end
+function spawn_krovosos5()
+	create("bloodsucker_strong",xyz(-48.803283691406,-23.589998245239,-12.683199882507),935,2710)
+end
+function spawn_krovosos6()
+	create("bloodsucker_strong",xyz(-41.521129608154,-9.3385972976685,19.369287490845),1277,2671)
+end
+function spawn_krovosos7()
+	create("bloodsucker_strong",xyz(-41.521129608154,-9.3385972976685,19.369287490845),1277,2671)
+end
+function spawn_gigant()
+	create("gigant_strong",xyz(123.00789642334,-2.8396821022034,-265.21520996094),320162,812)
+end
+function spawn_krovosos8()
+	create("bloodsucker_strong",xyz(-17.042646408081,0.34361407160759,-39.846321105957),5037,1960)
+end
+function spawn_kontroller()
+	create("m_controller_old",xyz(1.7860032320023,3.3078780174255,-17.679542541504),11207,2027)
+end
+function spawn_krovosos9()
+	create("bloodsucker_strong",xyz(202.84341430664,2.8056454658508,212.30674743652),261166,2219)
+end
+function spawn_kontroller2()
+	create("m_controller_old",xyz(161.87483215332,-0.12682989239693,208.54525756836),249970,2219)
+end
+function spawn_krovosos10()
+	create("bloodsucker_strong",xyz(-117.9132232666,1.2031532526016,103.49546813965),7427,2216)
+end
+function spawn_krovosos11()
+	create("bloodsucker_strong",xyz(-118.59702301025,-2.0015077590942,98.689834594727),7412,2216)
+end
+function spawn_kontroller3()
+	create("m_controller_old",xyz(-132.71118164063,-2.3125338554382,75.232917785645),4523,2253)
+end
+function spawn_gigant2()
+	create("gigant_strong",xyz(-55.885761260986,-19.087875366211,-125.18222045898),19499,1491)
+	create("bloodsucker_strong",xyz(-86.284149169922,-17.001029968262,-193.91262817383),9590,1489)
+	create("burer_strong",xyz(-62.387954711914,-18.848684310913,-35.322704315186),16823,1494)
+	create("m_controller_old",xyz(-119.57475280762,21.564353942871,-31.035280227661),176,1529)
+end
+
+function spawn_pipec_gg1()
+	create("gigant_normal",xyz(91.44384765625,-7.7290263175964,-268.84085083008),510295,2824)
+	create("gigant_normal",xyz(131.46574401855,-6.2588143348694,-276.92578125),566209,2824)
+	create("gigant_normal",xyz(139.18276977539,-5.9207892417908,-318.28570556641),576832,2831)
+	create("gigant_strong",xyz(116.39553833008,-5.0737051963806,-335.06665039063),544441,2831)
+	create("gigant_strong",xyz(81.120567321777,-5.243540763855,-330.37979125977),494313,2821)
+	create("gigant_strong",xyz(74.439407348633,-6.2116746902466,-305.9533996582),485390,2821)
+end
+function checking_taken_item39(obj)
+	if not has_info("atp_propusk_shurup_have") then 
+	if obj:section()=="tisku_arhara" then spawn_pipec_gg1()
+	end
+	end
+end
+
+function spawn_pizdec_gg()
+	create("monolith_x8_regular",xyz(102.07215118408,-0.56886887550354,219.97409057617),213216,2163)
+	create("monolith_x8_veteran",xyz(105.6082611084,-0.62651246786118,250.9222869873),216911,2163)
+	create("monolith_x8_master",xyz(117.33411407471,-0.67893779277802,201.55955505371),226710,2163)
+	create("monolith_x8_veteran",xyz(119.12321472168,3.9994158744812,134.80612182617),227513,2173)
+	create("monolith_x8_regular",xyz(160.26086425781,3.9999127388,134.02439880371),249359,2176)
+	create("monolith_x8_regular",xyz(108.85919952393,-0.00026518106460571,156.55084228516),220359,2185)
+	create("monolith_x8_veteran",xyz(101.38366699219,-0.62753546237946,230.4598236084),212554,2163)
+	create("monolith_x8_veteran",xyz(-36.925113677979,-1.6531541347504,49.351211547852),61567,2165)
+	create("monolith_x8_master",xyz(-61.738639831543,-2.3914077281952,65.415672302246),40534,2165)
+end
+function checking_taken_item40(obj)
+	if not has_info("med_dok_have") then 
+	if obj:section()=="doc_medal" then spawn_pizdec_gg()
+	end
+	end
+end
+
+function checking_taken_item41(obj)
+	if not has_info("shax_kniga_naity_have") then 
+	if obj:section()=="book_xabarych" then akill.zasada_puzir_timer()
+	end
+	end
+end
+
+function spawn_killer()
+	sms("%c[255,160,160,160]".."Ћќ јЋ№Ќјя —≈“№:".."\\n".."%c[255,255,128,128]—игнал исходит из этого дома. ќбойдите его и проверьте, есть ли кто внутри. Ќо действуйте осторожно - там может быть засада.", nil, nil, 15000)
+	create("bloodsucker_strong",xyz(-296.89874267578,-22.190504074097,286.92123413086),45801,1833)
+	create("mil_killer_respawn_1",xyz(-279.85797119141,-22.178747177124,295.20132446289),60066,1832)
+	create("mil_killer_respawn_2",xyz(-279.85797119141,-22.178747177124,295.20132446289),60066,1832)
+	create("mil_killer_respawn_3",xyz(-279.85797119141,-22.178747177124,295.20132446289),60066,1832)
+	create("mil_killer_respawn_4",xyz(-278.49209594727,-22.509449005127,271.50329589844),61170,1832)
+	give_info("xvatit_spawn22")
+end
+function checking_taken_item42(obj)
+	if not has_info("xvatit_spawn22") then 
+	if obj:section()=="3d_raziy" then spawn_killer()
+	end
+	end
+end
+
+function spawn_ept_gg()
+	sms("%c[255,160,160,160]".."Ѕќ–ќ¬:".."\\n".."%c[255,255,128,128]Ёй вы, раздолбаи, когда наконец заделаете дыру в заборе? —нова к нам крысоволки пожаловали! »збавьтесь от них или € скормлю им кого-нибудь из вас...", nil, nil, 15000, nil, [[sms\borov\spawn_ept_gg]])
+	create("volkodav",xyz(26.224334716797,0.12501075863838,-44.189655303955),206039,1045)
+	create("volkodav",xyz(21.418594360352,0.089109361171722,-55.710716247559),200730,1044)
+	create("volkodav",xyz(4.0548872947693,0.079111576080322,-58.98025894165),179031,1037)
+	create("volkodav",xyz(1.9367613792419,0.080904215574265,-87.617774963379),176461,1035)
+	create("volkodav",xyz(29.398971557617,0.062291234731674,-95.921005249023),210251,1039)
+	give_info("xvatit_spawn23")
+end
+function checking_taken_item43(obj)
+	if not has_info("xvatit_spawn23") then 
+	if obj:section()=="pribor" then spawn_ept_gg()
+	end
+	end
+end

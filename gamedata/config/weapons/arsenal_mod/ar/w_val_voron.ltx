@@ -1,0 +1,212 @@
+;;;;;;;;;;;;;;;;;;;;;; ¬инторез генерала ¬оронина /јвтор јлександрыч/;;;;;;;;;;;;;;;;;;;;;            
+[wpn_val_voron]:WP_BINOC
+min_radius		                  = 0
+max_radius					= 150
+description					= enc_ars_val_voron
+
+ef_main_weapon_type			= 2
+ef_weapon_type				= 6
+
+holder_range_modifier	= 1.0
+holder_fov_modifier		= 1.0
+
+cost		 	 			= 55000
+cheat_item = true
+weapon_class				= assault_rifle
+
+ammo_elapsed				= 20
+ammo_mag_size			= 20
+ammo_class		 		= ammo_9x39_sp5, ammo_9x39_ap, ammo_9x39_izomorf  
+fire_modes					= 1, -1
+
+hand_dependence		 	= 1
+single_handed				= 0
+	
+slot 				 		= 2		; // secondary
+animation_slot		 		= 2		; type of the animation that will be used
+
+inv_name	         		      = ars-val_voron
+inv_weight		 			= 2.66
+
+inv_grid_width				= 5
+inv_grid_height				= 2
+inv_grid_x					= 55
+inv_grid_y					= 29
+
+;базова€ дисперси€
+dispersion_start		      = 0
+fire_dispersion_base		= 0.015		;угол (в градусах) базовой дисперсии оружи€ (оружи€ зажатого в тисках)
+control_inertion_factor		= 1.83f
+
+;отдача
+cam_relax_speed 		      = 15.75		;скорость возврата в исходное положение
+cam_dispersion 			= 0.014		;увеличени€ угла (в градусах) с каждым выстрелом
+cam_dispersion_inc		= 0.015		;увеличениe cam_dispersion с каждым выстрелом
+cam_dispertion_frac		= 0.012		;ствол будет подыматьс€ на cam_dispersion*cam_dispertion_frac +- cam_dispersion*(1-cam_dispertion_frac)
+cam_max_angle			= 4.0		;максимальный угол отдачи
+cam_max_angle_horz		= 6.0		;(degree) maximum shot horizontal degree 
+cam_step_angle_horz		= 0.015		;(degree) size of step camera moved in horizontal position while shooting
+
+fire_dispersion_condition_factor = 3		;увеличение дисперсии в процентах при максимальном износе 
+misfire_probability 		= 0.00015		;веро€тность осечки при максимальном износе 
+misfire_condition_k		= 0.3
+condition_shot_dec 		= 0.000025 	;увеличение износа при каждом выстреле
+
+direction            	    = 0, 0, 1
+
+fire_point           	    = 0.0, 0.212, 0.638
+
+smoke_particles			= weapons\generic_shoot_00
+grenade_flame_particles		= weapons\generic_shoot_00
+
+shell_point		 			= 0.0, 0.186, 0.082
+shell_dir		 			= 0.0, 1.0, 0.0
+shell_particles	 			= amik\weapons\9x39\9x39_shells_r_00 ;weapons\arsenal_shells1
+
+PDM_disp_base 			= 4.2
+PDM_disp_vel_factor 		= 0.9
+PDM_disp_accel_factor 		= 1.2
+PDM_crouch	 		= 1.0
+PDM_crouch_no_acc 		= 1.0
+
+hit_power        	      = 0.92
+hit_impulse		 	= 55
+hit_type 			      = fire_wound
+hit_rate			= 1.95
+fire_distance   	      = 350
+bullet_speed		= 745	;начальна€ скорость пули (реальна€ скорость 290 м/с)
+rpm                     = 850
+rpm_empty_click 		            = 400
+
+use_aim_bullet			= true			;ѕоддерживаетс€ ли перва€ суппер пул€
+time_to_aim				= 1.0	
+
+hud             	        = wpn_val_voron_hud
+normal          	        = 0, 1, 0
+
+position 			= -0.026,-0.167,0 
+orientation 			= 0, 0, 0
+
+;под мишкой
+strap_position         		= -0.26,-0.11,0.25			; position (offset) and orientation of the weapon when it is strapped
+strap_orientation      		= -15,-9,110				; (3rd person view in degrees)
+strap_bone0				= bip01_spine2
+strap_bone1				= bip01_spine1
+
+visual          	        = weapons\val\wpn_val_voron.ogf
+
+light_disabled				= true
+
+;addons
+scope_status			= 1
+silencer_status			= 0
+grenade_launcher_status	        = 0
+
+scope_texture			= Arsenal_Mod\Crosshairs\wpn_vss_vor ;anti_terror_scope
+zoom_enabled			= true
+scope_zoom_factor		= 7
+
+scope_name 			= wpn_addon_scope
+scope_x 			= 37						; offset in inventory icon
+scope_y 			= 0
+
+;звуки
+snd_draw			= weapons\val\vintorez_draw
+snd_holster			= weapons\generic_holster
+snd_shoot			= weapons\val\val_voron_shoot, 0.5
+snd_empty			= weapons\val\vintorez_empty, 0.8
+snd_reload			= weapons\val\val_reload_1
+snd_gyro			= weapons\binoculars_gyro
+snd_zoomin		= weapons\binoculars_zoomin
+snd_zoomout		= weapons\binoculars_zoomout
+
+vision_present		= false
+vis_frame_speed	= 6
+vis_frame_color		= 0.7,0.7,0.7,1.0
+found_snd			= detectors\DA-2_beep1
+
+[wpn_val_voron_hud]
+
+allow_inertion			= true
+
+shell_point			= 0.020,-0.0300,-0.020 
+shell_dir		 	= 0.0, 1.0, 0.0
+
+fire_point       	        = 0.005,0.0212,0.4215 
+fire_bone        	        = wpn_body
+
+position				= -0.042,-0.125,0.1725
+orientation				= 3.75, 2.39, 0.15 
+visual 	 			= weapons\val\wpn_val_voron_hud.ogf
+
+anim_idle			= idle
+anim_reload			= reload_1 
+anim_draw			= draw
+anim_holster		= holster
+anim_shoot			= shoot
+anim_idle_aim		= idle_aim
+anim_idle_sprint		= sprint
+
+;смещени€ HUD дл€ режима приближени€     
+zoom_offset		= -0.112450,0.02500,-0.12500 ;-0.112450,0.054700,-0.12000
+zoom_rotate_x		= 0.06500 ;0.037500
+zoom_rotate_y		= 0.027200
+
+
+;;;;;;;;;;;; ¬инторез тактический /јвтор јлександрыч/ ;;;;;;;;;;;;
+[wpn_vint_tactic]:wpn_val_voron
+description		= enc_ars_vint_tactic
+inv_name	         		= ars-vint_tactic
+cheat_item = true
+inv_weight		 			= 2.35
+
+inv_grid_x					= 56
+inv_grid_y					= 74
+
+ammo_mag_size				= 30
+ammo_class				= ammo_9x39_sp5, ammo_9x39_ap, ammo_9x39_pab9, ammo_9x39_izomorf 
+
+fire_dispersion_base		= 0.12
+condition_shot_dec 		= 0.00001
+rpm                     = 900
+fire_point           	 = 0.0, 0.212, 0.638
+shell_point		 = 0.0, 0.186, 0.082
+position 		 = -0.022,-0.175,-0.012
+
+scope_status			= 2
+scope_zoom_factor		= 65
+
+scope_name 			= wpn_addon_optik
+scope_x 			= 64
+scope_y 			= -2
+
+hud             	        = wpn_vint_tactic_hud
+visual          	        = weapons\val\wpn_vint_tactic.ogf
+
+snd_shoot			= weapons\val\vint_tactic_shoot
+snd_reload			= weapons\abakan\abakan_reload
+
+[wpn_vint_tactic_hud]
+shell_point		= 0.0375,-0.055,-0.4250
+shell_dir		= 0.0, 1.0, 0.0
+
+fire_point		= 0.00,-0.0375,-0.400
+fire_bone			= muzzle
+grenade_bone			= wpn_grenade
+orientation			= 0, 0, 0
+position			= 0.076,-0.040,-0.0272 ;0.076,-0.0378,-0.0272
+visual 	 			= weapons\val\wpn_vint_tactic_hud.ogf
+
+anim_idle					= idle
+anim_idle_aim					= idle_aim
+anim_reload					= reload
+anim_reload1					= reload
+anim_draw					= draw
+anim_holster					= holster
+anim_shoot					= shoot_1
+anim_idle_sprint				= idle_sprint
+
+;смещени€ HUD дл€ режима приближени€
+zoom_offset		= -0.075000,0.01820,-0.075000
+zoom_rotate_x		= 0.002000                    ;0.005500
+zoom_rotate_y		= -0.00165

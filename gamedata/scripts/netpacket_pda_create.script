@@ -1,0 +1,19 @@
+function create_pda()
+  local netpacket_pda_id = 0
+  if db.storage[db.actor:id()].pstor == nil then
+    db.storage[db.actor:id()].pstor = {}
+  end
+  if db.storage[db.actor:id()].pstor["np_pda"] == nil then
+    --создание ПДА для нетпакета при новой игре
+    local np_obj = create("np_pda",db.actor:position(),db.actor:level_vertex_id(),db.actor:game_vertex_id(),db.actor:id())
+    netpacket_pda_id = np_obj.id
+	db.storage[db.actor:id()].pstor["np_pda"] = netpacket_pda_id
+    --console:execute("load ~#I#:"..string.format("np_pda: Cоздан ПДА для нетпакета с id: "..netpacket_pda_id))
+  else
+      netpacket_pda_id = db.storage[db.actor:id()].pstor["np_pda"]
+  end
+  if netpacket_pda_id == 0 then
+	--console:execute("load ~#I#:"..string.format("Не найден np_pda: пишем на актора "..netpacket_pda_id))
+  end
+  return netpacket_pda_id
+end

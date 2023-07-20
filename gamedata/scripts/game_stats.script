@@ -1,0 +1,16 @@
+function update()
+	if db.actor:money() > db.money then
+		archievements.has_cheated_money()
+		db.money = db.actor:money()
+	end
+end
+
+function money_trade_update(money_i)
+	db.money = db.actor:money()
+	archievements.acv_money()
+end
+
+function money_quest_update(money_i)
+	db.money = db.actor:money()
+	archievements.acv_money()
+end

@@ -1,0 +1,16 @@
+[smart_terrains]
+none = true
+
+[logic]
+active = remark
+danger = danger_ignore 
+combat_ignore = combat_ignore
+on_death = death@tank
+
+[combat_ignore]
+[remark]
+anim = hide
+combat_ignore_cond = always
+
+[death@tank]
+on_info = {=killed_by_kuvalda} %+sak_gold_fish_have%

@@ -1,0 +1,122 @@
+--ini_reader.script 
+--чтение данных из ini
+
+local _system_ini=config
+local _game_ini=game_ini()
+
+class "iniReader"
+function iniReader:__init(iniFileName)
+	if iniFileName==nil then
+		iniFileName="system"
+	end
+
+	if iniFileName=="system" then
+		self.iniFile=_system_ini
+		self.system=true
+	elseif iniFileName=="game" then
+		self.iniFile=_game_ini
+	else
+		self.iniFile=ini_file(iniFileName)
+		self.system=false
+	end
+end
+
+function iniReader:GetIni()
+	return self.iniFile
+end
+
+function iniReader:SectionExist(section)
+	if section==nil then
+		return false
+	end
+	return self.iniFile:section_exist(section)
+end
+
+function iniReader:LineExist(section,line)
+	if section==nil or line==nil then
+		return false
+	end
+	return self.iniFile:line_exist(section,line)
+end
+
+--читаем строку
+function iniReader:readString(section,parameter,default)
+	section=section:lower()
+	if self.iniFile:line_exist(section,parameter) then
+		return self.iniFile:r_string(section,parameter) 
+	else
+		return default
+	end
+end
+
+--читаем bool
+function iniReader:readBool(section,parameter,default)
+	section=section:lower()
+	if self.iniFile:line_exist(section,parameter) then
+		return self.iniFile:r_bool(section,parameter) 
+	else
+		return default
+	end
+end
+
+--читаем флоат
+function iniReader:readFloat(section,parameter,default)
+	section=section:lower()
+	if self.iniFile:line_exist(section,parameter) then
+		return self.iniFile:r_float(section,parameter) 
+	else
+		return default
+	end
+end
+
+--читаем беззнаковое целое
+function iniReader:readUInt(section,parameter,default)
+	section=section:lower()
+	if self.iniFile:line_exist(section,parameter) then
+		return self.iniFile:r_u32(section,parameter) 
+	else
+		return default
+	end
+end
+
+--читаем знаковое целое
+function iniReader:readSInt(section,parameter,default)
+	section=section:lower()
+	if self.iniFile:line_exist(section,parameter) then
+		return self.iniFile:r_s32(section,parameter) 
+	else
+		return default
+	end
+end
+
+function iniReader:readTranslatedString(section,field)
+	if not self.system then
+		return section.."-"..field
+	end
+	local data=self:readString(section, field)
+	if data==nil then
+		return field
+	end
+	return game.translate_string(data)	
+end
+
+--читаем из секции пары key=value
+function iniReader:readSection(section,default)
+	section=section:lower()
+	local resultTable={}
+	if self.iniFile:section_exist(section) then --есл секции нет-вернем пустую таблицу
+		local linesCount=self.iniFile:line_count(section)
+		for i=0,linesCount-1 do
+			local result, key, value = self.iniFile:r_line(section,i,"","") 
+			key=string.trim(tostring(key))
+			value=string.trim(tostring(value)) --value строка! внимание! т.е. "3" а не 3, и "false" а не false
+			if (value=="" or value=="nil") and default~=nil then
+				value=default --если попадает под категорию пустого - вернуть default
+			end
+			resultTable[key]=value
+		end
+	end
+	return resultTable
+end
+
+

@@ -1,0 +1,8 @@
+[logic] 
+active = sr_idle
+
+[sr_idle] 
+on_actor_inside = {+vol_info} sr_idle@one %=spawn_nano_restr(169)% 
+
+[sr_idle@one] 
+on_timer = 15000 | {+vol_info} nil %=spawn_nano_tel(211) =spawn_nano_tel(212)% 

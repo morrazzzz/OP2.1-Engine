@@ -1,0 +1,1157 @@
+; Здесь все гранаты и ракеты кроме уникальных.
+
+; Фейковые секции
+[wpn_fake_missile]:G_FAKE
+visual                  = weapons\ammo\ammo_vog-25.ogf
+cost				= 150
+
+blast				= 2.75 ;150
+blast_r			= 12
+blast_impulse		= 250
+frags				= 30
+frags_r			= 18
+frag_hit			= 2.75
+frag_hit_impulse	= 300
+hit_type_blast		= explosion
+hit_type_frag		= fire_wound
+up_throw_factor		= 0.7
+
+;trail				= weapons\rpg_trail_01, weapons\rpg_trail_02
+explode_particles	= explosions\explosion_01
+light_color		         = 1.9,1.2,0.5
+light_range		         = 25.0
+light_time 		         = 0.5
+
+ph_mass			 = 5
+;engine_f			= 530
+;engine_u			= 90
+jump_height = 0.2
+wm_size         = 0.1
+
+;трассы от осколков
+fragment_speed				= 300
+explode_duration		 = 5		;подолжительность взрыва (с)
+snd_explode = weapons\explo\grenade_vog25_boom
+wallmark_section		= explosion_marks
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 19
+inv_grid_y			= 10
+
+; Свойства CustomRocket
+engine_present		= false		;присутствует ли в ракете двигатель
+lights_enabled		= false		;свет вокруг ракеты, во время полета
+force_explode_time  = 10000
+
+[wpn_fake_missile1]:G_FAKE
+visual                  = weapons\ammo\ammo_vog-25p.ogf
+cost					 = 150
+
+blast				= 2.85;150
+blast_r			= 12
+blast_impulse		= 250
+frags				= 40
+frags_r			= 20
+frag_hit			= 3.0
+frag_hit_impulse	= 300
+hit_type_blast		= explosion
+hit_type_frag		= fire_wound
+up_throw_factor		= 0.7
+
+;trail				= weapons\rpg_trail_01, weapons\rpg_trail_02
+explode_particles	= explosions\explosion_01
+light_color		         = 1.9,1.4,0.5
+light_range		         = 14.0
+light_time 		         = 0.85
+
+ph_mass			 = 5
+;engine_f			= 530
+;engine_u			= 90
+jump_height = 1.5
+
+;трассы от осколков
+fragment_speed				= 300
+wm_size         = 0.1
+wallmark_section		 = explosion_marks
+explode_duration		 = 5		;подолжительность взрыва (с)
+snd_explode = weapons\explo\grenade_vog25p_boom
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 19
+inv_grid_y			= 9
+
+
+; Свойства CustomRocket
+engine_present		= false		;присутствует ли в ракете двигатель
+lights_enabled 		= true			;свет вокруг ракеты, во время полета
+trail_light_color 	= 0.6,0.5,0.3
+trail_light_range 	= 8.0
+force_explode_time  = 10000
+
+; для полетов
+[wpn_fake_missile_fly]:wpn_fake_missile1
+blast				= 5.0
+
+[wpn_fake_missile2]:G_FAKE
+visual                  = weapons\ammo\ammo_m209.ogf
+cost					 = 150
+
+blast				= 2.7 ;150
+blast_r			= 12
+blast_impulse		= 250
+frags				= 32
+frags_r			= 18
+frag_hit			= 2.75
+frag_hit_impulse	= 300
+hit_type_blast		= explosion
+hit_type_frag		= fire_wound
+up_throw_factor		= 0.7
+
+;trail				= weapons\rpg_trail_01, weapons\rpg_trail_02
+explode_particles	= explosions\explosion_01
+light_color		         = 1.9,1.4,0.5
+light_range		         = 14.0
+light_time 		         = 0.85
+
+ph_mass			 = 5
+;engine_f			= 530
+;engine_u			= 90
+jump_height = 1
+
+;трассы от осколков
+fragment_speed				= 300
+wallmark_section			= explosion_marks
+wm_size						= 0.1 ;0.05
+explode_duration			 = 5		;подолжительность взрыва (с)
+snd_explode = weapons\explo\grenade_m406_boom
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 5
+inv_grid_y			= 13
+
+; Свойства CustomRocket
+engine_present		= false		;присутствует ли в ракете двигатель
+lights_enabled 		= true			;свет вокруг ракеты, во время полета
+trail_light_color 	= 0.6,0.5,0.3
+trail_light_range 	= 8.0
+force_explode_time  = 10000
+
+[wpn_fake_drob]:G_FAKE
+visual              = weapons\upgrade\drob.ogf
+cost			= 1500
+
+blast				= 2.5 ;.00;150
+blast_r			= 0.5
+blast_impulse		= 0.01
+frags				= 50
+frags_r			= 2.5 ;10
+frag_hit			= 0.55
+frag_hit_impulse	      = 10
+hit_type_blast		= explosion  ;fire_wound 
+hit_type_frag		= fire_wound
+up_throw_factor		= 0.75
+
+;trail				= weapons\rpg_trail_01, weapons\rpg_trail_02
+explode_particles	= hit_fx\hit_human_dust ;explosions\explosion_01
+light_color		    = 1.9,1.4,0.5
+light_range		    = 14.0
+light_time 		    = 0.00000000085
+
+ph_mass			= 0.005
+;engine_f			= 530
+;engine_u			= 90
+jump_height             = 1.5
+
+;трассы от осколков
+fragment_speed		= 100
+wm_size         	      = 0.05
+wallmark_section		 = explosion_marks
+explode_duration		 = 0.0000001		;подолжительность взрыва (с)
+snd_explode = $no_sound ;weapons\f1_explode
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 19
+inv_grid_y			= 9
+
+; Свойства CustomRocket
+engine_present = false ;присутствует ли в ракете двигатель
+lights_enabled = false ;true ;свет вокруг ракеты, во время полета
+trail_light_color = 0,0,0 ;0.6,0.5,0.3
+trail_light_range = 0.001 ;8.0
+force_explode_time = 10000
+
+; Ф-1
+[grenade_f1]:G_F1
+grenade_remove_time		= 60000
+detonation_threshold_hit= 200
+script_binding  		= bind_grenade.init
+visual					= weapons\grenade\wpn_f_1.ogf
+inv_name				= grenade-f1
+inv_name_short			= grenade-f1
+inv_weight				= 0.325	;.1
+description				= enc_weapons1_grenade-f1
+ef_weapon_type			= 10
+
+inv_grid_width			= 1
+inv_grid_height			= 1
+inv_grid_x				= 9
+inv_grid_y				= 9
+
+animation_slot			= 7
+single_handed			= 1
+slot					= 3
+hud						= grenade_f1_hud
+
+force_min				= 10	; ~30% от максимума
+force_const				= 25;20
+force_max				= 30
+force_grow_speed		= 15 ;2 ;30
+destroy_time			= 2500 ;3500
+cost					= 470 ;210
+
+blast					= 3.2
+blast_r					= 12
+blast_impulse			    = 140
+frags					= 28
+frags_r					= 50
+frag_hit				     = 2.5
+frag_hit_impulse		     = 6
+hit_type_blast			= explosion
+hit_type_frag			= fire_wound
+up_throw_factor			= 1.2
+
+explode_particles		 = amik\explosion\explosion_f1 ;explosions\explosion_01
+light_color		         = 1.9,1.4,0.5
+light_range		         = 25.0
+light_time 		         = 0.85
+
+;трассы от осколков
+fragment_speed				= 50
+explode_duration			= 3		;подолжительность взрыва (с)
+snd_explode  = weapons\explo\t_f1_explosion         
+snd_checkout = weapons\generic_checkout
+
+attach_position_offset	= -0.030,-0.087,0.0135
+attach_angle_offset		= 0,0,0
+attach_bone_name		= 
+
+throw_point				 = 0,0.3,0.2
+throw_dir				 = 0,0,1
+wm_size                  = 0.1
+wallmark_section		 =explosion_marks
+
+[grenade_f1_hud]
+fire_point          = 0,0,0
+fire_bone           = wpn_body
+
+position			= -0.09400,-0.165000,0.065
+orientation			= -4.399999,1.000000,-2.000000
+visual              = weapons\grenade\wpn_f_1_hud.ogf
+
+throw_point				 = 0.0,0.4,0.3
+throw_dir				 = 0,0,1
+
+anim_show		= f1_draw
+anim_hide		= f1_holster
+
+anim_idle		= f1_idle
+;anm_bore		= f1_idle_bore
+anim_playing            = f1_idle_bore ;f1_idle_moving
+anim_idle_sprint	= f1_idle_sprint
+
+anim_throw_begin	= f1_throw_begin
+anim_throw_idle		= f1_throw_idle
+anim_throw_act		= f1_throw
+anim_throw_end		= f1_end
+
+
+; Двойная Ф-1
+[grenade_f1_double]:grenade_f1
+weapon_type             = double_grenade
+inv_name		      = ars-f1_double 
+inv_name_short		= ars-f1_double 
+description		      = enc_ars-f1_double    
+inv_weight		= 0.65
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x		= 45
+inv_grid_y		= 49
+upgr_icon_x		= 924
+upgr_icon_y		= 384
+upgr_icon_width		= 60
+upgr_icon_height   	= 132
+cost                   = 850 ;500
+
+blast			= 6.65
+blast_r			= 16
+frags			= 56
+frags_r			= 60
+frag_hit		= 2.5
+
+visual			= weapons\grenade\wpn_dual_f1.ogf
+hud			= grenade_f1_double_hud
+
+[grenade_f1_double_hud]:grenade_f1_hud
+visual              = weapons\grenade\wpn_dual_f1_hud.ogf
+anim_playing            = f1_idle_bore_dual ;1-f1_idle_bore
+
+
+; ГД-05 Дымовая граната
+[grenade_gd-05]:grenade_f1
+visual				= weapons\grenade\wpn_gd_05.ogf
+inv_name			= st_grenade_gd5
+inv_name_short		= st_grenade_gd5
+description			= enc_weapons1_grenade-gd05
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 19
+inv_grid_y			= 3
+hud					= grenade_gd-05_hud
+
+blast				= 0 ;150
+blast_r				= 8
+blast_impulse		= 0
+frags				= 0  ;12
+frags_r				= 8
+frag_hit			     	= 0 ;50
+frag_hit_impulse	= 0
+hit_type_blast		= strike
+hit_type_frag		= fire_wound
+up_throw_factor		= 0
+cost			        = 350
+inv_weight		= 0.15
+
+explode_particles	= amik\explosion\explosion_dym
+light_color		         = 0.9,0.6,0.5
+light_range		         = 2.0
+light_time 		         = 2.85
+
+;трассы от осколков
+fragment_speed	 = 50
+hide_in_explosion	      = false
+explode_duration	      = 20		;подолжительность взрыва (с)
+explode_hide_duration	      = 20	     	;время, через которое гранату надо сделать невидимой (с)
+dynamic_explosion_particles   = true
+snd_explode = weapons\explo\grenade_gd05
+attach_position_offset	= -0.029,-0.082,0.0217
+
+[grenade_gd-05_hud]
+fire_point		= 0, 0, 0
+fire_bone		= wpn_body
+
+orientation         = -0.450, 1.0, -2.0
+position            = -0.055, -0.157, 0.110
+
+visual			= weapons\grenade\wpn_gd5_hud.ogf ;wpn_gd_05_hud.ogf
+
+throw_point		= 0.0,0.4,0.3
+throw_dir		= 0,0,1
+
+anim_show			= draw
+anim_hide			= holster
+anim_idle			= idle
+anim_playing		= idle_sae
+anim_throw_begin	= throw_begin
+anim_throw_idle		= throw_idle
+anim_throw_act		= throw_act	
+anim_throw_end		= throw_end
+anim_idle_sprint	= sprint
+
+; Светошумовая граната
+[grenade_flash]:grenade_gd-05
+script_binding  		= bind_grenade.init
+visual				= weapons\grenade\wpn_flash_g.ogf 
+description			= enc_arsenal_grenade_flash
+inv_name			= ars-grenade_flash   
+inv_name_short		= ars-grenade_flash  
+cost			        = 380
+inv_grid_x			= 63
+inv_grid_y			= 28
+inv_weight				= 0.23
+
+blast					= 0
+blast_r					= 8
+blast_impulse			= 0
+frags					= 10
+frags_r					= 8
+frag_hit			= 0
+frag_hit_impulse		= 0
+hit_type_blast		= explosion
+hit_type_frag		= fire_wound
+
+attach_position_offset 	= -0.0350,-0.088,0.0175 
+attach_angle_offset		= 0,0,0
+
+snd_explode 		= weapons\explo\grenade_flash
+explode_particles	 	= explosions\explosion_01
+explode_duration		= 0		;подолжительность взрыва (с)
+explode_hide_duration	= 0		;время, через которое объект надо сделать невидимым (с)
+condition_to_explode	= 0.f
+time_to_explode		= 0.f ;1.f
+set_timer_particles		= vehiclefx\exhaust_1
+hud		= grenade_flash_hud
+
+[grenade_flash_hud]
+fire_point 		= 0.05, 0.0, 0.1
+fire_bone 		= grenade_0
+
+orientation 		= 0,0,0
+position 		= -0.065,0.025,0.0
+visual 			= weapons\grenade\wpn_flash_g_hud.ogf
+
+throw_point		 = 0.0,-0.4,0.3
+throw_dir		 = 0,0,1
+
+anim_show		= draw
+anim_hide		= holster
+anim_idle			= idle
+anim_playing		= idle_bore
+anim_throw_begin	= attack_begin
+anim_throw_idle	= attack_idle
+anim_throw_act		= attack_act	
+anim_throw_end	= attack_end
+;anim_idle_sprint	= idle_sprint_skyl_
+
+; РГД-5
+[grenade_rgd5]:G_RGD5
+visual				= weapons\grenade\wpn_rgd_5.ogf
+inv_name			= grenade-rgd5
+inv_name_short		= grenade-rgd5
+cost				= 440 ;100
+inv_weight			= 0.31
+description			= enc_weapons1_grenade-rgd5
+ef_weapon_type		= 10
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 10
+inv_grid_y			= 9
+
+animation_slot		= 7
+single_handed		= 1
+slot				= 3
+hud					= grenade_rgd5_hud
+
+force_min				= 10	; ~30% от максимума
+force_const				= 25;20
+force_max				= 30
+force_grow_speed		= 15;2 ;30
+destroy_time		= 2500;3500
+
+blast				= 3.5
+blast_r			= 10
+blast_impulse		= 145
+frags				= 10
+frags_r			= 15
+frag_hit			= 2.5
+frag_hit_impulse	      = 10
+hit_type_blast		= explosion
+hit_type_frag		= fire_wound
+up_throw_factor		= 1.2
+
+explode_particles	= explosions\explosion_01
+light_color		         = 1.9,1.4,0.5
+light_range		         = 14.0
+light_time 		         = 0.85
+
+;трассы от осколков
+fragment_speed				= 200
+explode_duration		 = 5		;подолжительность взрыва (с)
+snd_explode  = weapons\explo\t_rgd5_explosion     
+snd_checkout = weapons\generic_checkout
+
+attach_position_offset	= -0.03,-0.089,0.021
+attach_angle_offset	= 0,0,0
+attach_bone_name	= 
+
+throw_point		 = 0,0.3,0.2
+throw_dir		 = 0,0,1
+wm_size                  = 0.1
+wallmark_section		 = explosion_marks
+
+[grenade_rgd5_hud]
+fire_point          = 0,0,0
+fire_bone           = wpn_body
+position			= -0.096500,-0.165000,0.065
+orientation			= -4.399999,1.000000,-2.000000
+visual              = weapons\grenade\wpn_rgd_5_hud.ogf
+
+throw_point			= 0.0,0.4,0.3
+throw_dir			= 0,0,1
+
+anim_show		= f1_draw
+anim_hide		= f1_holster
+
+anim_idle		= f1_idle
+anim_playing            = f1_idle_bore
+
+anim_throw_begin	= f1_throw_begin
+anim_throw_idle		= f1_throw_idle
+anim_throw_act		= f1_throw
+anim_throw_end		= f1_end 
+anim_idle_sprint	= f1_idle_sprint
+
+[grenade_rgd5_new]:grenade_rgd5
+blast				= 5
+frag_hit			= 1.5
+frag_hit_impulse	= 0.4
+
+; Ядерная бомба. Хабарыч
+[yadrena_bomba]:grenade_f1
+grenade_remove_time		= 60000
+detonation_threshold_hit= 200
+visual					= weapons\grenade\yadrena_bomba.ogf
+cost					= 1000 ;80
+inv_name				= grenade-f1
+inv_name_short			= grenade-f1
+inv_weight				= 0.63	;.1
+description				= enc_weapons1_grenade-f1
+ef_weapon_type			= 10
+
+inv_grid_width			= 1
+inv_grid_height			= 1
+inv_grid_x				= 9
+inv_grid_y				= 9
+
+animation_slot			= 7
+single_handed			= 1
+slot					= 3
+hud						= grenade_f1_hud
+
+force_min				= 10	; ~30% от максимума
+force_const				= 250;20
+force_max				= 300
+force_grow_speed		= 15000;2 ;30
+destroy_time			= 3500 ;через сколько взрыв
+
+blast					= 1
+blast_r					= 70
+blast_impulse			= 1
+frags					= 0
+frags_r					= 70
+frag_hit				= 1
+frag_hit_impulse		= 1
+hit_type_blast			= explosion
+hit_type_frag			= fire_wound
+up_throw_factor			= 1.2
+
+explode_particles		 = a_ufp_particles\atom_blow
+light_color		         = 1.9,1.4,0.5
+light_range		         = 25.0
+light_time 		         = 0.85
+
+;трассы от осколков
+fragment_speed				= 1500
+explode_duration			= 20		;подолжительность взрыва (с)
+snd_explode = weapons\nucleus_blast        ; t_f1_explosion ; f1_explode
+snd_checkout = weapons\generic_checkout
+
+attach_position_offset	= -0.053,-0.089,0.0
+attach_angle_offset		= 0,0,0
+attach_bone_name		= 
+
+throw_point				 = 0,0.3,0.2
+throw_dir				 = 0,0,1
+wm_size                  = 0.1
+wallmark_section		 =explosion_marks
+
+; М61
+[grenade_m61]:G_F1
+grenade_remove_time		= 60000
+detonation_threshold_hit      = 200
+visual				= weapons-new\m61\wpn_m61.ogf
+inv_name				= ars-m61   
+inv_name_short			= ars-m61_s   
+inv_weight				= 0.454	
+description				= enc_weapons1_grenade-m61
+ef_weapon_type			= 10
+
+inv_grid_width			= 1
+inv_grid_height			= 1
+inv_grid_x			= 14
+inv_grid_y			= 65
+
+animation_slot			= 7
+single_handed			= 1
+slot					= 3
+hud					= grenade_m61_hud
+
+force_min				= 10	; ~30% от максимума
+force_const				= 25;20
+force_max				= 30
+force_grow_speed		      = 15;2 ;30
+destroy_time			= 2500;3500
+cost					= 750 ;80
+
+blast				= 5
+blast_r				= 12
+blast_impulse		        = 200
+frags				= 30
+frags_r				= 50
+frag_hit			= 2.0
+frag_hit_impulse	        = 6
+hit_type_blast			= explosion
+hit_type_frag			= fire_wound
+up_throw_factor			= 10.2
+
+explode_particles		= explosions\explosion_01   ;a_ufp_particles\fog_ground
+blowout_light	    = on
+light_color		    = 1.9,1.6,1.3
+light_range		    = 18.0
+light_time 		    = 10
+light_height	    = 2
+
+;трассы от осколков
+fragment_speed			= 50
+explode_duration			= 3		;подолжительность взрыва (с)
+snd_explode  = weapons\explo\grenade_attack_3        
+snd_checkout = weapons\generic_checkout
+
+attach_position_offset	= -0.033,-0.089,0.03
+attach_angle_offset	= 0,0,0
+attach_bone_name		= 
+
+throw_point				 = 0,0.3,0.2
+throw_dir				 = 0,0,1
+wm_size                  = 0.1
+wallmark_section		 = explosion_marks
+
+[grenade_m61_hud]:grenade_f1_hud
+
+visual              = weapons-new\m61\wpn_m61_hud.ogf
+
+
+; Аномальные гранаты
+; «Зажигалка»
+[grenade_he]:G_F1
+grenade_remove_time		= 60000
+detonation_threshold_hit= 200
+visual				= weapons\grenade\wpn_he.ogf      
+inv_name				= grenade-he
+inv_name_short			= grenade-he_s
+inv_weight				= 0.453	;.1
+description				= enc_weapons1_grenade-he
+ef_weapon_type			= 10
+
+inv_grid_width			= 1
+inv_grid_height			= 1
+inv_grid_x			= 16
+inv_grid_y			= 65
+
+animation_slot			= 7
+single_handed			= 1
+
+slot					= 3
+hud					= grenade_he_hud
+force_min				= 10	; ~30% от максимума
+force_const				= 25;20
+force_max				= 30
+force_grow_speed		      = 15;2 ;30
+destroy_time			= 2500;3500
+cost					= 2500 ;80
+
+blast				= 7.5
+blast_r				= 20
+blast_impulse		= 350
+frags				= 80
+frags_r				= 60
+frag_hit				= 1.0
+frag_hit_impulse	= 6
+hit_type_blast		= burn
+hit_type_frag		= burn
+up_throw_factor		= 1.2
+
+explode_particles		 = static\zharka_static  ;explosions\explosion_01         ;explosion_dynamite
+light_color		         = 1.9,1.4,0.5
+light_range		         = 25.0
+light_time 		         = 0.85
+
+;трассы от осколков
+fragment_speed			= 50
+explode_duration			= 9		;подолжительность взрыва (с)
+snd_explode = anomaly\zhar_blow  ;weapons\explo\grenade_stop_3                          ;weapons\t_f1_explosion ; f1_explode
+snd_checkout = weapons\generic_checkout
+
+attach_position_offset	= -0.035,-0.089,0.03
+attach_angle_offset	= 0,0,0
+attach_bone_name		= 
+
+throw_point				 = 0,0.3,0.2
+throw_dir				 = 0,0,1
+wm_size                  = 0.1
+wallmark_section		 = explosion_marks
+
+[grenade_he_hud]:grenade_f1_hud
+orientation	    = -0.53000,1.000000,-2.000000
+visual              = weapons\grenade\wpn_he_hud.ogf
+
+; «Вороненок»
+[grenade_sg]:grenade_he
+visual				= weapons\grenade\wpn_sg.ogf
+inv_name			= st_grenade_sg
+inv_name_short		= st_grenade_sg_s
+description			= enc_weapons1_grenade-sg
+inv_grid_x			= 17
+inv_grid_y			= 65
+hud				= grenade_sg_hud
+
+blast				= 25
+blast_r				= 20
+blast_impulse		= 350
+frags				= 100
+frags_r				= 60
+frag_hit				= 1.0
+frag_hit_impulse	= 6
+hit_type_blast		= strike
+hit_type_frag		= strike
+
+explode_particles		 = amk_anoms\bold_blast
+snd_explode              = anomaly\anomaly_gravy_blast1  ;weapons\explo\grenade_attack_2.ogg
+
+[grenade_sg_hud]:grenade_f1_hud
+orientation		= -0.53000,1.000000,-2.000000
+visual                  = weapons\grenade\wpn_sg_hud.ogf
+
+; «Электричка»
+[grenade_fb]:grenade_he
+visual				= weapons\grenade\wpn_fb.ogf
+inv_name			= st_grenade_fb
+inv_name_short		= st_grenade_fb_s
+description			= enc_weapons1_grenade-fb
+inv_grid_x			= 15
+inv_grid_y			= 65
+hud				= grenade_fb_hud
+
+blast				= 5
+blast_r				= 15
+blast_impulse		= 350
+frags				= 80
+frags_r				= 60
+frag_hit				= 1.0
+frag_hit_impulse	= 6
+hit_type_blast		= shock
+hit_type_frag		= shock
+
+explode_particles		= anomaly2\electra2_blast
+snd_explode             = anomaly\electra_blast1  ;weapons\explo\grenade_attack_3.ogg
+
+[grenade_fb_hud]:grenade_f1_hud
+orientation		= -0.53000,1.000000,-2.000000
+visual                  = weapons\grenade\wpn_fb_hud.ogf
+
+; «Снежок»
+[grenade_7643b]:grenade_he
+description		= enc_grenade_7643b       
+inv_name		= ars-snowball_7643b
+inv_name_short		= ars-snowball_7643b_s
+hud			= grenade_7643b_hud
+visual			= weapons\grenade\wpn_sn.ogf
+
+inv_grid_x			= 18 ;50
+inv_grid_y			= 3 ;49
+
+blast				= 15
+blast_r				= 14
+blast_impulse		= 350
+frags				= 80
+frags_r				= 60
+frag_hit				= 1.5
+frag_hit_impulse	= 6
+hit_type_blast		= wound
+hit_type_frag		= wound
+
+explode_particles		= amk\snow_blow
+snd_explode                     = anomaly\gravi_blowout6
+
+[grenade_7643b_hud]:grenade_f1_hud
+orientation		= -0.53000,1.000000,-2.000000
+visual 			= weapons\grenade\wpn_sn_hud.ogf
+
+;;;; Граната с усыпляющим газом
+[grenade_gaz]:grenade_he
+visual				= raider\7643b_world.ogf    
+inv_name			= grenade-gaz
+inv_name_short			= grenade-gaz_s
+description			= enc_grenade-gaz
+
+inv_grid_x			= 50
+inv_grid_y			= 49
+
+hud				= grenade_gaz_hud
+
+cost				= 1000
+
+blast				= 0.0000001
+blast_r				= 15
+blast_impulse			= 0
+
+frags				= 0
+frags_r				= 0
+frag_hit			= 0.0
+frag_hit_impulse		= 0
+
+hit_type_blast		= shock  ;explosion
+hit_type_frag		= shock
+
+explode_particles	= a_ufp_particles\fog_ground
+snd_explode             = weapons\explo\grenade_gd05
+
+[grenade_gaz_hud]:grenade_f1_hud
+orientation	    = -0.53000,1.000000,-2.000000
+visual              = raider\7643b_hud.ogf
+
+
+
+; Подствольные гранаты
+[ammo_vog-25p]:A_VOG25
+
+visual                  = weapons\ammo\ammo_vog-25p.ogf
+description				= enc_weapons1_ammo_ammo-vog-25p
+cost					 = 580 ;170
+box_size		= 1
+
+inv_name		= ammo-vog-25p
+inv_name_short	= ammo-vog-25p_s
+inv_weight		= .08
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 19
+inv_grid_y			= 10
+
+k_dist			= 1.3
+k_disp			= 1
+k_hit			= 2.5
+k_impulse		= 1.3
+k_pierce		= 1.25
+impair			= 1
+buck_shot		= 0
+tracer			= off
+wm_size         = 0.1
+jump_height = 1.5
+fake_grenade_name = wpn_fake_missile1
+
+; Для полетов
+[ammo_vog-25_fly]:ammo_vog-25p
+k_hit			= 100
+k_impulse		= 50
+fake_grenade_name = wpn_fake_missile_fly
+
+[ammo_vog-25]:A_VOG25
+
+visual                  = weapons\ammo\ammo_vog-25.ogf
+description				= enc_weapons1_ammo_ammo-vog-25
+cost					 = 490 ;150
+box_size		= 1
+
+inv_name		= ammo-vog-25
+inv_name_short	= ammo-vog-25_s
+inv_weight		= .08
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 19
+inv_grid_y			= 9
+
+k_dist			= 1
+k_disp			= 1
+k_hit			= 2.5
+k_impulse		= 1.2
+k_pierce		= 1.25
+impair			= 1
+buck_shot		= 0
+tracer			= off
+wm_size         = 0.1
+fake_grenade_name = wpn_fake_missile
+
+[ammo_vog-27]:ammo_vog-25
+inv_name_short	= "Нет подствола"
+inv_grid_x			= 0
+inv_grid_y			= 80
+
+[ammo_m209]:A_M209
+
+visual                  = weapons\ammo\ammo_m209.ogf
+description				= enc_weapons1_ammo_ammo-m209
+cost					 = 480 ;155
+box_size		= 1
+
+inv_name		= ammo-m209
+inv_name_short	= ammo-m209_s
+inv_weight		= .08
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 5
+inv_grid_y			= 13
+
+k_dist			= 1
+k_disp			= 1
+k_hit			= 2.5
+k_impulse		= 1.4
+k_pierce		= 1.25
+impair			= 1
+buck_shot		= 0
+tracer			= off
+wm_size         = 0.1
+fake_grenade_name = wpn_fake_missile2
+
+[ammo_20x85]:ammo_m209
+description		= enc_arsenal_20x85               
+cost			= 2940 ;2660
+box_size		= 5
+
+inv_name		= ars-20x85                   
+inv_name_short	= ars-20x85_s                          
+inv_weight		= 0.9
+inv_grid_width     = 1
+inv_grid_height    = 1
+inv_grid_x         = 47
+inv_grid_y         = 55
+
+k_dist			= 8
+k_disp			= 1
+k_hit			= 1.2
+k_impulse		= 1
+k_pierce		= 1.25
+impair		= 1
+buck_shot		= 0
+tracer			= on
+wm_size         = 0.1
+fake_grenade_name = wpn_fake_missile28
+
+[wpn_fake_missile28]:wpn_fake_missile2
+visual          = weapons\ammo\ammo_m209.ogf
+cost			= 660
+
+blast			= 2.85
+blast_r		= 7
+blast_impulse	= 120
+frags			= 68
+frags_r		= 17
+frag_hit		= 2.65
+frag_hit_impulse	= 100
+hit_type_blast	= explosion
+hit_type_frag	= fire_wound
+up_throw_factor	= 0.7
+
+;trail			= weapons\rpg_trail_01, weapons\rpg_trail_02
+explode_particles	= explosions\explosion_04b
+dynamic_explosion_particles 	= true
+light_color		= 1.9,1.4,0.5
+light_range		= 14.0
+light_time 		= 0.85
+
+;engine_f		= 530
+;engine_u		= 90
+jump_height = 1
+
+;трассы от осколков
+fragment_speed	      = 100
+wallmark_section		= explosion_marks
+wm_size			= 0.1
+explode_duration			 = 5		;подолжительность взрыва (с)
+snd_explode = weapons\explo\grenade_m406_boom
+
+inv_grid_x		= 5
+inv_grid_y		= 13
+
+trail_light_color 	= 0.6,0.5,0.3
+trail_light_range 	= 8.0
+force_explode_time  = 10000
+
+[ammo_kumul_82]:ammo_m209
+description		= enc_arsenal_kumul_82               
+cost			= 2760 ;2660
+box_size		= 3
+
+inv_name		= ars-kumul_82                   
+inv_name_short	= ars-kumul_82_s                          
+inv_weight		= 0.9
+inv_grid_width     = 1
+inv_grid_height    = 1
+inv_grid_x         = 50
+inv_grid_y         = 55
+
+k_dist		= 8
+k_disp		= 1
+k_hit			= 1.2
+k_impulse		= 1
+k_pierce		= 1.25
+impair		= 1
+buck_shot		= 0
+tracer			= on
+wm_size         = 0.1
+fake_grenade_name = wpn_fake_missile82
+
+[wpn_fake_missile82]:wpn_fake_missile2
+visual          = weapons\ammo\ammo_m209.ogf
+cost			= 1000
+
+blast			= 3.5
+blast_r		= 8
+blast_impulse	= 120; 250
+frags			= 82
+frags_r		= 17
+frag_hit		= 2.85
+frag_hit_impulse	= 120
+hit_type_blast	= explosion
+hit_type_frag	= fire_wound
+up_throw_factor	= 0.7
+
+;trail			= weapons\rpg_trail_01, weapons\rpg_trail_02
+explode_particles	            = explosions\explosion_mobiltank        ;explosions\explosion_barrel   ;explosions\explosion_04b
+dynamic_explosion_particles 	= true
+light_color		= 1.9,1.4,0.5
+light_range		= 14.0
+light_time 		= 0.85
+
+;engine_f		= 530
+;engine_u		= 90
+jump_height = 1
+
+;трассы от осколков
+fragment_speed	      = 100
+wallmark_section		= explosion_marks
+wm_size			= 0.1
+explode_duration			 = 5		;подолжительность взрыва (с)
+snd_explode = weapons\explo\grenade_m406_boom
+
+inv_grid_x		= 5
+inv_grid_y		= 13
+
+trail_light_color 	= 0.6,0.5,0.3
+trail_light_range 	= 8.0
+force_explode_time      = 10000
+
+; Аномальные подствольные гранаты
+; «Зажигалка»
+[ammo_vog-25he]:ammo_vog-25p
+
+visual            = weapons\ammo\ammo_vog-25p.ogf
+description		= enc_weapons1_ammo_ammo-vog-25he
+cost			= 1500 ;170
+box_size		= 1
+
+inv_name		= ammo-vog-25he
+inv_name_short	= ammo-vog-25he_s
+inv_weight		= .10
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 62
+inv_grid_y			= 66
+
+k_dist		= 1.3
+k_disp		= 1
+k_hit			= 7.5
+k_impulse		= 1.3
+k_pierce		= 1.25
+impair		= 1
+buck_shot		= 0
+tracer			= off
+wm_size         = 0.1
+jump_height = 1.5
+fake_grenade_name = wpn_fake_missile_25he
+
+[wpn_fake_missile_25he]:G_FAKE
+visual                  = weapons\ammo\ammo_vog-25p.ogf
+cost					= 1500
+
+blast				= 7.85
+blast_r				= 25
+blast_impulse		= 350
+frags				= 350
+frags_r				= 45
+frag_hit				= 50.0
+frag_hit_impulse	= 300
+hit_type_blast		= burn
+hit_type_frag		= burn
+up_throw_factor		= 0.7
+
+explode_particles	= explosions\explosion_mobiltank  ;explosions\explosion_01
+light_color		         = 1.9,1.4,0.5
+light_range		         = 14.0
+light_time 		         = 0.85
+
+ph_mass			 = 5
+jump_height = 1.5
+
+;трассы от осколков
+fragment_speed		= 300
+wm_size         = 0.1
+wallmark_section		 = explosion_marks
+explode_duration		 = 5		;подолжительность взрыва (с)
+snd_explode = weapons\plamja ;anomaly\zhar_blow  
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 19
+inv_grid_y			= 9
+
+; Свойства CustomRocket
+engine_present		= false		;присутствует ли в ракете двигатель
+lights_enabled 		= true			;свет вокруг ракеты, во время полета
+trail_light_color 	= 0.6,0.5,0.3
+trail_light_range 	= 8.0
+force_explode_time  = 10000
+
+; «Вороненок»
+[ammo_vog-25sg]:ammo_vog-25he
+inv_name		= ammo-vog-25sg
+inv_name_short	= ammo-vog-25sg_s
+description		= enc_weapons1_ammo_ammo-vog-25sg
+inv_grid_x			= 61
+inv_grid_y			= 67
+fake_grenade_name = wpn_fake_missile_25sg
+
+[wpn_fake_missile_25sg]:wpn_fake_missile_25he
+blast				= 25
+blast_r				= 20
+frags				= 250
+frags_r				= 40
+frag_hit				= 150.0
+hit_type_blast		= strike
+hit_type_frag		= strike
+explode_particles	 = amk_anoms\bold_blast
+snd_explode              = anomaly\anomaly_gravy_blast1  
+
+; «Электричка»
+[ammo_vog-25fb]:ammo_vog-25he
+inv_name		= ammo-vog-25fb
+inv_name_short	= ammo-vog-25fb_s
+description		= enc_weapons1_ammo_ammo-vog-25fb
+inv_grid_x			= 64
+inv_grid_y			= 67
+fake_grenade_name = wpn_fake_missile_25fb
+
+[wpn_fake_missile_25fb]:wpn_fake_missile_25he
+blast					= 7.5
+blast_r				= 23
+frags					= 400
+frags_r				= 40
+frag_hit				= 100.0
+hit_type_blast		= shock
+hit_type_frag		= shock
+explode_particles	= anomaly2\electra2_blast
+snd_explode              = anomaly\electra_blast1  
+
+; «Снежок»
+[ammo_vog-25sn]:ammo_vog-25he
+inv_name		= ammo-vog-25sn
+inv_name_short	= ammo-vog-25sn_s
+description		= enc_weapons1_ammo_ammo-vog-25sn
+inv_grid_x			= 63
+inv_grid_y			= 66
+fake_grenade_name = wpn_fake_missile_25sn
+
+[wpn_fake_missile_25sn]:wpn_fake_missile_25he
+blast				= 15
+blast_r				= 20
+frags				= 350
+frags_r				= 45
+frag_hit				= 105.0
+hit_type_blast		= wound 
+hit_type_frag		= wound
+explode_particles	= amk\snow_blow
+snd_explode              = anomaly\gravi_blowout6

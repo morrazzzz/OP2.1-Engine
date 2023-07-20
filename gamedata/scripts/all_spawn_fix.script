@@ -1,0 +1,68 @@
+-- Переспавн алспаун и скриптовых объектов для правки конфигов, логики и ошибок без необходимости начинать НИ
+-- При добавлении строк в таблицу добавлять в info_known_objects.xml поршни all_spawn_fix_[номер секции]
+
+--[[ таблица заполняется так:
+local objects = {
+	[1] (это номер поршня all_spawn_fix) = {
+		name = name из секции алспавна или секция скриптового спавна, и далее варианты на выбор:
+			allspawn_section = номер секции или -1 для удаления, 
+			create_section = номер секции для доспавна новых объектов,
+			spawn_story_id = spawn_story_id объекта из алспауна, спавнится всегда
+			script = функция для выполнения разового скрипта при необходимости
+	},
+}
+--]]
+
+-- Эту таблицу нужно полностью чистить перед каждой правкой алспауна или перед каждым патчем, с которого нужно начинать НИ
+local objects = {
+	
+}
+
+-- переспавн объектов из алспауна по таблице
+function respawn_allspawn()
+	for i, group in pairs(objects) do
+		if not has_info("all_spawn_fix_"..i) then 
+			give_info("all_spawn_fix_"..i)
+			
+			for j, obj in pairs(group) do
+				respawn_allspawn_object(obj)
+			end
+		end
+	end
+end
+
+-- переспавн единичного объекта из алспаун
+function respawn_allspawn_object(obj)
+	if release_allspawn_object(obj.name) then
+		-- объект удалился
+		if obj.allspawn_section and obj.allspawn_section ~= -1 then
+			-- доспавниваем
+			create(obj.allspawn_section)
+		end
+	else
+		-- объекта не было - создаём, если нужно
+		if obj.create_section then
+			create(obj.create_section)
+		end
+	end
+	
+	-- Сторилайновый объект спавним всегда
+	if obj.spawn_story_id then
+		create(ai:spawn_id(obj.spawn_story_id))
+	end
+	
+	-- Выполняем скрипт
+	if obj.script then
+		loadstring(obj.script)()
+	end
+end
+
+-- удаление алспаун объекта по его name
+function release_allspawn_object(name)
+	local obj = server_object(name)
+	if obj then
+		release(obj)
+		return true
+	end
+	return false
+end

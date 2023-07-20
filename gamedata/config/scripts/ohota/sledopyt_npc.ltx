@@ -1,0 +1,61 @@
+[smart_terrains]
+none = true
+
+[logic]
+active = walker@sledopyt1
+combat_ignore = combat_ignore
+on_death = mob_death
+
+[walker@sledopyt1]
+path_walk = mil_sledopyt_walk
+path_look = mil_sledopyt_look
+def_state_standing = prisoner
+danger = danger_ignore
+combat_ignore_cond = always
+on_info = {+sledopyt_bomba_start} walker@sledopyt2
+
+[walker@sledopyt2]
+path_walk = mil_sledopyt_walk
+path_look = mil_sledopyt_look
+def_state_standing = dynamite
+meet = no_meet
+danger = danger_ignore
+combat_ignore_cond = always
+on_timer = 8000 | {-sledopyt_bomba_have} walker@sledopyt_timer
+on_info = {+sledopyt_bomba_have} walker@sledopyt3
+
+[walker@sledopyt_timer]
+path_walk = mil_sledopyt_walk
+path_look = mil_sledopyt_look
+def_state_standing = search
+meet = no_meet
+danger = danger_ignore
+combat_ignore_cond = always
+on_timer = 8000 | walker@sledopyt2
+
+[walker@sledopyt3]
+path_walk = mil_sledopyt_walk2
+def_state_moving1 = run
+def_state_moving2 = run
+def_state_moving3 = run
+meet = no_meet
+danger = danger_ignore
+combat_ignore_cond = always
+on_signal = arrived | walker@sledopyt4
+
+[walker@sledopyt4]
+path_walk = mil_sledopyt_walk2
+path_look = mil_sledopyt_look2
+def_state_standing = caution
+meet = meet
+danger = danger_ignore
+combat_ignore_cond = always
+
+[danger_ignore]
+ignore_distance = 0
+
+[combat_ignore]
+combat_ignore_cond = always
+
+[mob_death]
+on_info = %+sledopyt_bomba_fail%

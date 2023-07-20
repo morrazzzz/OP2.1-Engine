@@ -1,0 +1,62 @@
+[zone_field_thermal]:anomaly
+class			= ZS_ZHARK
+hit_impulse_scale	= .01
+effective_radius	= 1.00 ;размер радиуса в процентах от оригинального, где действует зона
+postprocess		= postprocess_thermal
+ef_anomaly_type			= 3
+ef_weapon_type			= 15
+
+min_start_power		= 0
+max_start_power		= 0
+attenuation			= 0.5
+hit_type		= burn
+
+;idle_particles		= amik\monsters\chimera\2_spine
+blowout_particles	= explosions\campfire_blowout
+
+;hit_small_particles			= damage_fx\burn_creatures
+;hit_big_particles			= damage_fx\burn_creatures00
+;idle_small_particles		= damage_fx\burn_creatures
+;idle_big_particles			= damage_fx\burn_creatures00
+
+idle_sound			= ambient\fire2					;iinoiyiiue caoe
+blowout_sound		= ambient\fire2			;ai a?aiy aua?ina(oaa?a) a oaio?a aiiiaeee
+hit_sound			= ambient\fire2								;ia ia?niia?a, eiaaa oio iieo?aao oeo
+;entrance_sound		= ambient\zhar									;i?e iiiaaaiee iauaeoa a aiiiaee?
+
+disable_time		= -1	;время игнорирования неживого объекта в зоне (-1 если не нужно)
+disable_time_small	= -1		;время игнорирования маленького неживого объекта в зоне (-1 если не нужно)
+disable_idle_time	= -1	;время отключения idle партиклов
+
+ignore_nonalive		= true;
+ignore_small		= false;
+ignore_artefacts	= true
+
+blowout_light		= off
+idle_light			= off
+
+awaking_time		= 100
+blowout_time		= 300
+accamulate_time		= 100
+
+visible_by_detector = off
+blowout_wind		= off
+
+; Опции из ЗП
+;shape_transp_color		= 200, 200, 0, 60
+;shape_edge_color		= 32, 32, 32, 255
+;idle_light_volumetric 	= false
+;idle_light_shadow		= true
+;pick_dof_effector		= false
+;idle_light_r1			= true
+
+[zone_field_thermal_weak]:zone_field_thermal
+max_start_power		= 0.2
+[zone_field_thermal_average]:zone_field_thermal
+max_start_power		= 0.45
+[zone_field_thermal_strong]:zone_field_thermal
+max_start_power		= 0.9
+
+[amk_zone_field_thermal_weak]:zone_field_thermal_weak
+[amk_zone_field_thermal_average]:zone_field_thermal_average
+[amk_zone_field_thermal_strong]:zone_field_thermal_strong

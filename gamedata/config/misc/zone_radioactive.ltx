@@ -1,0 +1,76 @@
+[zone_radioactive]:anomaly
+$spawn 			= "zones\radioactive"
+class			= Z_RADIO
+hit_impulse_scale	= .01
+effective_radius	= 1.00 ;размер радиуса в процентах от оригинального, где действует зона
+sound			= zone_mosquito_bald
+postprocess		= postprocess_rad
+ef_anomaly_type			= 3
+ef_weapon_type			= 15
+
+min_start_power		= 0.99
+max_start_power		= 1.00
+attenuation			= 0.1
+hit_type		= radiation
+
+disable_time		= -1	;время игнорирования неживого объекта в зоне (-1 если не нужно)
+disable_time_small	= -1		;время игнорирования маленького неживого объекта в зоне (-1 если не нужно)
+disable_idle_time	= -1	;время отключения idle партиклов
+
+ignore_nonalive		= true;
+ignore_small		= false;
+ignore_artefacts	= true
+
+blowout_light		= off
+idle_light			= off
+
+awaking_time		= 100
+blowout_time		= 100	
+accamulate_time		= 500
+
+visible_by_detector = on
+
+blowout_wind		= off
+
+[zone_radioactive_weak]:zone_radioactive
+$spawn 			= "zones\radioactive_weak"
+awaking_time		= 100
+blowout_time		= 100	
+accamulate_time		= 100
+min_start_power		= 0.01
+max_start_power		= 0.011
+
+[zone_radioactive_average]:zone_radioactive
+$spawn 			= "zones\radioactive_average"
+awaking_time		= 100
+blowout_time		= 100	
+accamulate_time		= 100
+min_start_power		= 0.03
+max_start_power		= 0.031
+
+[zone_radioactive_strong]:zone_radioactive
+$spawn 			= "zones\radioactive_strong"
+awaking_time		= 100
+blowout_time		= 100	
+accamulate_time		= 100
+min_start_power		= 0.06
+max_start_power		= 0.061
+
+[zone_radioactive_killing]:zone_radioactive_strong
+$spawn 			= "zones\radioactive_killing"
+
+
+[amk_zone_radioactive_weak]:zone_radioactive_weak
+$spawn 			= "zones\amk radioactive_weak"
+min_start_power		= 0.03
+max_start_power		= 0.031
+
+[amk_zone_radioactive_average]:zone_radioactive_average
+$spawn 			= "zones\amk radioactive_average"
+min_start_power		= 0.06
+max_start_power		= 0.061
+
+[amk_zone_radioactive_strong]:zone_radioactive_strong
+$spawn 			= "zones\amk radioactive_strong"
+min_start_power		= 0.08
+max_start_power		= 0.081

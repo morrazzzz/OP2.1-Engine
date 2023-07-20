@@ -1,0 +1,46 @@
+[spawn]
+note_4
+
+[logic] 
+active = remark@my_nps_psih 
+combat_ignore = combat_ignore 
+meet = meet 
+;on_hit = hit 
+on_death = death 
+
+[danger_ignore] 
+ignore_distance = 90 
+
+[remark@my_nps_psih] 
+anim = trans_0 
+on_actor_dist_le_nvis = 100|remark@my_nps_psih_kol 
+danger = danger_condition 
+meet = meet 
+combat_ignore_cond = always 
+
+[remark@my_nps_psih_kol] 
+anim = trans_0 
+no_move = true 
+meet = meet 
+combat_ignore_cond = always 
+on_actor_dist_le_nvis = 8|remark@my_nps_psih_vrag 
+
+[remark@my_nps_psih_vrag] 
+anim = trans_0 
+no_move = true 
+meet = meet 
+combat_ignore_cond = always 
+on_timer = 25000|remark@my_nps_psih_voyna 
+
+[remark@my_nps_psih_voyna] 
+anim = trans_1
+no_move = true 
+meet = meet 
+on_timer = 25000|%=killactor% 
+
+[smart_terrains] 
+none = true
+
+[death] 
+on_info = %+info_cold_death% 
+

@@ -1,0 +1,22 @@
+[logic]
+active = sr_idle
+
+[sr_idle]
+on_timer = 20000 | heli_move@idle
+
+[heli_move@idle]
+path_move = esc_heli_move_5
+path_look = esc_heli_look_5
+engine_sound = true
+combat_use_rocket = true
+combat_use_mgun = true
+rocket_delay = 5000
+combat_safe_altitude = -30
+mute = true
+on_info = {=heli_health_le(0.1)} %=esc_fly.spawn_heli_3%
+
+
+
+
+
+

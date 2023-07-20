@@ -1,0 +1,38 @@
+class "amk_options" (CUIWindow)
+ 
+function amk_options:__init() super()
+end
+
+function amk_options:__finalize()
+end
+	
+function amk_options:InitControls(x, y, xml, handler)
+	if not amk.check_game() then return end
+	
+	self:Init(x,y, 738, 416)
+	self:SetAutoDelete(true)
+	
+	self.bk = xml:InitFrame("frame_amk", self)
+
+	handler.radio_hud = xml:InitTab("amk_options:radio_amk_hud", self)
+	handler.radio_hud:SetNewActiveTab(amk.load_variable("option_hud",2))
+	
+	handler.radio_mus = xml:InitTab("amk_options:radio_amk_mus", self)
+	handler.radio_mus:SetNewActiveTab(amk.load_variable("option_mus",0))
+
+	handler.radio_treasure = xml:InitTab("amk_options:radio_amk_treasure", self)
+	handler.radio_treasure:SetNewActiveTab(amk.load_variable("option_treasure",0))
+
+	handler.radio_rad = xml:InitTab("amk_options:radio_amk_rad", self)
+	handler.radio_rad:SetNewActiveTab(amk.load_variable("option_rad",1))
+
+	handler.btn_op21 = xml:Init3tButton("amk_options:btn_op21", self)
+	handler:Register(handler.btn_op21, "btn_op21")
+
+	handler.btn_game = xml:Init3tButton("amk_options:btn_game", self)
+	handler:Register(handler.btn_game,"btn_game")
+
+	handler.btn_god = xml:Init3tButton("amk_options:btn_god", self)
+	handler:Register(handler.btn_god, "btn_god")
+	
+end

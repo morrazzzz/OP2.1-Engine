@@ -1,0 +1,20 @@
+[logic]
+active = mob_home
+on_death = death
+on_hit = hit
+
+[mob_home]
+path_home = yantar_kontroller_yazva_walk
+home_min_radius = 15
+home_max_radius = 20
+aggressive_home
+on_signal = sig_attacked | mob_combat
+
+[mob_combat]
+on_timer = 30000 | mob_home
+
+[death]
+on_info = {=killed_by_actor_eagle} %=arhara_dialog.fotka_kont_yazva_have%
+
+[hit]
+on_info = {=hit_by_actor_eagle} %=arhara_dialog.fotka_kont_yazva_have%

@@ -1,0 +1,17 @@
+[logic]
+active = ph_door@locked
+
+[ph_door@locked]
+closed = true
+locked = true
+on_info = {+dol_dar_door_unlocked} ph_door@closed %=play_snd_from_obj(6430:device\door_locked)%
+
+[ph_door@closed]
+closed = true
+locked = false
+on_use = ph_door@opened
+
+[ph_door@opened]
+closed = false
+locked = false
+on_use = ph_door@closed

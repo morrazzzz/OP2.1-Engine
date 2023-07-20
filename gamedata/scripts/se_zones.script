@@ -1,0 +1,212 @@
+local math_random = math.random
+local string_sub = string.sub
+
+local not_spawn_levels = {
+  l05_bar = true
+}
+
+function is_single_player_game  ()
+  if (_G.alife == nil) then
+    return  (true)
+  end
+  
+  if (ai ~= nil) then
+    return  (true)
+  end
+  
+  if (_G.IsGameTypeSingle == nil) then
+    return  (true)
+  end
+
+  if (IsGameTypeSingle() == true) then
+    return  (true)
+  end
+
+  return    (false)
+end
+
+class "se_zone_anom" (cse_anomalous_zone)
+function se_zone_anom:__init (section) super (section)  
+end
+function se_zone_anom:on_register()
+  cse_anomalous_zone.on_register(self)
+  
+  self.artefact_spawn_idle = 60*60*1000*utils.cfg_get_number(config, self:section_name(), "artefact_spawn_idle", self, false, 24)
+  self.artefact_spawn_rnd = utils.cfg_get_number(config, self:section_name(), "artefact_spawn_rnd", self, false, 100)
+end
+
+function se_zone_anom:on_unregister()
+  cse_anomalous_zone.on_unregister(self)
+end
+
+function se_zone_anom:update()
+  cse_anomalous_zone.update(self)
+
+  if self.last_spawn_time == nil then
+    self.last_spawn_time = game.get_game_time()
+  end
+
+  if string_sub(self:name(),1,3)~="amk" then
+    if game.get_game_time():diffSec(self.last_spawn_time) >= self.artefact_spawn_idle then
+      self.last_spawn_time = game.get_game_time()
+      if math_random(100) <= self.artefact_spawn_rnd then
+			local sobj = self:spawn_artefacts()
+			db.artefacts[sobj.id].spot = false
+            -- bind_det_arts.del_spot(sobj.id, v)
+      end
+    end 
+  else
+  end
+end
+function se_zone_anom:STATE_Write(packet)
+  cse_anomalous_zone.STATE_Write(self, packet)
+
+  if (is_single_player_game() == false) then
+    return
+  end
+  
+  if self.last_spawn_time == nil then
+    packet:w_u8(0)
+  else
+    packet:w_u8(1)
+    utils.w_CTime(packet, self.last_spawn_time)
+  end 
+end
+-- восстановление
+
+function se_zone_anom:STATE_Read( packet, size )
+	local anomData=unpackZonePacket(packet,size,self:section_name())
+	self.last_spawn_time=anomData.last_spawn_time
+	self.radius=anomData.radius
+	cse_anomalous_zone.STATE_Read( self, packet, size )
+end
+
+
+function unpackZonePacket(packet,size,dp)
+	local packetData={radius=0}
+	local r_tell = packet:r_tell()
+	--read variables from net_packet
+	packetData.game_vertex_id=packet:r_u16()
+	packetData.distance=packet:r_float()
+	packetData.direct_control=packet:r_s32()
+	packetData.level_vertex_id=packet:r_s32()
+	packetData.object_flags=packet:r_s32()
+	packetData.custom_data=packet:r_stringZ()
+	packetData.story_id=packet:r_s32()
+	packetData.spawn_story_id=packet:r_s32()
+	local shape_count = packet:r_u8()
+	packetData.shapes={}
+	for i=1,shape_count do
+		local shape_type = packet:r_u8()
+		packetData.shapes[i]={}
+		packetData.shapes[i].shtype=shape_type
+		if shape_type == 0 then
+			packetData.shapes[i].center = packet:r_vec3(vector())
+			packetData.shapes[i].radius = packet:r_float()
+			if 	packetData.radius<packetData.shapes[i].radius then
+					packetData.radius=packetData.shapes[i].radius -- our var.no other way of get this variable
+			end
+		else
+			packetData.shapes[i].v1 = packet:r_vec3(vector())
+			packetData.shapes[i].v2 = packet:r_vec3(vector())
+			packetData.shapes[i].v3 = packet:r_vec3(vector())
+			packetData.shapes[i].offset = packet:r_vec3(vector())
+			--strange street magic... dull copy from pref repack ... different calc from engine
+			local calcRadius=math.sqrt(packetData.shapes[i].v1:magnitude()*packetData.shapes[i].v1:magnitude()+packetData.shapes[i].v3:magnitude()*packetData.shapes[i].v3:magnitude())/2
+			if 	packetData.radius<calcRadius then
+					packetData.radius=calcRadius -- our var.no other way of get this variable
+			end
+		end
+	end
+	packetData.restrictor_type = packet:r_u8()
+	packetData.max_power = packet:r_float()
+	packetData.owner_id = packet:r_s32()
+	packetData.enabled_time = packet:r_s32()
+	packetData.disabled_time = packet:r_s32()
+	packetData.start_time_shift = packet:r_s32()
+	packetData.offline_interactive_radius = packet:r_float()
+	packetData.artefact_spawn_count = packet:r_u16()
+	packetData.artefact_position_offset = packet:r_s32()
+
+	if packet:r_elapsed()>0 then --maybe info on last spawn
+		packetData.last_spawn_time_present = packet:r_u8()
+		packetData.last_spawn_time = game.CTime()
+		if packetData.last_spawn_time_present==1 then
+			local year=packet:r_u8()
+			if year ~= 0 then --а бывает оказываетсЯ и по другому... year=0 and last_spawn_time_present=true
+				local M, D, h, m, s, ms = packet:r_u8(), packet:r_u8(), packet:r_u8(), packet:r_u8(), packet:r_u8(), packet:r_u16()
+				packetData.last_spawn_time:set( year + 2000,  M, D, h, m, s, ms)
+			end
+		end
+		if not packet:r_eof() then
+			abort("Invalid data in net_packet. left=%d", packet:r_elapsed())
+		end
+	end
+	packet:r_seek(r_tell)
+	return packetData
+end
+
+class "se_zone_visual" (cse_zone_visual)
+function se_zone_visual:__init (section) super (section)
+end
+function se_zone_visual:on_register()
+  cse_zone_visual.on_register(self)
+  
+  self.artefact_spawn_idle = 60*60*1000*utils.cfg_get_number(config, self:section_name(), "artefact_spawn_idle", self, false, 24)
+  self.artefact_spawn_rnd = utils.cfg_get_number(config, self:section_name(), "artefact_spawn_rnd", self, false, 100) 
+end
+function se_zone_visual:update()
+  cse_zone_visual.update(self)
+
+  if self.last_spawn_time == nil then
+    self.last_spawn_time = game.get_game_time()
+  end
+
+  if game.get_game_time():diffSec(self.last_spawn_time) >= self.artefact_spawn_idle then
+    self.last_spawn_time = game.get_game_time()
+    if math_random(100) <= self.artefact_spawn_rnd then
+			local sobj = self:spawn_artefacts()
+			db.artefacts[sobj.id].spot = false
+    end
+  end 
+end
+
+function se_zone_visual:STATE_Write(packet)
+  cse_zone_visual.STATE_Write(self, packet)
+
+  if (is_single_player_game() == false) then
+    return
+  end
+  
+  if self.last_spawn_time == nil then
+    packet:w_u8(0)
+  else
+    packet:w_u8(1)
+    utils.w_CTime(packet, self.last_spawn_time)
+  end 
+end
+-- восстановление
+function se_zone_visual:STATE_Read( packet, size )
+  cse_zone_visual.STATE_Read( self, packet, size )
+  
+  if editor() then
+    return
+  end
+  
+  if (is_single_player_game() == false) then
+    return
+  end
+  
+  local flag = packet:r_u8()
+  if flag == 1 then
+    self.last_spawn_time = utils.r_CTime(packet)
+  end
+end
+
+--' Рестрикторы
+class "se_restrictor" (cse_alife_space_restrictor)
+function se_restrictor:__init (section) super (section)
+end
+function se_restrictor:keep_saved_data_anyway()
+  return true
+end

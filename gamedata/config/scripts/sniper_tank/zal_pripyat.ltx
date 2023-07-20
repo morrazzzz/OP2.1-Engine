@@ -1,0 +1,39 @@
+[smart_terrains]
+none = true
+
+[logic]
+active = camper@pri_prisoner
+combat_ignore = combat_ignore
+
+[camper@pri_prisoner]
+path_walk = zalozhnik_pripyat_walk
+path_look = zalozhnik_pripyat_look
+combat_ignore_cond = always
+def_state_campering = prisoner
+meet = meet@pri_prisoner
+danger = danger_ignore@pri_prisoner
+on_info = {+volna_foto_done} remark@pri_prisoner
+
+[remark@pri_prisoner]
+anim = prisoner
+meet = meet@pri_prisoner
+target = look_zal_pripyat, 0
+combat_ignore_cond = always
+danger = danger_ignore@pri_prisoner
+
+[meet@pri_prisoner]
+meet_state 		= 7| prisoner @ agr_dont_shoot
+meet_state_wpn 	= 7| prisoner @ agr_dont_shoot
+meet_talk_enabled = true
+victim 		= 7|nil
+victim_wpn 		= 7|nil
+use = {=dist_to_actor_le(3)} self, true
+use_wpn = {=dist_to_actor_le(3)} self, true
+
+[danger_ignore@pri_prisoner]
+ignore_distance = 0
+ignore_distance_corpse = 0
+ignore_distance_sound = 0
+
+[combat_ignore]
+combat_ignore_cond = always

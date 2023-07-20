@@ -1,0 +1,82 @@
+[logic]
+active = heli_move@idle
+on_hit = hit
+
+[hit]
+on_info = {=hit_by_actor} heli_move@fly5 %+minigan_proval%
+
+[heli_move@idle]
+path_move = yan_heli_baty_idle_move
+engine_sound = false
+mute = true
+combat_safe_altitude = 85
+invulnerable = true
+on_info = {+saxar_minigan_nachalo_start} heli_move@fly1
+;on_timer = 3000 | heli_move@fly1
+
+
+[heli_move@fly1]
+path_move = yan_heli_baty_prilet_move
+engine_sound = true
+default_velocity = 15
+combat_enemy = nil
+combat_use_rocket = false
+combat_use_mgun = true
+rocket_delay = 6000
+combat_safe_altitude = 120
+invulnerable = true
+mute = true
+on_timer = 16000 | heli_move@fly2
+
+
+[heli_move@fly2]
+path_move = yan_heli_baty_predesant_move
+engine_sound = true
+default_velocity = 15
+combat_enemy = nil
+combat_use_rocket = false
+combat_use_mgun = false
+invulnerable = true
+mute = true
+combat_safe_altitude = 80
+on_timer = 17000 | heli_move@fly3
+
+[heli_move@fly3]
+path_move = yan_heli_baty_desant_move
+engine_sound = true
+default_velocity = 4
+combat_enemy = nil
+mute = true
+combat_use_rocket = false
+combat_use_mgun = false
+rocket_delay = 6000
+combat_safe_altitude = 65
+velocity = 0
+invulnerable = true
+on_timer = 36500 | %+baty_yntar_spawn%
+on_info = {+baty_otlet_heli} heli_move@fly4
+
+[heli_move@fly4]
+path_move = yan_heli_baty_otlet_move
+engine_sound = true
+default_velocity = 15
+combat_enemy = nil
+combat_use_rocket = false
+combat_use_mgun = true
+rocket_delay = 6000
+combat_safe_altitude = 120
+invulnerable = false
+on_timer = 30000 | nil %=arhara_dialog.dell_yantar_heli_baty%
+
+
+[heli_move@fly5]
+path_move = yan_heli_baty_hit_move
+engine_sound = true
+default_velocity = 10
+combat_enemy = actor
+combat_use_rocket = true
+combat_use_mgun = true
+rocket_delay = 6000
+combat_safe_altitude = 80
+invulnerable = false
+on_timer = 100000 | heli_move@fly4

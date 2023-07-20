@@ -1,0 +1,40 @@
+[smart_terrains]
+none = true
+
+[logic]
+active = remark@sergeant_crazy
+combat_ignore = combat_ignore
+meet = no_meet
+on_death = death@soldier
+
+[remark@sergeant_crazy]
+anim = psy_pain
+no_move = true
+danger = danger_ignore
+combat_ignore_cond = always
+meet = no_meet
+on_timer = 13000|remark@sergeant_crazy2
+
+[remark@sergeant_crazy2]
+anim = psy_pain
+no_move = true
+danger = danger_ignore
+combat_ignore_cond = always
+meet = no_meet
+on_timer = 400|remark@sergeant_shoot
+
+[remark@sergeant_shoot]
+anim = psy_shoot
+no_move = true
+danger = danger_ignore
+combat_ignore_cond = always
+meet = no_meet
+
+[danger_ignore]
+ignore_distance = 0
+
+[combat_ignore]
+combat_ignore_cond = always
+
+[death@soldier]
+on_info = {=killed_by_actor} %+hamster_kuznec1_fail%

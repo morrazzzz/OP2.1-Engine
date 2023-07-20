@@ -1,0 +1,14 @@
+;-- radio of bandit trader
+
+[logic]
+active = ph_sound@music
+
+[ph_sound@music]
+snd = music
+on_signal = sound_end|ph_idle@wait
+
+[ph_idle@wait]
+on_timer = 10000| ph_sound@music
+
+
+

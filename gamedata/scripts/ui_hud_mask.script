@@ -1,0 +1,395 @@
+-- ’уд костюмов и различные эффекты
+
+-- грузитс€ из јћ -опций:
+local suithud_enable = true -- худ костюма
+local blurs_enable = false -- эффект запотевани€
+
+-- чтобы отключить эффект, поставьте вместо единицы ноль:
+local zoom_hud_enable = 1	-- эффект прицеливани€
+local blood_enable = 1 -- эффект ранени€
+local bleed_enable = 1 -- эффект плохого самочувстви€
+--local otladka = 0 -- вывод в лог
+
+local need_init = true
+
+local suitHudName_wotType = {
+	["bandit_gaz_outfit_"]				= "hud_gaz",
+	["dolg_gaz_outfit_"]				= "hud_gaz",
+	["monolit_gaz_outfit_"]				= "hud_gaz",
+	["neytral_exo_gaz_outfit_"]			= "hud_gaz",
+	["neytral_gaz_outfit_"]				= "hud_gaz",
+	["neytral_novice_gaz_outfit_"]		= "hud_gaz",
+	["outfit_svoboda_"]					= "hud_gaz",
+	["svoboda_gaz_outfit_"]				= "hud_gaz",
+	["svoboda_heavy_gaz_outfit_"]		= "hud_gaz",
+	["dolg_scientific_outfit"]			= "hud_sci",
+	["scientist_suit_white"]			= "hud_sci",
+	["fire_outfit"]						= "hud_sci",
+	["ecolog_outfit"]					= "hud_sci",
+	["freedom_scientific_outfit"]		= "hud_sci",
+	["merc_scientific_outfit"]			= "hud_sci",
+	["monolit_scientific_outfit"]		= "hud_sci",
+	["protection_outfit"]				= "hud_sci",
+	["nebo_exo_outfit"]					= "hud_sci",
+	["nebo_scientific_outfit"]			= "hud_sci",
+	["scientific_outfit"]				= "hud_sci",
+	["killer_gaz_outfit_"]				= "hud_merc",
+	["outfit_killer_"]					= "hud_merc",
+	["gagarin_outfit"]					= "hud_merc",
+	["voshod_outfit"]					= "hud_merc",
+	["military_outfit"]					= "hud_mil",
+	["militaryspec_outfit"]				= "hud_mil",
+	["outfit_specnaz_"]					= "hud_mil",
+	["specops_outfit"]					= "hud_mil",
+	["nano_outfit"]						= "hud_nano",
+	["nano_suit"]						= "hud_nano",
+	["broken_exoskeleton"]				= "hud_exo",
+	["dolg_black_exoskeleton"]			= "hud_exo",
+	["exo_bandit_outfit"]				= "hud_exo",
+	["exo_outfit"]						= "hud_exo",
+	["killer_blue_exoskeleton"]			= "hud_exo",
+	["military_exo_outfit"]				= "hud_exo",
+	["monolit_exoskeleton"]				= "hud_exo",
+	["neytral_exo_antigas_outfit"]		= "hud_exo",
+	["outfit_exo_"]						= "hud_exo",
+	["svoboda_exoskeleton"]				= "hud_exo",
+	["svoboda_yellow_exo_outfit_"]		= "hud_exo",	
+    ["outfit_lethalspeed_exo_m1"]       = "hud_exo",
+    ["outfit_lethalspeed_exo_m2"]       = "hud_exo",
+    ["voen_exo_outfit"]                 = "hud_exo",
+    ["killer_green_exoskeleton"]        = "hud_exo",
+    ["exo_doktor_outfit"]               = "hud_exo",
+    ["exo_military_outfit"]             = "hud_exo",
+    ["exo_knight_outfit"]               = "hud_exo",
+    ["exo_scientist_outfit"]            = "hud_sci",
+    ["seva_scient_outfit"]              = "hud_sci"              
+}
+
+local freemem = 0
+local freemem2 = 0
+
+function init_settings()
+	local var = amk.load_variable("option_hud",2)
+	suithud_enable = var>0
+	blurs_enable = var==2
+	need_init = nil
+end
+
+function update()
+	local _time = time_global()
+	
+	if freemem == 0 then
+		freemem = _time + 700
+	elseif _time > freemem then
+		freemem = 0
+		check_hud()
+		bleedcondition()
+	end
+
+	if zoom_hud_enable == 1 then zoom_hud(_time) end
+
+	if freemem2 == 0 then
+		freemem2 = _time + 40
+	elseif _time > freemem2 then
+		freemem2 = 0
+		init_blurs()
+		blood(_time)
+	end
+end
+
+local mycurrent_suithud
+local suit_condition
+local last_outfit
+local wotsuittype = nil
+local suitfirstrun = true
+
+function check_hud()
+	if need_init then init_settings() return end
+	
+	if suithud_enable==false or db.actor:alive()==false then
+		remove_dynhud()
+		return
+	end
+	
+	local csuithud = db.actor:get_current_outfit()
+	local suithudtype = nil
+	if csuithud ~= nil then
+		local suithudname = csuithud:section()
+		wotsuittype = nil
+		for k,v in pairs(suitHudName_wotType) do
+			if string.find(suithudname, k) then
+				wotsuittype = v
+				break
+			end
+		end
+		if wotsuittype==nil then
+			remove_dynhud()
+			return
+		end
+		
+		local cond = csuithud:condition()
+		if cond > 0.87 then suit_condition = "blue"
+		elseif cond > 0.69 then suit_condition = "green"
+		elseif cond > 0.60 then suit_condition = "yellow"
+		elseif cond > 0.40 then suit_condition = "red"
+		elseif cond > 0.25 then suit_condition = "red2"
+		else suit_condition = "red3" end
+		
+		suithudtype = wotsuittype.."_"..suit_condition
+	else
+		remove_dynhud()
+		return
+	end
+	
+	if suithudtype ~= mycurrent_suithud then
+		if mycurrent_suithud then
+			hud:RemoveCustomStatic(mycurrent_suithud)
+		end
+		hud:AddCustomStatic(suithudtype, true)
+		
+		biodetector.biodetectorRemove()	-- перезагрузка биодетектора
+		
+		-- проверка по id, чтобы не воспроизводилс€ звук при смене целого костюма
+		-- на изношеный или при первом одевании сломанной брони
+		local oid = csuithud:id()
+		if last_outfit==oid then
+			if suitfirstrun == false
+				and suit_condition ~= "green" and suit_condition ~= "blue"
+			then
+				say("material\\glass\\glass_fall0"..
+					tostring(math.random(1,4)).."hl")
+			elseif suitfirstrun == true then
+				suitfirstrun = false
+			end
+		end
+		last_outfit = oid
+		mycurrent_suithud = suithudtype
+	end
+end
+
+function remove_dynhud()
+	if mycurrent_suithud ~= nil then
+		local wchud = hud:GetCustomStatic(mycurrent_suithud)
+		if wchud ~= nil then hud:RemoveCustomStatic(mycurrent_suithud) end
+		mycurrent_suithud = nil
+		suitfirstrun = true
+	end
+end
+
+local actor_last_health = 0
+local bloodtime = 0
+local bloodtimeb = 0
+local isbleeding = "no"
+local countblood = 0
+function blood(_time)
+	if blood_enable == 0 then return end   -- by Monnoroch
+	
+	if db.actor:alive() then
+		if _time > bloodtime then
+			bloodtime = _time + 1500
+			if isbleeding == "stopit" then
+				for i=1,4 do
+					if hud:GetCustomStatic("hud_blood"..i) ~= nil then
+						hud:RemoveCustomStatic("hud_blood"..i)
+						isbleeding = "no"
+					end
+				end
+			end
+			
+			if actor_last_health - db.actor.health > 0.01 then
+				isbleeding = "yes"
+			end
+			actor_last_health = db.actor.health
+		end
+	end
+	
+	if _time > bloodtimeb and isbleeding == "yes" then
+		bloodtimeb = _time + 170
+		countblood = countblood + 1
+		hud:AddCustomStatic("hud_blood"..countblood, true)
+		if countblood == 4 then
+			isbleeding = "stopit"
+			countblood = 0
+		end
+	end
+end
+
+local isactcondset = false
+local radeffect = false
+
+function bleedcondition()
+	if bleed_enable == 0 then return end
+	
+	local actor = db.actor
+	if actor.health < 0.31 and isactcondset == false then
+		level.add_pp_effector ("alcohol.ppe", 2012, true)
+		isactcondset = true
+	elseif actor.health > 0.30 and isactcondset == true then
+		level.remove_pp_effector (2012)
+		isactcondset = false
+	end
+	if actor.radiation > 0.3 and radeffect == false then
+		level.add_pp_effector ("alcohol.ppe", 2013, true)
+		radeffect = true
+	elseif actor.radiation == 0 and radeffect == true then
+		level.remove_pp_effector (2013)
+		radeffect = false
+	end
+end
+
+function init_blurs()
+	if blurs_enable == false then return end
+	
+	if mycurrent_suithud ~= nil 
+		and suit_condition~="red3"	-- много дырок, стекло не запотевает
+		and wotsuittype~="hud_sci"	-- вентил€ци€ в научных костюмах
+	then
+		local zoom=67.5/screen.fov
+		zoom=(zoom-1)*1.5+1
+		if zoom<1.001 then
+			zoom=1.001
+		end
+
+		local stretchy = 0.75/(math.floor(screen.aspect_ratio*1000)/1000)
+		if stretchy < 1 then stretchy = 1 end
+		local rect = {x=-768*zoom+768,y=(-512*zoom+512)*stretchy-(stretchy-1)*300,w=1024*zoom,h=768*zoom*stretchy}
+		set_blurs(true, rect)
+	else
+		set_blurs(false)
+	end
+end
+
+local blurs = nil
+local blurval = 0 -- уровень запотевани€ от 0 до 1
+local blurlt = 0 -- врем€ последнего обновлени€
+local blurcyctime = 0 -- врем€ начала последнего цикла дvхани€ (вvдох)
+local blurlastphase = 0
+
+function set_blurs(enabled, rect)
+	if (not blurs) or hud:GetCustomStatic("hud_blur1") == nil then
+		blurs = {}
+		for i = 1,4 do
+			blurs[i]=hud:AddCustomStatic("hud_blur"..i,true):wnd()
+			blurs[i]:SetWidth(0)
+		end
+	end
+	if not enabled then
+		for i=1,4 do
+			blurs[i]:SetWidth(0)
+		end
+		return    
+	end
+  
+	-- ÷икл в зависимости от силы дыхани€: 0->1->0 0->1->2->4->5->0 0->1->2->3->4->5->0 5->4->3->4->5 4->3->4
+	local power = db.actor.power
+	local period = 1.0+power*power*1.0 -- теку а€ частота дvхани€ от 30 до 120 циклов в минуту
+	local expirt = 0.3
+	local breathpower = 3
+  
+	local _time = time_global()
+	local delta = (_time-blurlt)/1000 -- дельта в секундах
+	local phase = (_time-blurcyctime)/1000 -- фаза дvхательного цикла в сек.
+	blurlt = _time
+	if phase > period then
+		phase = phase%period
+		blurcyctime = blurlt-phase*1000
+	end
+	if blurlastphase > phase then
+		blurlastphase = 0
+	end
+  
+	local blurdelta = delta*-0.7 -- работа вентилл€ции
+	if blurlastphase < expirt and phase < expirt then
+		blurdelta = blurdelta+(phase-blurlastphase)*breathpower
+	elseif blurlastphase < expirt then
+		blurdelta = blurdelta+(expirt-blurlastphase)*breathpower
+	end
+	blurlastphase = phase
+  
+	blurval = blurval+blurdelta
+	if blurval > 0.999 then
+		blurval = 0.999
+	elseif blurval < 0 then
+		blurval = 0
+	end
+  
+	local tm = math.floor(blurval*3)
+	local tmn = (tm+1)
+	local v = blurval*3-math.floor(blurval*3)
+	v = 1-v
+	local v1 = 1-v
+	if tm ~= 0 then
+		blurs[tm]:SetColor(GetARGB(v*255,255,255,255))
+	end
+	if tmn ~= 0 then
+		blurs[tmn]:SetColor(GetARGB(v1*255,255,255,255))
+	end
+	for i = 1,4 do
+		if i == tm or i==tmn then
+			blurs[i]:SetWndRect(Frect():set(rect.x,rect.y,rect.w,rect.h))
+		else
+			blurs[i]:SetWndRect(Frect():set(rect.x,rect.y,0,0))
+		end
+	end
+end
+
+
+-- Ёффект прицеливани€
+-- јвтор: Bak
+-- јдаптаци€: Charsi
+local pre_fov = 0
+local precf = 0
+local ztime = time_global()
+local zbias = Frect():set(0,0,1027,768)
+local zenc
+function zoom_hud(_time)
+	if mycurrent_suithud == nil then return end
+	local _hud = hud:GetCustomStatic(mycurrent_suithud)
+	if _hud then
+		local cf = precf
+		local fov = math.floor((screen.fov+0.02)*10)
+		local delta = _time-ztime
+		ztime = _time
+		if not zenc or fov > 38*10 and pre_fov < fov then
+			zenc = nil
+			if cf > 0 then
+				cf = cf-(delta/400)
+				if cf < 0 then
+					cf = 0
+				end
+			end
+		end
+		if zenc or fov < 58*10 and pre_fov > fov then
+			zenc = true
+			if cf < 1 then
+				cf = cf+(delta/400)
+				if cf > 1 then
+					cf = 1
+				end
+			end
+		end
+		if cf ~= precf then
+			local wpn = db.actor:active_item()
+			if wpn then
+				if wpn:clsid() == clsid.wpn_binocular_s then
+					if wpn:section():find("wpn_binoc") then
+						zbias:set(-100*cf,-100*cf,1027+100*cf,768+100*cf)
+					else
+						zbias:set(-350*cf,-175*cf,1027,768+175*cf)
+					end
+				elseif rx_utils.addon_attached(wpn,"sc") then
+					zbias:set(-350*cf,-175*cf,1027,768+175*cf)
+				else
+					zbias:set(-200*cf,-100*cf,1027,768+100*cf)
+				end
+				_hud:wnd():SetWndRect(zbias)
+			elseif precf ~= 0 then
+				zbias:set(0,0,1027,768)
+				_hud:wnd():SetWndRect(zbias)
+			end
+			precf = cf
+		end
+		pre_fov = fov
+	end
+end
+

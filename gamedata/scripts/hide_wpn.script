@@ -1,0 +1,19 @@
+-- Убирание оружия при открытии окон
+local info2action = {
+	['ui_inventory']	= true,	['ui_inventory_hide']	= false,
+	['ui_car_body']		= true,	['ui_car_body_hide']	= false,
+	['ui_pda']			= true,	['ui_pda_hide']			= false
+}
+	
+function on_info(info_id)
+	local need_hide = info2action[info_id]
+	if need_hide ~= nil then
+		if level.get_game_difficulty() == game_difficulty.novice then return end
+		if need_hide then
+			bind_actor.hide_weapon("info")
+		else
+			bind_actor.restore_weapon("info")
+		end
+	end
+end
+

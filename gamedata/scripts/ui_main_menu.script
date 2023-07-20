@@ -1,0 +1,335 @@
+-- File:        UI_MAIN_MENU.SCRIPT
+-- Description: Load Dialog for STALKER
+-- Created:     28.10.2004
+-- Lasd edit:	18.01.2006
+-- Copyright:   2004 GSC Game World
+-- Author:      Serhiy Vynnychenko (narrator@gsc-game.kiev.ua)
+-- Version:     0.9
+
+local console = get_console()
+local f = getFS()
+
+class "main_menu" (CUIScriptWnd)
+
+function main_menu:__init() super()
+	self.mbox_mode = 0
+   self:InitControls()
+   self:InitCallBacks()
+   self:InitGameSetupMenu()
+	console:execute("r2_sun_near_border 1")
+end
+
+function main_menu:__finalize()
+
+end
+
+function main_menu:Update()
+	CUIScriptWnd.Update(self)
+end
+	
+function main_menu:InitControls()
+	self:Init(0,0,1024,768)			  
+    local xml = CScriptXmlInit()
+    xml:ParseFile("ui_mm_main.xml")
+     
+    xml:InitStatic("back_movie", self)
+    xml:InitStatic("fire_movie", self)
+    xml:InitStatic("background", self)
+    self.shniaga = xml:InitMMShniaga("shniaga_wnd",self);
+	
+	self.message_box = CUIMessageBoxEx()
+	self:Register(self.message_box, "msg_box")	
+	
+	local _ver = xml:InitStatic		("static_version",self)
+	local mm						= _G.main_menu.get_main_menu()
+	
+
+	local versionFunc
+	if newEngine then
+		versionFunc=function() return GetOPEngineVersion() end
+	else
+		versionFunc=function() return mm:GetGSVer() end
+	end
+	_ver:SetText					(versionFunc())
+	
+	_ver = xml:InitStatic("mod_version",self)
+	local txt = meceniy_utils.read_mod_ver("txt")
+	_ver:SetText(txt)
+end
+
+function main_menu:Show(f)
+	self.shniaga:SetVisibleMagnifier(f)
+end
+
+
+function main_menu:InitCallBacks()
+	-- new game
+	self:AddCallback("btn_novice",		ui_events.BUTTON_CLICKED,				self.OnButton_new_novice_game,		self)
+	self:AddCallback("btn_stalker",		ui_events.BUTTON_CLICKED,				self.OnButton_new_stalker_game,		self)
+	self:AddCallback("btn_veteran",		ui_events.BUTTON_CLICKED,				self.OnButton_new_veteran_game,		self)
+	self:AddCallback("btn_master",		ui_events.BUTTON_CLICKED,				self.OnButton_new_master_game,		self)
+	-- options																											
+	self:AddCallback("btn_options",     ui_events.BUTTON_CLICKED,				self.OnButton_options_clicked,		self)
+	-- load																												
+	self:AddCallback("btn_load",        ui_events.BUTTON_CLICKED,				self.OnButton_load_clicked,			self)
+	-- save																												
+	self:AddCallback("btn_save",		ui_events.BUTTON_CLICKED,				self.OnButton_save_clicked,			self)
+	self:AddCallback("btn_save_level",	ui_events.BUTTON_CLICKED,				self.OnButton_save_level_clicked,	self)
+	-- quit																												
+	self:AddCallback("btn_quit",		ui_events.BUTTON_CLICKED,				self.OnButton_quit_clicked,			self)
+	self:AddCallback("btn_quit_to_mm",	ui_events.BUTTON_CLICKED,				self.OnButton_disconnect_clicked,	self)
+	self:AddCallback("btn_ret",			ui_events.BUTTON_CLICKED,				self.OnButton_return_game,			self)
+	self:AddCallback("btn_lastsave",	ui_events.BUTTON_CLICKED,				self.OnButton_last_save,			self)
+	self:AddCallback("btn_credits",		ui_events.BUTTON_CLICKED,				self.OnButton_credits_clicked,		self)
+	-- message box																										
+	self:AddCallback("msg_box",     ui_events.MESSAGE_BOX_OK_CLICKED,		self.OnMsgOk,						self)
+	self:AddCallback("msg_box",     ui_events.MESSAGE_BOX_CANCEL_CLICKED,	self.OnMsgCancel,					self)
+	self:AddCallback("msg_box",     ui_events.MESSAGE_BOX_YES_CLICKED,		self.OnMsgYes,						self)
+	self:AddCallback("msg_box",     ui_events.MESSAGE_BOX_NO_CLICKED,		self.OnMsgNo,						self)
+	self:AddCallback("msg_box",			ui_events.MESSAGE_BOX_QUIT_GAME_CLICKED,self.OnMessageQuitGame,				self)
+	self:AddCallback("msg_box",			ui_events.MESSAGE_BOX_QUIT_WIN_CLICKED,	self.OnMessageQuitWin,				self)
+	--amk
+	-- self:AddCallback("btn_amk",		ui_events.BUTTON_CLICKED,				self.amk_options,		self)
+
+end
+function main_menu:OnMsgOk()
+	self.mbox_mode = 0
+end
+
+function main_menu:OnMsgCancel()
+	self.mbox_mode = 0
+end
+
+function main_menu:OnMsgYes()
+	
+	if 	self.mbox_mode == 1 then
+		self:LoadLastSave()	
+	end
+
+	self.mbox_mode = 0
+end
+
+function main_menu:OnMsgNo()
+	self.mbox_mode = 0
+end
+
+function main_menu:LoadLastSave()
+	ui_mm_opt_add.check_options()
+	
+	console:execute			("main_menu off")
+	console:execute			("load_last_save")
+end
+
+function main_menu:OnButton_last_save()
+	if not alife() or not db.actor or not db.actor:alive() then
+		self:LoadLastSave	();
+		return
+	end
+	
+	self.mbox_mode			= 1
+	self.message_box:Init	("message_box_confirm_load_save")
+	self:GetHolder():start_stop_menu(self.message_box, true)
+end
+
+function main_menu:OnButton_credits_clicked()
+	if f:exist("$game_settings$", "credits.ltx") ~= nil then 
+	--	console:execute("main_menu off")
+		game.start_tutorial("credits_seq")
+	end
+end
+
+function main_menu:OnButton_quit_clicked()
+	self.message_box:Init("message_box_quit_windows")
+	self:GetHolder():start_stop_menu(self.message_box, true)
+end
+
+
+function main_menu:OnButton_disconnect_clicked()
+	self.message_box:Init("message_box_quit_game")
+	
+	if (level.game_id() ~= 1) then		
+		self.message_box:SetText("ui_mm_disconnect_message")	-- MultiPlayer
+	else
+		self.message_box:SetText("ui_mm_quit_game_message")		-- SinglePlayer
+	end
+	self:GetHolder():start_stop_menu(self.message_box, true)
+end
+
+function main_menu:OnMessageQuitGame()
+	console:execute("disconnect")
+end
+
+function main_menu:OnMessageQuitWin()
+	archievements.save_gametime()
+	ui_mm_opt_add.check_options()
+	console:execute("quit")
+end
+
+function main_menu:OnButton_return_game()
+	ui_mm_opt_add.check_options()
+	console:execute("main_menu off")
+	archievements.mm_opt()
+	ui_mm_opt_add.buy_quest_item()
+end
+
+function main_menu:OnButton_new_novice_game()
+	console:execute("g_game_difficulty gd_novice")
+	self:StartGame()	
+end
+
+function main_menu:OnButton_new_stalker_game()
+	console:execute("g_game_difficulty gd_stalker")
+	self:StartGame()
+end
+
+function main_menu:OnButton_new_veteran_game()
+	console:execute("g_game_difficulty gd_veteran")
+	self:StartGame()
+end
+
+function main_menu:OnButton_new_master_game()
+	console:execute("g_game_difficulty gd_master")
+	self:StartGame()
+end
+
+function main_menu:StartGame()
+	ui_mm_opt_add.check_options()
+
+	if (alife() ~= nil) then
+		console:execute	("disconnect")	
+	end
+	
+	console:execute("start server(all/single/alife/new) client(localhost)")
+	console:execute("main_menu off")
+	archievements.on_new_game()
+end
+
+function main_menu:OnButton_save_clicked()
+	local save_dlg = ui_save_dialog.save_dialog()
+	save_dlg.owner = self
+	
+	self:GetHolder():start_stop_menu(save_dlg, true)
+	self:GetHolder():start_stop_menu(self, true) --new
+	self:Show(false)
+end
+
+function main_menu:OnButton_options_clicked()
+	local opt_dlg = ui_mm_opt_main.options_dialog()
+	opt_dlg.owner = self
+	
+	opt_dlg:UpdateControls()
+	self:GetHolder():start_stop_menu(opt_dlg, true)
+	self:GetHolder():start_stop_menu(self, true) --new
+	self:Show(false)
+	amk_mod.hud_update = true
+end
+
+function main_menu:OnButton_load_clicked()
+	local load_dlg = ui_load_dialog.load_dialog()
+	load_dlg.owner = self
+	
+	self:GetHolder():start_stop_menu(load_dlg, true)
+	self:GetHolder():start_stop_menu(self, true) --new
+	self:Show(false)
+end
+
+function main_menu:OnButton_save_level_clicked()
+	ui_mm_opt_add.check_options()
+	console:execute("main_menu off")
+    u3_utils.savegame_on_level()
+	archievements.mm_opt()
+end
+
+function main_menu:OnKeyboard(dik, keyboard_action)  --virtual function
+	CUIScriptWnd.OnKeyboard(self,dik,keyboard_action)
+--	local bind = dik_to_bind(dik)
+	
+	if keyboard_action == ui_events.WINDOW_KEY_PRESSED then
+		if dik == DIK_keys.DIK_ESCAPE then
+			if level.present() and (db.actor ~= nil) and db.actor:alive() then
+				ui_mm_opt_add.check_options()
+				console:execute("main_menu off")
+				archievements.mm_opt()
+				ui_mm_opt_add.buy_quest_item()
+			end
+			
+		elseif dik == DIK_keys.DIK_S then
+			if level.present() and (db.actor ~= nil) and db.actor:alive() then
+				self:OnButton_save_level_clicked()
+			end
+		
+		elseif dik == DIK_keys.DIK_L then
+			self:OnButton_last_save()
+
+		elseif 	dik == DIK_keys.DIK_Q then
+			self:OnMessageQuitWin()
+	--	elseif 	dik == DIK_keys.DIK_A then
+		--	if amk.check_game() then 
+				-- self:amk_options()
+		--	end	
+		elseif dik == DIK_keys.DIK_F4 then
+	          self:show_position_informer_window()	
+		end
+		
+	end
+   
+	return true
+end
+
+-- function main_menu:amk_options()
+-- -- если еще ни разу не вызывали, то обозначим наш новый скрипт
+	-- if self.amk_options_dlg == nil then
+		-- self.amk_options_dlg = ui_amk_options.amk_options()
+		-- self.amk_options_dlg.owner = self
+	-- end
+-- -- останавливаем родительский элемент, запускаем свой, но родителя показываем.
+	-- self:GetHolder():start_stop_menu(self.amk_options_dlg, true)
+	-- self:GetHolder():start_stop_menu(self, true)
+	-- self:Show(false)
+
+-- end
+
+function main_menu:show_position_informer_window()
+	if not db.debug_mode then return end
+	
+	if self.cheat_dlg == nil then
+		self.cheat_dlg = positioninformer.pi()
+		self.cheat_dlg.owner = self
+	end
+	self:GetHolder():start_stop_menu(self.cheat_dlg, true)
+	self:GetHolder():start_stop_menu(self, true)
+	self:Show(true)
+end
+
+function main_menu:InitGameSetupMenu()
+	if f:exist("$game_settings$", "game_setup.ltx") == nil then 
+		-- самый первый запуск, устанавливаем дефолтные значения опций
+		local f1 = f:update_path("$app_data_root$", "user.ltx")
+		local f2 = f:update_path("$game_settings$", "game_setup.ltx")
+		f:file_copy(f1, f2)
+		f2 = f:update_path("$game_settings$", user_name()..".name")
+		f:file_copy(f1, f2)
+--		f2 = f:update_path("$game_settings$", "autochange_difficulty.ltx")
+--		f:file_copy(f1, f2)
+		f2 = f:update_path("$game_settings$", "dynamic_bioradar.ltx")
+		f:file_copy(f1, f2)
+		f2 = f:update_path("$game_settings$", "autosave_enable.ltx")
+		f:file_copy(f1, f2)
+		f2 = f:update_path("$game_settings$", "pause_on_load.ltx")
+		f:file_copy(f1, f2)
+		f2 = f:update_path("$game_settings$", "animations.ltx")
+		f:file_copy(f1, f2)
+		f2 = f:update_path("$game_settings$", "autograb_body.ltx")
+		f:file_copy(f1, f2)
+		f2 = f:update_path("$game_settings$", "new_sms.ltx")
+		f:file_copy(f1, f2)
+--		f2 = f:update_path("$game_settings$", "fast_respawn.ltx")
+--		f:file_copy(f1, f2)
+--		f2 = f:update_path("$game_settings$", "transparent_treasure.ltx")
+--		f:file_copy(f1, f2)
+	end
+end
+
+if ui_mm_opt_main.GetOption("pause_on_load") then 
+	autopause.main()
+end

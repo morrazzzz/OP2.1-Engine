@@ -1,0 +1,49 @@
+[smart_terrains]
+none = true
+
+[logic]
+active = walker@partizan1
+combat_ignore = combat_ignore
+
+[walker@partizan1]
+path_walk = x18_partizan_walk
+path_look = x18_partizan_look
+meet = meet1
+danger = danger_ignore
+combat_ignore_cond = always
+on_info = {+mina_partizan_fail} walker@partizan2 %=actor_enemy =killactor%
+
+[walker@partizan2]
+path_walk = x18_partizan_walk
+path_look = x18_partizan_look
+meet = meet2
+danger = danger_ignore
+combat_ignore_cond = always
+on_actor_dist_le = 8| walker@partizan3
+
+[walker@partizan3]
+path_walk = x18_partizan_walk
+path_look = x18_partizan_look
+meet = meet2
+
+[meet1]
+meet_state = 40| threat
+meet_state_wpn = 40| threat
+victim = 40| actor
+victim_wpn = 40| actor
+use = true
+use_wpn = false
+
+[meet2]
+meet_state = 40| threat
+meet_state_wpn = 40| threat
+victim = 40| actor
+victim_wpn = 40| actor
+use = false
+use_wpn = false
+
+[danger_ignore]
+ignore_distance = 0
+
+[combat_ignore]
+combat_ignore_cond = always

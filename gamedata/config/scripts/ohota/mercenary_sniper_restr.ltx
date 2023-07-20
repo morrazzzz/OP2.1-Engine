@@ -1,0 +1,10 @@
+[logic]
+active = sr_idle1
+ 
+[sr_idle1]
+on_actor_outside = sr_idle2 {-knife_akill_done} %=akill.mercenary_sniper_spawn%
+on_info = {+knife_akill_done} nil
+ 
+[sr_idle2]
+on_actor_inside = {-knife_akill_done} nil
+on_info = {+knife_akill_done} nil

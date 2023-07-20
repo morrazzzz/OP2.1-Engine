@@ -1,0 +1,14 @@
+;-- transiever in bar backroom
+
+[logic]
+active = ph_sound@noise
+
+[ph_sound@noise]
+snd = bar_transiever
+on_signal = sound_end|ph_idle@wait
+
+[ph_idle@wait]
+on_timer = 10000| ph_sound@noise
+
+
+

@@ -1,0 +1,124 @@
+--' проверим наличие мозга
+function anarh_mozg_have()
+	return has("mozg",2)
+end 
+
+--' отдадим мозг Лукашуи получим награду 
+function anarh_mozg_done(first_speaker, second_speaker)
+	lost("mozg",2)
+	got("af_kol_4")
+	second_speaker:set_relation(game_object.friend, first_speaker)
+end
+
+--' спавним нашу маскировочную экзу в саркофаге
+function ekza_sarcofag()
+	create("meceniy_outfit_new",xyz(37.431274414063,56.184043884277,32.08748626709),4591,2417)
+end
+
+--' проверим наличие финансов
+function arhara_have_money_300000(actor,npc)
+    return actor:money() > 300000
+end
+
+--' отдадим их Лукашу
+function arhara_give_money_300000(actor, npc)    
+    lost_money(300000)
+end
+
+--' заспавним листок Стрелка и телепорт в Саркофаге
+function sp_listok()
+	create("arhara_listok",xyz(37.540,56.258,31.288),6321,2417)
+	create("arhara_obman5",xyz(37.765,56.252,32.024),6321,2417)
+end
+
+--' заспавним микросхемы
+function microshema()
+	create("microshema",xyz(-111.194,-29.847,-394.991),145881,22)
+	create("microshema",xyz(-111.194,-29.847,-394.991),145881,22)
+	create("microshema",xyz(-111.151,-29.880,-395.110),145881,22)
+	create("microshema",xyz(-111.053,-29.826,-395.174),145881,22)
+	create("microshema",xyz(-111.105,-29.848,-395.166),145881,22)
+	create("microshema",xyz(-111.158,-29.863,-394.991),145881,22)
+	create("microshema",xyz(-111.158,-29.863,-394.991),145881,22)
+	create("microshema",xyz(-111.133,-29.803,-394.744),145881,22)
+	create("microshema",xyz(-111.176,-29.858,-394.993),145881,22)
+	create("microshema",xyz(-111.176,-29.858,-394.993),145881,22)
+	create("microshema",xyz(-111.176,-29.858,-394.993),145881,22)
+	create("microshema",xyz(-111.516,-29.804,-394.496),144941,22)
+	create("microshema",xyz(-110.728,-29.803,-394.339),145881,22)
+end
+
+--' проверим наличие вывертов и микросхем
+function dolgovyzui_lentyi_have() 
+	return has("af_vyvert",5) and
+	has("microshema",10)
+end
+
+--' отдадим выверты
+function dolgovyzui_lentyi_done(first_speaker, second_speaker)
+	lost("af_vyvert",5)
+	lost("microshema",10)
+	got("wpn_sv98",1)
+	got("ammo_7.62x54_7h14",1)
+end
+
+--' проверим наличие финансов для Долговязого
+function dolgovyzui_have_money_50000(actor,npc)
+    return actor:money() > 50000
+end
+
+--' отдадим деньги
+function dolgovyzui_give_money_50000(t1,t2) 
+	lost_money(50000)
+end
+
+--' спавним фляжку Пертенко
+function flyga_spawn()
+	create("flyga",xyz(238.317,-0.011,5.41),59484,1262)
+end
+
+--' проверим наличие фляжки для Петренко
+function flyga_naity_have()
+	return has("flyga",1)
+end
+
+--' отдадим фляжку
+function flyga_naity_done(first_speaker, second_speaker)
+	lost("flyga",1)
+end
+
+--' получим бабки от Петренко
+function petrenko_vzyt_30000(t1,t2)
+	got_money(30000)
+end
+
+--' проверим наличие финансов для Гарика
+function garik_money_20000(actor,npc)
+   return actor:money() > 20000
+end
+
+--' проверим наличие сигарет
+function garik_vopros_have() 
+	return has("sigaret",10)
+end
+
+--' отдадим деньги Гарику
+function garik_give_20000(t1,t2)
+	lost_money(20000)
+end
+
+--' отдадим сигареты Гарику
+function garik_vopros_done(first_speaker, second_speaker)
+	lost("sigaret",10)
+end
+
+--' спавним большие термосы
+function termos_big_spawn()
+	create("termos_big",xyz(-93.859214782715,-20.037916564941,222.6757232666),220725,1734) -- ас
+	create("termos_big",xyz(101.65575408936,0.15658415555954,302.86987304688),396080,1775) -- ас
+	create("termos_big",xyz(-69.140277709961,-1.8591649150848,20.138668060303),134381,330) -- свалка
+	create("termos_big",xyz(-133.96228027344,2.6039491271973,-274.9045715332),78415,3377) -- болота
+	create("termos_big",xyz(503.15352783203,4.2132781028748,-153.01805114746),481333,3563) -- болота
+	create("termos_big",xyz(-263.44686889648,0.70789569139481,18.802749633789),5804,1395) -- дт
+end
+

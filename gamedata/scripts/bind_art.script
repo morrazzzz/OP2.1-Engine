@@ -1,0 +1,43 @@
+-- Author: Dennis_Chikin (AMK-forum)
+
+class "art_binder" ( object_binder )
+
+function art_binder:__init( item ) super( item )
+	self.need_extrude = true
+end
+
+function art_binder:update( delta )
+	object_binder.update( self, delta )
+
+	if self.need_extrude then
+		local item = self.object
+		local ps = item:get_physics_shell()
+		if ps and not item:parent() then
+			local impulse = item:mass() * 1300
+			ps:apply_force( 0, impulse, 0 )
+		--	log("--extrude artefact [%s]", item:section())
+		end
+		self.need_extrude = nil
+	end
+end
+
+function art_binder:net_spawn( obj )
+	if not object_binder.net_spawn( self, obj ) then return false end
+
+	bind_det_arts.add_artefact(self.object:section(), self.object:id())
+
+	return true 
+end 
+
+function art_binder:net_destroy()
+	if server_object(self.object:id()) == nil then
+		db.artefacts[self.object:id()] = nil
+	end
+
+	object_binder.net_destroy(self)
+end
+
+---------------------------------------------------------------------------------
+function bind( item )
+	item:bind_object( art_binder( item ) )
+end 

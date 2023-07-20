@@ -1,0 +1,97 @@
+-- Хабарохранилище
+
+function init(obj) -- привязка биндера
+	db.storage[obj:id()] = { }
+	local new_binder = SafeBinder(obj)
+	obj:bind_object(new_binder)
+end
+
+class "SafeBinder" (object_binder) --биндер
+function SafeBinder:__init(obj) super(obj)
+	self.binderDataTable={}
+	self.classname="SafeBinder"
+	self.object:set_nonscript_usable(false)
+end
+
+function SafeBinder:reinit()
+	object_binder.reinit(self)
+	db.storage[self.object:id()] = { }
+end
+
+function SafeBinder:update(delta)
+	object_binder.update(self, delta)
+end
+ 
+ function SafeBinder:net_spawn(data)
+	if not object_binder.net_spawn(self, data) then
+		return false
+	end
+	if not safe_StealManager.GetStealManagerClass():IsStolen(self.object:id()) then --если украден - то не надо цеплять калбек и текст
+		self.object:set_tip_text(game.translate_string("st_search_treasure")) --в связи с тем что это O_PHYS_S добавляем строку при взгляде на него
+		self.object:set_callback(callback.use_object, SafeBinder.use_callback, self) --если вызывать это в reinit/init - не биндиться, в update тоже не хорошо
+	end
+	return true
+end
+
+function SafeBinder:net_destroy()
+	self.object:set_callback(callback.use_object, nil)
+	db.storage[self.object:id()] = nil
+	object_binder.net_destroy(self)
+end
+ 
+function SafeBinder:net_save_relevant()
+	return true
+end 
+
+function SafeBinder:save(packet) --сохраняем данные в нетпакет объекта
+	object_binder.save(self, packet)
+	for section,data in pairs(self.binderDataTable) do
+		packet:w_stringZ(section) --секция с износом , разделитель '&'
+		packet:w_u8(data.itemsType) --тип
+		packet:w_u16(data.count) --количество
+	end
+end
+
+function SafeBinder:load(reader) --читаем данные из нетпакета объекта
+	object_binder.load(self, reader)
+	local section, it, cnt
+	while not reader:r_eof() do
+		section = reader:r_stringZ() --секция с износом , разделитель '&'
+		it = reader:r_u8() --тип
+		cnt = reader:r_u16() --количество
+		self.binderDataTable[section]={count=cnt,itemsType=it}  --итоговая таблица
+	end
+end
+
+function SafeBinder:use_callback(obj, who)
+	if not safe_StealManager.GetStealManagerClass():IsStolen(self.object:id()) then --ложил он на set_nonscript_usable, поему просто игнорим
+		local storageViewer = safe_StorageViewer.StorageViewer(self)
+		level.start_stop_menu(storageViewer,true)
+	end
+end
+ 
+function SafeBinder:reload(section)
+	object_binder.reload(self, section)
+end
+
+function SafeBinder:CopyDataFrom(dataBuffer)
+	self.binderDataTable=nil
+	self.binderDataTable=safe_utils.DataDeepCopy(dataBuffer)
+end
+
+function SafeBinder:CopyOfData()
+	return safe_utils.DataDeepCopy(self.binderDataTable)
+end
+
+function SafeBinder:DumpDataTable()
+	safe_utils.print_r(self.binderDataTable)
+end
+
+function SafeBinder:GetDataSize() --считаем объем текущей таблицы данных
+	local size=0
+	for section in pairs(self.binderDataTable) do
+		size=size+section:len()+1 --[[размер секции +1 на длинну ]] + 1 --[[байт для типа]] + 2 --[[2-а байта на количество 65к максимум]]
+	end
+	return size
+end
+

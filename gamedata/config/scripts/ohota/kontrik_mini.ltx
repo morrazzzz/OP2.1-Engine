@@ -1,0 +1,11 @@
+[smart_terrains]
+none = true
+ 
+[logic]
+active = mob_home
+ 
+[mob_home]
+path_home = marsh_kontrik_mini_home
+home_min_radius = 15
+home_max_radius = 20
+on_use = {=actor_has_item(vodka) =mini_alkash_ready} %=akill.kontrik_mini_kick%

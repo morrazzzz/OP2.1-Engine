@@ -1,0 +1,34 @@
+[logic]
+active = remark@voin_sidass1
+combat_ignore = combat_ignore
+meet = meet
+
+[remark@voin_sidass1]
+anim = sit_knee
+snd = help_heavy 
+meet = meet@rana
+target = nil
+combat_ignore_cond = always
+on_info = {+info_cold_death} remark@work
+
+[remark@work] 
+anim = wounded_heavy_3 
+snd = help_heavy 
+meet = meet@rana 
+combat_ignore_cond = always
+on_actor_dist_le = 3|remark@voin_sidass1
+
+
+[meet@rana] 
+meet_state = 2|wounded_heavy_3 
+meet_state_wpn = 2|wounded_heavy_3 
+;victim = 3|actor 
+;victim_wpn = 3|actor 
+use = true 
+use_wpn = true
+
+[smart_terrains] 
+none = true
+
+[spawner]
+cond = {-info_dictofon_8}

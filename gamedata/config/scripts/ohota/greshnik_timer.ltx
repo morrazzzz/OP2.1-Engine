@@ -1,0 +1,13 @@
+[logic]
+active = sr_idle
+ 
+[sr_idle]
+on_actor_inside = sr_timer
+ 
+[sr_timer]
+type = dec
+start_value = 540000
+argb = 255,255,255,255
+on_value = 300000 | %+greshnik_killer_spawn% | 0 | nil %+greshnik_trap_have%
+on_info = {+greshnik_trap_fail} nil
+string = st_time_survive

@@ -1,0 +1,155 @@
+; Trader
+[m_trader]:base
+class						= AI_TRD_S ;AI_TRADE
+visual						= actors\trader\trader
+rank						= 1
+script_binding		 			= bind_trader.bind
+; format : section{,section},count,min_factor,max_factor, ...
+supplies					= grenade_f1,15,0,1.0, ammo_5.45x39_ap,ammo_5.45x39_fmj,50,0,1.0, ammo_5.56x45_ap,ammo_5.56х45_ss190,50,0,1.0, ammo_9x19_fmj,50,0,1.0, ammo_7.62x54_ap,10,0,1.0, ammo_og-7b,10,0,1.0 
+max_item_mass				= 10000.0
+
+ef_creature_type			= 1							; option for evaluation functions
+ef_weapon_type				= 1
+
+scheduled		     = on						; option for ALife Simulator
+Human		     	 = off						; option for ALife Simulator
+Health			     = 40						; option for ALife Simulator
+MinSpeed		     = 1.0						; option for ALife Simulator
+MaxSpeed		     = 1.5						; option for ALife Simulator
+going_speed          = 1.0                      ; option for ALife Simulator
+
+ph_box0_center 		 = 0.0,  0.9,  0.0
+ph_box0_size 		 = 0.35, 0.9,  0.35
+ph_box1_center 		 = 0.0,  0.6,  0.0
+ph_box1_size 		 = 0.40, 0.6,  0.40
+ph_crash_speed_min   = 8;16
+ph_crash_speed_max   = 16;30
+ph_mass 		     = 170.
+cost			     = 1000
+
+
+Health				 = 100.0
+money				 = 1000000
+
+immunities_sect				= trader_immunities
+condition_sect				= trader_condition
+
+; attach params
+attachable_items		= 
+
+
+;species of monster
+species				= human
+
+[trader_foot_bones]
+front_left	= bip01_l_foot
+front_right	= bip01_r_foot
+
+[trader_step_manager]
+; order: left, right
+;	animation				Cycles	| time1 | power1 | time2 | power2 | 
+
+[barman_movement_speeds]
+;barman can't crouch or run
+	; danger
+	;; crouch
+	;;; walk
+	danger_crouch_walk_forward	= 0.8
+	danger_crouch_walk_backward	= 0.575
+	danger_crouch_walk_left		= 0.8
+	danger_crouch_walk_right	= 0.8
+	;;; run						  
+	danger_crouch_run_forward	= 2.0
+	danger_crouch_run_backward	= 1.1
+	danger_crouch_run_left		= 2.0
+	danger_crouch_run_right		= 2.0
+	;; stand
+	;;; walk
+	danger_stand_walk_forward	= 1.2
+	danger_stand_walk_backward	= 1.2
+	danger_stand_walk_left		= 1.2
+	danger_stand_walk_right		= 1.2
+	;;; run
+	danger_stand_run_forward	= 5.0
+	danger_stand_run_backward	= 1.5
+	danger_stand_run_left		= 5.0
+	danger_stand_run_right		= 5.0
+	; free
+	;; stand
+	;;; forward
+	free_stand_walk_forward		= 0.85
+	free_stand_run_forward		= 2.5
+	; panic
+	;; stand
+	;;; run
+	;;;; forward
+	panic_stand_run_forward		= 6.5
+
+[m_osoznanie]:stalker
+SpaceRestrictionSection = space_restrictor
+immunities_sect		 = osoznanie_immunities
+need_osoznanie_mode  = true
+
+[osoznanie_immunities]
+burn_immunity 				= 0.0
+strike_immunity 			= 0.0
+shock_immunity 				= 0.0
+wound_immunity				= 0.0
+radiation_immunity 			= 0.0
+telepatic_immunity 			= 0.0
+chemical_burn_immunity 		= 0.0
+explosion_immunity 			= 0.0
+fire_wound_immunity  		= 0.0
+
+
+[m_barman]:stalker
+SpaceRestrictionSection = space_restrictor
+money				 = 100000;
+
+visual				 = actors\barman\barman.ogf
+use_single_item_rule = false
+can_select_items	 = off
+
+movement_speeds					= barman_movement_speeds;
+
+;entity condition
+immunities_sect				= trader_immunities
+condition_sect				= trader_condition
+
+material				= creatures\human
+
+[trader_immunities]
+burn_immunity 				= 0.0
+strike_immunity 			= 0.0
+shock_immunity 				= 0.0
+wound_immunity				= 0.0
+radiation_immunity 			= 0.0
+telepatic_immunity 			= 0.0
+chemical_burn_immunity 		= 0.0
+explosion_immunity 			= 0.0
+fire_wound_immunity  		= 0.0
+
+[trader_condition]
+satiety_v					= 0.0				;скорость уменьшения сытости со временем
+radiation_v					= 1.0				;скорость уменьшения радиации
+satiety_power_v				= 1.0				;увеличение силы при уменьшении сытости 
+satiety_health_v			= 1.0				;увеличение здоровья при уменьшении сытости 
+satiety_critical			= 0.0				;критическое значения сытости (в процентах от 0..1) когда здоровье начианает уменьшаться
+radiation_health_v			= 0.0				;уменьшение здоровья при воздействии радиации
+morale_v					= 0.0				;скорость восстановления морали 						
+health_hit_part				= 1.0				;процент хита, уходящий на отнимание здоровья
+power_hit_part				= 0.1				;процент хита, уходящий на отнимание силы
+psy_health_v				= 0.1				;скорость восстановления psy-здоровья
+
+;открытые раны
+bleeding_v					= 0.0				;потеря крови при номинальной ране в секунду
+wound_incarnation_v			= 1.0				;крутизна кривой заживления (какой процент раны заживет в игровую секунду)
+min_wound_size				= 1.0				;минимальный размер раны, после которого она считается зажившей
+
+sleep_health				= 1.0		;1.5				;коэффициенты скоростей изменения параметров во время сна
+sleep_power					= 1.0		;1.5
+sleep_satiety				= 1.0		;0.8
+sleep_radiation				= 1.0		;1.1
+sleep_psy_health			= 1.0
+
+

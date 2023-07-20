@@ -1,0 +1,147 @@
+-- √енераторы описани€ дл€ script_description
+
+-- ““’ Ѕрони
+function outfit(obj)
+	local section = obj:section()
+	local cond = obj:condition()
+	local txt = ""
+	local value
+
+	-- «ащиты
+	local info = {
+		"burn",
+		"shock",
+		"strike",
+		"wound",
+		"radiation",
+		"telepatic",
+		"chemical_burn",
+		"explosion",
+		"fire_wound",
+	}
+	for _, item in ipairs(info) do
+		value = math.floor(config:r_float(section, item.."_protection")*100)
+		if value > 0 then
+			txt = txt.."%c[255,255,255,255]"..game.translate_string("ui_inv_outfit_"..item.."_protection").."%c[255,1,255,1] +"..math.round(value*cond).."%\\n"
+		end
+	end
+	
+	txt = txt.." \\n"
+	
+	-- ћодификаторы
+	info = {
+		["health"] = "+",
+		["satiety"] = "+",
+		["power"] = "+",
+		["bleeding"] = "-",
+	}
+	for item, v in pairs(info) do
+		if config:line_exist(section, item.."_restore_speed") then
+			value = math.round(config:r_float(section, item.."_restore_speed")*1000,1)
+			txt = txt.."%c[255,255,255,255]"..game.translate_string("ui_inv_"..item).."%c[255,1,255,1] "..v..math.round(value*cond).."%\\n"
+		end
+	end
+
+	if config:line_exist(section, "power_loss") then
+		value = math.round(config:r_float(section, "power_loss")*100,1)
+		txt = txt.."%c[255,255,255,255]"..game.translate_string("ui_inv_power_loss").."%c[255,255,1,1] +"..math.round(value*cond).."%\\n"
+	end
+
+	value = config:r_s32(section, "additional_inventory_weight")
+	if value > 0 then
+		txt = txt.."%c[255,255,255,255]"..game.translate_string("ui_inv_outfit_additional_inventory_weight").."%c[255,1,255,1] +"..math.round(value*cond).."кг\\n"
+	end
+
+	txt = txt.."%c[default] \\n"
+	return txt
+end
+
+-- ѕараметры стволов
+local zoom = {
+	[100] = 1,
+	[93] = 1.2,
+	[75] = 1.5,
+	[70] = 1.6,
+	[65] = 1.8,
+	[56] = 2,
+	[45] = 2.5,
+	[37] = 3,
+	[32] = 3.5,
+	[28] = 4,
+	[25] = 4.5,
+	[22] = 5,
+	[20] = 5.5,
+	[18] = 6,
+	[16] = 7,
+	[14] = 8,
+	[12] = 9,
+	[11] = 10,
+	[10] = 11,
+	[9] = 12,
+	[8] = 14,
+	[7] = 16,
+	[6] = 18,
+	[5] = 22
+}
+
+function weapon(obj)
+	local section = obj:section()
+	local txt = "%c[255,255,255,255]"
+	local value
+	
+	txt = txt.."Ѕоеприпасы:"
+	value = string.explode(config:r_string(section, "ammo_class"), ",", true)
+	for _, ammo in ipairs(value) do
+		txt = txt.."\\n Х "..game.translate_string(config:r_string(ammo, "inv_name"))
+	end
+	
+	if config:line_exist(section, "grenade_class") and config:r_u32(section, "grenade_launcher_status") > 0 then
+		value = string.explode(config:r_string(section, "grenade_class"), ",", true)
+		for _, ammo in ipairs(value) do
+			txt = txt.."\\n Х "..game.translate_string(config:r_string(ammo, "inv_name"))
+		end
+	end
+
+	if config:line_exist(section, "silencer_fire_distance") then
+		txt = txt.."\\n Х эффективна€ дальность "..config:r_u32(section, "silencer_fire_distance").." м"
+	end
+	txt = txt.."\\n Х прицельна€ дальность "..config:r_u32(section, "fire_distance").." м"
+	txt = txt.."\\n Х скорострельность "..config:r_u32(section, "rpm").." в/м"
+	txt = txt.."\\n Х Ємкость магазина "..config:r_u32(section, "ammo_mag_size").." патронов"
+
+	-- ќбвесы
+	local obves = ""
+	obves = obves..weapon_addon(section, "scope")..weapon_addon(section, "silencer")..weapon_addon(section, "grenade_launcher")
+	if obves ~= "" then
+		txt = txt.."\\nќбвесы:"..obves
+	end
+
+	txt = txt.."%c[default] \\n"
+	return txt
+end
+
+-- ќписание обвеса
+function weapon_addon(section, addon_name)
+	local addon = config:r_u32(section, addon_name.."_status")
+	local txt = ""
+
+	if addon == 1 then		-- »нтегрированный
+		txt = txt.."\\n Х »нтегрированный "..game.translate_string(addon_name)
+		
+		if addon_name == "scope" then
+			local zoom_factor = config:r_u32(section, "scope_zoom_factor")
+			txt = txt..(zoom[zoom_factor] and " "..zoom[zoom_factor].."x" or "")
+		end
+
+	elseif addon == 2 then	-- —ъемный
+		--txt = txt.."\\n Х "..game.translate_string("ui_"..addon_name).." "..game.translate_string(config:r_string(config:r_string(section, addon_name.."_name"), "inv_name"))
+		txt = txt.."\\n Х "..game.translate_string(config:r_string(config:r_string(section, addon_name.."_name"), "inv_name"))
+	end
+
+	return txt
+end
+
+-- "ѕустое" описание
+function none(obj)
+	return ""
+end

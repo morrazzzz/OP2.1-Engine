@@ -1,0 +1,334 @@
+;;;;;;;;;;;;;;;;;;;;;;; USP-45 «Tactical» ;;;;;;;;;;;;;;;;;;;;;
+[wpn_usp]:WP_USP45
+min_radius               			= 0
+max_radius                  			= 30
+description				= enc_weapons1_wpn-usp
+
+ef_weapon_type				= 5
+
+holder_range_modifier			= 1.0
+holder_fov_modifier			= 1.0 
+
+cost					 = 1500
+
+ammo_limit		 		= 120
+ammo_current		 		= 96
+ammo_elapsed		 		= 12
+
+ammo_mag_size		 		= 12
+ammo_class		 		= ammo_11.43x23_fmj, ammo_11.43x23_hydro 
+
+hand_dependence		 		= 1
+single_handed				= 1
+
+slot 			 		= 1
+animation_slot				= 1
+
+inv_name				= wpn_usp
+inv_weight				= .82
+
+inv_grid_width				= 2
+inv_grid_height				= 1
+inv_grid_x				= 14
+inv_grid_y				= 57
+
+fire_dispersion_base		= 0.16
+cam_relax_speed         	= 9.7	;скорость возврата в исходное положение
+cam_dispersion          	= 0.6	;увеличения угла (в градусах) с каждым выстрелом
+cam_dispersion_inc		= 0.0	;увеличениe cam_dispersion с каждым выстрелом
+cam_dispertion_frac		= 0.25	;ствол будет подыматься на cam_dispersion*cam_dispertion_frac +- cam_dispersion*(1-cam_dispertion_frac)
+cam_max_angle			= 6.0	;максимальный угол отдачи
+cam_max_angle_horz		= 8.0	;(degree) maximum shot horizontal degree 
+cam_step_angle_horz		= 0.16	;(degree) size of step camera moved in horizontal position while shooting
+
+fire_dispersion_condition_factor = 5	;увеличение дисперсии в процентах при максимальном износе 
+misfire_probability 		 = 0.0015	    ;вероятность осечки при максимальном износе 
+misfire_condition_k		 = 0.05
+condition_shot_dec 		 = 0.000075	;увеличение износа при каждом выстреле
+
+direction                				= 0, 0, 1
+fire_point               				= 0.0, 0.132, 0.170
+
+flame_particles		   		= weapons\generic_weapon03
+smoke_particles		   		= weapons\generic_shoot_00
+
+shell_point		 		= 0.0, 0.132, 0.03
+shell_dir		 		= 0.0, 0.0, 0.4
+shell_particles	 			= amik\weapons\45\45_r ;weapons\arsenal_shells1
+
+rpm_empty_click 	 			= 200
+
+PDM_disp_base 				= 1.0
+PDM_disp_vel_factor 			= 0.6
+PDM_disp_accel_factor 			= 0.6
+PDM_crouch	 			= 1.0
+PDM_crouch_no_acc 			= 1.0
+
+hit_power           = 0.62
+hit_impulse	    = 54
+hit_type 	    = fire_wound
+hit_rate	    = 1.85
+fire_distance       = 65 
+bullet_speed	    = 385
+rpm                 = 350
+
+use_aim_bullet				= true
+time_to_aim				= 1.0	
+
+silencer_hit_power       	= 0.58
+silencer_hit_impulse	 	= 46
+silencer_fire_distance   	= 60
+silencer_bullet_speed	 	= 345
+
+hud                      				= wpn_usp_hud
+normal                   				= 0, 1, 0
+position                 				= -0.021, -0.085, -0.0055
+orientation              				= 0, 0, 0
+
+visual                   				= weapons\usp_45\wpn_usp_tact.ogf
+
+light_color		 		= 0.6,0.5,0.3
+light_range		 		= 4.0
+light_var_color		 		= 0.05
+light_var_range		 		= 0.5
+light_time 		 		= 0.2
+
+ph_mass			 		= 1
+
+scope_status				= 0
+silencer_status				= 2
+grenade_launcher_status			= 0
+
+zoom_enabled				= true
+scope_zoom_factor	    		= 56
+
+snd_draw					= weapons\usp\pistol_draw
+snd_holster					= weapons\usp\pistol_holster
+snd_shoot					= weapons\usp\usp_shoot_45, 1.5
+snd_empty					= weapons\usp\usp_empty
+snd_reload				        = weapons\usp\reload
+snd_close					= weapons\usp\usp_close
+snd_silncer_shot			        = weapons\usp\usp_shoot_sil
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; silencer
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+silencer_name  				= wpn_addon_sil_1143_p
+silencer_x 					= 74
+silencer_y 					= -16
+
+silencer_smoke_particles 		= weapons\generic_shoot_00
+silencer_light_color			= 0.6,0.5,0.3
+silencer_light_range			= 2
+silencer_light_var_color		= 0.05
+silencer_light_var_range		= 0.5
+silencer_light_time 			= 0.2
+ 
+[wpn_usp_hud]
+shell_point				= 0.00, 0.0015, -0.4250 ;0.0000,0.250000,-0.2500 ;0,0,-0.5
+fire_point				= 0,0,-0.35
+fire_bone                			= muzzle
+position             				= 0.003,-0.1895,0.039
+orientation                 			= 2,2,0
+visual                   				= weapons\usp_45\wpn_usp_tact_hud.ogf
+
+anim_holster				= holster
+anim_idle				= idle
+anim_empty				= idle_empty
+anim_reload				= reload
+anim_reload_empty			= reload_empty
+anim_draw				= draw
+anim_draw_empty				= draw_empty
+anim_shoot				= shoot
+anim_shot_last				= shoot_last
+anim_close				= holster_empty
+anim_idle_aim				= idle_aim
+anim_idle_sprint			= idle_sprint
+
+zoom_offset				= -0.121000,0.076900,-0.011
+zoom_rotate_x				= 0.035200
+zoom_rotate_y				= 0.034400
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;; USP-40 «Expert» ;;;;;;;;;;;;;;;;;;;;;;;;;;
+[wpn_usp_40]:wpn_usp
+description				= enc_weapons1_wpn-usp_40
+inv_name				= wpn_usp_40
+
+ammo_mag_size		 		= 16
+ammo_class		 		= ammo_40sw_hp, ammo_40sw_ap
+
+inv_weight				= 1.04
+
+inv_grid_x         = 72
+inv_grid_y         = 32
+
+fire_point               	= 0.0, 0.132, 0.17
+
+shell_point		 	= 0.0, 0.127, 0.03
+
+hud                      	= wpn_usp_40_hud
+position                 	= -0.021, -0.09, -0.011
+
+visual                   	= weapons\usp_45\wpn_usp_45.ogf
+
+silencer_x 					= 72
+silencer_y 					= -16		
+
+;snd_shoot					= weapons\usp\usp_shoot_40
+snd_reload					= weapons\aps\aps_reload, 2.5
+
+ 
+[wpn_usp_40_hud]
+
+shell_point			= 0.0000,0.350000,-0.0500
+fire_point			= 0.000000,0.37500,-0.067500  
+fire_bone                	= wpn_body
+orientation              	= 0,0,0
+position                 	= 0.05,0,0.35
+visual                   	= weapons\usp_45\wpn_usp_45_hud.ogf
+
+anim_holster				= holster
+anim_idle				= idle
+anim_empty				= empty
+anim_reload				= reload_full
+anim_reload_empty			= reload
+anim_draw				= draw
+anim_draw_empty				= draw_empty
+anim_shoot				= shoot
+anim_shot_last				= shoot_last
+anim_close				= holster ;close
+anim_idle_aim				= idle_aim
+anim_idle_sprint			= idle_sprint
+
+;смещения HUD для режима приближения
+zoom_offset		= -0.127400,0.027500,-0.180000
+zoom_rotate_x		= -0.002500
+zoom_rotate_y		= 0.000805
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;; USP P8 под 9х19 ;;;;;;;;;;;;;;;;;;;;;;;;;;
+[wpn_usp_9]:wpn_usp
+description				= enc_weapons1_wpn-usp_9
+inv_name				= wpn_usp_9
+
+ammo_mag_size		 		= 15
+ammo_class		 		= ammo_9x19_fmj, ammo_9x19_pbp
+
+inv_weight				= 0.75
+
+inv_grid_x         = 72
+inv_grid_y         = 33
+
+fire_point               	= 0.0, 0.132, 0.185
+shell_point		 	= 0.0, 0.132, 0.03
+position                 	= -0.021, -0.088, -0.010
+visual                   				= weapons\usp_45\wpn_usp_9.ogf
+hud                      	= wpn_usp_9_hud
+
+hit_power           = 0.65
+bullet_speed	    = 415
+
+silencer_hit_power       	= 0.62
+silencer_bullet_speed	 	= 375
+
+silencer_name  				= wpn_addon_sil_9_p
+silencer_x 					= 66
+silencer_y 					= -15
+
+snd_shoot					= weapons\usp\usp_shoot, 2.5
+snd_silncer_shot			        = weapons\usp\usp_shot_sil
+
+[wpn_usp_9_hud]
+shell_point		        	= 0.03, 0.012, -0.145
+
+fire_point				= 0,0.031,-0.25
+fire_bone                	= wpn_body
+orientation              	= 0,0,0
+position                 	= -0.022,-0.150,0 
+visual                   	= weapons\usp_45\wpn_usp_9_hud.ogf
+
+anim_holster				= holster
+anim_idle				= idle
+anim_empty				= idle_empty
+anim_reload				= reload
+anim_reload_empty			= reload_full     ;reload_empty
+anim_draw				= draw
+anim_draw_empty				= draw_empty
+anim_shoot				= shoot
+anim_shot_last				= shoot_last
+anim_close				= holster 
+anim_idle_aim				= idle_aim
+anim_idle_sprint			= idle_sprint
+
+;смещения HUD для режима приближения
+zoom_offset		= -0.093500,0.03150,-0.01100
+zoom_rotate_x		= -0.00100 
+zoom_rotate_y		= -0.00200
+
+
+;;;;;;;;;;;;;;; USP Match под .44 Магнум ;;;;;;;;;;;;;;;;
+[wpn_usp_44]:wpn_usp
+description				= enc_weapons1_wpn-usp_44
+inv_name				= wpn_usp_44
+cost					= 2500
+
+ammo_mag_size		 		= 10
+ammo_class		 		= ammo_44mag_hp, ammo_44mag_ap
+
+inv_weight				= 1.08
+inv_grid_width	   = 3
+inv_grid_height	   = 2
+inv_grid_x         = 43
+inv_grid_y         = 54
+
+fire_point               	= 0.0, 0.120, 0.210
+shell_point		 	= 0.0, 0.132, 0.03
+position                 	= -0.021, -0.09, 0.0
+
+hit_power           = 0.87
+hit_impulse	    = 64
+fire_distance       = 75 
+bullet_speed	    = 465
+silencer_hit_power       	= 0.84
+silencer_hit_impulse	 	= 54
+silencer_fire_distance   	= 70
+silencer_bullet_speed	 	= 400
+
+silencer_name  				= wpn_addon_silencer_44
+silencer_x 					= 103						; offset in inventory icon
+silencer_y 					= 4
+
+visual                   	= weapons\usp_45\wpn_usp44.ogf
+hud                      	= wpn_usp_44_hud
+
+snd_shoot			= weapons\usp\usp_shoot_44, 2.5
+snd_silncer_shot		= weapons\colt\bren_shot_sil
+
+[wpn_usp_44_hud]
+shell_point		        = 0.03, 0.030, -0.25 ;0.05, 0.012, -0.15
+fire_point			= 0,0.035,-0.21
+fire_bone                	= wpn_body
+orientation              	= -0.45,0.85,0
+position                 	= -0.018,-0.155,0
+
+visual                   	= weapons\usp_45\wpn_usp44_hud.ogf
+
+anim_holster				= holster
+anim_idle				= idle
+anim_empty				= idle_empty
+anim_reload				= usp_reload_empty ;reload
+anim_reload_empty			= usp_reload_empty
+anim_draw				= draw
+anim_draw_empty				= draw_empty
+anim_shoot				= shoot
+anim_shot_last				= shoot_last
+anim_close				= holster 
+anim_idle_aim				= idle_aim
+anim_idle_sprint			= idle_sprint
+
+;смещения HUD для режима приближения
+zoom_offset		= -0.09990,0.03800,-0.03300
+zoom_rotate_x		= 0.01220
+zoom_rotate_y		= -0.0065

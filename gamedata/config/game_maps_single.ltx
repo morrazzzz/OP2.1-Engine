@@ -1,0 +1,558 @@
+; Как получать координаты для глобал мар: приходим на локу и выводим в консоль вот это:
+
+; local xmax = level.get_bounding_volume().max.x
+; local xmin = level.get_bounding_volume().min.x
+; local ymax = level.get_bounding_volume().max.y
+; local ymin = level.get_bounding_volume().min.y
+; local zmax = level.get_bounding_volume().max.z
+; local zmin = level.get_bounding_volume().min.z
+; log(xmax)
+; log(xmin)
+; log(ymax)
+; log(ymin)
+; log(zmax)
+; log(zmin)
+ 
+; x и z - это размеры локации в координатах. Вписываем их в bound_rect, один в один.
+; Далее, в global_rect вписываем нужные размеры карты локи на глобал мар ОБЯЗАТЕЛЬНО СОХРАНЯЯ ПРОПОРЦИИ!!! иначе не будет совпадать позиция ГГ. И соответственно располагаем их, чтобы они совпадали с фоном. Нужно карту подвинуть так, чтобы совпало. Стараемся чтобы на границе совпадали дороги, реки и т.д.
+
+[level_maps_single]
+L01_escape
+L02_garbage
+L03_agroprom
+L03u_agr_underground
+l04_darkvalley
+l04u_LabX18
+L05_bar
+L06_rostok
+l07_military
+l08_yantar
+l10_radar
+l11_pripyat
+l12_stancia
+l12_stancia_2
+l12u_control_monolith
+l12u_sarcofag
+l08u_brainlab
+atp_for_test22
+peshera
+puzir
+aver
+av_peshera
+limansk
+hospital
+generators
+warlab
+red_forest
+lost_village
+marsh
+dead_city
+zaton
+jupiter
+pripyat
+jupiter_underground
+labx8
+l40_dshor
+l38u_labx5
+l37_kurchatov
+l39u_lab_x14
+l41_darkscape_ogse
+l42_predbannik
+l44_perimetr
+l45_forest
+l46_science_station
+l47u_lab_x17
+l49u_damned
+l48_promzone
+l50u_katakomb
+l51_lostvalley
+l52_swamp
+l53_anomfields
+l54u_labx9
+l55u_basement
+l56_rostok_factory
+l57_outskirts
+l58_forgotten
+l59_east_cordon
+l60u_utilities
+l61u_d6
+l62u_collector
+l63_massive
+l64_railstation
+l65_polesie
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[level_music_tracks]
+music\amb01		= 0, 12, 0.5, 10,20
+music\amb03		= 0, 12, 0.5, 10,15
+music\amb07		= 12,24, 1.0, 5, 25
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[global_map]
+texture			= ui\ui_global_map
+bound_rect		= 0.0,0.0, 4096, 5268.0
+max_zoom		= 8.0
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[l01_escape]
+texture         = map\map_escape
+bound_rect      = -317.164, -633.718, 404.880, 811.627
+global_rect		= 1379.0,3327.93, 1600.0,3769.93
+weathers		= cordon
+music_tracks    = l01_escape_musics
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[L02_garbage]
+texture         = map\map_garbage
+bound_rect      = -322.334, -347.225, 321.685, 318.000
+global_rect		= 1395.0, 3079.72, 1585, 3275.72
+weathers		= garbage
+music_tracks    = l02_garbage_musics
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[l03_agroprom]
+texture			= map\map_agroprom
+bound_rect		= -266.505, -355.611, 331.388, 213.838
+global_rect		= 1185.0, 3153.89, 1368.0,3327.89
+weathers		= agro
+music_tracks    = l03_agroprom_musics
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[l03u_agr_underground]
+texture			= map\map_agr_underground
+bound_rect		= -137.000, -147.000, -35.302, 50.254
+global_rect		= 1279.0, 3221.76, 1279.0, 3221.76
+weathers		= agr_ugrnd
+music_tracks    = l03u_agr_underground_musics
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[l04_darkvalley]
+texture			= map\map_darkvalley
+bound_rect		= -445.320, -663.867, 449.864, 231.317
+global_rect		= 1590.0, 2935.0, 2026.0,3371.0
+weathers		= valley
+music_tracks   	= l04_darkvalley_musics
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[l04u_LabX18]
+texture			= map\map_labx18_map
+bound_rect		= -51.236, -37.911, 47.999, 81.159
+global_rect		= 1906, 3172.0, 1906, 3172.0
+weathers		= x18_ugrnd
+music_tracks	= l04u_labx18_musics
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[L05_bar]
+texture         = map\map_bar
+bound_rect      = 0.000, -512.030, 512.000, 512.001
+global_rect		= 1432.0,2732.32,1581.0,3030.32
+weathers		= bar
+;music_tracks   = l05_bar_musics
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[L06_rostok]
+texture         = map\map_rostok
+bound_rect     	= -512.000, -512.030, 0.000, 512.001
+global_rect		= 1283.0,2732.32,1432.0,3030.32
+weathers		= rostok
+music_tracks    = l06_rostok_musics
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[l07_military]
+texture         = map\map_military
+bound_rect      = -443.666, -131.665, 196.334, 508.334
+global_rect		= 1438, 2533.62, 1628, 2723.62
+weathers		= military
+music_tracks    = l07_military_musics
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[l08_yantar]
+texture         = map\map_yantar
+bound_rect      = -282.869, -432.963, 287.342, 138.271
+global_rect		= 1117.0,2883.51,1280.0,3046.51
+weathers		= yantar
+music_tracks	= l08_yantar_musics
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[l08u_brainlab]
+texture         = map\map_mind
+bound_rect      = -146.670, -41.626, 153.227, 21.611
+global_rect		= 1141.0, 2902.0, 1141.0, 2902.0
+weathers		= x16_ugrnd
+music_tracks    = l08u_brainlab_musics
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[L10_radar]
+texture         = map\map_radar
+bound_rect      = -136.256, -503.108, 714.384, 353.524
+global_rect		= 1549.0,2285.46,1793.0,2533.46
+weathers		= radar
+music_tracks    = l10_radar_musics
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[l10u_bunker]
+global_rect		= 1624.0, 2426.93, 1624.0, 2426.93
+weathers		= x19_ugrnd
+music_tracks   	= l10u_bunker_musics
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[l11_pripyat]
+texture	    	= map\map_pripyat
+bound_rect		= -529.399, -457.516, 574.854, 769.050
+global_rect		= 1481.0, 1889.06, 1822.0, 2267.06
+weathers		= pripyat
+music_tracks    = l11_pripyat_musics
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[l12_stancia]
+texture			= map\map_aes_1
+bound_rect		= -256.776, -747.782, 1398.440, 50.35
+global_rect		= 1277.0, 1630.08, 1761, 1873.08
+weathers		= stancia
+music_tracks    = l12_stancia_musics
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[l12u_sarcofag]
+global_rect		= 1453.0, 1639.82, 1453.0, 1639.82
+weathers		= NPP_ugrnd
+music_tracks    = l12u_sarcofag_musics
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[l12u_control_monolith]
+global_rect		= 1453.0, 1639.82, 1453.0, 1639.82
+weathers		= mono_ugrnd
+music_tracks    = l12u_control_musics
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[l12_stancia_2]
+texture			= map\map_aes_2
+bound_rect		= -256.776, 50.70, 1398.440, 850.523
+global_rect		= 1277.0, 1396.27, 1761, 1630.08
+weathers		= stancia2
+music_tracks    = l12_stancia_2_musics
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[atp_for_test22]
+texture         = map\map_atp_for_test22
+bound_rect      = -263.555, -391.829, 472.498, 354.993
+global_rect     = 1270, 2626.9, 1370.0, 2726.9
+weathers		= default
+music_tracks    = atp_for_test22_musics
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[peshera]
+texture         = map\map_peshera
+bound_rect		= -202.691, -126.253, -2.441, 93.430
+global_rect		= 1362, 3174, 1362, 3174
+weathers		= indoor
+music_tracks    = peshera_musics
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[puzir]
+texture         = map\map_puzir
+bound_rect		= -255.346, -255.890, 255.286, 251.884
+global_rect		= 1564, 3243, 1664, 3343
+weathers		= default
+music_tracks   	= puzir_musics
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[aver]
+texture         = map\map_aver
+bound_rect		= -500.000, -500.000, 500.000, 500.000
+global_rect		= 1574.0, 2936.24, 1724.0, 3086.24
+weathers		= default
+music_tracks   	= aver_musics 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[av_peshera]
+texture         = map\map_av_peshera
+bound_rect		= -410.139, 19.017, 176.426, 532.516
+global_rect		= 1581, 2997, 1581, 2997
+weathers		= indoor
+music_tracks    = av_peshera_musics
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[limansk]
+texture         = map\map_limansk
+bound_rect      = -210.0, -415.0, 210.0, 425.0
+global_rect		= 1090.0, 2192.86, 1206.0, 2423.86
+weathers		= default
+music_tracks    = limansk_musics
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[hospital]
+texture         = map\map_hospital
+bound_rect      = -180.0, 537.0,10.0, 917.0
+global_rect		= 1218.0, 2011.0, 1270.0, 2115.0
+weathers		= default
+music_tracks    = hospital_musics
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[generators]
+texture         = map\map_generators
+bound_rect      = -385.577, -639.389, 352.818, 65.245
+global_rect		= 1324, 1805, 1424, 1900.42
+weathers		= stancia
+music_tracks    = generators_musics
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[warlab]
+global_rect		= 1434.0, 1925, 1434.0, 1925
+weathers		= x16_ugrnd
+music_tracks    = warlab_musics
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[red_forest]
+texture         = map\map_red_forest
+bound_rect      = -285.0, -485.0, 375.0, 175.0
+global_rect     = 1222.0, 2346.0, 1404.0, 2528.0
+weathers		= default
+music_tracks    = red_forest_musics
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[lost_village]
+texture         = map\map_lost_village
+bound_rect      = -137.794, -109.345, 198.546, 134.706
+global_rect     = 1307, 2124.0, 1407.0, 2196.621
+weathers		= default
+music_tracks    = lost_village_musics
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[marsh]
+texture         = map\map_marsh
+bound_rect      = -445.0, -445.0, 755.0, 755.0
+global_rect     = 1046.0, 3430, 1376.0, 3760
+weathers		= boloto
+music_tracks    = marsh_musics
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[dead_city]
+texture        	= map\map_dead_city
+bound_rect		= -509.583, -378.084, 396.726, 530.434
+global_rect		= 1101.0, 2636.57, 1201, 2736.57
+weathers		= default
+music_tracks    = l11_pripyat_musics
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[zaton]
+texture         = map\map_zaton
+bound_rect     	= -627.4, -600.0, 802.6, 830.0
+global_rect     = 2309, 1444.76, 2709, 1844.76
+weathers		= boloto
+music_tracks    = zaton_musics
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[jupiter]
+texture         = map\map_jupiter
+bound_rect      = -600.0, -600.0, 600.0, 600.0
+global_rect		= 2188, 1871.17, 2588, 2271.17
+weathers		= yantar
+music_tracks    = jupiter_musics
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[pripyat]
+texture         = map\map_pripyat_2
+bound_rect      = -550.0, -550.0, 550.0, 550.0
+global_rect		= 1759, 1922.77, 2109, 2272.77
+weathers		= pripyat
+music_tracks    = pripyat_musics
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[jupiter_underground]
+texture         = map\map_jupiter_underground
+bound_rect 		= -390.807584, -265.132240, 349.192416, 474.867776
+global_rect		= 2470, 2238.0, 2470, 2238.0
+weathers		= x19_ugrnd
+music_tracks    = underground_musics
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[labx8]
+texture         = map\map_labx8
+bound_rect 		= -122.440560, 44.614076, -40.440560, 126.614072
+global_rect		= 1898, 1968.24, 1898, 1968.24
+weathers		= x16_ugrnd
+music_tracks    = warlab_musics
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[l40_dshor]
+texture         = map\map_l40_dshor
+bound_rect      = -500.000, -499.999,	500.000, 500.000
+global_rect		= 2420, 1035.48, 2800, 1415.48
+weathers		= yantar
+music_tracks    = l40_dshor_musics
+
+[l38u_labx5]
+global_rect		= 1455.0, 3318.22, 1455.0, 3318.22
+weathers		= indoor
+music_tracks   	= l38u_labx5_musics
+
+[l37_kurchatov]
+texture         = map\map_l37_kurchatov
+bound_rect      = -488.691, -599.236, 738.207, 624.225
+global_rect		= 2607, 2007.0, 2870, 2270.0
+weathers		= pripyat
+music_tracks    = l37_kurchatov_musics
+
+[l39u_lab_x14]
+global_rect		= 1734, 2747.91, 1734, 2747.91
+weathers		= indoor
+music_tracks    = l39u_lab_x14_musics
+
+[l41_darkscape_ogse]
+texture			= map\map_l41_darkscape
+bound_rect		= -702.00,-704.090, 708.500,716.7780
+global_rect		= 1725.0, 3387.38, 2044.0,3708.38
+weathers		= default
+music_tracks    = l41_darkscape_ogse_musics
+
+[l42_predbannik]
+texture			= map\map_l42_predbannik
+bound_rect		= -729.635, -422.952, 270.365, 577.048
+global_rect		= 1463.5, 4187.79, 1798.5, 4522.79
+weathers		= default
+music_tracks    = l42_predbannik_musics
+
+[l44_perimetr]
+texture			= map\map_l44_perimetr
+bound_rect		= -532.636, -492.258, 427.640, 442.363
+global_rect		= 1806.0, 4374.14, 2100.0, 4661.14
+weathers		= default
+music_tracks    = l44_perimetr_musics
+
+[l45_forest]
+texture         = map\map_l45_forest
+bound_rect		= -1024.000, -1193.543, 1024.000, 1092.050
+global_rect		= 2618.452, 2457.65,	3022.548, 2908.65
+weathers		= default
+music_tracks    = l45_forest_musics
+
+[l46_science_station]
+texture         = map\map_l46_science_station
+bound_rect 		= -353.108, -344.031, 349.903, 309.553
+global_rect 	= 2263.35, 2404.78, 2568.65, 2688.78
+weathers		= yantar
+music_tracks    = l46_science_station_musics
+
+[l47u_lab_x17]
+global_rect		= 2862, 3250, 2862, 3250
+weathers		= x18_ugrnd
+music_tracks    = l47u_lab_x17_musics
+
+[l49u_damned]
+global_rect		= 1471.0, 2078.0, 1471.0, 2078.0
+weathers		= x18_ugrnd
+music_tracks    = l49u_damned_musics
+
+[l48_promzone]
+texture         = map\map_l48_promzone
+bound_rect      = -531.500, -334.959, 594.500, 1100.192
+global_rect		= 2302.784, 2974.39, 2585.216, 3337.39
+weathers		= default
+music_tracks    = l48_promzone_musics
+
+[l50u_katakomb]
+texture			= map\map_agr_underground
+bound_rect		= -137.000, -147.000, -35.302, 50.254
+global_rect		= 1175.0, 3240, 1175.0, 3240
+weathers		= x18_ugrnd
+music_tracks    = l50u_katakomb_musics
+
+[l51_lostvalley]
+texture			= map\map_l51_lostvalley
+bound_rect		= -238.419, -644.229, 623.570, 215.112
+global_rect		= 2626.274, 3114.02, 2852.726, 3340.02
+weathers		= default
+music_tracks    = l51_lostvalley_musics
+
+[l52_swamp]
+texture         = map\map_l52_swamp
+bound_rect		= -418.945, -354.172, 388.974, 361.915
+global_rect		= 2690.469, 1756.13, 2903.532, 1944.139
+weathers		= default
+music_tracks    = l52_swamp_musics
+
+[l53_anomfields]
+texture         = map\map_l53_anomfields
+bound_rect      = -1522.452, -612.138, 1502.418, 500.000
+global_rect		= 2701.76, 3460.98, 3269.24, 3669.98
+weathers		= default
+music_tracks	= l53_anomfields_musics
+
+[l54u_labx9]
+global_rect		= 2738, 2280.0, 2738, 2280.0
+weathers		= indoor
+music_tracks    = l54u_labx9_musics
+
+[l55u_basement]
+global_rect		= 1900, 2282.0, 1900, 2282.0
+weathers		= x19_ugrnd
+music_tracks	= l55u_basement_musics
+
+[l56_rostok_factory]
+texture	    	= map\map_l56_rostok_factory
+bound_rect		= -361.650, -299.984, 317.136, 315.598
+global_rect		= 783.784, 3524.58, 958.216, 3682.58
+weathers		= default
+music_tracks    = l56_rostok_factory_musics
+
+[l57_outskirts]
+texture         = map\map_l57_outskirts
+bound_rect      = -640.000, -731.232, 640.000, 726.656
+global_rect		= 2033.57, 3809.40, 2358.43, 4179.40
+weathers		= default
+music_tracks	= l57_outskirts_musics
+
+[l58_forgotten]
+texture         = map\map_l58_forgotten
+bound_rect      = -345.863, -321.115, 346.146, 424.976
+global_rect  	= 1821.545, 2764.18, 2000.455, 2957.18
+weathers		= default
+music_tracks    = l58_forgotten_musics
+
+[l59_east_cordon]
+texture         = map\map_l59_east_cordon
+bound_rect		= -1024.000, -1024.000, 1024.000, 1050.880
+global_rect		= 3507.393, 3393.11, 4022.607, 3915.11
+weathers		= default
+music_tracks    = l59_east_cordon_musics
+
+[l60u_utilities]
+texture         = map\map_l60u_utilities
+bound_rect 		= -244.0, -150.0, 11.0, 36.0
+global_rect     = 2073, 2715.02, 2074, 2716.02
+weathers		= x18_ugrnd
+music_tracks	= l60u_utilities_musics
+
+[l61u_d6]
+texture         = map\map_l61u_d6
+bound_rect      = -423.928, -246.733, 19.500, 87.25
+global_rect		= 3420.0, 3569.0, 3421.0, 3570.0
+weathers		= x18_ugrnd
+music_tracks	= l61u_d6_musics
+
+[l62u_collector]
+bound_rect      = -304.998, 260.867, -68.199, 619.416
+global_rect		= 2704.0, 1490.63, 2705.0, 1491.63
+weathers		= x18_ugrnd
+music_tracks	= l62u_collector_musics
+
+[l63_massive]
+texture         = map\map_l63_massive
+bound_rect		= -349.732, -348.773, 350.267, 351.226
+global_rect		= 3060.0, 3099.58, 3250.0, 3289.58
+weathers		= default
+music_tracks    = l63_massive_musics
+
+[l64_railstation]
+texture         = map\map_l64_railstation
+bound_rect		= -350.35, -379.200, 255.500, 226.800
+global_rect		= 891.0, 2568.407, 1041.0, 2718.407
+weathers		= default
+music_tracks    = l64_railstation_musics
+
+[l65_polesie]
+texture         = map\map_l65_polesie
+bound_rect		= -570.0, -750.0, 750.0, 742.0
+global_rect		= 3072.0, 1071.63, 3372.0, 1411.23
+weathers		= default
+music_tracks    = l65_polesie_musics

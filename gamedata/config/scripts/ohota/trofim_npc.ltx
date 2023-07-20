@@ -1,0 +1,85 @@
+[smart_terrains]
+none = true
+
+[logic]
+active = walker@eat_vodka
+combat_ignore = combat_ignore
+on_death = death
+
+[walker@eat_vodka]
+path_walk = bandit_pyan_walk1
+path_look = bandit_pyan_look1
+def_state_standing = eat_vodka
+meet = meet
+danger = danger_ignore
+combat_ignore_cond = always
+on_info = {+trofim_joke_have} kamp@end
+on_info2 = {+trofim_joke_start} walker@ostanovka
+
+[walker@ostanovka]
+path_walk = bandit_pyan_walk2
+def_state_standing = wait
+def_state_moving1 = walk
+def_state_moving2 = walk
+def_state_moving3 = walk
+meet = no_meet
+danger = danger_ignore
+combat_ignore_cond = always
+on_signal = arrived | walker@dai_pivo %=akill.trofim_sms%
+
+[walker@dai_pivo]
+path_walk = bandit_pyan_walk2
+def_state_standing = sit
+meet = meet
+danger = danger_ignore
+combat_ignore_cond = always
+on_info = {+trofim_joke_pivo_done} walker@ostanovka2
+
+[walker@ostanovka2]
+path_walk = bandit_pyan_walk3
+def_state_moving1 = walk
+def_state_moving2 = walk
+def_state_moving3 = walk
+meet = no_meet
+danger = danger_ignore
+combat_ignore_cond = always
+on_signal = arrived | remark@ploho_mne %=akill.trofim_sms2%
+
+[remark@ploho_mne]
+anim = psy_pain
+no_move = true
+meet = no_meet
+danger = danger_ignore
+combat_ignore_cond = always
+on_timer = 55000 | walker@ostanovka3
+
+[walker@ostanovka3]
+path_walk = bandit_pyan_camp_task
+def_state_moving1 = walk
+def_state_moving2 = walk
+def_state_moving3 = walk
+meet = no_meet
+danger = danger_ignore
+combat_ignore_cond = always
+on_signal = arrived | kamp@end %+trofim_joke_have%
+
+[kamp@end]
+center_point = bandit_pyan_camp
+path_walk = bandit_pyan_camp_task
+meet = meet
+danger = danger_ignore
+combat_ignore_cond = always
+
+[meet]
+use = true
+use_wpn = true
+meet_talk_enabled = true
+
+[danger_ignore]
+ignore_distance = 0
+
+[combat_ignore]
+combat_ignore_cond = always
+
+[death]
+on_info = %+trofim_npc_dead%

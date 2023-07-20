@@ -1,0 +1,53 @@
+
+local spawn_story_id_cache
+
+function init(force) --эту функцию можно вообще поместить, например в actor:net_spawn() ids_utils.init(true)
+	if force==nil then
+		force=false
+	end
+	if spawn_story_id_cache==nil or force then
+		spawn_story_id_cache=ini_reader.iniReader("game"):readSection("spawn_story_ids") --формат game_spawn_story_ids.ltx  аналогичен game_story_ids.ltx 
+	end
+end
+
+--получение spawn_story_id из конфига по имени из all.spawn
+local function cget_ssid_by_name(spawn_name)
+	init()
+	for id,name in pairs(spawn_story_id_cache) do
+		if name:gsub('%"',"")==spawn_name then
+			return id
+		end
+	end
+	return -1
+end
+
+--получение из конфига spawn_id по spawn_story_id
+function cget_sid_by_ssid(ssid)
+	if ssid==-1 then
+		return -1
+	end
+	local id=ai:spawn_id(ssid) --тут есть странная магия, если чето не так - функция иногда возвращает 30320 - wtf???????
+	if id then
+		return id
+	else
+		return -1
+	end	
+end
+
+--получение из конфига spawn_id по имени из all.spawn
+function cget_sid_by_name(spawn_name) --если данный метов вернул -1 - значит в game_spawn_story_ids.ltx не прописано соответствие
+	return cget_sid_by_ssid(cget_ssid_by_name(spawn_name))
+end
+
+--получение spawn_story_id из нетпакета
+function nget_ssid_from_obj(obj)
+	if not obj then
+		return -1
+	end
+	local net_packet=m_netpk.get(obj) --получаем state часть нетпакета
+	if net_packet:isOk() then
+		return net_packet:get().spawn_story_id
+	else
+		return -1
+	end
+end

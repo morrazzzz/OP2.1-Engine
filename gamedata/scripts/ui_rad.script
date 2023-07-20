@@ -1,0 +1,86 @@
+--[[-------------------------------------------------------------------------------
+	UI Radiation Mod
+	by sokol_jack (sokol_jack@mail.ru)
+	version 0.3
+
+	Edited by naxac (14.10.2015):
+	For wide- and normal- screens read settings from "ui_custom_msgs(_16).xml",
+	no ini-file
+	Last update: 10.06.16
+--]]-------------------------------------------------------------------------------
+
+class "UIRad"
+
+function UIRad:__init()
+	self:OnOptionsChange()
+	self.saved_width = -1
+	self.detectors = {
+		"detector_simple",
+		"detector_advances",
+		"detector_elite",
+		"detector_elite_sak",
+		"detector_elite_john",
+		"detector_suit"
+	}
+end
+
+function UIRad:UpdateScale()
+	-- Проверим, есть ли детектор на поясе
+	self.bDetected = false
+	for _,v in ipairs(self.detectors) do
+		if Inventory:on_belt(v) then
+			self.bDetected = true
+			break
+		end
+	end
+	
+	self.cs_rad = hud:GetCustomStatic("hud_rad_level")
+	
+	if not ( self.bDetected
+		and  self.working
+		and (not bind_actor.scopeUsed)
+		and db.actor:alive() )
+	then
+		if self.cs_rad then
+			hud:RemoveCustomStatic("hud_rad_level")
+			hud:RemoveCustomStatic("cs_radiation_danger")
+		end
+		return
+	end
+	
+	if self.cs_rad == nil then
+		self.cs_rad = hud:AddCustomStatic("hud_rad_level", true)
+		self.p_width = self.cs_rad:wnd():GetWidth()
+		self.cs_rad:wnd():SetWidth(0)
+	end
+	
+	self.actor_rad = db.actor.radiation
+	self.new_width = self.actor_rad*self.p_width
+	if self.saved_width ~= self.new_width then
+		self.cs_rad:wnd():SetWidth(self.new_width)
+		self.saved_width = self.new_width
+	end
+	
+	--' Вывод сообщения о большой радиации
+	self.radiation_static = hud:GetCustomStatic("cs_radiation_danger")
+	if self.actor_rad >= 0.7 then
+		if self.radiation_static == nil then
+			hud:AddCustomStatic("cs_radiation_danger", true):wnd():SetTextST("st_radiation_danger")
+		end
+	else
+		if self.radiation_static ~= nil then
+			hud:RemoveCustomStatic("cs_radiation_danger")
+		end
+	end
+end
+
+function UIRad:ReLoad()
+	if self.cs_rad then
+		hud:RemoveCustomStatic("hud_rad_level")
+		self.cs_rad = nil
+	end
+end
+
+function UIRad:OnOptionsChange()
+	self.working = amk.load_variable("option_rad",1) ~= 0
+end

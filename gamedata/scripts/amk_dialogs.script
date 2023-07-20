@@ -1,0 +1,122 @@
+-- AMK Поддержка функциональности диалогов
+-- Initial release by Red75
+
+rndval=nil
+
+function act_rnd_init(actor,npc) -- инициализирует значение переменной случайным числом и создаёт функции проверки
+  setfenv(1,amk_dialogs)
+  if pre_rnd_0_100==nil then
+    for a=0,90,10 do
+      for b=10,100,10 do
+        if a<b then
+          if a==0 then
+            amk_dialogs["pre_rnd_"..a.."_"..b]=function()
+              return rndval<b
+              end
+          elseif b==100 then
+            amk_dialogs["pre_rnd_"..a.."_"..b]=function()
+              return rndval>=a
+              end
+          elseif a==0 and b==100 then
+            amk_dialogs["pre_rnd_"..a.."_"..b]=function()
+              return true
+              end
+          else
+            amk_dialogs["pre_rnd_"..a.."_"..b]=function()
+              return rndval>=a and rndval<b
+              end
+          end
+        end
+        setfenv(amk_dialogs["pre_rnd_"..a.."_"..b],amk_dialogs)            
+      end
+    end
+  end
+  rndval=math.random(1,100)
+end
+
+
+
+function frenzy_humanoid(talker,listener) -- можно вызывать как из фразы ГГ, так и NPC
+  local tgt=talker
+  if tgt:id()==db.actor:id() then
+    tgt=listener
+  end
+  local h = hit()
+  h.power = 0
+  h.direction = tgt:direction()
+  h.bone = "bip01_spine"
+  h.draftsman = db.actor
+  h.impulse = 0
+  h.type = hit.wound
+  tgt:hit(h)
+end
+
+function scare_humanoid(talker,listener) -- можно вызывать как из фразы ГГ, так и NPC
+  local tgt=talker
+  if tgt:id()==db.actor:id() then
+    tgt=listener
+  end
+  tgt:set_custom_panic_threshold(1.0)
+  local h = hit()
+  h.power = 0.5
+  h.direction = tgt:direction()
+  h.bone = "bip01_spine"
+  h.draftsman = db.actor
+  h.impulse = 0
+  h.type = hit.wound
+  tgt:hit(h)
+  tgt.morale=0
+end
+
+
+function info_received()
+  amk.send_tip("","Найдена информация",0,10,"gen_info")
+end
+
+function actor_has_money_30000()
+  return db.actor:money()>=30000
+end
+
+function give_money_30000(t1,t2)
+  lost_money(30000)
+end
+--------------------
+function actor_has_money_100000()
+  return db.actor:money()>=100000
+end
+
+function give_money_100000(t1,t2)
+  lost_money(100000)
+end
+-------------------
+function actor_has_money_50000()
+  return db.actor:money()>=50000
+end
+
+function give_money_50000(t1,t2)
+  lost_money(50000)
+end
+-------------------
+function actor_has_money_150000()
+  return db.actor:money()>=150000
+end
+
+function give_money_150000(t1,t2)
+  lost_money(150000)
+end
+------------------
+function actor_has_money_200000()
+  return db.actor:money()>=200000
+end
+
+function give_money_200000(t1,t2)
+  lost_money(200000)
+end
+------------------
+function actor_has_money_500000()
+  return db.actor:money()>=500000
+end
+
+function give_money_500000(t1,t2)
+  lost_money(500000)
+end
